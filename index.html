@@ -57,7 +57,7 @@ small.muted { color: #9fb4ff; }
 /* === Botón deslizable estilo iPhone === */
 .slider-btn { margin-top: 20px; display: flex; justify-content: center; }
 .slider-track {
-  position: relative; width: 320px; height: 56px; background: #1b2a4a;
+  position: relative; width: 220px; height: 56px; background:linear-gradient(145deg, #0d1b2a, #1b263b);
   border-radius: 40px; box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
   overflow: hidden; user-select: none;
 }
@@ -166,7 +166,6 @@ small.muted { color: #9fb4ff; }
   let maxRight = 0;
 
   function recalc(){
-    // ancho útil: contenedor menos el ancho del “handle”
     maxRight = track.clientWidth - handle.clientWidth - 2;
   }
   function setX(x){
@@ -178,30 +177,46 @@ small.muted { color: #9fb4ff; }
   recalc();
   window.addEventListener('resize', recalc);
 
-  // Pointer Events = funciona con mouse, touch y stylus
-  handle.addEventListener('pointerdown', (e) => {
+  // ---- PC (mouse) ----
+  handle.addEventListener('mousedown', e => {
     dragging = true;
-    startX = e.clientX - handle.offsetLeft;
-    handle.setPointerCapture?.(e.pointerId);
+    startX = e.pageX - handle.offsetLeft;
   });
 
-  window.addEventListener('pointermove', (e) => {
+  document.addEventListener('mousemove', e => {
     if (!dragging) return;
-    setX(e.clientX - startX);
+    setX(e.pageX - startX);
   });
 
-  window.addEventListener('pointerup', (e) => {
+  document.addEventListener('mouseup', () => {
     if (!dragging) return;
-    dragging = false;
-    handle.releasePointerCapture?.(e.pointerId);
-
-    // si llegó al final, abre el versículo
     if (handle.offsetLeft >= maxRight - 10) {
       window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
     }
-    // reset
-    handle.style.left = '2px';
+    handle.style.left = "2px";
+    dragging = false;
   });
+
+  // ---- Móvil (touch) ----
+  handle.addEventListener('touchstart', e => {
+    dragging = true;
+    startX = e.touches[0].clientX - handle.offsetLeft;
+  });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    setX(e.touches[0].clientX - startX);
+  });
+
+  document.addEventListener('touchend', () => {
+    if (!dragging) return;
+    if (handle.offsetLeft >= maxRight - 10) {
+      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
+    }
+    handle.style.left = "2px";
+    dragging = false;
+  });
+
 })();
 </script>
 </body>
