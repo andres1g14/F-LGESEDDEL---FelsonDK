@@ -1,138 +1,165 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Samling – Josva 1:9</title>
-  <style>
-    body {
-      margin: 0; padding: 0;
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-      background: linear-gradient(145deg,#0d1b2a,#1b263b);
-      color: #e6ecff;
-    }
-    .container {
-      max-width: 780px;
-      margin: 40px auto;
-      background: #0f1a2b;
-      padding: 32px;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    }
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 17px;
-      line-height: 1.6;
-    }
-    blockquote {
-      margin: 20px 0;
-      padding: 12px 18px;
-      background: #142544;
-      border-left: 4px solid #4d8dff;
-      border-radius: 6px;
-    }
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    .button {
-      flex: 1;
-      text-align: center;
-      padding: 12px 16px;
-      background: #1b57ff;
-      border-radius: 10px;
-      font-weight: bold;
-      text-decoration: none;
-      color: white;
-      box-shadow: 0 6px 18px rgba(27,87,255,0.4);
-      transition: background 0.3s;
-    }
-    .button:hover { background:#1543c4; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samling – Mod og tillid (Josva 1:9)</title>
+<meta name="description" content="Velkomst, kort opmuntring og Josva 1:9 i fokus.">
+<style>
+:root {
+  --bg: #0b1220;
+  --card: #0f1a2b;
+  --text: #e6ecff;
+  --muted: #9fb4ff;
+  --accent: #6ea8ff;
+  --accent-2: #4d8dff;
+  --btn: #1b57ff;
+  --btn-hover: #1543c4;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Inter', 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background: radial-gradient(1200px 800px at 80% -10%, #1b2a4a 0%, #0b1220 60%) fixed, var(--bg);
+  color: var(--text);
+}
+.container { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+.header {
+  text-align: center; padding: 28px 18px; border-radius: 18px;
+  background: linear-gradient(180deg, #11203c, #0f1a2b);
+  box-shadow: 0 20px 60px #0007, inset 0 1px 0 #ffffff10, 0 0 0 1px #3a4a6a33;
+}
+.header h1 { margin: 0 0 8px; font-weight: 800; letter-spacing: -0.02em; font-size: clamp(26px, 3vw, 34px); }
+.header p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+.card {
+  margin-top: 24px; padding: 24px; border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 12px 40px #00000050, 0 0 0 1px #3a4a6a33;
+}
+.card p { line-height: 1.65; font-size: 18px; margin: 0 0 14px; }
+.card p.lead { font-size: 19px; color: #e9f0ff; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.button {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-radius: 12px; text-decoration: none;
+  font-weight: 700; font-size: 16px; color: white;
+  background: var(--btn); box-shadow: 0 10px 24px #1b57ff44, 0 0 0 1px #1b57ff99;
+}
+.button:hover { background: var(--btn-hover); }
+.button.secondary { background: transparent; color: var(--accent); box-shadow: 0 0 0 1px #4d6aa833; }
+.button.secondary:hover { color: white; background: #1a2b4a; }
+.tag { display:inline-block; padding: 6px 10px; border-radius: 999px; background: #1a2944; color:#b9c9ff; font-weight:600; font-size:12px; letter-spacing: .02em; border:1px solid #33486c; }
+.footer { margin-top: 22px; font-size: 13px; color: #aab7e7; text-align: center; }
+hr.sep { border: none; height: 1px; background: linear-gradient(90deg, transparent, #3a4a6a55, transparent); margin: 22px 0; }
+blockquote { margin: 8px 0; padding: 10px 14px; border-left: 3px solid #4d8dff; background: #0c1530; border-radius: 8px; }
+small.muted { color: #9fb4ff; }
 
-    /* Slider estilo iPhone */
-    .slider-btn { margin-top: 20px; display: flex; justify-content: center; }
-    .slider-track {
-      position: relative; width: 240px; height: 46px;
-      background: linear-gradient(145deg,#111827,#1b2a4a);
-      border-radius: 40px; box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
-      overflow: hidden; user-select: none;
-    }
-    .slider-text {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      color: #cdd7ff; font-weight: 600;
-      font-size: 15px; white-space: nowrap; pointer-events: none;
-    }
-    .slider-handle {
-      position: absolute; top: 2px; left: 2px;
-      width: 42px; height: 42px; border-radius: 50%;
-      background: linear-gradient(145deg,#4d8dff,#1b57ff);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      transition: left .2s ease;
-      touch-action: none;
-    }
-
-    /* Botones flotantes */
-    .float-btns {
-      position: fixed;
-      bottom: 20px; right: 20px;
-      display: flex; flex-direction: column; gap: 12px;
-    }
-    .float-btns a {
-      width: 52px; height: 52px;
-      background: #1b57ff;
-      color: white; font-size: 22px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 6px 18px rgba(27,87,255,0.5);
-      transition: background 0.3s;
-    }
-    .float-btns a:hover { background:#1543c4; }
-  </style>
+/* === Botón deslizable estilo iPhone === */
+.slider-btn { margin-top: 20px; display: flex; justify-content: center; }
+.slider-track {
+  position: relative; width: 220px; height: 56px; background:linear-gradient(145deg, #0d1b2a, #1b263b);
+  border-radius: 40px; box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+  overflow: hidden; user-select: none;
+}
+.slider-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  color: #cdd7ff; font-weight: 600; font-size: 15px; white-space: nowrap; pointer-events: none;
+}
+.slider-handle {
+  position: absolute; top: 2px; left: 2px; width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #4d8dff, #1b57ff);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: left .2s ease;
+  touch-action: none;
+}
+</style>
 </head>
 <body>
-
-<div class="container">
-  <h1>Mod i tjenesten — Jehova er med os</h1>
-  <p>Velkommen til samlingen. I dag vil vi se på, hvordan Jehova ser på os, når vi er samlet. Vi ved, hvor vigtigt det er at opmuntre hinanden.</p>
-  <p>Når vi går ud i tjenesten, ved vi aldrig på forhånd, hvem vi vil møde, eller hvordan de vil reagere. Nogle gange er det positivt, andre gange en udfordring. Men uanset hvad kræver det én ting: <strong>mod</strong>.</p>
-  <p>Jonas er et godt eksempel. I starten var han ikke modig, fordi han manglede tro. Han prøvede at flygte fra det, Jehova bad ham om. Men da han senere stolede på Jehova, fik han styrken til at fuldføre sin opgave. Det viser os, at ægte mod kommer af at stole på Jehova.</p>
-
-  <blockquote>Jehova siger i Josva 1:9: “Vær stærk og modig. Vær ikke bange eller modløs, for Jehova din Gud er med dig overalt hvor du går.”</blockquote>
-
-  <p>Det løfte kan vi tage med os hver gang vi går i tjenesten. For vi er aldrig alene – Jehova går med os.</p>
-  <p><em>👉 Vil nogen dele en oplevelse fra tjenesten, hvor I mærkede Jehovas hjælp?</em></p>
-
-  <div class="actions">
-    <a class="button" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9" target="_blank">Åbn verset – Josva 1:9</a>
-  </div>
-
-  <!-- Botón deslizable -->
-  <div class="slider-btn" aria-label="Skub for at åbne Josva 1:9">
-    <div class="slider-track">
-      <span class="slider-text">➔ Skub for at åbne Josva 1:9</span>
-      <div class="slider-handle" role="button"></div>
+  <div class="container">
+    <div class="header">
+      <span class="tag">Samling · Esbjerg syd menighed</span>
+      <h1>Mod i tjenesten — Jehova er med os</h1>
+      <p>Et kort, opmuntrende budskab med <strong>Josva 1:9</strong>.</p>
     </div>
+
+    <div class="card">
+      <p>Velkommen til samlingen. I dag vil vi fokusere på, hvordan Jehova ser på os, og hvad han tænker, når vi er samlet her. Vi ved, hvor vigtigt det er at opmuntre hinanden.</p>
+      <p>Når vi går ud i tjenesten, ved vi aldrig helt, hvem vi møder, eller hvordan de vil reagere. Nogle gange er det positivt, andre gange kan det være en udfordring. Men uanset hvad kræver det altid én ting: mod.<strong>Mod</strong>.</p>
+      <p><strong>mod</strong> Fordi vi lever i en verden, hvor fjenden har stor indflydelse. Alligevel vælger vi med glæde at gå ud i ”fjendens territorium” for at bringe det gode budskab.</p>
+      <p>Men tænk på profeten <strong>Jonas</strong>.Jonas er et godt eksempel. I starten havde han ikke mod, fordi han manglede tro. Han prøvede faktisk at flygte fra det, Jehova bad ham om. Men da han senere stolede på Jehova, fik han styrken til at gøre det, han skulle. Det viser os, at rigtigt mod kommer, når vi stoler på Jehova.</p>
+
+      <blockquote>
+        <p>Jehova opmuntrer os i <strong>Josva 1:9</strong>: Har jeg ikke befalet dig at være modig og stærk? Bliv ikke skrækslagen eller bange, for Jehova din Gud er med dig uanset hvor du ”</p>
+      </blockquote>
+
+      <p>Det er et dejligt løfte, der giver os styrke, hver gang vi går ud i tjenesten. Vi ved, at vi aldrig står alene – Jehova går med os.</p>
+      <hr class="sep">
+      <p class="lead"><em> Vil en af jer fortælle om en oplevelse i tjenesten, hvor Jehova velsignede jer??</em></p>
+
+      <!-- Botones normales -->
+      <div class="actions">
+        <a class="button" href="https://wol.jw.org/da/wol/d/r9/lp-d/502300111" target="_blank" rel="noopener">Åbn verset – Josva 1:9</a>
+        <a class="button secondary" href="#copy" onclick="navigator.clipboard.writeText(location.href); this.innerText='Link kopieret!'; return false;"></a>
+      </div>
+
+      <!-- Botón deslizable estilo iPhone -->
+<div class="slider-btn" aria-label="Skub for at åbne Josva 1:9">
+  <div class="slider-track">
+    <span class="slider-text">➔ Skub for at åbne Josva 1:9</span>
+    <div class="slider-handle" role="button" aria-label="Skub-knap"></div>
   </div>
 </div>
-
-<!-- enlace oculto -->
-<a id="openLink" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9" target="_blank" style="position:absolute;left:-9999px;top:-9999px;">open</a>
-
-<!-- Botones flotantes -->
-<div class="float-btns">
-  <a href="#top" title="Til toppen">↑</a>
-  <a href="#" onclick="navigator.clipboard.writeText(location.href);alert('Link kopieret!');return false;" title="Kopiér link">⎘</a>
-</div>
+      <!-- enlace oculto para abrir el versículo -->
+<a id="openLink" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9" 
+   target="_blank" 
+   style="position:absolute; left:-9999px; top:-9999px;">open</a>
 
 <script>
+(function(){
+  const track  = document.querySelector('.slider-track');
+  const handle = document.querySelector('.slider-handle');
+  if (!track || !handle) return;
+
+  let dragging = false;
+  let startX = 0;
+  let maxRight = 0;
+
+  function recalc(){ maxRight = track.clientWidth - handle.clientWidth - 2; }
+  function setX(x){ if (x < 2) x = 2; if (x > maxRight) x = maxRight; handle.style.left = x + 'px'; }
+
+  recalc();
+  window.addEventListener('resize', recalc);
+
+  handle.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX - handle.offsetLeft;
+    handle.setPointerCapture?.(e.pointerId);
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    setX(e.clientX - startX);
+  });
+
+  window.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    handle.releasePointerCapture?.(e.pointerId);
+
+    // 👉 Aquí está tu link
+    if (handle.offsetLeft >= maxRight - 10) {
+      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
+    }
+    handle.style.left = '2px';
+  });
+})();
+</script>
+
+
+
+  <!-- JS: slider (mouse + touch) -->
+ <script>
 (function(){
   const track  = document.querySelector('.slider-track');
   const handle = document.querySelector('.slider-handle');
@@ -143,22 +170,58 @@
   let startX = 0;
   let maxRight = 0;
 
-  function recalc(){ maxRight = track.clientWidth - handle.clientWidth - 2; }
-  function setX(x){ if (x<2) x=2; if (x>maxRight) x=maxRight; handle.style.left=x+'px'; }
-  function atEnd(){ return handle.offsetLeft >= (maxRight - 6); }
-  function openVerse(){ try { linkEl.click(); } catch(e){ window.location.href=linkEl.href; } }
-  function reset(){ handle.style.left='2px'; }
+  function recalc(){
+    maxRight = track.clientWidth - handle.clientWidth - 2;
+  }
+  function setX(x){
+    if (x < 2) x = 2;
+    if (x > maxRight) x = maxRight;
+    handle.style.left = x + 'px';
+  }
+  function atEnd(){
+    return handle.offsetLeft >= (maxRight - 6);
+  }
+  function openVerse(){
+    try { linkEl.click(); }
+    catch(e){ window.location.href = linkEl.href; }
+  }
+  function reset(){
+    handle.style.left = '2px';
+  }
 
   recalc();
   window.addEventListener('resize', recalc);
+
   track.addEventListener('touchmove', e => { if (dragging) e.preventDefault(); }, {passive:false});
 
-  handle.addEventListener('pointerdown', (e)=>{ dragging=true; recalc(); startX=e.clientX-handle.offsetLeft; handle.setPointerCapture?.(e.pointerId); });
-  window.addEventListener('pointermove', (e)=>{ if(!dragging)return; setX(e.clientX-startX); }, {passive:false});
-  window.addEventListener('pointerup', (e)=>{ if(!dragging)return; dragging=false; handle.releasePointerCapture?.(e.pointerId); if(atEnd()) openVerse(); reset(); });
+  handle.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    recalc();
+    startX = e.clientX - handle.offsetLeft;
+    handle.setPointerCapture?.(e.pointerId);
+  });
 
-  handle.tabIndex=0;
-  handle.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openVerse(); reset(); } });
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    setX(e.clientX - startX);
+  }, {passive:false});
+
+  window.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    handle.releasePointerCapture?.(e.pointerId);
+    if (atEnd()) openVerse();
+    reset();
+  });
+
+  handle.tabIndex = 0;
+  handle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openVerse();
+      reset();
+    }
+  });
 })();
 </script>
 </body>
