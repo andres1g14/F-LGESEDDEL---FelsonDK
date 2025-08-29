@@ -116,59 +116,54 @@ small.muted { color: #9fb4ff; }
   </div>
 
   <!-- JS: slider (mouse + touch) -->
-  <script>
-  (function(){
-    const track = document.querySelector('.slider-track');
-    const handle = document.querySelector('.slider-handle');
-    if(!track || !handle) return;
+ <script>
+(function(){
+  const track  = document.querySelector('.slider-track');
+  const handle = document.querySelector('.slider-handle');
+  if (!track || !handle) return;
 
-    let down = false, startX = 0, maxRight = 0;
+  let dragging = false;
+  let startX = 0;
+  let maxRight = 0;
 
-    function recalc(){ maxRight = track.offsetWidth - handle.offsetWidth - 2; }
-    window.addEventListener('resize', recalc);
-    recalc();
+  function recalc(){
+    // ancho útil: contenedor menos el ancho del “handle”
+    maxRight = track.clientWidth - handle.clientWidth - 2;
+  }
+  function setX(x){
+    if (x < 2) x = 2;
+    if (x > maxRight) x = maxRight;
+    handle.style.left = x + 'px';
+  }
 
-    function start(clientX){
-      down = true;
-      startX = clientX - handle.offsetLeft;
+  recalc();
+  window.addEventListener('resize', recalc);
+
+  // Pointer Events = funciona con mouse, touch y stylus
+  handle.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX - handle.offsetLeft;
+    handle.setPointerCapture?.(e.pointerId);
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    setX(e.clientX - startX);
+  });
+
+  window.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    handle.releasePointerCapture?.(e.pointerId);
+
+    // si llegó al final, abre el versículo
+    if (handle.offsetLeft >= maxRight - 10) {
+      window.open("https://wol.jw.org/da/wol/d/r9/lp-d/502300111", "_blank");
     }
-    function move(clientX){
-      if(!down) return;
-      let x = clientX - startX;
-      if(x < 2) x = 2;
-      if(x > maxRight) x = maxRight;
-      handle.style.left = x + 'px';
-    }
-    function end(){
-      if(!down) return;
-      // si llegó al final, abrir versículo
-      if(handle.offsetLeft >= maxRight - 10){
-        window.open("https://wol.jw.org/da/wol/d/r9/lp-d/502300111", "_blank");
-      }
-      // reset
-      handle.style.left = '2px';
-      down = false;
-    }
-
-    // Mouse
-    handle.addEventListener('mousedown', e => start(e.pageX));
-    document.addEventListener('mousemove', e => move(e.pageX));
-    document.addEventListener('mouseup', end);
-
-    // Touch
-    handle.addEventListener('touchstart', e => { const t=e.touches[0]; start(t.clientX); }, {passive:true});
-    document.addEventListener('touchmove', e => { if(!down) return; const t=e.touches[0]; move(t.clientX); }, {passive:false});
-    document.addEventListener('touchend', end);
-
-    // Accesibilidad: Enter/Space disparan apertura directa
-    handle.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        window.open("https://wol.jw.org/da/wol/d/r9/lp-d/502300111", "_blank");
-      }
-    });
-    handle.tabIndex = 0;
-  })();
-  </script>
+    // reset
+    handle.style.left = '2px';
+  });
+})();
+</script>
 </body>
 </html>
