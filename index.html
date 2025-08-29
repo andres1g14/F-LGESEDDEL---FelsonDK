@@ -78,16 +78,16 @@ small.muted { color: #9fb4ff; }
 <body>
   <div class="container">
     <div class="header">
-      <span class="tag">Samling · Tradition & fællesskab</span>
+      <span class="tag">Samling · Esbjerg syd menighed</span>
       <h1>Mod i tjenesten — Jehova er med os</h1>
       <p>Et kort, opmuntrende budskab med <strong>Josva 1:9</strong>.</p>
     </div>
 
     <div class="card">
       <p>Velkommen til samlingen. I dag vil vi fokusere på, hvordan Jehova ser på os, og hvad han tænker, når vi er samlet her. Vi ved, hvor vigtigt det er at opmuntre hinanden.</p>
-      <p>Hver gang vi beslutter os for at gå ud på gaden for at forkynde, ved vi ikke, hvem vi vil møde, eller hvordan folk vil reagere. Men ved I, hvad det kaldes? <strong>Mod</strong>.</p>
-      <p><strong>Hvorfor mod?</strong> Fordi vi lever i en verden, hvor fjenden har stor indflydelse. Alligevel vælger vi med glæde at gå ud i ”fjendens territorium” for at bringe det gode budskab.</p>
-      <p>Men tænk på profeten <strong>Jonas</strong>. I begyndelsen var han ikke modig, fordi han manglede tro. Han undervurderede Jehova ved at afvise hans hjælp og forsøgte at flygte fra sit ansvar. Men da han senere stolede på Jehova, fandt han styrken til at udføre sin opgave. Det minder os om, at sandt mod kommer af tillid til Jehova.</p>
+      <p>Når vi går ud i tjenesten, er det altid en rejse ind i det uvisse. Vi ved aldrig, hvem vi vil møde, eller hvordan de vil reagere. Nogle gange møder vi åbne hjerter, andre gange afvisning. Men uanset hvad kræver det én ting: <strong>Mod</strong>.</p>
+      <p><strong>mod</strong> Fordi vi lever i en verden, hvor fjenden har stor indflydelse. Alligevel vælger vi med glæde at gå ud i ”fjendens territorium” for at bringe det gode budskab.</p>
+      <p>Men tænk på profeten <strong>Jonas</strong>.Jonas er et godt eksempel. I starten havde han ikke mod, fordi han manglede tro. Han prøvede faktisk at flygte fra det, Jehova bad ham om. Men da han senere stolede på Jehova, fik han styrken til at gøre det, han skulle. Det viser os, at rigtigt mod kommer, når vi stoler på Jehova.</p>
 
       <blockquote>
         <p>Jehova opmuntrer os i <strong>Josva 1:9</strong>: Har jeg ikke befalet dig at være modig og stærk? Bliv ikke skrækslagen eller bange, for Jehova din Gud er med dig uanset hvor du ”</p>
@@ -100,21 +100,59 @@ small.muted { color: #9fb4ff; }
       <!-- Botones normales -->
       <div class="actions">
         <a class="button" href="https://wol.jw.org/da/wol/d/r9/lp-d/502300111" target="_blank" rel="noopener">Åbn verset – Josva 1:9</a>
-        <a class="button secondary" href="#copy" onclick="navigator.clipboard.writeText(location.href); this.innerText='Link kopieret!'; return false;">https://www.jw.org/da/bibliotek/bibelen/nwt/bøger/josva/1/
-</a>
+        <a class="button secondary" href="#copy" onclick="navigator.clipboard.writeText(location.href); this.innerText='Link kopieret!'; return false;"></a>
       </div>
 
       <!-- Botón deslizable estilo iPhone -->
-      <div class="slider-btn" aria-label="Skub for at åbne Josva 1:9">
-        <div class="slider-track">
-          <span class="slider-text">➔ Skub for at åbne Josva 1:9</span>
-          <div class="slider-handle" role="button" aria-label="Skub-knap"></div>
-        </div>
-      </div>
-    </div>
-
-    <p class="footer">© 2025 — Enkel webside til samlingen. Bygget af familia Mora.</p>
+<div class="slider-btn" aria-label="Skub for at åbne Josva 1:9">
+  <div class="slider-track">
+    <span class="slider-text">➔ Skub for at åbne Josva 1:9</span>
+    <div class="slider-handle" role="button" aria-label="Skub-knap"></div>
   </div>
+</div>
+
+<script>
+(function(){
+  const track  = document.querySelector('.slider-track');
+  const handle = document.querySelector('.slider-handle');
+  if (!track || !handle) return;
+
+  let dragging = false;
+  let startX = 0;
+  let maxRight = 0;
+
+  function recalc(){ maxRight = track.clientWidth - handle.clientWidth - 2; }
+  function setX(x){ if (x < 2) x = 2; if (x > maxRight) x = maxRight; handle.style.left = x + 'px'; }
+
+  recalc();
+  window.addEventListener('resize', recalc);
+
+  handle.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX - handle.offsetLeft;
+    handle.setPointerCapture?.(e.pointerId);
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    setX(e.clientX - startX);
+  });
+
+  window.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    handle.releasePointerCapture?.(e.pointerId);
+
+    // 👉 Aquí está tu link
+    if (handle.offsetLeft >= maxRight - 10) {
+      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
+    }
+    handle.style.left = '2px';
+  });
+})();
+</script>
+
+
 
   <!-- JS: slider (mouse + touch) -->
  <script>
@@ -159,7 +197,7 @@ small.muted { color: #9fb4ff; }
 
     // si llegó al final, abre el versículo
     if (handle.offsetLeft >= maxRight - 10) {
-      window.open("https://wol.jw.org/da/wol/d/r9/lp-d/502300111", "_blank");
+      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
     }
     // reset
     handle.style.left = '2px';
