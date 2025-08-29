@@ -1,228 +1,161 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Samling – Mod og tillid (Josva 1:9)</title>
-<meta name="description" content="Velkomst, kort opmuntring og Josva 1:9 i fokus.">
-<style>
-:root {
-  --bg: #0b1220;
-  --card: #0f1a2b;
-  --text: #e6ecff;
-  --muted: #9fb4ff;
-  --accent: #6ea8ff;
-  --accent-2: #4d8dff;
-  --btn: #1b57ff;
-  --btn-hover: #1543c4;
-}
-* { box-sizing: border-box; }
-html, body {
-  margin: 0; padding: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Inter', 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  background: radial-gradient(1200px 800px at 80% -10%, #1b2a4a 0%, #0b1220 60%) fixed, var(--bg);
-  color: var(--text);
-}
-.container { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
-.header {
-  text-align: center; padding: 28px 18px; border-radius: 18px;
-  background: linear-gradient(180deg, #11203c, #0f1a2b);
-  box-shadow: 0 20px 60px #0007, inset 0 1px 0 #ffffff10, 0 0 0 1px #3a4a6a33;
-}
-.header h1 { margin: 0 0 8px; font-weight: 800; letter-spacing: -0.02em; font-size: clamp(26px, 3vw, 34px); }
-.header p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
-.card {
-  margin-top: 24px; padding: 24px; border-radius: 18px;
-  background: var(--card);
-  box-shadow: 0 12px 40px #00000050, 0 0 0 1px #3a4a6a33;
-}
-.card p { line-height: 1.65; font-size: 18px; margin: 0 0 14px; }
-.card p.lead { font-size: 19px; color: #e9f0ff; }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
-.button {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 12px 16px; border-radius: 12px; text-decoration: none;
-  font-weight: 700; font-size: 16px; color: white;
-  background: var(--btn); box-shadow: 0 10px 24px #1b57ff44, 0 0 0 1px #1b57ff99;
-}
-.button:hover { background: var(--btn-hover); }
-.button.secondary { background: transparent; color: var(--accent); box-shadow: 0 0 0 1px #4d6aa833; }
-.button.secondary:hover { color: white; background: #1a2b4a; }
-.tag { display:inline-block; padding: 6px 10px; border-radius: 999px; background: #1a2944; color:#b9c9ff; font-weight:600; font-size:12px; letter-spacing: .02em; border:1px solid #33486c; }
-.footer { margin-top: 22px; font-size: 13px; color: #aab7e7; text-align: center; }
-hr.sep { border: none; height: 1px; background: linear-gradient(90deg, transparent, #3a4a6a55, transparent); margin: 22px 0; }
-blockquote { margin: 8px 0; padding: 10px 14px; border-left: 3px solid #4d8dff; background: #0c1530; border-radius: 8px; }
-small.muted { color: #9fb4ff; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mod i tjenesten — Jehova er med os</title>
+  <meta name="description" content="Et kort, opmuntrende budskab med Josva 1:9." />
+  <style>
+    :root{
+      --bg: #0b1220;
+      --panel: #0f1a2b;
+      --tag: #1a2944;
+      --text: #e6ecff;
+      --muted:#9fb4ff;
+      --accent:#1b57ff;
+      --accent-2:#4d8dff;
+      --ring:#3a4a6a55;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:radial-gradient(1200px 800px at 78% -10%, #1b2a4a 0%, #0b1220 60%) fixed,var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+    .wrap{max-width:960px;margin:40px auto;padding:0 18px}
+    .header{
+      width:720px;max-width:100%;margin:0 auto 18px auto;
+      background:linear-gradient(180deg,#12213c,#0f1a2b);
+      border-radius:20px; text-align:center; padding:22px 18px 20px;
+      box-shadow:0 22px 60px #0008, inset 0 1px 0 #ffffff12, 0 0 0 1px #3a4a6a30;
+    }
+    .tag{
+      display:inline-block;background:var(--tag);color:#b9c9ff;border:1px solid #33486c;
+      padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.02em;
+    }
+    h1{margin:10px 0 6px;font-weight:800;letter-spacing:-.02em;font-size:clamp(24px,3.4vw,34px)}
+    .sub{margin:0;color:var(--muted);font-size:15px}
 
-/* === Botón deslizable estilo iPhone === */
-.slider-btn { margin-top: 20px; display: flex; justify-content: center; }
-.slider-track {
-  position: relative; width: 220px; height: 56px; background:linear-gradient(145deg, #0d1b2a, #1b263b);
-  border-radius: 40px; box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
-  overflow: hidden; user-select: none;
-}
-.slider-text {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  color: #cdd7ff; font-weight: 600; font-size: 15px; white-space: nowrap; pointer-events: none;
-}
-.slider-handle {
-  position: absolute; top: 2px; left: 2px; width: 52px; height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #4d8dff, #1b57ff);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  transition: left .2s ease;
-  touch-action: none;
-}
-</style>
+    .card{
+      width:720px;max-width:100%;margin:14px auto 24px auto;background:var(--panel);
+      border-radius:20px;padding:24px 22px;box-shadow:0 14px 44px #0007, 0 0 0 1px #3a4a6a30;
+    }
+    p{font-size:18px;line-height:1.65;margin:0 0 14px}
+    blockquote{
+      margin:16px 0;padding:12px 14px;border-left:3px solid var(--accent-2);
+      background:#0c1530;border-radius:10px;font-size:18px
+    }
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:700;font-size:16px;color:#fff;
+      background:var(--accent); box-shadow:0 10px 24px rgba(27,87,255,.35), 0 0 0 1px #1b57ff99;
+    }
+    .btn:hover{background:#1543c4}
+
+    /* Slider estilo iPhone, compacto como en la captura */
+    .slider-area{display:flex;align-items:center;gap:10px;margin-top:14px}
+    .slider{
+      position:relative;width:180px;height:34px;border-radius:999px;background:linear-gradient(145deg,#111827,#1a2744);
+      box-shadow:inset 0 0 6px rgba(0,0,0,.55);
+      user-select:none; overflow:hidden;
+    }
+    .handle{
+      position:absolute;top:2px;left:2px;width:30px;height:30px;border-radius:999px;
+      background:linear-gradient(145deg,var(--accent-2),var(--accent));
+      box-shadow:0 4px 12px rgba(0,0,0,.55);
+      transition:left .18s ease; touch-action:none;
+    }
+    .hint{color:#b7c6ff;font-size:14px}
+    .hint .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#4d8dff;margin-right:6px;vertical-align:middle}
+
+    .footer{width:720px;max-width:100%;margin:0 auto;color:#aab7e7;text-align:center;font-size:13px;padding:8px 0 30px}
+    @media (max-width:560px){
+      .header,.card,.footer{width:100%}
+      .slider-area{justify-content:flex-start}
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
     <div class="header">
       <span class="tag">Samling · Esbjerg syd menighed</span>
       <h1>Mod i tjenesten — Jehova er med os</h1>
-      <p>Et kort, opmuntrende budskab med <strong>Josva 1:9</strong>.</p>
+      <p class="sub">Et kort, opmuntrende budskab med <strong>Josva 1:9</strong>.</p>
     </div>
 
     <div class="card">
-      <p>Velkommen til samlingen. I dag vil vi fokusere på, hvordan Jehova ser på os, og hvad han tænker, når vi er samlet her. Vi ved, hvor vigtigt det er at opmuntre hinanden.</p>
-      <p>Når vi går ud i tjenesten, ved vi aldrig helt, hvem vi møder, eller hvordan de vil reagere. Nogle gange er det positivt, andre gange kan det være en udfordring. Men uanset hvad kræver det altid én ting: mod.<strong>Mod</strong>.</p>
-      <p><strong>mod</strong> Fordi vi lever i en verden, hvor fjenden har stor indflydelse. Alligevel vælger vi med glæde at gå ud i ”fjendens territorium” for at bringe det gode budskab.</p>
-      <p>Men tænk på profeten <strong>Jonas</strong>.Jonas er et godt eksempel. I starten havde han ikke mod, fordi han manglede tro. Han prøvede faktisk at flygte fra det, Jehova bad ham om. Men da han senere stolede på Jehova, fik han styrken til at gøre det, han skulle. Det viser os, at rigtigt mod kommer, når vi stoler på Jehova.</p>
+      <p>Velkommen til samlingen. I dag vil vi fokusere på, hvordan Jehova ser på os, og hvad han tænker, når vi er samlet. Vi ved, hvor vigtigt det er at opmuntre hinanden.</p>
+      <p>Når vi går ud i tjenesten, ved vi aldrig på forhånd, hvem vi vil møde, eller hvordan de vil reagere. Nogle gange er det positivt, andre gange kan det være en udfordring. Men uanset hvad kræver det altid én ting: <strong>mod</strong>.</p>
+      <p><strong>Hvorfor mod?</strong> Fordi vi lever i en verden, hvor fjenden har stor indflydelse. Alligevel vælger vi med glæde at gå ud i “fjendens territorium” for at bringe det gode budskab.</p>
+      <p>Men tænk på profeten <strong>Jonas</strong>. I starten havde han ikke mod, fordi han manglede tro. Han prøvede faktisk at flygte fra det, Jehova bad ham om. Men da han senere stolede på Jehova, fik han styrken til at gøre det, han skulle. Det viser os, at rigtigt mod kommer, når vi stoler på Jehova.</p>
 
-      <blockquote>
-        <p>Jehova opmuntrer os i <strong>Josva 1:9</strong>: Har jeg ikke befalet dig at være modig og stærk? Bliv ikke skrækslagen eller bange, for Jehova din Gud er med dig uanset hvor du ”</p>
-      </blockquote>
+      <blockquote>Jehova opmuntrer os i <strong>Josva 1:9</strong>:
+        “Har jeg ikke givet dig befaling om at være stærk og modig? Vær ikke bange eller modløs, for Jehova din Gud er med dig overalt hvor du går.”</blockquote>
 
       <p>Det er et dejligt løfte, der giver os styrke, hver gang vi går ud i tjenesten. Vi ved, at vi aldrig står alene – Jehova går med os.</p>
-      <hr class="sep">
-      <p class="lead"><em> Vil en af jer fortælle om en oplevelse i tjenesten, hvor Jehova velsignede jer??</em></p>
 
-      <!-- Botones normales -->
+      <p><em>👉 Vil en af jer fortælle om en oplevelse i tjenesten, hvor Jehova velsignede jer?</em></p>
+
       <div class="actions">
-        <a class="button" href="https://wol.jw.org/da/wol/d/r9/lp-d/502300111" target="_blank" rel="noopener">Åbn verset – Josva 1:9</a>
-        <a class="button secondary" href="#copy" onclick="navigator.clipboard.writeText(location.href); this.innerText='Link kopieret!'; return false;"></a>
+        <a class="btn" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9">Åbn verset – Josva 1:9</a>
       </div>
 
-      <!-- Botón deslizable estilo iPhone -->
-<div class="slider-btn" aria-label="Skub for at åbne Josva 1:9">
-  <div class="slider-track">
-    <span class="slider-text">➔ Skub for at åbne Josva 1:9</span>
-    <div class="slider-handle" role="button" aria-label="Skub-knap"></div>
+      <!-- Slider + texto como en tu captura -->
+      <div class="slider-area">
+        <div class="slider" id="slider">
+          <div class="handle" id="handle" aria-label="Skub-knap"></div>
+        </div>
+        <span class="hint"><span class="dot"></span>— for at åbne Josva 1:9</span>
+      </div>
+    </div>
+
+    <p class="footer">© 2025 — Enkel webside til samlingen. Bygget af familia Mora.</p>
   </div>
-</div>
-      <!-- enlace oculto para abrir el versículo -->
-<a id="openLink" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9" 
-   target="_blank" 
-   style="position:absolute; left:-9999px; top:-9999px;">open</a>
 
-<script>
-(function(){
-  const track  = document.querySelector('.slider-track');
-  const handle = document.querySelector('.slider-handle');
-  if (!track || !handle) return;
+  <!-- JS: slider robust (PC + iPhone/Android) con redirección directa -->
+  <script>
+    (function(){
+      const slider = document.getElementById('slider');
+      const handle = document.getElementById('handle');
+      const url = "https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9";
 
-  let dragging = false;
-  let startX = 0;
-  let maxRight = 0;
+      let dragging=false, startX=0, maxRight=0;
 
-  function recalc(){ maxRight = track.clientWidth - handle.clientWidth - 2; }
-  function setX(x){ if (x < 2) x = 2; if (x > maxRight) x = maxRight; handle.style.left = x + 'px'; }
+      function recalc(){ maxRight = slider.clientWidth - handle.clientWidth - 2; }
+      function setX(x){ if(x<2)x=2; if(x>maxRight)x=maxRight; handle.style.left = x + 'px'; }
+      function atEnd(){ return handle.offsetLeft >= (maxRight - 4); }
+      function go(){ location.href = url; }  // ✅ abre fiable en iOS/Android
+      function reset(){ handle.style.left='2px'; }
 
-  recalc();
-  window.addEventListener('resize', recalc);
+      recalc();
+      window.addEventListener('resize', recalc);
 
-  handle.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    startX = e.clientX - handle.offsetLeft;
-    handle.setPointerCapture?.(e.pointerId);
-  });
+      // Evita scroll del documento mientras arrastras en móvil
+      slider.addEventListener('touchmove', e => { if(dragging) e.preventDefault(); }, {passive:false});
 
-  window.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    setX(e.clientX - startX);
-  });
+      // Pointer events = mouse + touch + stylus
+      handle.addEventListener('pointerdown', e => {
+        dragging = true; recalc();
+        startX = e.clientX - handle.offsetLeft;
+        handle.setPointerCapture && handle.setPointerCapture(e.pointerId);
+      });
 
-  window.addEventListener('pointerup', (e) => {
-    if (!dragging) return;
-    dragging = false;
-    handle.releasePointerCapture?.(e.pointerId);
+      window.addEventListener('pointermove', e => {
+        if(!dragging) return;
+        setX(e.clientX - startX);
+      }, {passive:false});
 
-    // 👉 Aquí está tu link
-    if (handle.offsetLeft >= maxRight - 10) {
-      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
-    }
-    handle.style.left = '2px';
-  });
-})();
-</script>
+      window.addEventListener('pointerup', e => {
+        if(!dragging) return;
+        dragging = false;
+        handle.releasePointerCapture && handle.releasePointerCapture(e.pointerId);
+        if(atEnd()) go();
+        reset();
+      });
 
-
-
-  <!-- JS: slider (mouse + touch) -->
- <script>
-(function(){
-  const track  = document.querySelector('.slider-track');
-  const handle = document.querySelector('.slider-handle');
-  const linkEl = document.getElementById('openLink');
-  if (!track || !handle || !linkEl) return;
-
-  let dragging = false;
-  let startX = 0;
-  let maxRight = 0;
-
-  function recalc(){
-    maxRight = track.clientWidth - handle.clientWidth - 2;
-  }
-  function setX(x){
-    if (x < 2) x = 2;
-    if (x > maxRight) x = maxRight;
-    handle.style.left = x + 'px';
-  }
-  function atEnd(){
-    return handle.offsetLeft >= (maxRight - 6);
-  }
-  function openVerse(){
-    try { linkEl.click(); }
-    catch(e){ window.location.href = linkEl.href; }
-  }
-  function reset(){
-    handle.style.left = '2px';
-  }
-
-  recalc();
-  window.addEventListener('resize', recalc);
-
-  track.addEventListener('touchmove', e => { if (dragging) e.preventDefault(); }, {passive:false});
-
-  handle.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    recalc();
-    startX = e.clientX - handle.offsetLeft;
-    handle.setPointerCapture?.(e.pointerId);
-  });
-
-  window.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    setX(e.clientX - startX);
-  }, {passive:false});
-
-  window.addEventListener('pointerup', (e) => {
-    if (!dragging) return;
-    dragging = false;
-    handle.releasePointerCapture?.(e.pointerId);
-    if (atEnd()) openVerse();
-    reset();
-  });
-
-  handle.tabIndex = 0;
-  handle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      openVerse();
-      reset();
-    }
-  });
-})();
-</script>
+      // Accesibilidad: Enter/Espacio
+      handle.tabIndex = 0;
+      handle.addEventListener('keydown', e => {
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); reset(); }
+      });
+    })();
+  </script>
 </body>
 </html>
