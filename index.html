@@ -110,6 +110,10 @@ small.muted { color: #9fb4ff; }
     <div class="slider-handle" role="button" aria-label="Skub-knap"></div>
   </div>
 </div>
+      <!-- enlace oculto para abrir el versículo -->
+<a id="openLink" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9" 
+   target="_blank" 
+   style="position:absolute; left:-9999px; top:-9999px;">open</a>
 
 <script>
 (function(){
@@ -159,7 +163,8 @@ small.muted { color: #9fb4ff; }
 (function(){
   const track  = document.querySelector('.slider-track');
   const handle = document.querySelector('.slider-handle');
-  if (!track || !handle) return;
+  const linkEl = document.getElementById('openLink');
+  if (!track || !handle || !linkEl) return;
 
   let dragging = false;
   let startX = 0;
@@ -173,50 +178,50 @@ small.muted { color: #9fb4ff; }
     if (x > maxRight) x = maxRight;
     handle.style.left = x + 'px';
   }
+  function atEnd(){
+    return handle.offsetLeft >= (maxRight - 6);
+  }
+  function openVerse(){
+    try { linkEl.click(); }
+    catch(e){ window.location.href = linkEl.href; }
+  }
+  function reset(){
+    handle.style.left = '2px';
+  }
 
   recalc();
   window.addEventListener('resize', recalc);
 
-  // ---- PC (mouse) ----
-  handle.addEventListener('mousedown', e => {
+  track.addEventListener('touchmove', e => { if (dragging) e.preventDefault(); }, {passive:false});
+
+  handle.addEventListener('pointerdown', (e) => {
     dragging = true;
-    startX = e.pageX - handle.offsetLeft;
+    recalc();
+    startX = e.clientX - handle.offsetLeft;
+    handle.setPointerCapture?.(e.pointerId);
   });
 
-  document.addEventListener('mousemove', e => {
+  window.addEventListener('pointermove', (e) => {
     if (!dragging) return;
-    setX(e.pageX - startX);
-  });
+    setX(e.clientX - startX);
+  }, {passive:false});
 
-  document.addEventListener('mouseup', () => {
+  window.addEventListener('pointerup', (e) => {
     if (!dragging) return;
-    if (handle.offsetLeft >= maxRight - 10) {
-      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
-    }
-    handle.style.left = "2px";
     dragging = false;
+    handle.releasePointerCapture?.(e.pointerId);
+    if (atEnd()) openVerse();
+    reset();
   });
 
-  // ---- Móvil (touch) ----
-  handle.addEventListener('touchstart', e => {
-    dragging = true;
-    startX = e.touches[0].clientX - handle.offsetLeft;
-  });
-
-  document.addEventListener('touchmove', e => {
-    if (!dragging) return;
-    setX(e.touches[0].clientX - startX);
-  });
-
-  document.addEventListener('touchend', () => {
-    if (!dragging) return;
-    if (handle.offsetLeft >= maxRight - 10) {
-      window.open("https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9", "_blank");
+  handle.tabIndex = 0;
+  handle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openVerse();
+      reset();
     }
-    handle.style.left = "2px";
-    dragging = false;
   });
-
 })();
 </script>
 </body>
