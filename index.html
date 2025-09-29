@@ -260,11 +260,20 @@
 
         /* Print Styles */
         @media print {
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+
             * {
                 background-color: transparent !important;
                 color: #000 !important;
                 box-shadow: none !important;
                 text-shadow: none !important;
+            }
+
+            #company-logo {
+                color: #4A90E2 !important;
             }
 
             body {
