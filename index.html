@@ -1,161 +1,431 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mod i tjenesten — Jehova er med os</title>
-  <meta name="description" content="Et kort, opmuntrende budskab med Josva 1:9." />
-  <style>
-    :root{
-      --bg: #0b1220;
-      --panel: #0f1a2b;
-      --tag: #1a2944;
-      --text: #e6ecff;
-      --muted:#9fb4ff;
-      --accent:#1b57ff;
-      --accent-2:#4d8dff;
-      --ring:#3a4a6a55;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:radial-gradient(1200px 800px at 78% -10%, #1b2a4a 0%, #0b1220 60%) fixed,var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-    .wrap{max-width:960px;margin:40px auto;padding:0 18px}
-    .header{
-      width:720px;max-width:100%;margin:0 auto 18px auto;
-      background:linear-gradient(180deg,#12213c,#0f1a2b);
-      border-radius:20px; text-align:center; padding:22px 18px 20px;
-      box-shadow:0 22px 60px #0008, inset 0 1px 0 #ffffff12, 0 0 0 1px #3a4a6a30;
-    }
-    .tag{
-      display:inline-block;background:var(--tag);color:#b9c9ff;border:1px solid #33486c;
-      padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.02em;
-    }
-    h1{margin:10px 0 6px;font-weight:800;letter-spacing:-.02em;font-size:clamp(24px,3.4vw,34px)}
-    .sub{margin:0;color:var(--muted);font-size:15px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Følgeseddel - Felson Watersafe ApS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .card{
-      width:720px;max-width:100%;margin:14px auto 24px auto;background:var(--panel);
-      border-radius:20px;padding:24px 22px;box-shadow:0 14px 44px #0007, 0 0 0 1px #3a4a6a30;
-    }
-    p{font-size:18px;line-height:1.65;margin:0 0 14px}
-    blockquote{
-      margin:16px 0;padding:12px 14px;border-left:3px solid var(--accent-2);
-      background:#0c1530;border-radius:10px;font-size:18px
-    }
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:700;font-size:16px;color:#fff;
-      background:var(--accent); box-shadow:0 10px 24px rgba(27,87,255,.35), 0 0 0 1px #1b57ff99;
-    }
-    .btn:hover{background:#1543c4}
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #ffffff;
+            padding: 1rem;
+            min-height: 100vh;
+        }
 
-    /* Slider estilo iPhone, compacto como en la captura */
-    .slider-area{display:flex;align-items:center;gap:10px;margin-top:14px}
-    .slider{
-      position:relative;width:180px;height:34px;border-radius:999px;background:linear-gradient(145deg,#111827,#1a2744);
-      box-shadow:inset 0 0 6px rgba(0,0,0,.55);
-      user-select:none; overflow:hidden;
-    }
-    .handle{
-      position:absolute;top:2px;left:2px;width:30px;height:30px;border-radius:999px;
-      background:linear-gradient(145deg,var(--accent-2),var(--accent));
-      box-shadow:0 4px 12px rgba(0,0,0,.55);
-      transition:left .18s ease; touch-action:none;
-    }
-    .hint{color:#b7c6ff;font-size:14px}
-    .hint .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#4d8dff;margin-right:6px;vertical-align:middle}
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
 
-    .footer{width:720px;max-width:100%;margin:0 auto;color:#aab7e7;text-align:center;font-size:13px;padding:8px 0 30px}
-    @media (max-width:560px){
-      .header,.card,.footer{width:100%}
-      .slider-area{justify-content:flex-start}
-    }
-  </style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 2rem;
+            background-color: white;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #4A90E2;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .company-info {
+            text-align: right;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 2rem 0;
+            color: #333;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .content-wrapper {
+            padding: 2rem;
+        }
+
+        .details-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .details-column {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .items-section {
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #e0e0e0;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            background-color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .antal-input {
+            width: 100%;
+        }
+
+        .beskrivelse-input {
+            width: 100%;
+        }
+
+        .delete-row-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .delete-row-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        #add-row-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #add-row-btn:hover {
+            background-color: #218838;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        #print-btn {
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+            text-transform: uppercase;
+        }
+
+        #print-btn:hover {
+            background-color: #357ABD;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white !important;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            header {
+                background: #003d5c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            thead {
+                background: #003d5c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            #add-row-btn,
+            .delete-row-btn,
+            #print-btn {
+                display: none !important;
+            }
+
+            .print-value {
+                border: none;
+                padding: 0.5rem;
+                display: block;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            td {
+                background-color: white !important;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <span class="tag">Samling · Esbjerg syd menighed</span>
-      <h1>Mod i tjenesten — Jehova er med os</h1>
-      <p class="sub">Et kort, opmuntrende budskab med <strong>Josva 1:9</strong>.</p>
-    </div>
+    <div class="container">
+        <header>
+            <div>
+                <h2>Felson Watersafe ApS</h2>
+            </div>
+            <div class="company-info">
+                <p>Felson Watersafe ApS</p>
+                <p>Gartnervej 4</p>
+                <p>6710 Esbjerg V</p>
+                <p>CVR-nr. DK26813522</p>
+                <p>Tlf. 70206676</p>
+                <p>felson@felson.dk</p>
+            </div>
+        </header>
 
-    <div class="card">
-      <p>Velkommen til samlingen. I dag vil vi fokusere på, hvordan Jehova ser på os, og hvad han tænker, når vi er samlet.Vi ved, hvor vigtigt det er at opmuntre hinanden, og det gør vi hver gang vi kommer her og deler tro og erfaringer.</p>
-      <p>Når vi går ud i tjenesten, ved vi aldrig på forhånd, hvem vi vil møde, hvem der står bag døren, eller hvordan folk vil reagere, når en fremmed banker på. Nogle tager venligt imod os, andre gør det ikke. Ikke alle vil være glade for vores besøg. Men uanset hvad kræver det altid én ting: <strong>mod</strong>.</p>
-      <p><strong>Hvorfor mod?</strong> Fordi vi lever i en verden, hvor fjenden har stor indflydelse.Men alligevel vælger vi med glæde at gå ud i “fjendens territorium” for at bringe det gode budskab.</p>
-      <p>Men tænk på profeten <strong>Jonas</strong>. I starten havde han ikke mod, fordi han manglede tro. Han prøvede faktisk at flygte fra det, Jehova bad ham om. Men da han senere stolede på Jehova, fik han styrken til at gøre det, han skulle. Det viser os, at rigtigt mod kommer, når vi stoler på Jehova.</p>
+        <div class="content-wrapper">
+            <h1>FØLGESEDDEL</h1>
 
-      <blockquote>Jehova opmuntrer os i <strong>Josva 1:9</strong>:
-        “Har jeg ikke givet dig befaling om at være stærk og modig? Vær ikke bange eller modløs, for Jehova din Gud er med dig overalt hvor du går.”</blockquote>
+            <section class="details-section">
+            <div class="details-column">
+                <label for="levering">Levering:</label>
+                <textarea id="levering" rows="4"></textarea>
+            </div>
+            <div class="details-column">
+                <div class="form-group">
+                    <label for="dato">Dato:</label>
+                    <input type="date" id="dato">
+                </div>
+                <div class="form-group">
+                    <label for="ordre-nr">Ordre nr.:</label>
+                    <input type="text" id="ordre-nr">
+                </div>
+            </div>
+        </section>
 
-      <p>Det er et dejligt løfte, der giver os styrke, hver gang vi går ud i tjenesten. Vi ved, at vi aldrig står alene – Jehova går med os.</p>
+        <section class="items-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Antal</th>
+                        <th>Beskrivelse</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="items-table-body">
+                    <tr>
+                        <td><input type="number" class="antal-input" min="0"></td>
+                        <td><input type="text" class="beskrivelse-input"></td>
+                        <td><button class="delete-row-btn">Slet</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="add-row-btn">+ Tilføj Række</button>
+        </section>
 
-      <p><em>👉 Vil en af jer fortælle om en oplevelse i tjenesten, hvor Jehova velsignede jer?</em></p>
-
-      <div class="actions">
-        <a class="btn" href="https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9">Åbn verset – Josva 1:9</a>
-      </div>
-
-      <!-- Slider + texto como en tu captura -->
-      <div class="slider-area">
-        <div class="slider" id="slider">
-          <div class="handle" id="handle" aria-label="Skub-knap"></div>
+            <footer>
+                <button type="button" id="print-btn">Generer og Udskriv</button>
+            </footer>
         </div>
-        <span class="hint"><span class="dot"></span>— for at åbne Josva 1:9</span>
-      </div>
     </div>
 
-    <p class="footer">© 2025 — Enkel webside til samlingen. Bygget af familia Mora.</p>
-  </div>
+    <script>
+        // Add Row Functionality
+        document.getElementById('add-row-btn').addEventListener('click', function() {
+            const tbody = document.getElementById('items-table-body');
+            const lastRow = tbody.querySelector('tr:last-child');
+            const newRow = lastRow.cloneNode(true);
+            
+            // Clear the values in the cloned row
+            newRow.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+            
+            tbody.appendChild(newRow);
+        });
 
-  <!-- JS: slider robust (PC + iPhone/Android) con redirección directa -->
-  <script>
-    (function(){
-      const slider = document.getElementById('slider');
-      const handle = document.getElementById('handle');
-      const url = "https://wol.jw.org/da/wol/b/r9/lp-d/nwtsty/6/1#s=9&study=discover&v=6:1:9";
+        // Delete Row Functionality (Event Delegation)
+        document.getElementById('items-table-body').addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-row-btn')) {
+                const tbody = document.getElementById('items-table-body');
+                const rows = tbody.querySelectorAll('tr');
+                
+                // Ensure at least one row remains
+                if (rows.length > 1) {
+                    e.target.closest('tr').remove();
+                } else {
+                    alert('Du skal have mindst én række i tabellen.');
+                }
+            }
+        });
 
-      let dragging=false, startX=0, maxRight=0;
+        // Print Functionality
+        document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
 
-      function recalc(){ maxRight = slider.clientWidth - handle.clientWidth - 2; }
-      function setX(x){ if(x<2)x=2; if(x>maxRight)x=maxRight; handle.style.left = x + 'px'; }
-      function atEnd(){ return handle.offsetLeft >= (maxRight - 4); }
-      function go(){ location.href = url; }  // ✅ abre fiable en iOS/Android
-      function reset(){ handle.style.left='2px'; }
+        function prepareAndPrint() {
+            // Store original inputs for restoration
+            const inputs = document.querySelectorAll('input, textarea');
+            const originalElements = [];
 
-      recalc();
-      window.addEventListener('resize', recalc);
+            inputs.forEach(input => {
+                // Store the original element and its parent
+                originalElements.push({
+                    element: input,
+                    parent: input.parentNode,
+                    nextSibling: input.nextSibling
+                });
 
-      // Evita scroll del documento mientras arrastras en móvil
-      slider.addEventListener('touchmove', e => { if(dragging) e.preventDefault(); }, {passive:false});
+                // Create a span with the input's value
+                const span = document.createElement('span');
+                span.className = 'print-value';
+                span.textContent = input.value || '';
+                
+                // Replace input with span
+                input.parentNode.replaceChild(span, input);
+            });
 
-      // Pointer events = mouse + touch + stylus
-      handle.addEventListener('pointerdown', e => {
-        dragging = true; recalc();
-        startX = e.clientX - handle.offsetLeft;
-        handle.setPointerCapture && handle.setPointerCapture(e.pointerId);
-      });
+            // Trigger print dialog
+            window.print();
 
-      window.addEventListener('pointermove', e => {
-        if(!dragging) return;
-        setX(e.clientX - startX);
-      }, {passive:false});
+            // Restore original inputs after print dialog closes
+            window.onafterprint = function() {
+                originalElements.forEach(item => {
+                    const printValue = item.parent.querySelector('.print-value');
+                    if (printValue) {
+                        if (item.nextSibling) {
+                            item.parent.insertBefore(item.element, item.nextSibling);
+                        } else {
+                            item.parent.appendChild(item.element);
+                        }
+                        printValue.remove();
+                    }
+                });
+            };
 
-      window.addEventListener('pointerup', e => {
-        if(!dragging) return;
-        dragging = false;
-        handle.releasePointerCapture && handle.releasePointerCapture(e.pointerId);
-        if(atEnd()) go();
-        reset();
-      });
+            // Fallback for browsers that don't support onafterprint
+            setTimeout(function() {
+                if (document.querySelector('.print-value')) {
+                    originalElements.forEach(item => {
+                        const printValue = item.parent.querySelector('.print-value');
+                        if (printValue) {
+                            if (item.nextSibling) {
+                                item.parent.insertBefore(item.element, item.nextSibling);
+                            } else {
+                                item.parent.appendChild(item.element);
+                            }
+                            printValue.remove();
+                        }
+                    });
+                }
+            }, 1000);
+        }
 
-      // Accesibilidad: Enter/Espacio
-      handle.tabIndex = 0;
-      handle.addEventListener('keydown', e => {
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); reset(); }
-      });
-    })();
-  </script>
+        // Set today's date by default
+        document.getElementById('dato').valueAsDate = new Date();
+    </script>
 </body>
 </html>
