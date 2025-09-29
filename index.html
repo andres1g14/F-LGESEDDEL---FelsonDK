@@ -213,36 +213,60 @@
             padding-bottom: 2.5rem;
         }
 
-        #print-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 1.25rem 3rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
-            text-transform: uppercase;
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
         }
 
-        #print-btn:hover {
+        .action-buttons button {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            min-width: 200px;
+        }
+
+        #save-pdf-btn {
+            background-color: white;
+            color: var(--secondary-color);
+            border: 2px solid var(--border-color);
+        }
+
+        #save-pdf-btn:hover {
+            background-color: var(--bg-light);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
+        }
+
+        #print-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
+        }
+
+        #print-btn.primary:hover {
             background-color: #357ABD;
+            border-color: #357ABD;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
         }
 
-        .helper-text {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--secondary-color);
-            font-style: italic;
-        }
-
         /* Print Styles */
         @media print {
+            * {
+                background-color: transparent !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+
             body {
                 background: white !important;
                 padding: 0;
@@ -257,25 +281,14 @@
             }
 
             header {
-                border-bottom: 2px solid var(--text-dark);
-            }
-
-            h2 {
-                color: var(--primary-color) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            thead {
-                background-color: var(--bg-light) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                border-bottom: 2px solid #000;
             }
 
             #add-row-btn,
             .delete-row-btn,
+            #save-pdf-btn,
             #print-btn,
-            .helper-text {
+            .action-buttons {
                 display: none !important;
             }
 
@@ -287,6 +300,7 @@
 
             table {
                 page-break-inside: auto;
+                border: 1px solid #000;
             }
 
             tr {
@@ -294,8 +308,12 @@
                 page-break-after: auto;
             }
 
+            th {
+                border-bottom: 2px solid #000;
+            }
+
             td {
-                background-color: white !important;
+                border-bottom: 1px solid #000;
             }
 
             input, textarea {
@@ -325,10 +343,6 @@
 
             <section class="details-section">
                 <div class="details-column">
-                    <label for="levering">Levering:</label>
-                    <textarea id="levering" rows="5"></textarea>
-                </div>
-                <div class="details-column">
                     <div class="form-group">
                         <label for="dato">Dato:</label>
                         <input type="date" id="dato">
@@ -337,6 +351,10 @@
                         <label for="ordre-nr">Ordre nr.:</label>
                         <input type="text" id="ordre-nr">
                     </div>
+                </div>
+                <div class="details-column">
+                    <label for="levering">Levering:</label>
+                    <textarea id="levering" rows="5"></textarea>
                 </div>
             </section>
 
@@ -361,8 +379,10 @@
             </section>
 
             <footer>
-                <button type="button" id="print-btn">Udskriv / Gem som PDF</button>
-                <p class="helper-text">Bemærk: "Gem som PDF" er en standardmulighed i de fleste browseres udskriftsdialog.</p>
+                <div class="action-buttons">
+                    <button type="button" id="save-pdf-btn">Gem som PDF</button>
+                    <button type="button" id="print-btn" class="primary">Udskriv</button>
+                </div>
             </footer>
         </div>
     </div>
@@ -398,6 +418,7 @@
         });
 
         // Print Functionality
+        document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
         document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
 
         function prepareAndPrint() {
