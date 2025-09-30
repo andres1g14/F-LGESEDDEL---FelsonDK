@@ -1,129 +1,491 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Følgeseddel – Felson Watersafe ApS</title>
-<style>
-  :root{
-    --ink:#0b0b0b;
-    --muted:#555;
-    --accent:#0a3a62; /* navy sobrio */
-    --line:#d9d9d9;
-  }
-  @page{ size:A4; margin:20mm 16mm 18mm 16mm; }
-  *{box-sizing:border-box}
-  body{
-    font:12pt/1.35 "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    color:var(--ink); margin:0; background:#fff;
-  }
-  .sheet{ max-width:180mm; margin:0 auto; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Følgeseddel - Felson Watersafe ApS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  /* Encabezado */
-  .header{
-    display:grid; grid-template-columns:1fr auto; align-items:end; gap:8mm;
-    padding-bottom:8mm; border-bottom:2px solid var(--ink);
-  }
-  .brand h1{ margin:0; font-size:20pt; letter-spacing:.2px; }
-  .brand small{ display:block; margin-top:2mm; color:var(--muted); font-size:10pt; }
-  .docmark{ text-align:right; }
-  .docmark .title{ font-size:18pt; letter-spacing:.5px; font-weight:700; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-  /* Metadatos */
-  .meta{
-    display:grid; grid-template-columns:22mm 1fr 22mm 1fr; gap:4mm 6mm; margin-top:8mm;
-  }
-  .meta label{ font-size:10pt; color:var(--muted); }
-  .meta input, .meta textarea{
-    width:100%; border:none; border-bottom:1px solid var(--line);
-    padding:2mm 1mm; font-size:12pt; background:#fff; color:var(--ink); outline:none;
-  }
-  .meta textarea{ min-height:22mm; resize:vertical; }
+        .app-container {
+            width: 100%;
+            max-width: 1000px;
+        }
 
-  /* Tabla */
-  table.items{ width:100%; border-collapse:collapse; margin-top:10mm; }
-  .items thead th{
-    text-align:left; font-weight:700; border-bottom:1.8px solid var(--ink); padding:3mm 2mm;
-  }
-  .items tbody td{
-    border-bottom:1px solid var(--line); padding:3.5mm 2mm; vertical-align:top;
-  }
-  .col-qty{ width:26mm; }
-  .col-desc{ width:auto; }
+        .document {
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
 
-  /* Pie */
-  .footer{
-    margin-top:14mm; padding-top:6mm; border-top:1px solid var(--line);
-    display:flex; justify-content:space-between; gap:6mm; font-size:10pt; color:var(--muted); flex-wrap:wrap;
-  }
-  .footer .line{ white-space:nowrap; }
-  .footer .strong{ color:var(--ink); font-weight:600; }
+        .header {
+            padding: 2rem 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
 
-  /* Botones utilitarios (ocultan al imprimir) */
-  .actions{ display:flex; gap:8px; margin:10px 0 16px; }
-  .btn{ border:1px solid var(--line); background:#f7f7f7; padding:8px 12px; font-size:12px; cursor:pointer; border-radius:6px; }
-  @media print{ .actions{display:none !important;} }
-</style>
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 3rem;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f7fafc;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .table-section {
+            margin-bottom: 2rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .data-table th {
+            padding: 1rem;
+            text-align: left;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table th:first-child {
+            width: 20%;
+            border-right: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+        }
+
+        .data-table td:first-child {
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .table-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .table-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .table-textarea {
+            resize: none;
+            overflow: hidden;
+        }
+
+        .btn-delete {
+            background: transparent;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 0.5rem;
+            transition: all 0.2s;
+            border-radius: 6px;
+        }
+
+        .btn-delete:hover {
+            background: #fff5f5;
+            transform: scale(1.1);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 3rem;
+            border-top: 2px solid #e2e8f0;
+            background: #f7fafc;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-action {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .app-container {
+                max-width: 100%;
+            }
+
+            .document {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .header {
+                background: white;
+                border-bottom: 2px solid #667eea;
+            }
+
+            .logo {
+                color: #667eea;
+            }
+
+            .data-table thead {
+                background: white;
+                border-bottom: 2px solid #000;
+            }
+
+            .data-table th {
+                color: #000;
+                border-right: 1px solid #000;
+            }
+
+            .data-table td {
+                border: 1px solid #000;
+            }
+
+            .actions,
+            .btn-add,
+            .btn-delete {
+                display: none !important;
+            }
+
+            .print-value {
+                display: block;
+                padding: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="sheet">
-  <div class="actions">
-    <button class="btn" onclick="window.print()">Print</button>
-    <button class="btn" onclick="addRow()">Tilføj linje</button>
-    <button class="btn" onclick="clearRows()">Ryd linjer</button>
-  </div>
+    <div class="app-container">
+        <div class="document">
+            <div class="header">
+                <div class="logo">FELSON WATERSAFE ApS</div>
+            </div>
 
-  <header class="header">
-    <div class="brand">
-      <h1>Felson Watersafe ApS</h1>
-      <small>Levering:</small>
+            <div class="content">
+                <h1 class="title">Følgeseddel</h1>
+
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Dato</label>
+                            <input type="date" class="form-input" id="dato">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Ordre nr.</label>
+                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Levering</label>
+                            <textarea class="form-textarea" id="levering" placeholder="Leveringsadresse"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Antal</th>
+                                <th>Beskrivelse</th>
+                                <th style="width: 60px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr>
+                                <td>
+                                    <input type="number" class="table-input" min="0" placeholder="0">
+                                </td>
+                                <td>
+                                    <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button class="btn-delete" title="Slet række">🗑️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-add" id="btn-add">+ Tilføj Række</button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-action btn-secondary" id="btn-pdf">Gem som PDF</button>
+                    <button class="btn-action btn-primary" id="btn-print">Udskriv</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Felson Watersafe ApS • Gartnervej 4 • 6710 Esbjerg V</p>
+                <p>CVR-nr. DK26813522 • Tlf. 70206676 • felson@felson.dk</p>
+            </div>
+        </div>
     </div>
-    <div class="docmark"><div class="title">FØLGESEDDEL</div></div>
-  </header>
 
-  <section class="meta">
-    <label for="dato">Dato:</label>
-    <input id="dato" type="text" placeholder="dd.mm.åååå">
-    <label for="ordre">Ordre nr.:</label>
-    <input id="ordre" type="text" placeholder="—">
-  </section>
+    <script>
+        (function() {
+            'use strict';
 
-  <table class="items" id="items">
-    <thead><tr><th class="col-qty">Antal</th><th class="col-desc">Beskrivelse</th></tr></thead>
-    <tbody>
-      <!-- 10 filas vacías para empezar -->
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-      <tr><td><input type="text" style="width:100%; border:none; outline:none;"></td><td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td></tr>
-    </tbody>
-  </table>
+            // Set today's date
+            document.getElementById('dato').valueAsDate = new Date();
 
-  <footer class="footer">
-    <div class="line"><span class="strong">Felson Watersafe ApS</span> / Gartnervej 4 / 6710 Esbjerg V</div>
-    <div class="line">CVR-nr. DK26813522 / Tlf. 70206676 / <span class="strong">felson@felson.dk</span></div>
-  </footer>
-</div>
+            // Auto-resize textareas
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('table-textarea')) {
+                    e.target.style.height = 'auto';
+                    e.target.style.height = e.target.scrollHeight + 'px';
+                }
+            });
 
-<script>
-  function addRow(){
-    const tbody = document.querySelector('#items tbody');
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><input type="text" style="width:100%; border:none; outline:none;"></td>
-      <td><textarea style="width:100%; border:none; outline:none; height:16mm;"></textarea></td>
-    `;
-    tbody.appendChild(tr);
-  }
-  function clearRows(){
-    document.querySelector('#items tbody').innerHTML = '';
-  }
-</script>
+            // Add row
+            document.getElementById('btn-add').addEventListener('click', function() {
+                const tbody = document.getElementById('table-body');
+                const row = tbody.rows[0].cloneNode(true);
+                row.querySelectorAll('input, textarea').forEach(el => {
+                    el.value = '';
+                    if (el.classList.contains('table-textarea')) {
+                        el.style.height = 'auto';
+                    }
+                });
+                tbody.appendChild(row);
+            });
+
+            // Delete row
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-delete')) {
+                    const tbody = document.getElementById('table-body');
+                    if (tbody.rows.length > 1) {
+                        e.target.closest('tr').remove();
+                    } else {
+                        alert('Skal have mindst én række');
+                    }
+                }
+            });
+
+            // Print function
+            function handlePrint() {
+                const inputs = document.querySelectorAll('input, textarea');
+                const saved = [];
+
+                inputs.forEach(input => {
+                    const span = document.createElement('span');
+                    span.className = 'print-value';
+                    
+                    if (input.tagName === 'TEXTAREA') {
+                        span.innerHTML = (input.value || '').replace(/\n/g, '<br>');
+                    } else {
+                        span.textContent = input.value || '';
+                    }
+
+                    saved.push({
+                        input: input,
+                        parent: input.parentNode,
+                        next: input.nextSibling
+                    });
+
+                    input.parentNode.replaceChild(span, input);
+                });
+
+                setTimeout(() => {
+                    window.print();
+                    setTimeout(() => {
+                        saved.forEach(item => {
+                            const span = item.parent.querySelector('.print-value');
+                            if (span) {
+                                item.parent.replaceChild(item.input, span);
+                            }
+                        });
+                    }, 100);
+                }, 100);
+            }
+
+            document.getElementById('btn-pdf').addEventListener('click', handlePrint);
+            document.getElementById('btn-print').addEventListener('click', handlePrint);
+        })();
+    </script>
 </body>
 </html>
