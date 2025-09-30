@@ -254,13 +254,15 @@
     z-index: 9999;
   }
 
-  /* === Reserva de espacio para header y footer === */
-  .card-content {
-    /* altura aproximada del header */
-    margin-top: 46mm !important;
-    /* altura aproximada del footer */
-    margin-bottom: 30mm !important;
-  }
+  /* Altura reservada para el header fijo */
+.card-content { 
+  margin-top: 46mm !important;    /* prueba 44–48 mm hasta encajar con tu impresora */
+}
+
+/* Altura reservada para el footer fijo */
+.card-content { 
+  margin-bottom: 30mm !important; /* sube/baja 1–3 mm si queda hueco o pisa el pie */
+}
 
   /* Repite cabecera de tabla y evita cortes feos */
   .data-table thead { display: table-header-group; }
@@ -290,8 +292,6 @@
     print-color-adjust: exact;
   }
 }
-
-
         }
     </style>
 </head>
