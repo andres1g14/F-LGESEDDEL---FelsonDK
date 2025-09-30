@@ -12,7 +12,7 @@
         }
 
         :root {
-            --primary: #1DA1F2;
+            --primary: #5B21B6;
             --primary-dark: #4C1D95;
             --secondary: #8B5CF6;
             --accent: #A78BFA;
@@ -81,30 +81,43 @@
             50% { transform: scaleX(1.05); }
         }
 
-        .header{
-  background:#fff;                       /* sin degradado */
-  text-align: var(--header-align);       /* right/left/center */
-  padding: var(--header-pad-top) var(--header-pad-x) .8rem;
-  border-bottom: 2px solid var(--brand-sky);
-}
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-        .header::after{ display:none; }          /* sin adorno diagonal */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(35deg);
+        }
 
-.company-name{
-  color: var(--brand-sky);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: .2px;
-  margin: 0;
-}
+        .company-name {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
 
-.document-title{
-  margin-top: .35rem;
-  font-size: .95rem;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
+        .document-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
         .content {
             padding: 3rem;
