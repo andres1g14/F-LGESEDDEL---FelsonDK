@@ -43,24 +43,16 @@
 
         header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            justify-content: flex-end;
+            align-items: center;
             padding: 2.5rem;
+            padding-bottom: 2rem;
             background-color: white;
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 1px solid #dee2e6;
         }
 
-        .header-left {
-            flex: 1;
+        .header-right-content {
             text-align: right;
-        }
-
-        .header-right {
-            flex: 1;
-            text-align: left;
-            font-size: 0.9rem;
-            line-height: 1.8;
-            color: var(--secondary-color);
         }
 
         h2 {
@@ -73,17 +65,6 @@
             color: var(--logo-blue-color);
         }
 
-        .company-info {
-            text-align: right;
-            font-size: 0.9rem;
-            line-height: 1.8;
-            color: var(--secondary-color);
-        }
-
-        .print-only-date {
-            display: none;
-        }
-
         h1 {
             text-align: center;
             font-size: 2.5rem;
@@ -91,19 +72,6 @@
             color: var(--text-dark);
             font-weight: 700;
             letter-spacing: 1.5px;
-        }
-
-        .print-only-date {
-            display: none;
-        }
-
-        .document-footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #dee2e6;
-            font-size: 0.85rem;
-            color: #6c757d;
         }
 
         .content-wrapper {
@@ -162,45 +130,48 @@
             margin-bottom: 2.5rem;
         }
 
-        /* === Ultra-Professional Table Styles === */
+        /* === "Super Potente" Minimalist Table Style === */
         .items-section table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 1rem;
+            border: none;
         }
 
-        /* Table Header */
         .items-section thead th {
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #dee2e6;
+            background-color: transparent;
+            border-bottom: 2px solid #212529;
             font-weight: 600;
-            padding: 12px 15px;
+            padding: 1rem 0.75rem;
             text-align: left;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #495057;
+            letter-spacing: 1px;
+            color: #343a40;
         }
 
-        /* Table Cells */
-        .items-section tbody td {
-            padding: 12px 15px;
+        .items-section tbody tr {
             border-bottom: 1px solid #dee2e6;
         }
 
-        /* Zebra-Striping for Rows */
-        .items-section tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
+        .items-section tbody td {
+            padding: 1rem 0.75rem;
+            border: none;
+            color: #495057;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
-        /* Column-specific Alignment */
+        .items-section tbody tr:last-child {
+            border-bottom: none;
+        }
+
         .items-section th:first-child,
         .items-section td:first-child {
             text-align: center;
             width: 15%;
         }
 
-        /* Seamless Input Styling */
-        .items-section td input {
+        .items-section td input,
+        .items-section td textarea {
             width: 100%;
             border: none;
             background-color: transparent;
@@ -208,9 +179,11 @@
             font-size: inherit;
             color: inherit;
             padding: 0;
+            resize: none;
         }
 
-        .items-section td input:focus {
+        .items-section td input:focus,
+        .items-section td textarea:focus {
             outline: none;
         }
 
@@ -247,6 +220,15 @@
             background-color: #218838;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .document-footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.85rem;
+            color: #6c757d;
         }
 
         .action-buttons {
@@ -299,7 +281,14 @@
 
         /* Full Responsiveness */
         @media (max-width: 768px) {
-            /* 1. General Layout */
+            header {
+                justify-content: center;
+            }
+
+            .header-right-content {
+                text-align: center;
+            }
+
             .container {
                 margin: 0;
                 padding: 1rem;
@@ -310,19 +299,12 @@
                 font-size: 15px;
             }
 
-            /* 2. Stack Header & Details Sections */
-            header,
             .details-section {
                 flex-direction: column;
                 gap: 1rem;
             }
 
-            header .header-left,
-            header .header-right {
-                text-align: center;
-            }
-
-            /* 3. Responsive Table Transformation */
+            /* Responsive Table Transformation */
             .items-section table thead {
                 display: none;
             }
@@ -351,14 +333,12 @@
                 text-transform: uppercase;
             }
 
-            /* 4. Stack Action Buttons */
             .action-buttons {
                 flex-direction: column;
                 gap: 0.5rem;
                 padding: 1rem;
             }
 
-            /* 5. Adjust Footer for Mobile */
             .document-footer {
                 margin-top: 2rem;
                 padding-top: 1rem;
@@ -381,14 +361,6 @@
 
             #company-logo {
                 color: var(--logo-blue-color) !important;
-            }
-
-            .print-only-date {
-                display: block;
-                font-size: 12px;
-                text-align: right;
-                color: #333 !important;
-                margin-top: 0.5rem;
             }
 
             body {
@@ -428,7 +400,6 @@
 
             table {
                 page-break-inside: auto;
-                border: 1px solid #000;
             }
 
             tr {
@@ -436,16 +407,12 @@
                 page-break-after: auto;
             }
 
-            th {
-                border-bottom: 2px solid #000;
-            }
-
-            td {
-                border-bottom: 1px solid #000;
-            }
-
             input, textarea {
                 border: none !important;
+            }
+
+            .print-value {
+                white-space: pre-wrap;
             }
         }
     </style>
@@ -453,12 +420,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="header-right">
-                <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
-                <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
-                <p class="print-only-date"></p>
-            </div>
-            <div class="header-left">
+            <div class="header-right-content">
                 <h2 id="company-logo">Felson Watersafe ApS</h2>
             </div>
         </header>
@@ -487,15 +449,15 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 15%;">Antal</th>
-                            <th style="width: 75%;">Beskrivelse</th>
-                            <th style="width: 10%;"></th>
+                            <th>Antal</th>
+                            <th>Beskrivelse</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="items-table-body">
                         <tr>
                             <td data-label="Antal"><input type="number" class="antal-input" min="0"></td>
-                            <td data-label="Beskrivelse"><input type="text" class="beskrivelse-input"></td>
+                            <td data-label="Beskrivelse"><textarea class="beskrivelse-input" rows="1"></textarea></td>
                             <td style="text-align: center;"><button class="delete-row-btn" title="Slet række">🗑️</button></td>
                         </tr>
                     </tbody>
@@ -517,14 +479,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Custom print date
-            const dateElement = document.querySelector('.print-only-date');
-            if (dateElement) {
-                const today = new Date();
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                dateElement.textContent = 'Udskrevet den: ' + today.toLocaleDateString('da-DK', options);
-            }
-
             // Add Row Functionality
             document.getElementById('add-row-btn').addEventListener('click', function() {
                 const tbody = document.getElementById('items-table-body');
@@ -532,11 +486,28 @@
                 const newRow = lastRow.cloneNode(true);
                 
                 // Clear the values in the cloned row
-                newRow.querySelectorAll('input').forEach(input => {
+                newRow.querySelectorAll('input, textarea').forEach(input => {
                     input.value = '';
+                    if (input.tagName.toLowerCase() === 'textarea') {
+                        input.style.height = 'auto';
+                    }
                 });
                 
                 tbody.appendChild(newRow);
+            });
+
+            // === Auto-expanding Textarea Logic ===
+            const tableBody = document.getElementById('items-table-body');
+
+            tableBody.addEventListener('input', function(event) {
+                // Only target textareas within the table
+                if (event.target.tagName.toLowerCase() === 'textarea') {
+                    const textarea = event.target;
+                    // Reset height to auto to get the correct scrollHeight
+                    textarea.style.height = 'auto';
+                    // Set the height to the scroll height to fit the content
+                    textarea.style.height = (textarea.scrollHeight) + 'px';
+                }
             });
 
             // Delete Row Functionality (Event Delegation)
@@ -575,6 +546,7 @@
                     const span = document.createElement('span');
                     span.className = 'print-value';
                     span.textContent = input.value || '';
+                    span.style.whiteSpace = 'pre-wrap'; // Preserve line breaks for textareas
                     
                     // Replace input with span
                     input.parentNode.replaceChild(span, input);
