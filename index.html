@@ -446,28 +446,66 @@
             }
         }
         @media print {
-  body {
-    margin: 0;
-    padding: 0;
+  @page {
+    size: A4;
+    margin: 2.5cm 2cm 2cm; /* ajusta si quieres más/menos margen */
   }
 
-  .document {
-    min-height: 100vh;       /* ocupa toda la altura */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  /* Cabecera fija arriba en TODAS las páginas */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0; right: 0;
+    background: #fff !important;
+    border-bottom: 1px solid #000 !important;
+    padding: 10px 24px !important;
+    z-index: 9999;
   }
 
+  /* Espacio para que el contenido no se meta debajo del header */
+  .content {
+    /* altura aproximada del header: ajusta si te queda corto/largo */
+    margin-top: 80px !important;
+  }
+
+  /* Footer SIEMPRE fijo abajo en TODAS las páginas */
   .footer {
-    margin-top: auto;        /* lo empuja hacia el fondo */
-    position: fixed;         /* lo fija en todas las páginas */
+    position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 0.85rem;
+    left: 0; right: 0;
+    background: #fff !important;
+    border-top: 1px solid #000 !important;
+    padding: 8px 16px !important;
+    text-align: center !important;
+    z-index: 9999;
+  }
+
+  /* Reserva espacio para el footer */
+  .content,
+  .table-container {
+    margin-bottom: 80px !important; /* altura aprox del footer */
+  }
+
+  /* Repetir encabezado de la tabla automáticamente en cada página */
+  .table thead { display: table-header-group; }
+  .table tfoot { display: table-footer-group; }
+
+  /* Evitar que una fila se corte entre páginas */
+  .table tr { page-break-inside: avoid; }
+  .table { page-break-inside: auto; }
+
+  /* Ocultar UI en el PDF si aún no lo haces */
+  .actions, .btn-add, .btn-delete { display: none !important; }
+
+  /* Inputs/textarea se ven como texto (sin recuadro) pero mantendremos el placeholder con JS */
+  input, textarea {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
   }
 }
+
 
     </style>
 </head>
