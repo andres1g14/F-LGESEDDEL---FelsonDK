@@ -1,296 +1,493 @@
-<!DOCTYPE html>
+@media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                display: block;
+            }
+
+            .app-container {
+                max-width: 100%;
+            }
+
+            .document {
+                box-shadow: none;
+                border-radius: 0;
+                position: relative;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header {
+                background: white;
+                border-bottom: none;
+                padding: 0;
+                margin-bottom: 1.5rem;
+            }
+
+            .logo {
+                color: #4A90E2;
+                font-size: 1.1rem;
+            }
+
+            .content {
+                padding: 0;
+                flex: 1;
+            }
+
+            .title {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .data-table {
+                border: 1px solid #000;
+            }
+
+            .data-table thead {
+                background: white;
+            }
+
+            .data-table th {
+                color: #000;
+                border: 1px solid #000;
+                border-right: 1px solid #000;
+            }
+
+            .data-table td {
+                border: 1px solid #000;
+            }
+
+            .actions,
+            .btn-add,
+            .btn-delete {
+                display: none !important;
+            }
+
+            .print-value {
+                display: block;
+                padding: 0.5rem;
+            }
+
+            .footer {
+                margin-top: auto;
+                padding: 1rem 0;
+                border-top: 1px solid #000;
+                background: white;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                color: #000;
+            }
+        }        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                display: block;
+            }
+
+            .app-container {
+                max-width: 100%;
+            }
+
+            .document {
+                box-shadow: none;
+                border-radius: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .header {
+                background: white;
+                border-bottom: none;
+                padding: 1rem 0;
+            }
+
+            .logo {
+                color: #4A90E2;
+                font-size: 1.2rem;
+            }
+
+            .content {
+                flex: 1;
+                padding: 1.5rem 0;
+            }
+
+            .title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1<!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
-        /* --- 1. Design System & Variables --- */
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --success-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            --color-primary: #667eea;
-            --color-text-light: #ffffff;
-            --color-text-dark: #2d3748;
-            --color-text-muted: #718096;
-            --color-border: #e2e8f0;
-            --color-bg-light: #f7fafc;
-            --color-danger: #e53e3e;
-            --border-radius: 12px;
-            --shadow-lg: 0 20px 60px -10px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition-speed: 0.3s;
-        }
-
-        /* --- 2. General & Body Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: var(--primary-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
             min-height: 100vh;
             padding: 2rem;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            font-size: 16px;
+            align-items: center;
         }
 
-        /* --- 3. Main Application Structure --- */
         .app-container {
             width: 100%;
             max-width: 1000px;
         }
+
         .document {
             background: white;
-            box-shadow: var(--shadow-lg);
-            border-radius: var(--border-radius);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
             overflow: hidden;
         }
+
         .header {
             padding: 2rem 3rem;
-            background: var(--primary-gradient);
+            background: white;
+            border-bottom: 2px solid #4A90E2;
             display: flex;
             justify-content: flex-end;
             align-items: center;
         }
+
         .logo {
-            color: var(--color-text-light);
+            color: #4A90E2;
             font-size: 1.5rem;
             font-weight: 700;
+            letter-spacing: 1px;
+        }-weight: 700;
+            letter-spacing: 1px;
         }
+
         .content {
             padding: 3rem;
         }
+
         .title {
             text-align: center;
             font-size: 2rem;
             font-weight: 700;
-            color: var(--color-text-dark);
+            color: #2d3748;
             margin-bottom: 2.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-        .footer {
-            text-align: center;
-            padding: 2rem 3rem;
-            border-top: 1px solid var(--color-border);
-            background: var(--color-bg-light);
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
-        }
 
-        /* --- 4. Form & Input Styles --- */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin-bottom: 2.5rem;
         }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
+
         .form-label {
             display: block;
             font-weight: 600;
-            color: var(--color-text-dark);
+            color: #4a5568;
             margin-bottom: 0.5rem;
-        }
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            font-size: 1rem;
-            background: var(--color-bg-light);
-            transition: all var(--transition-speed);
-        }
-        .form-input:focus, .form-textarea:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
-        }
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
+            font-size: 0.95rem;
         }
 
-        /* --- 5. Dynamic Table Styles --- */
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f7fafc;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .table-section {
+            margin-bottom: 2rem;
+        }
+
         .data-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
             overflow: hidden;
         }
+
         .data-table thead {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+
         .data-table th {
             padding: 1rem;
             text-align: left;
-            color: var(--color-text-light);
+            color: white;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
-        .data-table th.col-antal {
+
+        .data-table th:first-child {
             width: 20%;
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 2px solid rgba(255, 255, 255, 0.3);
         }
-        .data-table th.col-actions {
-            width: 60px;
-        }
+
         .data-table tbody tr {
-            border-bottom: 1px solid var(--color-border);
+            border-bottom: 1px solid #e2e8f0;
         }
+
         .data-table tbody tr:last-child {
             border-bottom: none;
         }
+
         .data-table td {
-            padding: 0.5rem 1rem;
-            vertical-align: top;
+            padding: 0.75rem 1rem;
         }
-        .data-table td.col-antal {
-            border-right: 1px solid var(--color-border);
+
+        .data-table td:first-child {
+            border-right: 1px solid #e2e8f0;
         }
-        .table-input, .table-textarea {
+
+        .table-input {
             width: 100%;
             padding: 0.5rem;
-            border: 1px solid transparent;
+            border: 1px solid #cbd5e0;
             border-radius: 6px;
+            font-family: inherit;
             font-size: 0.95rem;
-            background: transparent;
+            transition: all 0.2s;
         }
-        .table-input:focus, .table-textarea:focus {
+
+        .table-input:focus {
             outline: none;
-            border-color: var(--color-primary);
-            background: white;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
+
         .table-textarea {
             resize: none;
             overflow: hidden;
         }
-        .table-input.col-antal {
-            text-align: center;
-        }
 
-        /* --- 6. Buttons & Actions --- */
-        .actions-container {
-            margin-top: 1rem;
-        }
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-speed);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 1rem;
-        }
-        .btn-add {
-            background: var(--success-gradient);
-            color: white;
-            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
-        }
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
-        }
         .btn-delete {
             background: transparent;
-            color: var(--color-danger);
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
             font-size: 1.3rem;
             padding: 0.5rem;
-            border-radius: 50%;
+            transition: all 0.2s;
+            border-radius: 6px;
         }
+
         .btn-delete:hover {
             background: #fff5f5;
             transform: scale(1.1);
         }
-        .main-actions {
+
+        .btn-add {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 3rem;
+            border-top: 2px solid #e2e8f0;
+            background: #f7fafc;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
             margin-top: 2rem;
         }
+
+        .btn-action {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .btn-primary {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
+
         .btn-secondary {
             background: white;
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
+            color: #667eea;
+            border: 2px solid #667eea;
         }
+
         .btn-secondary:hover {
-            background: var(--color-primary);
+            background: #667eea;
             color: white;
+            transform: translateY(-2px);
         }
 
-        /* --- 7. Responsiveness --- */
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .content { padding: 1.5rem; }
-            .form-grid { grid-template-columns: 1fr; }
-            .main-actions { flex-direction: column; }
-            .btn { width: 100%; }
+            body {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+            }
         }
 
-        /* --- 8. Print (WYSIWYG) Styles --- */
         @media print {
             @page {
                 size: A4;
-                margin: 0;
+                margin: 2cm;
             }
+
             body {
+                background: white;
                 padding: 0;
-                background: white; /* Print body background must be white */
             }
+
             .app-container {
                 max-width: 100%;
-                height: 100vh;
-                padding: 2cm;
             }
+
             .document {
                 box-shadow: none;
                 border-radius: 0;
-                border: none;
             }
-            /* Force printing of colors and backgrounds */
-            .header, .data-table thead, .btn, .logo {
-                -webkit-print-color-adjust: exact;
-                color-adjust: exact;
+
+            .header {
+                background: white;
+                border-bottom: 2px solid #667eea;
             }
-            .actions-container, .main-actions, .btn-delete {
+
+            .logo {
+                color: #667eea;
+            }
+
+            .data-table thead {
+                background: white;
+                border-bottom: 2px solid #000;
+            }
+
+            .data-table th {
+                color: #000;
+                border-right: 1px solid #000;
+            }
+
+            .data-table td {
+                border: 1px solid #000;
+            }
+
+            .actions,
+            .btn-add,
+            .btn-delete {
                 display: none !important;
             }
-            .form-input, .form-textarea, .table-input, .table-textarea {
-                border-color: #ccc !important;
-                background: #fff !important;
+
+            .print-value {
+                display: block;
+                padding: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <main class="app-container">
+    <div class="app-container">
         <div class="document">
-            <header class="header">
-                <div class="logo">Felson Watersafe ApS</div>
-            </header>
+            <div class="header">
+                <div class="logo">FELSON WATERSAFE ApS</div>
+            </div>
 
             <div class="content">
                 <h1 class="title">Følgeseddel</h1>
@@ -298,18 +495,18 @@
                 <div class="form-grid">
                     <div>
                         <div class="form-group">
-                            <label for="dato" class="form-label">Dato</label>
+                            <label class="form-label">Dato</label>
                             <input type="date" class="form-input" id="dato">
-                        </div>
-                        <div class="form-group">
-                            <label for="ordre-nr" class="form-label">Ordre nr.</label>
-                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
-                            <label for="levering" class="form-label">Levering</label>
-                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
+                            <label class="form-label">Ordre nr.</label>
+                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Levering</label>
+                            <textarea class="form-textarea" id="levering" placeholder="Leveringsadresse"></textarea>
                         </div>
                     </div>
                 </div>
@@ -318,201 +515,120 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th class="col-antal">Antal</th>
+                                <th>Antal</th>
                                 <th>Beskrivelse</th>
-                                <th class="col-actions"></th>
+                                <th style="width: 60px;"></th>
                             </tr>
                         </thead>
                         <tbody id="table-body">
-                            </tbody>
+                            <tr>
+                                <td>
+                                    <input type="number" class="table-input" min="0" placeholder="0">
+                                </td>
+                                <td>
+                                    <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button class="btn-delete" title="Slet række">🗑️</button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                    <div class="actions-container">
-                        <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
-                    </div>
+                    <button class="btn-add" id="btn-add">+ Tilføj Række</button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-action btn-secondary" id="btn-pdf">Gem som PDF</button>
+                    <button class="btn-action btn-primary" id="btn-print">Udskriv</button>
                 </div>
             </div>
 
-            <footer class="footer">
+            <div class="footer">
                 <p>Felson Watersafe ApS • Gartnervej 4 • 6710 Esbjerg V</p>
                 <p>CVR-nr. DK26813522 • Tlf. 70206676 • felson@felson.dk</p>
-            </footer>
+            </div>
         </div>
-        <div class="main-actions">
-            <button class="btn btn-secondary" id="btn-pdf">Gem som PDF</button>
-            <button class="btn btn-primary" id="btn-print">Udskriv</button>
-        </div>
-    </main>
-
-    <template id="table-row-template">
-        <tr>
-            <td class="col-antal">
-                <input type="number" class="table-input col-antal" min="0" placeholder="0">
-            </td>
-            <td>
-                <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
-            </td>
-            <td style="text-align: center;">
-                <button class="btn-delete" title="Slet række">🗑️</button>
-            </td>
-        </tr>
-    </template>
+    </div>
 
     <script>
         (function() {
             'use strict';
 
-            const F_APP_STORAGE_KEY = 'felsonAppSavedState';
+            // Set today's date
+            document.getElementById('dato').valueAsDate = new Date();
 
-            // --- DOM Element References ---
-            const datoInput = document.getElementById('dato');
-            const ordreNrInput = document.getElementById('ordre-nr');
-            const leveringTextarea = document.getElementById('levering');
-            const tableBody = document.getElementById('table-body');
-            const addRowBtn = document.getElementById('btn-add');
-            const printBtn = document.getElementById('btn-print');
-            const pdfBtn = document.getElementById('btn-pdf');
-            const rowTemplate = document.getElementById('table-row-template');
-
-            // --- State Management (LocalStorage) ---
-            function saveState() {
-                const tableRows = [];
-                tableBody.querySelectorAll('tr').forEach(row => {
-                    const antal = row.querySelector('.col-antal input').value;
-                    const beskrivelse = row.querySelector('textarea').value;
-                    tableRows.push({ antal, beskrivelse });
-                });
-
-                const state = {
-                    dato: datoInput.value,
-                    ordreNr: ordreNrInput.value,
-                    levering: leveringTextarea.value,
-                    table: tableRows
-                };
-                localStorage.setItem(F_APP_STORAGE_KEY, JSON.stringify(state));
-            }
-
-            function loadState() {
-                const savedState = localStorage.getItem(F_APP_STORAGE_KEY);
-                if (!savedState) {
-                    // If no saved state, add one default row
-                    addRow();
-                    return;
+            // Auto-resize textareas
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('table-textarea')) {
+                    e.target.style.height = 'auto';
+                    e.target.style.height = e.target.scrollHeight + 'px';
                 }
+            });
 
-                const state = JSON.parse(savedState);
-                datoInput.value = state.dato || '';
-                ordreNrInput.value = state.ordreNr || '';
-                leveringTextarea.value = state.levering || '';
-
-                tableBody.innerHTML = ''; // Clear existing rows before loading
-                if (state.table && state.table.length > 0) {
-                    state.table.forEach(rowData => {
-                        addRow(rowData.antal, rowData.beskrivelse);
-                    });
-                } else {
-                    addRow(); // Ensure at least one row exists
-                }
-            }
-            
-            // --- Core Functionality ---
-            function addRow(antal = '', beskrivelse = '') {
-                const newRow = rowTemplate.content.cloneNode(true);
-                newRow.querySelector('.col-antal input').value = antal;
-                const textarea = newRow.querySelector('.table-textarea');
-                textarea.value = beskrivelse;
-                
-                tableBody.appendChild(newRow);
-                autoResizeTextarea(textarea); // Resize after adding
-            }
-
-            function autoResizeTextarea(textarea) {
-                if (!textarea) return;
-                textarea.style.height = 'auto';
-                textarea.style.height = textarea.scrollHeight + 'px';
-            }
-
-            function handlePrint() {
-                document.body.classList.add('is-printing');
-                
-                // Replace inputs with static text for printing
-                const inputsToReplace = document.querySelectorAll('input, textarea');
-                const originalElements = [];
-
-                inputsToReplace.forEach(input => {
-                    const printValue = document.createElement('div');
-                    printValue.className = 'print-value';
-                    if (input.tagName === 'TEXTAREA') {
-                        printValue.innerHTML = input.value.replace(/\n/g, '<br>');
-                    } else if (input.type === 'date' && input.value) {
-                        const date = new Date(input.value);
-                        printValue.textContent = date.toLocaleDateString('da-DK');
-                    } else {
-                        printValue.textContent = input.value;
+            // Add row
+            document.getElementById('btn-add').addEventListener('click', function() {
+                const tbody = document.getElementById('table-body');
+                const row = tbody.rows[0].cloneNode(true);
+                row.querySelectorAll('input, textarea').forEach(el => {
+                    el.value = '';
+                    if (el.classList.contains('table-textarea')) {
+                        el.style.height = 'auto';
                     }
+                });
+                tbody.appendChild(row);
+            });
+
+            // Delete row
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-delete')) {
+                    const tbody = document.getElementById('table-body');
+                    if (tbody.rows.length > 1) {
+                        e.target.closest('tr').remove();
+                    } else {
+                        alert('Skal have mindst én række');
+                    }
+                }
+            });
+
+            // Print function
+            function handlePrint() {
+                const inputs = document.querySelectorAll('input, textarea');
+                const saved = [];
+
+                inputs.forEach(input => {
+                    const span = document.createElement('span');
+                    span.className = 'print-value';
                     
-                    originalElements.push({ original: input, replacement: printValue });
-                    input.style.display = 'none';
-                    input.parentNode.insertBefore(printValue, input);
+                    if (input.tagName === 'TEXTAREA') {
+                        span.innerHTML = (input.value || '').replace(/\n/g, '<br>');
+                    } else {
+                        span.textContent = input.value || '';
+                    }
+
+                    saved.push({
+                        input: input,
+                        parent: input.parentNode,
+                        next: input.nextSibling
+                    });
+
+                    input.parentNode.replaceChild(span, input);
                 });
 
                 setTimeout(() => {
                     window.print();
-                    
-                    // Restore inputs after print dialog
-                    originalElements.forEach(item => {
-                        item.original.style.display = '';
-                        if (item.replacement.parentNode) {
-                            item.replacement.parentNode.removeChild(item.replacement);
-                        }
-                    });
-                    document.body.classList.remove('is-printing');
-                }, 100); // Small delay to ensure DOM updates before print
+                    setTimeout(() => {
+                        saved.forEach(item => {
+                            const span = item.parent.querySelector('.print-value');
+                            if (span) {
+                                item.parent.replaceChild(item.input, span);
+                            }
+                        });
+                    }, 100);
+                }, 100);
             }
 
-
-            // --- Event Listeners ---
-            function setupEventListeners() {
-                // Save state on any input change
-                document.querySelector('.document').addEventListener('input', saveState);
-
-                // Add Row
-                addRowBtn.addEventListener('click', addRow);
-
-                // Delete Row & Auto-Resize (Event Delegation)
-                tableBody.addEventListener('click', (e) => {
-                    if (e.target && e.target.closest('.btn-delete')) {
-                        if (tableBody.rows.length > 1) {
-                            e.target.closest('tr').remove();
-                            saveState();
-                        } else {
-                            alert('Der skal være mindst én række.');
-                        }
-                    }
-                });
-                tableBody.addEventListener('input', (e) => {
-                    if (e.target && e.target.classList.contains('table-textarea')) {
-                        autoResizeTextarea(e.target);
-                    }
-                });
-
-                // Print/Save Buttons
-                printBtn.addEventListener('click', handlePrint);
-                pdfBtn.addEventListener('click', handlePrint);
-            }
-
-            // --- Initialization ---
-            function init() {
-                if (!datoInput.value) {
-                     datoInput.valueAsDate = new Date();
-                }
-                loadState();
-                setupEventListeners();
-                // Initial resize for all loaded textareas
-                tableBody.querySelectorAll('.table-textarea').forEach(autoResizeTextarea);
-            }
-
-            init();
-
+            document.getElementById('btn-pdf').addEventListener('click', handlePrint);
+            document.getElementById('btn-print').addEventListener('click', handlePrint);
         })();
     </script>
 </body>
