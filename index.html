@@ -397,6 +397,71 @@
         }
 
        @media print {
+        /* Respeta colores en impresión */
+html, body, .header, .footer, .table, .table *{
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* —— Inputs sin recuadro ni iconos —— */
+input, textarea{
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+}
+
+/* oculta icono calendario del date */
+input[type="date"]::-webkit-calendar-picker-indicator{
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+/* quita botón de limpiar en Chrome */
+input[type="date"]::-webkit-clear-button{ display:none !important; }
+/* quita flechitas del number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+input[type="number"]{ -moz-appearance: textfield; }
+
+/* —— Tabla clásica (sin tarjetas redondeadas) —— */
+.table-container{
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.table{
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+}
+.table thead th{
+  border-bottom: 1px solid var(--primary) !important;
+  color: #000 !important;
+}
+.table td, .table th{
+  border: 1px solid var(--primary) !important;  /* rejilla azul agua */
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.table tbody tr{
+  box-shadow: none !important;
+}
+
+/* Si prefieres SOLO el separador vertical (sin rejilla completa),
+   usa esto en lugar de los bordes de arriba:
+.table td, .table th{ border: none !important; }
+.table td:first-child, .table th:first-child{
+  border-right: 1px solid var(--primary) !important;
+}
+.table thead th{ border-bottom: 1px solid var(--primary) !important; }
+*/
+
+/* Mantén también tus reglas de header/footer fijos y márgenes que ya pusimos */
+
   /* tamaño y márgenes del A4 */
   @page { size: A4; margin: 2.5cm 2cm 2.2cm; }
 
