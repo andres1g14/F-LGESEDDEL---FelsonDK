@@ -3,172 +3,523 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
         :root {
             --logo-blue-color: #007BFF;
-            --border-color: #d1d5db;
-            --text-dark: #1f2937;
-            --bg-gray: #f3f4f6;
-            --bg-input-visible: #f9fafb;
+            --border-color: #dee2e6;
+            --text-dark: #212529;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: var(--bg-gray);
-            padding: 2rem;
-            font-size: 11pt;
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            background-color: #e9ecef;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            font-size: 16px;
             color: var(--text-dark);
         }
+
         .container {
-            max-width: 210mm; /* A4 Width */
+            max-width: 900px;
             margin: 0 auto;
+            padding: 0;
             background-color: white;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            padding: 2cm;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
+
         header {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding-bottom: 1.5rem;
+            padding: 2.5rem;
+            padding-bottom: 2rem;
+            background-color: white;
             border-bottom: 2px solid var(--logo-blue-color);
         }
+
         #company-logo {
             color: var(--logo-blue-color);
-            font-size: 16pt;
-            font-weight: bold;
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
+
         h1 {
             text-align: center;
-            font-size: 22pt;
-            margin: 2.5rem 0;
-            font-weight: bold;
+            font-size: 2.5rem;
+            margin: 2rem 0;
+            color: var(--text-dark);
+            font-weight: 700;
+            letter-spacing: 1.5px;
         }
+
+        .content-wrapper {
+            padding: 2.5rem;
+        }
+
         .details-section {
             display: flex;
             justify-content: space-between;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
+
         .details-column {
-            flex-basis: 48%;
+            flex: 1;
         }
-        .form-group {
-            margin-bottom: 1rem;
-        }
+
         label {
             display: block;
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-size: 0.95rem;
         }
-        input[type="date"],
+
         input[type="text"],
+        input[type="date"],
+        input[type="number"],
         textarea {
             width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
             font-family: inherit;
-            font-size: 11pt;
-            padding: 8px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            color: var(--text-dark);
         }
-        textarea {
-            resize: vertical;
-            min-height: 85px;
-        }
-        input:focus, textarea:focus {
+
+        input:focus,
+        textarea:focus {
             outline: none;
             border-color: var(--logo-blue-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
-        
-        /* --- Table Styles --- */
+
+        textarea {
+            resize: vertical;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .items-section {
+            margin-bottom: 2.5rem;
+        }
+
         .items-section table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
         }
-        .items-section th {
+
+        .items-section thead th {
             text-align: left;
-            padding: 10px;
-            border-bottom: 2px solid var(--text-dark);
+            padding: 12px 15px;
+            border-bottom: 2px solid #343a40;
+            border-right: 1px solid #dee2e6;
             text-transform: uppercase;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            letter-spacing: 0.7px;
+            background-color: #f8f9fa;
+            vertical-align: middle;
         }
-        .items-section td {
-            padding: 8px;
-            border-bottom: 1px solid var(--border-color);
+
+        .items-section thead th:last-child {
+            border-right: none;
+        }
+
+        .items-section tbody tr {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .items-section tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .items-section .antal-col {
+            width: 25%;
+            text-align: center;
+            vertical-align: top;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .items-section .beskrivelse-col {
+            width: 75%;
             vertical-align: top;
         }
-        .items-section .antal-col { width: 20%; }
-        .items-section .beskrivelse-col { width: 70%; }
-        .items-section .actions-col { width: 10%; text-align: center; }
 
-        /* VISIBLE INPUTS ON SCREEN */
+        .items-section td {
+            padding: 10px 15px;
+            vertical-align: top;
+        }
+
+        /* Campos SIEMPRE visibles en la vista web */
         .items-section td input,
         .items-section td textarea {
-            background-color: var(--bg-input-visible);
-            border: 1px solid var(--border-color);
-            padding: 8px;
             width: 100%;
-            font-size: 11pt;
+            padding: 10px;
+            border: 1px solid #ced4da !important;
+            border-radius: 4px;
+            background-color: #fff !important;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
-        .items-section .antal-col input { text-align: center; }
-        #add-row-btn {
-            margin-top: 1rem;
-            padding: 8px 16px;
-            border: 1px solid #555;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            font-weight: bold;
+
+        .items-section td input:focus,
+        .items-section td textarea:focus {
+            outline: none;
+            border-color: var(--logo-blue-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
+
+        .items-section .antal-col input {
+            text-align: center;
+        }
+
         .delete-row-btn {
-            background: none; border: none; color: #d9534f; cursor: pointer; font-size: 1.2rem;
+            background-color: transparent;
+            color: var(--danger-color);
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+        }
+
+        .delete-row-btn:hover {
+            background-color: rgba(220, 53, 69, 0.1);
+            transform: scale(1.1);
+        }
+
+        #add-row-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+        }
+
+        #add-row-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
         }
 
         .document-footer {
             text-align: center;
-            font-size: 9pt;
-            color: #555;
+            margin-top: 4rem;
+            padding-top: 1.5rem;
             border-top: 1px solid var(--logo-blue-color);
-            padding-top: 1rem;
-            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #6c757d;
         }
 
         .action-buttons {
-            text-align: center;
-            margin: 2rem auto 0;
-            max-width: 210mm;
-        }
-        .action-buttons button {
-            padding: 12px 24px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin: 0 0.5rem;
-            border: 1px solid #333;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem auto;
+            max-width: 900px;
+            padding: 0 1rem;
         }
 
-        /* --- PRINT STYLES --- */
-        @media print {
-            body { padding: 0; background: #fff; }
-            .action-buttons, #add-row-btn, .delete-row-btn { display: none; }
+        .action-buttons button {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            min-width: 200px;
+        }
+
+        #save-pdf-btn {
+            background-color: white;
+            color: #6c757d;
+            border: 2px solid #dee2e6;
+        }
+
+        #save-pdf-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #6c757d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
+        }
+
+        #print-btn.primary {
+            background-color: var(--logo-blue-color);
+            color: white;
+            border: 2px solid var(--logo-blue-color);
+            box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
+        }
+
+        #print-btn.primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Full Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                justify-content: center;
+            }
+
             .container {
+                margin: 0;
+                padding: 1rem;
+                box-shadow: none;
+            }
+
+            body {
+                font-size: 15px;
+            }
+
+            .details-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .items-section table thead {
+                display: none;
+            }
+
+            .items-section table tr {
+                display: block;
+                border: 1px solid #dee2e6;
+                margin-bottom: 1rem;
+                padding: 1rem;
+                border-radius: 4px;
+            }
+
+            .items-section table td {
+                display: block;
+                text-align: left;
+                border: none;
+                padding: 0.5rem 0;
+            }
+
+            .items-section table td::before {
+                content: attr(data-label);
+                display: block;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 0.5rem;
+                color: #6c757d;
+            }
+
+            .items-section .antal-col,
+            .items-section .beskrivelse-col {
+                width: 100%;
+                text-align: left;
+            }
+
+            .items-section .antal-col input {
+                text-align: left;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+
+            .document-footer {
+                margin-top: 2rem;
+                padding-top: 1rem;
+            }
+        }
+
+        /* Print Styles - Classic Document Layout */
+        @media print {
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+
+            * {
+                background-color: transparent !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+
+            body {
+                background: white !important;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
                 margin: 0;
                 padding: 0;
                 box-shadow: none;
-                width: 100%;
-                height: 100%;
+                border-radius: 0;
+            }
+
+            /* Hide buttons and UI elements */
+            #add-row-btn,
+            .delete-row-btn,
+            #save-pdf-btn,
+            #print-btn,
+            .action-buttons {
+                display: none !important;
+            }
+
+            /* Print Header - Logo stays on TOP RIGHT */
+            header {
                 display: flex;
-                flex-direction: column;
+                justify-content: flex-end;
+                padding: 0;
+                margin-bottom: 2rem;
+                border-bottom: none;
             }
+
+            #company-logo {
+                text-align: right;
+                font-size: 1.1rem;
+                font-weight: bold;
+                color: #000 !important;
+            }
+
+            .content-wrapper {
+                padding: 0;
+            }
+
+            /* Print Details Section - Stacked on left, before title */
+            .details-section {
+                display: block;
+                width: 100%;
+                margin-bottom: 1.5rem;
+                order: -1;
+            }
+
+            .details-column {
+                margin-bottom: 0.5rem;
+            }
+
+            label {
+                font-weight: normal;
+                margin-bottom: 0;
+                display: inline;
+            }
+
+            /* Print Title - Centered with underline */
+            h1 {
+                text-align: center;
+                font-size: 1.2rem;
+                margin: 2rem 0;
+                color: #000 !important;
+                text-decoration: underline;
+                font-weight: normal;
+                order: 0;
+            }
+
+            /* Print Table - Simple with borders */
             .items-section {
-                flex-grow: 1; /* Pushes footer down */
+                margin-top: 2rem;
+                margin-bottom: 2rem;
             }
-            .document-footer {
-                margin-top: auto; /* Positions at bottom */
-                flex-shrink: 0;
+
+            .items-section table {
+                border: 1px solid #000;
+                width: 100%;
             }
-            /* MAKE INPUTS INVISIBLE FOR PRINT */
-            input, textarea {
-                border-color: transparent !important;
+
+            .items-section thead th {
                 background-color: transparent !important;
+                border: 1px solid #000 !important;
+                padding: 8px;
+                text-align: left;
+                text-transform: none;
+                letter-spacing: normal;
+                font-weight: bold;
+                font-size: 1rem;
+                vertical-align: middle !important;
+            }
+
+            .items-section tbody tr {
+                border: none;
+            }
+
+            .items-section td {
+                border: 1px solid #000 !important;
+                padding: 8px;
+                vertical-align: top;
+            }
+
+            .items-section .antal-col {
+                width: 20%;
+                text-align: left;
+                border-right: 1px solid #000 !important;
+            }
+
+            .items-section .beskrivelse-col {
+                width: 80%;
+            }
+
+            .print-value {
+                display: block;
+                padding: 0;
+                border: none !important;
+                background: transparent !important;
+                min-height: 1.2em;
+            }
+
+            /* Print Footer - At bottom of page */
+            .document-footer {
+                display: block !important;
+                text-align: center;
+                position: fixed;
+                bottom: 2cm;
+                left: 0;
+                right: 0;
+                padding-top: 1rem;
+                border-top: 1px solid #000 !important;
+                font-size: 0.8rem;
+                color: #000 !important;
+            }
+
+            input, textarea {
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
             }
         }
     </style>
@@ -179,104 +530,211 @@
             <h2 id="company-logo">Felson Watersafe ApS</h2>
         </header>
 
-        <h1>FØLGESEDDEL</h1>
+        <div class="content-wrapper">
+            <h1>FØLGESEDDEL</h1>
 
-        <section class="details-section">
-            <div class="details-column">
-                <div class="form-group">
-                    <label for="dato">Dato:</label>
-                    <input type="date" id="dato">
+            <section class="details-section">
+                <div class="details-column">
+                    <div class="form-group">
+                        <label for="dato">Dato:</label>
+                        <input type="date" id="dato">
+                    </div>
+                    <div class="form-group">
+                        <label for="ordre-nr">Ordre nr.:</label>
+                        <input type="text" id="ordre-nr">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="ordre-nr">Ordre nr.:</label>
-                    <input type="text" id="ordre-nr">
+                <div class="details-column">
+                    <div class="form-group">
+                        <label for="levering">Levering:</label>
+                        <textarea id="levering" rows="5"></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="details-column">
-                <div class="form-group">
-                    <label for="levering">Levering:</label>
-                    <textarea id="levering" rows="4"></textarea>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="items-section">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="antal-col">Antal</th>
-                        <th class="beskrivelse-col">Beskrivelse</th>
-                        <th class="actions-col"></th>
-                    </tr>
-                </thead>
-                <tbody id="items-table-body">
+            <section class="items-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Antal</th>
+                            <th>Beskrivelse</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="items-table-body">
+                        <tr>
+                            <td class="antal-col" data-label="Antal">
+                                <input type="number" min="0">
+                            </td>
+                            <td class="beskrivelse-col" data-label="Beskrivelse">
+                                <textarea rows="1"></textarea>
+                            </td>
+                            <td style="text-align: center;">
+                                <button class="delete-row-btn" title="Slet række">🗑️</button>
+                            </td>
+                        </tr>
                     </tbody>
-            </table>
-            <button type="button" id="add-row-btn">+ Tilføj Række</button>
-        </section>
-        
-        <footer class="document-footer">
-            <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
-            <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
-        </footer>
+                </table>
+                <button type="button" id="add-row-btn">+ Tilføj Række</button>
+            </section>
+
+            <footer class="document-footer">
+                <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
+                <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
+            </footer>
+        </div>
     </div>
 
     <div class="action-buttons">
         <button type="button" id="save-pdf-btn">Gem som PDF</button>
-        <button type="button" id="print-btn">Udskriv</button>
+        <button type="button" id="print-btn" class="primary">Udskriv</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const tableBody = document.getElementById('items-table-body');
+            console.log('Script loaded'); // Debug log
 
-            function createRow() {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="antal-col"><input type="number" min="0"></td>
-                    <td class="beskrivelse-col"><textarea rows="1"></textarea></td>
-                    <td class="actions-col"><button class="delete-row-btn" title="Slet række">&times;</button></td>
-                `;
-                tableBody.appendChild(tr);
-            }
-            
-            // Add initial rows
-            for(let i = 0; i < 10; i++) {
-                createRow();
-            }
-
-            // Set today's date automatically, but allow changes
+            // A. Automatic Date
             const dateInput = document.getElementById('dato');
-            const today = new Date();
-            today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-            dateInput.valueAsDate = today;
-
-            // Add Row Button
-            document.getElementById('add-row-btn').addEventListener('click', createRow);
-
-            // Event Delegation for Delete and Textarea expansion
-            tableBody.addEventListener('click', function(e) {
-                if (e.target && e.target.classList.contains('delete-row-btn')) {
-                    if (tableBody.rows.length > 1) {
-                         e.target.closest('tr').remove();
-                    } else {
-                        alert('Der skal være mindst én række.');
-                    }
-                }
-            });
-            tableBody.addEventListener('input', function(e) {
-                if (e.target && e.target.tagName.toLowerCase() === 'textarea') {
-                    e.target.style.height = 'auto';
-                    e.target.style.height = (e.target.scrollHeight) + 'px';
-                }
-            });
-
-            // --- Simplified & Reliable Print Function ---
-            function triggerPrint() {
-                window.print();
+            if (dateInput) {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                dateInput.value = `${year}-${month}-${day}`;
             }
-            document.getElementById('print-btn').addEventListener('click', triggerPrint);
-            document.getElementById('save-pdf-btn').addEventListener('click', triggerPrint);
+
+            // Add Row Functionality
+            const addRowBtn = document.getElementById('add-row-btn');
+            if (addRowBtn) {
+                addRowBtn.addEventListener('click', function() {
+                    console.log('Add row clicked'); // Debug log
+                    const tbody = document.getElementById('items-table-body');
+                    const lastRow = tbody.querySelector('tr:last-child');
+                    const newRow = lastRow.cloneNode(true);
+                    
+                    newRow.querySelectorAll('input, textarea').forEach(input => {
+                        input.value = '';
+                        if (input.tagName.toLowerCase() === 'textarea') {
+                            input.style.height = 'auto';
+                        }
+                    });
+                    
+                    tbody.appendChild(newRow);
+                });
+            }
+
+            // Auto-expanding Textarea
+            const tableBody = document.getElementById('items-table-body');
+            if (tableBody) {
+                tableBody.addEventListener('input', function(event) {
+                    if (event.target.tagName.toLowerCase() === 'textarea') {
+                        const textarea = event.target;
+                        textarea.style.height = 'auto';
+                        textarea.style.height = (textarea.scrollHeight) + 'px';
+                    }
+                });
+
+                // Delete Row Functionality
+                tableBody.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('delete-row-btn')) {
+                        const rows = tableBody.querySelectorAll('tr');
+                        
+                        if (rows.length > 1) {
+                            e.target.closest('tr').remove();
+                        } else {
+                            alert('Du skal have mindst én række i tabellen.');
+                        }
+                    }
+                });
+            }
+
+            // Print Functionality
+            const savePdfBtn = document.getElementById('save-pdf-btn');
+            const printBtn = document.getElementById('print-btn');
+
+            if (savePdfBtn) {
+                savePdfBtn.addEventListener('click', function() {
+                    console.log('Save PDF clicked'); // Debug log
+                    prepareAndPrint();
+                });
+            }
+
+            if (printBtn) {
+                printBtn.addEventListener('click', function() {
+                    console.log('Print clicked'); // Debug log
+                    prepareAndPrint();
+                });
+            }
+
+            function prepareAndPrint() {
+                try {
+                    console.log('Preparing to print...'); // Debug log
+                    
+                    const inputs = document.querySelectorAll('input, textarea');
+                    const originalElements = [];
+
+                    inputs.forEach(input => {
+                        originalElements.push({
+                            element: input,
+                            parent: input.parentNode,
+                            nextSibling: input.nextSibling
+                        });
+
+                        const span = document.createElement('span');
+                        span.className = 'print-value';
+                        
+                        if (input.tagName.toLowerCase() === 'textarea') {
+                            const lines = (input.value || '').split('\n');
+                            lines.forEach((line, index) => {
+                                span.appendChild(document.createTextNode(line));
+                                if (index < lines.length - 1) {
+                                    span.appendChild(document.createElement('br'));
+                                }
+                            });
+                        } else {
+                            span.textContent = input.value || '';
+                        }
+                        
+                        input.parentNode.replaceChild(span, input);
+                    });
+
+                    console.log('Opening print dialog...'); // Debug log
+                    
+                    // Small delay to ensure DOM is updated
+                    setTimeout(function() {
+                        window.print();
+                    }, 100);
+
+                    // Restore function
+                    function restoreInputs() {
+                        console.log('Restoring inputs...'); // Debug log
+                        originalElements.forEach(item => {
+                            const printValue = item.parent.querySelector('.print-value');
+                            if (printValue) {
+                                if (item.nextSibling) {
+                                    item.parent.insertBefore(item.element, item.nextSibling);
+                                } else {
+                                    item.parent.appendChild(item.element);
+                                }
+                                printValue.remove();
+                            }
+                        });
+                    }
+
+                    // Restore after print
+                    if (window.onafterprint !== undefined) {
+                        window.onafterprint = restoreInputs;
+                    }
+
+                    // Fallback
+                    setTimeout(restoreInputs, 1000);
+                    
+                } catch (error) {
+                    console.error('Print error:', error);
+                    alert('Error al intentar imprimir: ' + error.message);
+                }
+            }
         });
     </script>
 </body>
