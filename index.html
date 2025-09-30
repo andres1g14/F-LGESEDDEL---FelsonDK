@@ -151,7 +151,7 @@
         }
 
         .main-title {
-            text-align: right;
+            text-align: center;
             font-size: 1.125rem;
             font-weight: 600;
             color: var(--text-secondary);
@@ -553,10 +553,9 @@
                 font-size: 18pt;
             }
 
-            .logo {
-    text-align: right !important;
-    width: auto !important;
-  }
+            .logo::after {
+                display: none;
+            }
 
             .card-content {
                 padding: 0 18mm;
@@ -565,8 +564,9 @@
             }
 
             .main-title {
-    text-align: right !important;
-  }
+                font-size: 11pt;
+                margin-bottom: 6mm;
+            }
 
             .form-grid {
                 grid-template-columns: 32% 68%;
