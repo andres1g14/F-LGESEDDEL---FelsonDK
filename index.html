@@ -10,10 +10,11 @@
             --logo-blue-color: #007BFF;
             --border-color: #dee2e6;
             --text-dark: #212529;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
+            --text-light: #6c757d;
+            --bg-light: #f8f9fa;
         }
 
+        /* --- Global Styles --- */
         * {
             margin: 0;
             padding: 0;
@@ -21,473 +22,228 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-            background-color: #e9ecef;
-            padding: 2rem 1rem;
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 2rem;
             font-size: 16px;
             color: var(--text-dark);
         }
 
+        /* --- On-Screen Modern Layout --- */
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 0;
             background-color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
             border-radius: 8px;
-            overflow: hidden;
+        }
+        
+        .content-wrapper {
+             padding: 2.5rem;
         }
 
         header {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
-            padding: 2.5rem;
-            padding-bottom: 2rem;
-            background-color: white;
+            padding: 1.5rem 2.5rem;
             border-bottom: 2px solid var(--logo-blue-color);
         }
 
+        /* Print-only header is hidden on screen */
+        .print-header {
+            display: none;
+        }
+        
         #company-logo {
             color: var(--logo-blue-color);
             font-size: 1.75rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         h1 {
             text-align: center;
-            font-size: 2.5rem;
             margin: 2rem 0;
-            color: var(--text-dark);
-            font-weight: 700;
-            letter-spacing: 1.5px;
-        }
-
-        .content-wrapper {
-            padding: 2.5rem;
+            font-size: 2.25rem;
         }
 
         .details-section {
             display: flex;
-            justify-content: space-between;
-            gap: 2.5rem;
+            gap: 2rem;
             margin-bottom: 2.5rem;
         }
-
         .details-column {
             flex: 1;
         }
-
+        .form-group {
+            margin-bottom: 1rem;
+        }
         label {
             display: block;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
-
         input[type="text"],
         input[type="date"],
         input[type="number"],
         textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 2px solid var(--border-color);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             font-family: inherit;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-
         input:focus,
         textarea:focus {
             outline: none;
             border-color: var(--logo-blue-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
         }
 
-        textarea {
-            resize: vertical;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .items-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .items-section table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
+        /* Pro Table Style (On-Screen) */
+        .items-section table { width: 100%; border-collapse: collapse; }
         .items-section thead th {
-            text-align: left;
-            padding: 12px 15px;
-            border-bottom: 2px solid #343a40;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.7px;
-            background-color: #f8f9fa;
+            text-align: left; padding: 12px 15px; border-bottom: 2px solid var(--text-dark);
+            text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.7px;
         }
-
-        .items-section tbody tr {
-            border-bottom: 1px solid #dee2e6;
+        .items-section tbody tr { border-bottom: 1px solid var(--border-color); }
+        .items-section tbody tr:last-child { border-bottom: none; }
+        .items-section .antal-col { width: 20%; text-align: center; }
+        .items-section .beskrivelse-col { width: 70%; }
+        .items-section .actions-col { width: 10%; text-align: center; }
+        .items-section td { padding: 10px 15px; vertical-align: top; }
+        .items-section td input, .items-section td textarea {
+            width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; font-size: 1rem;
         }
+        .items-section .antal-col input { text-align: center; }
+        .items-section textarea { resize: vertical; min-height: 42px; }
 
-        .items-section tbody tr:last-child {
-            border-bottom: none;
+        .table-actions {
+            margin-top: 1.5rem;
         }
-
-        .items-section .antal-col {
-            width: 25%;
-            text-align: center;
-            vertical-align: top;
-        }
-
-        .items-section .beskrivelse-col {
-            width: 75%;
-        }
-
-        .items-section td {
-            padding: 10px 15px;
-        }
-
-        .items-section td input,
-        .items-section td textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            background-color: #fff;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .items-section td input:focus,
-        .items-section td textarea:focus {
-            outline: none;
-            border-color: var(--logo-blue-color);
-        }
-
-        .items-section .antal-col input {
-            text-align: center;
-        }
-
-        .delete-row-btn {
-            background-color: transparent;
-            color: var(--danger-color);
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.2s ease;
-            border-radius: 4px;
-        }
-
-        .delete-row-btn:hover {
-            background-color: rgba(220, 53, 69, 0.1);
-            transform: scale(1.1);
-        }
-
         #add-row-btn {
-            background-color: var(--success-color);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+            background-color: #28a745; color: white; border: none; padding: 0.6rem 1.2rem;
+            border-radius: 5px; cursor: pointer; font-weight: 500;
         }
-
-        #add-row-btn:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        .delete-row-btn {
+            background: none; border: none; color: #dc3545; cursor: pointer; font-size: 1.2rem;
         }
-
+        
         .document-footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--logo-blue-color);
-            font-size: 0.85rem;
-            color: #6c757d;
+            text-align: center; margin-top: 3rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--logo-blue-color); font-size: 0.8rem; color: var(--text-light);
         }
 
         .action-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem auto;
-            max-width: 900px;
-            padding: 0 1rem;
+            display: flex; gap: 1rem; justify-content: center; margin: 2rem auto;
         }
-
         .action-buttons button {
-            padding: 1rem 2.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            min-width: 200px;
+            padding: 0.8rem 2rem; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600;
+            border: 2px solid;
         }
+        #save-pdf-btn { background-color: #fff; border-color: var(--border-color); color: var(--text-dark); }
+        #print-btn { background-color: var(--logo-blue-color); border-color: var(--logo-blue-color); color: #fff; }
 
-        #save-pdf-btn {
-            background-color: white;
-            color: #6c757d;
-            border: 2px solid #dee2e6;
-        }
-
-        #save-pdf-btn:hover {
-            background-color: #f8f9fa;
-            border-color: #6c757d;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
-        }
-
-        #print-btn.primary {
-            background-color: var(--logo-blue-color);
-            color: white;
-            border: 2px solid var(--logo-blue-color);
-            box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
-        }
-
-        #print-btn.primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
-        }
-
-        /* Full Responsiveness */
+        /* --- Responsiveness --- */
         @media (max-width: 768px) {
-            header {
-                justify-content: center;
-            }
-
-            .container {
-                margin: 0;
-                padding: 1rem;
-                box-shadow: none;
-            }
-
-            body {
-                font-size: 15px;
-            }
-
-            .details-section {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .items-section table thead {
-                display: none;
-            }
-
-            .items-section table tr {
-                display: block;
-                border: 1px solid #dee2e6;
-                margin-bottom: 1rem;
-                padding: 1rem;
-                border-radius: 4px;
-            }
-
-            .items-section table td {
-                display: block;
-                text-align: left;
-                border: none;
-                padding: 0.5rem 0;
-            }
-
-            .items-section table td::before {
-                content: attr(data-label);
-                display: block;
-                font-weight: bold;
-                text-transform: uppercase;
-                margin-bottom: 0.5rem;
-                color: #6c757d;
-            }
-
-            .items-section .antal-col,
-            .items-section .beskrivelse-col {
-                width: 100%;
-                text-align: left;
-            }
-
-            .items-section .antal-col input {
-                text-align: left;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 0.5rem;
-                padding: 1rem;
-            }
-
-            .document-footer {
-                margin-top: 2rem;
-                padding-top: 1rem;
-            }
+            body { padding: 1rem; }
+            .container { padding: 0; border-radius: 0; }
+            .content-wrapper { padding: 1.5rem; }
+            header { justify-content: center; }
+            .details-section { flex-direction: column; }
+            .items-section table thead { display: none; }
+            .items-section table tr { display: block; border: 1px solid var(--border-color); margin-bottom: 1rem; }
+            .items-section table td { display: block; text-align: right; border-bottom: 1px solid #eee; }
+            .items-section table td:last-child { border-bottom: none; }
+            .items-section table td::before { content: attr(data-label); float: left; font-weight: bold; }
         }
 
-        /* Print Styles - Classic Document Layout */
+        /* --- PRINT STYLES (Matches Word Document Reference) --- */
         @media print {
-            @page {
-                size: A4;
-                margin: 2cm;
-            }
+            @page { size: A4; margin: 2cm; }
+            body { background: #fff; padding: 0; font-size: 11pt; }
+            * { color: #000 !important; box-shadow: none !important; }
 
-            * {
-                background-color: transparent !important;
-                color: #000 !important;
-                box-shadow: none !important;
-                text-shadow: none !important;
-            }
-
-            body {
-                background: white !important;
-                padding: 0;
-            }
-
-            .container {
-                max-width: 100%;
-                margin: 0;
-                padding: 0;
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            /* Hide buttons and UI elements */
-            #add-row-btn,
-            .delete-row-btn,
-            #save-pdf-btn,
-            #print-btn,
-            .action-buttons {
+            /* Hide all on-screen UI */
+            .action-buttons, #add-row-btn, .delete-row-btn, header {
                 display: none !important;
             }
 
-            /* Print Header - Company name at TOP LEFT */
-            header {
+            .container {
+                width: 100%; max-width: 100%; padding: 0; margin: 0;
+                border: none; box-shadow: none; border-radius: 0;
+            }
+
+            /* Display the print-only header, styled like the Word doc */
+            .print-header {
                 display: block;
                 text-align: left;
-                padding: 0;
-                margin-bottom: 1rem;
-                border-bottom: none;
+                margin-bottom: 2rem;
+            }
+            .print-header h2 {
+                font-size: 14pt;
+                font-weight: bold;
             }
 
-            #company-logo {
-                text-align: left;
-                font-size: 1.2rem;
-                color: #000 !important;
-            }
+            h1 { font-size: 18pt; margin: 1.5rem 0; }
 
-            /* Print Title - Centered */
-            h1 {
-                text-align: center;
-                font-size: 1.8rem;
-                margin: 1.5rem 0;
-                color: #000 !important;
-            }
-
-            .content-wrapper {
-                padding: 0;
-            }
-
-            /* Print Details Section - Single block on left */
+            /* Reformat details section to a single block */
             .details-section {
                 display: block;
-                width: 50%;
                 margin-bottom: 2rem;
             }
-
             .details-column {
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem;
             }
 
-            label {
-                font-weight: bold;
-                margin-bottom: 0.25rem;
+            /* Classic document table style for printing */
+            .items-section table, .items-section th, .items-section td {
+                border: 1px solid black;
             }
-
-            /* Print Table - Classic document style with borders */
-            .items-section {
-                margin-bottom: 2rem;
-            }
-
             .items-section table {
-                border: 1px solid #000;
+                border-collapse: collapse;
+                width: 100%;
+                page-break-inside: auto;
             }
-
-            .items-section thead th {
-                background-color: transparent !important;
-                border: 1px solid #000 !important;
-                border-bottom: 1px solid #000 !important;
-                padding: 8px;
-                text-transform: none;
-                letter-spacing: normal;
+            .items-section th, .items-section td {
+                padding: 6px 8px;
+                text-align: left;
             }
+            .items-section .antal-col { text-align: left; } /* Align left for print */
+            tr { page-break-inside: avoid; page-break-after: auto; }
 
-            .items-section tbody tr {
-                border: 1px solid #000;
-            }
-
-            .items-section td {
-                border: 1px solid #000 !important;
-                padding: 8px;
+            /* Position footer at the bottom */
+            .document-footer {
+                border-top: 1px solid black;
+                text-align: left;
+                font-size: 9pt;
+                color: #000 !important;
+                /* Position footer at the bottom of the content flow */
+                margin-top: 3rem;
             }
 
             .print-value {
-                display: block;
-                padding: 0;
-                border: none !important;
-                background: transparent !important;
-            }
-
-            /* Print Footer - At bottom */
-            .document-footer {
-                text-align: center;
-                margin-top: 3rem;
-                padding-top: 1rem;
-                border-top: 1px solid #000 !important;
-                font-size: 0.9rem;
-                color: #000 !important;
-            }
-
-            input, textarea {
-                border: none !important;
-                padding: 0 !important;
-            }
-
-            table {
-                page-break-inside: auto;
-            }
-
-            tr {
-                page-break-inside: avoid;
-                page-break-after: auto;
+                white-space: pre-wrap; /* Preserve newlines */
+                padding: 6px 8px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        
         <header>
             <h2 id="company-logo">Felson Watersafe ApS</h2>
         </header>
 
         <div class="content-wrapper">
+            <div class="print-header">
+                <h2>Felson Watersafe ApS</h2>
+            </div>
+
             <h1>FØLGESEDDEL</h1>
 
             <section class="details-section">
@@ -503,7 +259,7 @@
                 </div>
                 <div class="details-column">
                     <label for="levering">Levering:</label>
-                    <textarea id="levering" rows="5"></textarea>
+                    <textarea id="levering" rows="4"></textarea>
                 </div>
             </section>
 
@@ -511,28 +267,24 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Antal</th>
-                            <th>Beskrivelse</th>
-                            <th></th>
+                            <th class="antal-col">Antal</th>
+                            <th class="beskrivelse-col">Beskrivelse</th>
+                            <th class="actions-col"></th>
                         </tr>
                     </thead>
                     <tbody id="items-table-body">
                         <tr>
-                            <td class="antal-col" data-label="Antal">
-                                <input type="number" min="0">
-                            </td>
-                            <td class="beskrivelse-col" data-label="Beskrivelse">
-                                <textarea rows="1"></textarea>
-                            </td>
-                            <td style="text-align: center;">
-                                <button class="delete-row-btn" title="Slet række">🗑️</button>
-                            </td>
+                            <td class="antal-col" data-label="Antal"><input type="number" class="antal-input" min="0"></td>
+                            <td class="beskrivelse-col" data-label="Beskrivelse"><textarea class="beskrivelse-input" rows="1"></textarea></td>
+                            <td class="actions-col"><button class="delete-row-btn" title="Slet række">🗑️</button></td>
                         </tr>
                     </tbody>
                 </table>
-                <button type="button" id="add-row-btn">+ Tilføj Række</button>
+                <div class="table-actions">
+                    <button type="button" id="add-row-btn">+ Tilføj Række</button>
+                </div>
             </section>
-
+            
             <footer class="document-footer">
                 <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
                 <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
@@ -542,122 +294,99 @@
 
     <div class="action-buttons">
         <button type="button" id="save-pdf-btn">Gem som PDF</button>
-        <button type="button" id="print-btn" class="primary">Udskriv</button>
+        <button type="button" id="print-btn">Udskriv</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // A. Automatic Date - Set today's date but allow user to change it
-            const dateInput = document.getElementById('dato');
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            dateInput.value = `${year}-${month}-${day}`;
 
-            // Add Row Functionality
+            // --- CORE FUNCTIONALITY ---
+
+            // 1. Set today's date automatically, but allow changes
+            const dateInput = document.getElementById('dato');
+            if(dateInput) {
+                const today = new Date();
+                // Format to YYYY-MM-DD for the date input
+                today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+                dateInput.valueAsDate = today;
+            }
+
+            // 2. Add Row Functionality
             document.getElementById('add-row-btn').addEventListener('click', function() {
                 const tbody = document.getElementById('items-table-body');
-                const lastRow = tbody.querySelector('tr:last-child');
-                const newRow = lastRow.cloneNode(true);
+                const newRow = tbody.rows[0].cloneNode(true);
                 
                 newRow.querySelectorAll('input, textarea').forEach(input => {
                     input.value = '';
                     if (input.tagName.toLowerCase() === 'textarea') {
-                        input.style.height = 'auto';
+                        input.style.height = 'auto'; // Reset height for cloned textarea
                     }
                 });
-                
                 tbody.appendChild(newRow);
             });
 
-            // Auto-expanding Textarea Logic
+            // 3. Delete Row Functionality (using event delegation)
             const tableBody = document.getElementById('items-table-body');
-
-            tableBody.addEventListener('input', function(event) {
-                if (event.target.tagName.toLowerCase() === 'textarea') {
-                    const textarea = event.target;
-                    textarea.style.height = 'auto';
-                    textarea.style.height = (textarea.scrollHeight) + 'px';
-                }
-            });
-
-            // Delete Row Functionality
             tableBody.addEventListener('click', function(e) {
-                if (e.target.classList.contains('delete-row-btn')) {
-                    const rows = tableBody.querySelectorAll('tr');
-                    
-                    if (rows.length > 1) {
+                if (e.target && e.target.classList.contains('delete-row-btn')) {
+                    if (tableBody.rows.length > 1) {
                         e.target.closest('tr').remove();
                     } else {
-                        alert('Du skal have mindst én række i tabellen.');
+                        alert('Du skal have mindst én række.');
                     }
                 }
             });
 
-            // B. Robust Print Functionality
-            document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
-            document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
+            // 4. Auto-expanding Textarea
+            tableBody.addEventListener('input', function(e) {
+                if (e.target && e.target.tagName.toLowerCase() === 'textarea') {
+                    e.target.style.height = 'auto';
+                    e.target.style.height = (e.target.scrollHeight) + 'px';
+                }
+            });
+
+            // 5. Robust Print Button Functionality
+            const printBtn = document.getElementById('print-btn');
+            const savePdfBtn = document.getElementById('save-pdf-btn');
+            
+            if (printBtn) printBtn.addEventListener('click', prepareAndPrint);
+            if (savePdfBtn) savePdfBtn.addEventListener('click', prepareAndPrint);
 
             function prepareAndPrint() {
-                const inputs = document.querySelectorAll('input, textarea');
                 const originalElements = [];
+                const inputs = document.querySelectorAll('.container input, .container textarea');
 
                 inputs.forEach(input => {
-                    originalElements.push({
-                        element: input,
-                        parent: input.parentNode,
-                        nextSibling: input.nextSibling
-                    });
+                    const parent = input.parentNode;
+                    originalElements.push({ original: input, parent: parent });
 
-                    const span = document.createElement('span');
-                    span.className = 'print-value';
+                    const printValue = document.createElement('div');
+                    printValue.className = 'print-value';
                     
-                    // Using textContent for security (XSS prevention)
-                    // Convert newlines to <br> for textareas
-                    if (input.tagName.toLowerCase() === 'textarea') {
-                        const lines = (input.value || '').split('\n');
-                        lines.forEach((line, index) => {
-                            span.appendChild(document.createTextNode(line));
-                            if (index < lines.length - 1) {
-                                span.appendChild(document.createElement('br'));
-                            }
-                        });
-                    } else {
-                        span.textContent = input.value || '';
-                    }
-                    
-                    input.parentNode.replaceChild(span, input);
+                    // Preserve newlines from textarea
+                    printValue.textContent = input.value;
+                    parent.replaceChild(printValue, input);
                 });
 
-                // Trigger print dialog
                 window.print();
 
-                // Restore mechanism using onafterprint
-                window.onafterprint = function() {
-                    restoreInputs();
-                };
-
-                // Fallback restoration for browsers that don't support onafterprint
-                setTimeout(function() {
-                    if (document.querySelector('.print-value')) {
-                        restoreInputs();
-                    }
-                }, 1000);
-
+                // Restore function to bring back input fields
                 function restoreInputs() {
                     originalElements.forEach(item => {
                         const printValue = item.parent.querySelector('.print-value');
                         if (printValue) {
-                            if (item.nextSibling) {
-                                item.parent.insertBefore(item.element, item.nextSibling);
-                            } else {
-                                item.parent.appendChild(item.element);
-                            }
-                            printValue.remove();
+                            item.parent.replaceChild(item.original, printValue);
                         }
                     });
+                    // Clean up the event listener to avoid memory leaks
+                    window.removeEventListener('afterprint', restoreInputs);
                 }
+
+                // Use 'afterprint' event which is more reliable
+                window.addEventListener('afterprint', restoreInputs);
+
+                // Fallback for browsers that might not fire 'afterprint' consistently
+                setTimeout(restoreInputs, 2000); 
             }
         });
     </script>
