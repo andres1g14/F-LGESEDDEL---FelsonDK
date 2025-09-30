@@ -12,13 +12,11 @@
         }
 
         :root {
-            --primary: #9BC2E6;
-            --primary-dark: #4C1D95;
+            --primary: #5B21B6;
             --secondary: #8B5CF6;
             --accent: #A78BFA;
             --success: #10B981;
             --danger: #EF4444;
-            --bg-dark: #111827;
             --bg-light: #F9FAFB;
             --text-dark: #111827;
             --text-gray: #6B7280;
@@ -27,79 +25,58 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #eef2f5; /* Un fondo más neutro para resaltar el documento */
             min-height: 100vh;
             padding: 2rem;
-            animation: gradientShift 15s ease infinite;
-            background-size: 400% 400%;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .document {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
         }
-        
-        /* CORRECTED & CLEANED HEADER STYLES */
+
+        /* --- NUEVOS ESTILOS PARA EL ENCABEZADO Y CONTENIDO --- */
         .header {
             background: #fff;
-            padding: 2rem 3rem 1.5rem;
+            padding: 2.5rem 3rem 1.5rem;
             text-align: right;
-            border-bottom: 2px solid #3BAFDA;
         }
 
         .company-name {
-            color: #9BC2E6;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 0 0 0.25rem 0;
-        }
-
-        .document-title {
-            font-size: 1rem;
-            color: var(--text-gray);
+            color: var(--text-dark);
+            font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
-        /* END OF HEADER STYLES */
-
-
+        
         .content {
-            padding: 3rem;
+            padding: 2rem 3rem 3rem;
+        }
+        
+        .document-title {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
         }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 400px; /* Limita el ancho de los campos de información */
         }
+        /* --- FIN DE LOS NUEVOS ESTILOS --- */
 
         .field-group {
             position: relative;
@@ -112,28 +89,24 @@
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: block;
         }
 
         .field-input {
             width: 100%;
             padding: 1rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             background: var(--bg-light);
-        }
-
-        .field-input:hover {
-            border-color: var(--accent);
         }
 
         .field-input:focus {
             outline: none;
-            border-color: var(--secondary);
+            border-color: var(--primary);
             background: white;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-            transform: translateY(-2px);
+            box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.1);
         }
 
         .field-textarea {
@@ -143,126 +116,110 @@
         }
 
         .table-container {
-            background: var(--bg-light);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         .table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
+            border-collapse: collapse;
         }
 
         .table thead th {
             text-align: left;
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             color: var(--text-gray);
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            background-color: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .table thead th:first-child {
+             width: 120px;
+        }
+        .table thead th:last-child {
+             width: 60px;
         }
 
         .table tbody tr {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            transition: background-color 0.2s ease;
         }
-
+        
+        .table tbody tr:not(:last-child) {
+            border-bottom: 1px solid var(--border);
+        }
+        
         .table tbody tr:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: scale(1.01);
+            background-color: #f9fafb;
         }
 
         .table tbody td {
-            padding: 1rem;
-            position: relative;
-        }
-
-        .table tbody td:first-child {
-            border-radius: 12px 0 0 12px;
-            width: 120px;
-        }
-
-        .table tbody td:last-child {
-            border-radius: 0 12px 12px 0;
-            width: 60px;
-            text-align: center;
+            padding: 0.5rem 1.5rem;
+            vertical-align: middle;
         }
 
         .table-input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid transparent;
-            background: var(--bg-light);
-            border-radius: 8px;
+            background: transparent;
+            border-radius: 6px;
             font-family: inherit;
             font-size: 0.95rem;
-            transition: all 0.2s ease;
         }
-
         .table-input:focus {
-            outline: none;
-            border-color: var(--secondary);
             background: white;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            border-color: var(--border);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.1);
         }
 
         .table-number {
-            width: 100%;
             text-align: center;
         }
 
         .btn-delete {
-            background: white;
-            border: 2px solid var(--danger);
-            color: var(--danger);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            display: inline-flex;
+            transition: all 0.2s ease;
+            font-size: 1.5rem;
+            display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 1;
         }
-
         .btn-delete:hover {
-            background: var(--danger);
-            color: white;
-            transform: rotate(90deg) scale(1.1);
+            background-color: #fee2e2;
+            color: var(--danger);
         }
 
         .btn-add {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
+            background: var(--bg-light);
+            color: var(--text-gray);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 1rem;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            margin-top: 1.5rem;
         }
-
         .btn-add:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-add::before {
-            content: '+';
-            font-size: 1.3rem;
-            font-weight: 700;
+           border-color: #ccc;
+           color: var(--text-dark);
         }
 
         .actions {
@@ -270,165 +227,68 @@
             gap: 1rem;
             justify-content: center;
             margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
         }
 
         .btn-action {
-            padding: 1.25rem 3rem;
-            border-radius: 14px;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-action::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-action:active::before {
-            width: 300px;
-            height: 300px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-color: var(--primary);
             color: white;
-            border: none;
-            box-shadow: 0 4px 14px rgba(91, 33, 182, 0.4);
         }
-
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.5);
+            background-color: var(--primary-dark);
         }
 
         .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            background-color: white;
+            color: var(--text-dark);
+            border-color: var(--border);
         }
-
         .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.3);
+            border-color: #ccc;
         }
 
         .footer {
-            background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+            background: var(--bg-light);
             padding: 2rem;
             text-align: center;
             color: var(--text-gray);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             line-height: 1.6;
-        }
-
-        .footer-divider {
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            margin: 0 auto 1rem;
-            border-radius: 2px;
+            border-top: 1px solid var(--border);
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn-action {
-                width: 100%;
-            }
-
-            .company-name {
-                font-size: 1.4rem;
-            }
-             .header {
-                padding: 1.5rem 2rem 1rem;
-            }
+            body { padding: 1rem; }
+            .content { padding: 1.5rem; }
+            .header { padding: 2rem 1.5rem 1rem; }
+            .company-name { font-size: 1.5rem; }
+            .actions { flex-direction: column; }
+            .btn-action { width: 100%; }
         }
 
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            .document {
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            .document::before, .document::after {
-                display: none;
-            }
-
-            .header {
-                background: white;
-                border-bottom: 2px solid #000000;
-                padding: 1.5rem 2rem;
-                text-align: right;
-            }
-
-            .company-name {
-                color: #000000;
-            }
-
-            .document-title {
-                color: #333333;
-            }
-
-            .btn-delete,
-            .btn-add,
-            .actions {
-                display: none !important;
-            }
-
-            .table tbody tr {
-                box-shadow: none;
-                border: 1px solid var(--border);
-            }
-
-            .table tbody tr:hover {
-                transform: none;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            body { background: white; padding: 0; }
+            .container { max-width: 100%; }
+            .document { box-shadow: none; border-radius: 0; }
+            .header { text-align: right; padding: 1.5rem 2rem; }
+            .company-name { font-size: 14pt; color: black; }
+            .content { padding: 1rem 2rem; }
+            .document-title { font-size: 12pt; margin-top: 2rem; }
+            .btn-delete, .btn-add, .actions, .footer { display: none !important; }
+            .table-container { border: 1px solid #ccc; }
+            .table thead th { background-color: #f1f1f1; }
+            .table tbody tr { border-bottom: 1px solid #ccc; }
         }
     </style>
 </head>
@@ -436,26 +296,26 @@
     <div class="container">
         <div class="document">
             <div class="header">
-                <h1 class="company-name">FELSON WATERSAFE ApS</h1>
-                <p class="document-title">Følgeseddel</p>
+                <h1 class="company-name">Felson Watersafe ApS</h1>
             </div>
 
             <div class="content">
-                <div class="info-grid">
+                <div class="info-section">
+                    <div class="field-group">
+                        <label class="field-label">Levering</label>
+                        <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..."></textarea>
+                    </div>
                     <div class="field-group">
                         <label class="field-label">Dato</label>
                         <input type="date" class="field-input" id="dato">
                     </div>
                     <div class="field-group">
-                        <label class="field-label">Ordre Nr.</label>
+                        <label class="field-label">Ordre nr.</label>
                         <input type="text" class="field-input" id="ordre" placeholder="Indtast ordrenummer...">
                     </div>
                 </div>
 
-                <div class="field-group">
-                    <label class="field-label">Leveringsadresse</label>
-                    <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..."></textarea>
-                </div>
+                <h2 class="document-title">FØLGESEDDEL</h2>
 
                 <div class="table-container">
                     <table class="table">
@@ -467,7 +327,7 @@
                             </tr>
                         </thead>
                         <tbody id="table-body">
-                            <tr class="fade-in">
+                            <tr>
                                 <td>
                                     <input type="number" class="table-input table-number" min="0" placeholder="0">
                                 </td>
@@ -480,8 +340,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn-add" id="add-row">Tilføj række</button>
                 </div>
+                <button class="btn-add" id="add-row">+ Tilføj række</button>
 
                 <div class="actions">
                     <button class="btn-action btn-secondary" id="save-pdf">Gem som PDF</button>
@@ -490,11 +350,7 @@
             </div>
 
             <div class="footer">
-                <div class="footer-divider"></div>
-                <p><strong>Felson Watersafe ApS</strong></p>
-                <p>Gartnervej 4 • 6710 Esbjerg V</p>
-                <p>CVR: DK26813522 • Tlf: 70 20 66 76</p>
-                <p>E-mail: felson@felson.dk</p>
+                <p><strong>Felson Watersafe ApS</strong> • Gartnervej 4, 6710 Esbjerg V • CVR: DK26813522 • Tlf: 70 20 66 76 • E-mail: felson@felson.dk</p>
             </div>
         </div>
     </div>
@@ -503,11 +359,10 @@
         // Set today's date
         document.getElementById('dato').valueAsDate = new Date();
 
-        // Add new row
-        document.getElementById('add-row').addEventListener('click', function() {
+        // Add new row function
+        function addRow() {
             const tbody = document.getElementById('table-body');
             const newRow = document.createElement('tr');
-            newRow.className = 'fade-in';
             newRow.innerHTML = `
                 <td>
                     <input type="number" class="table-input table-number" min="0" placeholder="0">
@@ -520,18 +375,25 @@
                 </td>
             `;
             tbody.appendChild(newRow);
+        }
+        
+        // Add a few empty rows to start
+        document.addEventListener('DOMContentLoaded', function() {
+            const initialRowCount = 10;
+            for(let i=0; i < initialRowCount; i++) {
+                 addRow();
+            }
         });
+
+        document.getElementById('add-row').addEventListener('click', addRow);
 
         // Delete row
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('btn-delete')) {
-                const tbody = document.getElementById('table-body');
-                if (tbody.rows.length > 1) {
-                    const row = e.target.closest('tr');
-                    row.style.animation = 'fadeIn 0.3s ease reverse';
-                    setTimeout(() => row.remove(), 300);
-                } else {
-                    alert('Der skal være mindst én række');
+                const row = e.target.closest('tr');
+                // Don't delete if it's the only row left
+                if (row.parentElement.children.length > 1) {
+                     row.remove();
                 }
             }
         });
@@ -543,16 +405,6 @@
 
         document.getElementById('save-pdf').addEventListener('click', handlePrint);
         document.getElementById('print').addEventListener('click', handlePrint);
-
-        // Add subtle animations on input focus
-        document.querySelectorAll('input, textarea').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.01)';
-            });
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
-        });
     </script>
 </body>
 </html>
