@@ -211,15 +211,128 @@
 
         /* --- 8. Estilos de Impresión --- */
         @media print {
-            body { background: white; padding: 0; }
-            .app-container { max-width: 100%; }
-            .document-card { box-shadow: none; border-radius: 0; border: 1px solid #ccc; }
-            .card-header { background: var(--color-bg-light); border-bottom: 2px solid #333; }
-            .logo { color: var(--color-text-dark); }
-            .main-actions, .actions-container { display: none; }
-            .form-input, .form-textarea, .table-input, .table-textarea {
-                border-color: transparent; background: transparent;
-            }
+  /* Página A4 y márgenes del área imprimible */
+  @page { size: A4; margin: 2.5cm 2cm 2.2cm; }
+
+  html, body {
+    background: #fff !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+  }
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+  }
+
+  /* ===== HEADER FIJO (derecha) ===== */
+  .document-card { border: none !important; }
+  .card-header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #fff !important;
+    border-bottom: 2px solid var(--brand, #00B0F0) !important;
+    padding: 12px 24px !important;
+    z-index: 9999;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important; /* derecha */
+    gap: 4px !important;
+  }
+
+  /* Logo (título empresa) y subtítulo en azul agua */
+  .logo{
+    color: var(--brand, #00B0F0) !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    text-align: right !important;
+  }
+  /* Reutilizamos tu h1 como subtítulo y lo “movemos” al header en print */
+  .main-title{
+    position: static !important;
+    color: var(--brand, #00B0F0) !important;
+    font-size: 0.9rem !important;
+    letter-spacing: .12rem !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: right !important;
+  }
+
+  /* Reservas de espacio para no chocar con header/footer */
+  .card-content{ margin-top: 120px !important; }
+  .table-section{ padding-bottom: 110px !important; }
+
+  /* ===== FOOTER FIJO (todas las páginas) ===== */
+  .card-footer{
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: #fff !important;
+    border-top: 2px solid var(--brand, #00B0F0) !important;
+    color: #000 !important;
+    text-align: center !important;
+    font-size: .78rem !important;
+    line-height: 1.25 !important;
+    padding: 8px 12px !important;
+    z-index: 9999;
+  }
+
+  /* ===== Tabla estilo “documento” ===== */
+  .data-table{
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+  .data-table thead { display: table-header-group; }
+  .data-table tfoot { display: table-footer-group; }
+  .data-table tr    { page-break-inside: avoid; break-inside: avoid; }
+
+  .data-table thead th{
+    background: #fff !important;
+    color: #000 !important;
+    border-bottom: 2px solid var(--brand, #00B0F0) !important;
+    padding: 6px 8px !important;
+    font-weight: 700 !important;
+  }
+  .data-table th, .data-table td{
+    border: none !important;
+    background: transparent !important;
+    color: #000 !important;
+    padding: 6px 8px !important;
+  }
+  /* línea vertical ANTAL | BESKRIVELSE */
+  .data-table th.col-antal, .data-table td:nth-child(1){
+    border-right: 1px solid var(--brand, #00B0F0) !important;
+    text-align: center !important;
+    width: 85px !important;
+  }
+  /* líneas horizontales del cuerpo */
+  .data-table tbody tr{
+    border-bottom: 1px solid var(--brand, #00B0F0) !important;
+  }
+
+  /* ===== Ocultar UI de la app en papel ===== */
+  .main-actions, .actions-container, .btn, .btn-delete { display: none !important; }
+
+  /* Inputs se imprimen como texto, sin cajas ni iconos */
+  .form-input, .form-textarea, .table-input, .table-textarea{
+    border: none !important;
+    background: transparent !important;
+    outline: none !important;
+    padding: 0 !important;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator{ display:none !important; }
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
+    -webkit-appearance:none !important; margin:0 !important;
+  }
+  input[type="number"]{ -moz-appearance:textfield; }
+}
+
         }
     </style>
 </head>
