@@ -397,174 +397,93 @@
         }
 
        @media print {
-        /* Respeta colores en impresión */
+       /* ---- offsets reutilizables ---- */
+:root{
+  --print-header-offset: 135px;   /* espacio que se deja bajo el header fijo */
+  --print-footer-offset: 110px;   /* espacio reservado antes del footer fijo */
+}
+
+@page { size: A4; margin: 2.5cm 2cm 2.2cm; }
+
+/* respeta los colores */
 html, body, .header, .footer, .table, .table *{
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-/* —— Inputs sin recuadro ni iconos —— */
-input, textarea{
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  outline: none !important;
+/* header fijo, azul agua */
+.header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff !important;
+  border-bottom: 2px solid var(--primary) !important;
+  padding: 12px 24px !important;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .25rem;
+}
+.company-name, .document-title{ color: var(--primary) !important; }
+
+/* MÁS espacio bajo el header en TODAS las páginas */
+.content{
+  margin-top: var(--print-header-offset) !important;
+  padding-bottom: var(--print-footer-offset) !important;  /* para que nada choque con el pie */
 }
 
-/* oculta icono calendario del date */
-input[type="date"]::-webkit-calendar-picker-indicator{
-  display: none !important;
-  -webkit-appearance: none !important;
-}
-/* quita botón de limpiar en Chrome */
-input[type="date"]::-webkit-clear-button{ display:none !important; }
-/* quita flechitas del number */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
-  -webkit-appearance: none !important;
-  margin: 0 !important;
-}
-input[type="number"]{ -moz-appearance: textfield; }
-
-/* —— Tabla clásica (sin tarjetas redondeadas) —— */
-.table-container{
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-.table{
-  border-collapse: collapse !important;
-  border-spacing: 0 !important;
-}
-.table thead th{
-  border-bottom: 1px solid var(--primary) !important;
+/* footer fijo, azul agua */
+.footer{
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #fff !important;
+  border-top: 2px solid var(--primary) !important;
+  font-size: .8rem !important;
+  padding: 10px 16px !important;
+  z-index: 9999;
   color: #000 !important;
 }
-.table td, .table th {
+
+/* por si tuvieras un wrapper de tabla */
+.table-container{ margin-bottom: calc(var(--print-footer-offset) - 10px) !important; }
+
+/* cabecera de tabla repetida y filas que NO se parten */
+.table thead{ display: table-header-group; }
+.table tfoot{ display: table-footer-group; }
+.table{ page-break-inside: auto; border-collapse: collapse !important; }
+.table tr{ page-break-inside: avoid; break-inside: avoid; }
+
+/* ====== ESTILO DE LÍNEAS (limpio, sin “cajas”) ====== */
+/* Variante: separador vertical + líneas horizontales */
+.table td, .table th{
   border: none !important;
   padding: 6px 10px !important;
 }
-
 .table td:first-child,
-.table th:first-child {
-  border-right: 1px solid var(--primary) !important;
+.table th:first-child{
+  border-right: 1px solid var(--primary) !important; /* separa ANTAL | BESKRIVELSE */
   text-align: center;
   width: 80px;
 }
-
-.table tr {
-  border-bottom: 1px solid var(--primary) !important;
+.table tr{
+  border-bottom: 1px solid var(--primary) !important; /* líneas horizontales finas */
+}
+.table thead th{
+  border-bottom: 2px solid var(--primary) !important; /* cabecera marcada */
+  color: #000 !important; font-weight: bold;
 }
 
-.table thead th {
-  border-bottom: 2px solid var(--primary) !important;
-  font-weight: bold;
-  color: #D3D3D3 !important;
+/* --- UI fuera del papel e inputs sin recuadro --- */
+.btn-delete, .btn-add, .actions{ display:none !important; }
+input, textarea{
+  border:none !important; background:transparent !important;
+  box-shadow:none !important; border-radius:0 !important; padding:0 !important;
 }
+input[type="date"]::-webkit-calendar-picker-indicator{ display:none !important; }
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{ -webkit-appearance:none !important; margin:0 !important; }
+input[type="number"]{ -moz-appearance:textfield; }
 
-/* Si prefieres SOLO el separador vertical (sin rejilla completa),
-   usa esto en lugar de los bordes de arriba:
-.table td, .table th{ border: none !important; }
-.table td:first-child, .table th:first-child{
-  border-right: 1px solid var(--primary) !important;
-}
-.table thead th{ border-bottom: 1px solid var(--primary) !important; }
-*/
-
-/* Mantén también tus reglas de header/footer fijos y márgenes que ya pusimos */
-
-  /* tamaño y márgenes del A4 */
-  @page { size: A4; margin: 2.5cm 2cm 2.2cm; }
-
-  /* respeta colores en impresión */
-  html, body, .header, .footer, .table, .table * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  body { background: #fff !important; padding: 0 !important; }
-  .document { box-shadow: none; border-radius: 0; }
-  .document::before { display: none; }
-
-  /* ===== HEADER fijo en todas las páginas ===== */
-  .header{
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: #fff !important;
-    border-bottom: 2px solid var(--primary) !important; /* azul agua */
-    padding: 12px 24px !important;
-    z-index: 9999;
-
-    /* ambos títulos a la derecha, uno debajo del otro */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: .25rem;
-  }
-  .company-name,
-  .document-title{
-    color: var(--primary) !important;  /* títulos azules en papel */
-  }
-
-  /* deja MÁS espacio para que el contenido no se pegue al header */
-  .content{ margin-top: 140px !important; }  /* si aún lo ves justo, súbelo a 130–140px */
-
-  /* ===== FOOTER fijo en todas las páginas ===== */
-  .footer{
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #fff !important;
-    border-top: 2px solid var(--primary) !important;  /* línea azul agua */
-    font-size: .8rem !important;
-    padding: 10px 16px !important;
-    text-align: center !important;
-    color: #000 !important;
-    z-index: 9999;
-  }
-
-  /* reserva espacio antes del pie (para que no lo pise) */
-  .table-container{ margin-bottom: 90px !important; }
-
-  /* ===== Tabla clásica en azul agua y sin cortes raros ===== */
-  .table thead{ display: table-header-group; }
-  .table tfoot{ display: table-footer-group; }
-  .table{ page-break-inside: auto; }
-  .table tr{ page-break-inside: avoid; }
-  .table thead th{
-    border-bottom: 1px solid var(--primary) !important;
-    color: #000 !important;  /* etiquetas legibles */
-  }
-  .table td, .table th {
-  border: none !important;
-  padding: 6px 10px !important;
-}
-
-.table tr {
-  border-bottom: 1px solid var(--primary) !important;
-}
-
-.table thead th {
-  border-bottom: 2px solid var(--primary) !important;
-  font-weight: bold;
-  color: #000 !important;
-}
-
-  .table td:first-child{
-    border-right: 1px solid var(--primary) !important; /* separador vertical ANTAL | BESKRIVELSE */
-  }
-
-  /* oculta UI en papel */
-  .btn-delete, .btn-add, .actions{ display: none !important; }
-
-  /* inputs/textarea como texto limpio */
-  input, textarea{
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
 }
     </style>
  <script>
