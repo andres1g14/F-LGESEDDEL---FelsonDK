@@ -12,7 +12,7 @@
         }
 
         :root {
-            --primary: #5B21B6;
+            --primary: #3BAFDA;
             --primary-dark: #4C1D95;
             --secondary: #8B5CF6;
             --accent: #A78BFA;
@@ -81,45 +81,43 @@
             50% { transform: scaleX(1.05); }
         }
 
-        /* HEADER: nombre arriba a la derecha en azul cielo */
-.header {
-  background: #fff;                 /* sin degradado */
-  padding: 1.2rem 2.2rem 0.8rem;    /* lo baja un poco del borde superior */
-  text-align: right;                /* alinea a la derecha */
-  border-bottom: 2px solid #3BAFDA; /* línea fina bajo el header */
-  position: relative;
-}
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-.header::after { display: none; }   /* sin adorno diagonal */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(35deg);
+        }
 
-.company-name {
-  color: #3BAFDA;                   /* azul cielo corporativo */
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  margin: 0;                        /* limpio y compacto */
-}
+        .company-name {
+            color: blue;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: rigth;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
 
-/* Título dentro del header (si lo usas) */
-.document-title {
-  margin-top: 0.35rem;
-  font-size: 0.95rem;
-  color: #6B7280;                   /* gris suave */
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-/* Impresión: look clásico BN */
-@media print {
-  .header {
-    background: #fff !important;
-    border-bottom: 2px solid #000 !important;
-    padding: 0.8rem 0 0.6rem !important;
-  }
-  .company-name { color: #000 !important; }
-  .document-title { color: #000 !important; }
-}
-
+        .document-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
         .content {
             padding: 3rem;
