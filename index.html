@@ -618,5 +618,34 @@
             });
         });
     </script>
+    <script>
+  (function () {
+    function beforePrintFillPlaceholders() {
+      document.querySelectorAll('input[type="text"], input[type="number"], textarea')
+        .forEach(el => {
+          if (!el.value && el.placeholder) {
+            el.dataset._printedPlaceholder = '1';
+            el.value = el.placeholder;
+          }
+        });
+    }
+    function afterPrintRestore() {
+      document.querySelectorAll('[data-_printedPlaceholder="1"]').forEach(el => {
+        el.value = '';
+        el.removeAttribute('data-_printedPlaceholder');
+      });
+    }
+
+    window.addEventListener('beforeprint', beforePrintFillPlaceholders);
+    window.addEventListener('afterprint', afterPrintRestore);
+
+    const printBtns = [document.getElementById('save-pdf'), document.getElementById('print')].filter(Boolean);
+    printBtns.forEach(btn => btn.addEventListener('click', () => {
+      beforePrintFillPlaceholders();
+      setTimeout(() => { window.print(); setTimeout(afterPrintRestore, 300); }, 50);
+    }));
+  })();
+</script>
+
 </body>
 </html>
