@@ -506,9 +506,9 @@
             /* Configuración de página con márgenes para header/footer */
             @page {
                 size: A4 portrait;
-                margin-top: 22mm;
+                margin-top: 20mm;
                 margin-right: 15mm;
-                margin-bottom: 25mm;
+                margin-bottom: 24mm;
                 margin-left: 15mm;
             }
 
@@ -558,13 +558,11 @@
                 left: 0;
                 right: 0;
                 background: white !important;
-                padding: 6mm 15mm 4mm 15mm !important;
+                padding: 5mm 15mm 4mm 15mm !important;
                 border-bottom: 2px solid var(--brand-primary) !important;
-                z-index: 9999;
-                display: flex !important;
-                justify-content: flex-end !important;
-                align-items: center !important;
-                height: 18mm;
+                z-index: 99999;
+                display: block !important;
+                height: 16mm;
             }
 
             .card-header::before {
@@ -572,10 +570,12 @@
             }
 
             .logo {
-                font-size: 15pt !important;
+                font-size: 14pt !important;
                 font-weight: 800 !important;
                 color: var(--brand-primary) !important;
                 text-align: right !important;
+                display: block !important;
+                padding-top: 2mm !important;
             }
 
             .logo::after {
@@ -587,19 +587,22 @@
                ============================================ */
             .card-content {
                 padding: 0 !important;
-                margin: 0 !important;
-                padding-top: 6mm !important;
+                margin-top: 3mm !important;
+                margin-bottom: 0 !important;
             }
 
             .main-title {
-                font-size: 10pt !important;
-                font-weight: 600 !important;
+                font-size: 11pt !important;
+                font-weight: 700 !important;
                 color: #1a1a1a !important;
-                margin: 0 0 6mm 0 !important;
+                margin: 6mm 0 6mm 0 !important;
                 text-align: center !important;
                 letter-spacing: 0.15em !important;
                 text-transform: uppercase !important;
                 display: block !important;
+                page-break-after: avoid !important;
+                visibility: visible !important;
+                opacity: 1 !important;
             }
 
             /* Formulario */
