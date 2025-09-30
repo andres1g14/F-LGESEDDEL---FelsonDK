@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
         :root {
+            --primary-color: #4A90E2;
             --logo-blue-color: #007BFF;
+            --secondary-color: #6c757d;
+            --bg-light: #f8f9fa;
             --border-color: #dee2e6;
             --text-dark: #212529;
             --success-color: #28a745;
@@ -41,25 +43,47 @@
 
         header {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            justify-content: space-between;
+            align-items: flex-start;
             padding: 2.5rem;
-            padding-bottom: 2rem;
             background-color: white;
-            border-bottom: 2px solid var(--logo-blue-color);
+            border-bottom: 3px solid var(--primary-color);
         }
 
-        #company-logo {
-            color: var(--logo-blue-color);
+        .header-left {
+            flex: 1;
+        }
+
+        .header-right {
+            flex: 1;
+            text-align: right;
+        }
+
+        h2 {
             font-size: 1.75rem;
             font-weight: 600;
             letter-spacing: 0.5px;
         }
 
+        #company-logo {
+            color: var(--logo-blue-color);
+        }
+
+        .company-info {
+            text-align: right;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: var(--secondary-color);
+        }
+
+        .print-only-date {
+            display: none;
+        }
+
         h1 {
             text-align: center;
             font-size: 2.5rem;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
             color: var(--text-dark);
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -105,8 +129,8 @@
         input:focus,
         textarea:focus {
             outline: none;
-            border-color: var(--logo-blue-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
         }
 
         textarea {
@@ -121,78 +145,63 @@
             margin-bottom: 2.5rem;
         }
 
+        /* Professional Table Styling */
         .items-section table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1rem;
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .items-section thead th {
-            text-align: left;
-            padding: 12px 15px;
-            border-bottom: 2px solid #343a40;
-            border-right: 1px solid #dee2e6;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.7px;
-            background-color: #f8f9fa;
-            vertical-align: middle;
+        .items-section table th,
+        .items-section table td {
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
         }
 
-        .items-section thead th:last-child {
+        .items-section table th:last-child,
+        .items-section table td:last-child {
             border-right: none;
         }
 
-        .items-section tbody tr {
-            border-bottom: 1px solid #dee2e6;
+        table {
+            margin-bottom: 1.5rem;
         }
 
-        .items-section tbody tr:last-child {
+        thead {
+            background-color: var(--bg-light);
+        }
+
+        th {
+            padding: 1rem 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            letter-spacing: 0.5px;
+            color: var(--text-dark);
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: white;
+        }
+
+        tbody tr:last-child td {
             border-bottom: none;
         }
 
-        .items-section .antal-col {
-            width: 25%;
-            text-align: center;
-            vertical-align: top;
-            border-right: 1px solid #dee2e6;
+        tbody tr:hover {
+            background-color: #f8f9fa;
         }
 
-        .items-section .beskrivelse-col {
-            width: 75%;
-            vertical-align: top;
-        }
-
-        .items-section td {
-            padding: 10px 15px;
-            vertical-align: top;
-        }
-
-        /* Campos SIEMPRE visibles en la vista web */
-        .items-section td input,
-        .items-section td textarea {
+        .antal-input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da !important;
-            border-radius: 4px;
-            background-color: #fff !important;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
         }
 
-        .items-section td input:focus,
-        .items-section td textarea:focus {
-            outline: none;
-            border-color: var(--logo-blue-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
-
-        .items-section .antal-col input {
-            text-align: center;
+        .beskrivelse-input {
+            width: 100%;
         }
 
         .delete-row-btn {
@@ -230,22 +239,16 @@
             box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
         }
 
-        .document-footer {
+        footer {
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--logo-blue-color);
-            font-size: 0.85rem;
-            color: #6c757d;
+            margin-top: 3rem;
+            padding-bottom: 2.5rem;
         }
 
         .action-buttons {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin: 2rem auto;
-            max-width: 900px;
-            padding: 0 1rem;
         }
 
         .action-buttons button {
@@ -262,107 +265,36 @@
 
         #save-pdf-btn {
             background-color: white;
-            color: #6c757d;
-            border: 2px solid #dee2e6;
+            color: var(--secondary-color);
+            border: 2px solid var(--border-color);
         }
 
         #save-pdf-btn:hover {
-            background-color: #f8f9fa;
-            border-color: #6c757d;
+            background-color: var(--bg-light);
+            border-color: var(--secondary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
         }
 
         #print-btn.primary {
-            background-color: var(--logo-blue-color);
+            background-color: var(--primary-color);
             color: white;
-            border: 2px solid var(--logo-blue-color);
-            box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
         }
 
         #print-btn.primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            background-color: #357ABD;
+            border-color: #357ABD;
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
         }
 
-        /* Full Responsiveness */
-        @media (max-width: 768px) {
-            header {
-                justify-content: center;
-            }
-
-            .container {
-                margin: 0;
-                padding: 1rem;
-                box-shadow: none;
-            }
-
-            body {
-                font-size: 15px;
-            }
-
-            .details-section {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .items-section table thead {
-                display: none;
-            }
-
-            .items-section table tr {
-                display: block;
-                border: 1px solid #dee2e6;
-                margin-bottom: 1rem;
-                padding: 1rem;
-                border-radius: 4px;
-            }
-
-            .items-section table td {
-                display: block;
-                text-align: left;
-                border: none;
-                padding: 0.5rem 0;
-            }
-
-            .items-section table td::before {
-                content: attr(data-label);
-                display: block;
-                font-weight: bold;
-                text-transform: uppercase;
-                margin-bottom: 0.5rem;
-                color: #6c757d;
-            }
-
-            .items-section .antal-col,
-            .items-section .beskrivelse-col {
-                width: 100%;
-                text-align: left;
-            }
-
-            .items-section .antal-col input {
-                text-align: left;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 0.5rem;
-                padding: 1rem;
-            }
-
-            .document-footer {
-                margin-top: 2rem;
-                padding-top: 1rem;
-            }
-        }
-
-        /* Print Styles - Classic Document Layout */
+        /* Print Styles */
         @media print {
             @page {
                 size: A4;
-                margin: 2cm;
+                margin: 1cm;
             }
 
             * {
@@ -370,6 +302,18 @@
                 color: #000 !important;
                 box-shadow: none !important;
                 text-shadow: none !important;
+            }
+
+            #company-logo {
+                color: var(--logo-blue-color) !important;
+            }
+
+            .print-only-date {
+                display: block;
+                font-size: 12px;
+                text-align: right;
+                color: #333 !important;
+                margin-top: 0.5rem;
             }
 
             body {
@@ -385,7 +329,10 @@
                 border-radius: 0;
             }
 
-            /* Hide buttons and UI elements */
+            header {
+                border-bottom: 2px solid #000;
+            }
+
             #add-row-btn,
             .delete-row-btn,
             #save-pdf-btn,
@@ -394,132 +341,32 @@
                 display: none !important;
             }
 
-            /* Print Header - Logo stays on TOP RIGHT */
-            header {
-                display: flex;
-                justify-content: flex-end;
-                padding: 0;
-                margin-bottom: 2rem;
-                border-bottom: none;
-            }
-
-            #company-logo {
-                text-align: right;
-                font-size: 1.1rem;
-                font-weight: bold;
-                color: #000 !important;
-            }
-
-            .content-wrapper {
-                padding: 0;
-            }
-
-            /* Print Details Section - Stacked on left, before title */
-            .details-section {
-                display: block;
-                width: 100%;
-                margin-bottom: 1.5rem;
-                order: -1;
-            }
-
-            .details-column {
-                margin-bottom: 0.5rem;
-            }
-
-            label {
-                font-weight: normal;
-                margin-bottom: 0;
-                display: inline;
-            }
-
-            /* Print Title - Centered with underline */
-            h1 {
-                text-align: center;
-                font-size: 1.2rem;
-                margin: 2rem 0;
-                color: #000 !important;
-                text-decoration: underline;
-                font-weight: normal;
-                order: 0;
-            }
-
-            /* Print Table - Simple with borders */
-            .items-section {
-                margin-top: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .items-section table {
-                border: 1px solid #000;
-                width: 100%;
-            }
-
-            .items-section thead th {
-                background-color: transparent !important;
-                border: 1px solid #000 !important;
-                padding: 8px;
-                text-align: left;
-                text-transform: none;
-                letter-spacing: normal;
-                font-weight: bold;
-                font-size: 1rem;
-                vertical-align: middle !important;
-            }
-
-            .items-section tbody tr {
-                border: none;
-            }
-
-            .items-section td {
-                border: 1px solid #000 !important;
-                padding: 8px;
-                vertical-align: top;
-            }
-
-            .items-section .antal-col {
-                width: 20%;
-                text-align: left;
-                border-right: 1px solid #000 !important;
-            }
-
-            .items-section .beskrivelse-col {
-                width: 80%;
-            }
-
             .print-value {
+                border: none;
+                padding: 0.5rem 0;
                 display: block;
-                padding: 0;
-                border: none !important;
-                background: transparent !important;
-                min-height: 1.2em;
-            }
-
-            /* Print Footer - At bottom of page */
-            .document-footer {
-                display: block !important;
-                text-align: center;
-                position: fixed;
-                bottom: 2cm;
-                left: 0;
-                right: 0;
-                padding-top: 1rem;
-                border-top: 1px solid #000 !important;
-                font-size: 0.8rem;
-                color: #000 !important;
-            }
-
-            input, textarea {
-                border: none !important;
-                padding: 0 !important;
             }
 
             table {
                 page-break-inside: auto;
+                border: 1px solid #000;
             }
 
             tr {
                 page-break-inside: avoid;
                 page-break-after: auto;
+            }
+
+            th {
+                border-bottom: 2px solid #000;
+            }
+
+            td {
+                border-bottom: 1px solid #000;
+            }
+
+            input, textarea {
+                border: none !important;
             }
         }
     </style>
@@ -527,7 +374,12 @@
 <body>
     <div class="container">
         <header>
-            <h2 id="company-logo">Felson Watersafe ApS</h2>
+            <div class="header-left">
+                <h2 id="company-logo">Felson Watersafe ApS</h2>
+            </div>
+            <div class="header-right">
+                <p class="print-only-date"></p>
+            </div>
         </header>
 
         <div class="content-wrapper">
@@ -545,10 +397,8 @@
                     </div>
                 </div>
                 <div class="details-column">
-                    <div class="form-group">
-                        <label for="levering">Levering:</label>
-                        <textarea id="levering" rows="5"></textarea>
-                    </div>
+                    <label for="levering">Levering:</label>
+                    <textarea id="levering" rows="5"></textarea>
                 </div>
             </section>
 
@@ -556,22 +406,16 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Antal</th>
-                            <th>Beskrivelse</th>
-                            <th></th>
+                            <th style="width: 15%;">Antal</th>
+                            <th style="width: 75%;">Beskrivelse</th>
+                            <th style="width: 10%;"></th>
                         </tr>
                     </thead>
                     <tbody id="items-table-body">
                         <tr>
-                            <td class="antal-col" data-label="Antal">
-                                <input type="number" min="0">
-                            </td>
-                            <td class="beskrivelse-col" data-label="Beskrivelse">
-                                <textarea rows="1"></textarea>
-                            </td>
-                            <td style="text-align: center;">
-                                <button class="delete-row-btn" title="Slet række">🗑️</button>
-                            </td>
+                            <td data-label="Antal"><input type="number" class="antal-input" min="0"></td>
+                            <td data-label="Beskrivelse"><input type="text" class="beskrivelse-input"></td>
+                            <td style="text-align: center;"><button class="delete-row-btn" title="Slet række">🗑️</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -592,123 +436,90 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Script loaded'); // Debug log
-
-            // A. Automatic Date
-            const dateInput = document.getElementById('dato');
-            if (dateInput) {
+            // Custom print date
+            const dateElement = document.querySelector('.print-only-date');
+            if (dateElement) {
                 const today = new Date();
-                const year = today.getFullYear();
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const day = String(today.getDate()).padStart(2, '0');
-                dateInput.value = `${year}-${month}-${day}`;
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                dateElement.textContent = 'Udskrevet den: ' + today.toLocaleDateString('da-DK', options);
             }
 
             // Add Row Functionality
-            const addRowBtn = document.getElementById('add-row-btn');
-            if (addRowBtn) {
-                addRowBtn.addEventListener('click', function() {
-                    console.log('Add row clicked'); // Debug log
+            document.getElementById('add-row-btn').addEventListener('click', function() {
+                const tbody = document.getElementById('items-table-body');
+                const lastRow = tbody.querySelector('tr:last-child');
+                const newRow = lastRow.cloneNode(true);
+                
+                // Clear the values in the cloned row
+                newRow.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                });
+                
+                tbody.appendChild(newRow);
+            });
+
+            // Delete Row Functionality (Event Delegation)
+            document.getElementById('items-table-body').addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-row-btn')) {
                     const tbody = document.getElementById('items-table-body');
-                    const lastRow = tbody.querySelector('tr:last-child');
-                    const newRow = lastRow.cloneNode(true);
+                    const rows = tbody.querySelectorAll('tr');
                     
-                    newRow.querySelectorAll('input, textarea').forEach(input => {
-                        input.value = '';
-                        if (input.tagName.toLowerCase() === 'textarea') {
-                            input.style.height = 'auto';
-                        }
-                    });
-                    
-                    tbody.appendChild(newRow);
-                });
-            }
-
-            // Auto-expanding Textarea
-            const tableBody = document.getElementById('items-table-body');
-            if (tableBody) {
-                tableBody.addEventListener('input', function(event) {
-                    if (event.target.tagName.toLowerCase() === 'textarea') {
-                        const textarea = event.target;
-                        textarea.style.height = 'auto';
-                        textarea.style.height = (textarea.scrollHeight) + 'px';
+                    // Ensure at least one row remains
+                    if (rows.length > 1) {
+                        e.target.closest('tr').remove();
+                    } else {
+                        alert('Du skal have mindst én række i tabellen.');
                     }
-                });
-
-                // Delete Row Functionality
-                tableBody.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('delete-row-btn')) {
-                        const rows = tableBody.querySelectorAll('tr');
-                        
-                        if (rows.length > 1) {
-                            e.target.closest('tr').remove();
-                        } else {
-                            alert('Du skal have mindst én række i tabellen.');
-                        }
-                    }
-                });
-            }
+                }
+            });
 
             // Print Functionality
-            const savePdfBtn = document.getElementById('save-pdf-btn');
-            const printBtn = document.getElementById('print-btn');
-
-            if (savePdfBtn) {
-                savePdfBtn.addEventListener('click', function() {
-                    console.log('Save PDF clicked'); // Debug log
-                    prepareAndPrint();
-                });
-            }
-
-            if (printBtn) {
-                printBtn.addEventListener('click', function() {
-                    console.log('Print clicked'); // Debug log
-                    prepareAndPrint();
-                });
-            }
+            document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
+            document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
 
             function prepareAndPrint() {
-                try {
-                    console.log('Preparing to print...'); // Debug log
-                    
-                    const inputs = document.querySelectorAll('input, textarea');
-                    const originalElements = [];
+                // Store original inputs for restoration
+                const inputs = document.querySelectorAll('input, textarea');
+                const originalElements = [];
 
-                    inputs.forEach(input => {
-                        originalElements.push({
-                            element: input,
-                            parent: input.parentNode,
-                            nextSibling: input.nextSibling
-                        });
-
-                        const span = document.createElement('span');
-                        span.className = 'print-value';
-                        
-                        if (input.tagName.toLowerCase() === 'textarea') {
-                            const lines = (input.value || '').split('\n');
-                            lines.forEach((line, index) => {
-                                span.appendChild(document.createTextNode(line));
-                                if (index < lines.length - 1) {
-                                    span.appendChild(document.createElement('br'));
-                                }
-                            });
-                        } else {
-                            span.textContent = input.value || '';
-                        }
-                        
-                        input.parentNode.replaceChild(span, input);
+                inputs.forEach(input => {
+                    // Store the original element and its parent
+                    originalElements.push({
+                        element: input,
+                        parent: input.parentNode,
+                        nextSibling: input.nextSibling
                     });
 
-                    console.log('Opening print dialog...'); // Debug log
+                    // Create a span with the input's value
+                    const span = document.createElement('span');
+                    span.className = 'print-value';
+                    span.textContent = input.value || '';
                     
-                    // Small delay to ensure DOM is updated
-                    setTimeout(function() {
-                        window.print();
-                    }, 100);
+                    // Replace input with span
+                    input.parentNode.replaceChild(span, input);
+                });
 
-                    // Restore function
-                    function restoreInputs() {
-                        console.log('Restoring inputs...'); // Debug log
+                // Trigger print dialog
+                window.print();
+
+                // Restore original inputs after print dialog closes
+                window.onafterprint = function() {
+                    originalElements.forEach(item => {
+                        const printValue = item.parent.querySelector('.print-value');
+                        if (printValue) {
+                            if (item.nextSibling) {
+                                item.parent.insertBefore(item.element, item.nextSibling);
+                            } else {
+                                item.parent.appendChild(item.element);
+                            }
+                            printValue.remove();
+                        }
+                    });
+                };
+
+                // Fallback for browsers that don't support onafterprint
+                setTimeout(function() {
+                    if (document.querySelector('.print-value')) {
                         originalElements.forEach(item => {
                             const printValue = item.parent.querySelector('.print-value');
                             if (printValue) {
@@ -721,20 +532,11 @@
                             }
                         });
                     }
-
-                    // Restore after print
-                    if (window.onafterprint !== undefined) {
-                        window.onafterprint = restoreInputs;
-                    }
-
-                    // Fallback
-                    setTimeout(restoreInputs, 1000);
-                    
-                } catch (error) {
-                    console.error('Print error:', error);
-                    alert('Error al intentar imprimir: ' + error.message);
-                }
+                }, 1000);
             }
+
+            // Set today's date by default
+            document.getElementById('dato').valueAsDate = new Date();
         });
     </script>
 </body>
