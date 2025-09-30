@@ -100,7 +100,7 @@
         }
 
         .company-name {
-            color: #3BAFDA; /* MODIFIED COLOR */
+            color: white;
             font-size: 2.5rem;
             font-weight: 800;
             text-align: center;
@@ -112,7 +112,7 @@
         .document-title {
             text-align: center;
             font-size: 1.2rem;
-            color: #3BAFDA; /* MODIFIED COLOR */
+            color: rgba(255, 255, 255, 0.9);
             margin-top: 0.5rem;
             font-weight: 300;
             letter-spacing: 3px;
@@ -413,17 +413,16 @@
 
             .header {
                 background: white;
-                border-bottom: 3px solid #000000;
+                border-bottom: 3px solid var(--primary);
                 padding: 2rem;
             }
 
             .company-name {
-                color: #000000; /* MODIFIED FOR PRINT */
+                color: var(--primary);
             }
 
             .document-title {
-                color: #000000; /* MODIFIED FOR PRINT */
-                text-decoration: underline; /* MODIFIED FOR PRINT */
+                color: var(--text-gray);
             }
 
             .btn-delete,
@@ -463,7 +462,8 @@
         <div class="document">
             <div class="header">
                 <h1 class="company-name">FELSON WATERSAFE ApS</h1>
-                <p class="document-title">FØLGESEDDEL</p> </div>
+                <p class="document-title">Følgeseddel</p>
+            </div>
 
             <div class="content">
                 <div class="info-grid">
