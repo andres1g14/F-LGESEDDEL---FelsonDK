@@ -1,110 +1,583 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Følgeseddel – Felson Watersafe ApS</title>
-  <style>
-    :root{
-      --sky:#3BAFDA; /* azul cielo corporativo */
-      --muted:#6b7280; --line:#e5e7eb; --danger:#ef4444; --success:#10b981;
-    }
-    body{font-family:"Inter",sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .wrap{max-width:900px;width:100%}
-    .doc{background:#fff;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.15);overflow:hidden;display:flex;flex-direction:column}
-    .header{padding:20px 28px;text-align:right;background:var(--sky)}
-    .brand{color:#fff;font-size:1.6rem;font-weight:800}
-    h1.title{text-align:center;text-transform:uppercase;letter-spacing:1.4px;margin:18px 0;font-size:1.8rem;font-weight:800;color:#111}
-    .details{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;margin:0 28px 22px}
-    .details .full{grid-column:1/-1}
-    .label{display:block;font-weight:600;font-size:.9rem;color:#374151;margin-bottom:4px}
-    .input,.textarea{width:100%;padding:10px;border:2px solid var(--line);border-radius:8px;background:#f9fafb;font:inherit}
-    .textarea{resize:vertical;min-height:80px}
-    .tablebox{margin:0 28px 24px}
-    table{width:100%;border-collapse:collapse;border:1px solid var(--line)}
-    th,td{padding:10px;border:1px solid var(--line)}
-    th{background:var(--sky);color:#fff;text-transform:uppercase;font-size:.8rem}
-    td input,td textarea{width:100%;border:none;background:transparent;font:inherit}
-    td.controls{text-align:center}
-    .btn-del{background:#fff;border:2px solid var(--danger);color:var(--danger);cursor:pointer;border-radius:6px;padding:0 6px}
-    .btn-del:hover{background:var(--danger);color:#fff}
-    .btn-add{margin-top:10px;background:var(--success);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer}
-    .actions{display:flex;gap:12px;justify-content:center;margin:20px}
-    .btn{padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;border:none}
-    .btn.primary{background:var(--sky);color:#fff}
-    .btn.secondary{background:#fff;border:2px solid var(--sky);color:var(--sky)}
-    .footer{padding:18px;text-align:center;font-size:.9rem;color:var(--muted);border-top:2px solid var(--line);margin-top:auto}
-    @media print{
-      @page{size:A4;margin:2.5cm}
-      body{background:#fff}
-      .doc{box-shadow:none;border-radius:0}
-      .header{background:#fff;text-align:right;padding:10px 0}
-      .brand{color:#000}
-      h1.title{text-decoration:underline;text-decoration-thickness:2px;margin:16px 0}
-      .btn,.btn-add,.btn-del,.actions{display:none !important}
-      input,textarea{border:none !important;background:transparent !important}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Følgeseddel - Felson Watersafe ApS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5B21B6;
+            --primary-dark: #4C1D95;
+            --secondary: #8B5CF6;
+            --accent: #A78BFA;
+            --success: #10B981;
+            --danger: #EF4444;
+            --bg-dark: #111827;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-gray: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            animation: gradientShift 15s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .document {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .document::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #5B21B6, #8B5CF6, #A78BFA);
+            animation: colorWave 3s ease-in-out infinite;
+        }
+
+        @keyframes colorWave {
+            0%, 100% { transform: scaleX(1); }
+            50% { transform: scaleX(1.05); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 3rem;
+            position: right;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(35deg);
+        }
+
+        .company-name {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .document-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            padding: 3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .field-group {
+            position: relative;
+        }
+
+        .field-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-light);
+        }
+
+        .field-input:hover {
+            border-color: var(--accent);
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .field-textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .table-container {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+        }
+
+        .table thead th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody tr {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: scale(1.01);
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            position: relative;
+        }
+
+        .table tbody td:first-child {
+            border-radius: 12px 0 0 12px;
+            width: 120px;
+        }
+
+        .table tbody td:last-child {
+            border-radius: 0 12px 12px 0;
+            width: 60px;
+            text-align: center;
+        }
+
+        .table-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid transparent;
+            background: var(--bg-light);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .table-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .table-number {
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-delete {
+            background: white;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-add::before {
+            content: '+';
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .btn-action {
+            padding: 1.25rem 3rem;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-action::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-action:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 14px rgba(91, 33, 182, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.3);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+            }
+
+            .company-name {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .document {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .document::before {
+                display: none;
+            }
+
+            .header {
+                background: white;
+                border-bottom: 3px solid var(--primary);
+                padding: 2rem;
+            }
+
+            .company-name {
+                color: var(--primary);
+            }
+
+            .document-title {
+                color: var(--text-gray);
+            }
+
+            .btn-delete,
+            .btn-add,
+            .actions {
+                display: none !important;
+            }
+
+            .table tbody tr {
+                box-shadow: none;
+                border: 1px solid var(--border);
+            }
+
+            .table tbody tr:hover {
+                transform: none;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-  <main class="wrap">
-    <article class="doc">
-      <header class="header">
-        <h2 class="brand">Felson Watersafe ApS</h2>
-      </header>
+    <div class="container">
+        <div class="document">
+            <div class="header">
+                <h1 class="company-name">FELSON WATERSAFE ApS</h1>
+                <p class="document-title">Følgeseddel</p>
+            </div>
 
-      <h1 class="title">FØLGESEDDEL</h1>
+            <div class="content">
+                <div class="info-grid">
+                    <div class="field-group">
+                        <label class="field-label">Dato</label>
+                        <input type="date" class="field-input" id="dato">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Ordre Nr.</label>
+                        <input type="text" class="field-input" id="ordre" placeholder="Indtast ordrenummer...">
+                    </div>
+                </div>
 
-      <section class="details">
-        <div>
-          <label class="label" for="dato">Dato</label>
-          <input id="dato" type="date" class="input">
+                <div class="field-group">
+                    <label class="field-label">Leveringsadresse</label>
+                    <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..."></textarea>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Antal</th>
+                                <th>Beskrivelse</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr class="fade-in">
+                                <td>
+                                    <input type="number" class="table-input table-number" min="0" placeholder="0">
+                                </td>
+                                <td>
+                                    <input type="text" class="table-input" placeholder="Indtast beskrivelse...">
+                                </td>
+                                <td>
+                                    <button class="btn-delete" title="Slet række">×</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-add" id="add-row">Tilføj række</button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-action btn-secondary" id="save-pdf">Gem som PDF</button>
+                    <button class="btn-action btn-primary" id="print">Udskriv</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="footer-divider"></div>
+                <p><strong>Felson Watersafe ApS</strong></p>
+                <p>Gartnervej 4 • 6710 Esbjerg V</p>
+                <p>CVR: DK26813522 • Tlf: 70 20 66 76</p>
+                <p>E-mail: felson@felson.dk</p>
+            </div>
         </div>
-        <div>
-          <label class="label" for="levering">Levering</label>
-          <textarea id="levering" class="textarea"></textarea>
-        </div>
-        <div class="full">
-          <label class="label" for="ordre">Ordre nr.</label>
-          <input id="ordre" type="text" class="input" placeholder="Indtast ordrenummer">
-        </div>
-      </section>
+    </div>
 
-      <div class="tablebox">
-        <table id="items">
-          <thead>
-            <tr><th style="width:20%">Antal</th><th>Beskrivelse</th><th style="width:60px"></th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="number" min="0" placeholder="0"></td>
-              <td><textarea rows="1" placeholder="Beskrivelse"></textarea></td>
-              <td class="controls"><button class="btn-del">×</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <button id="add" class="btn-add">+ Tilføj række</button>
-      </div>
+    <script>
+        // Set today's date
+        document.getElementById('dato').valueAsDate = new Date();
 
-      <div class="actions">
-        <button id="save" class="btn secondary">Gem som PDF</button>
-        <button id="print" class="btn primary">Udskriv</button>
-      </div>
+        // Add new row
+        document.getElementById('add-row').addEventListener('click', function() {
+            const tbody = document.getElementById('table-body');
+            const newRow = document.createElement('tr');
+            newRow.className = 'fade-in';
+            newRow.innerHTML = `
+                <td>
+                    <input type="number" class="table-input table-number" min="0" placeholder="0">
+                </td>
+                <td>
+                    <input type="text" class="table-input" placeholder="Indtast beskrivelse...">
+                </td>
+                <td>
+                    <button class="btn-delete" title="Slet række">×</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+        });
 
-      <footer class="footer">
-        Felson Watersafe ApS • Gartnervej 4 • 6710 Esbjerg V<br>
-        CVR: DK26813522 • Tlf: 70 20 66 76 • E-mail: felson@felson.dk
-      </footer>
-    </article>
-  </main>
+        // Delete row
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-delete')) {
+                const tbody = document.getElementById('table-body');
+                if (tbody.rows.length > 1) {
+                    const row = e.target.closest('tr');
+                    row.style.animation = 'fadeIn 0.3s ease reverse';
+                    setTimeout(() => row.remove(), 300);
+                } else {
+                    alert('Der skal være mindst én række');
+                }
+            }
+        });
 
-  <script>
-    document.getElementById("dato").valueAsDate = new Date();
-    const rows=document.querySelector("#items tbody");
-    document.getElementById("add").onclick=()=>{let tr=rows.rows[0].cloneNode(true);tr.querySelectorAll("input,textarea").forEach(el=>el.value="");rows.appendChild(tr)};
-    rows.addEventListener("click",e=>{if(e.target.classList.contains("btn-del")){if(rows.rows.length>1)e.target.closest("tr").remove();}});
-    document.getElementById("save").onclick=()=>window.print();
-    document.getElementById("print").onclick=()=>window.print();
-  </script>
+        // Print functionality
+        function handlePrint() {
+            window.print();
+        }
+
+        document.getElementById('save-pdf').addEventListener('click', handlePrint);
+        document.getElementById('print').addEventListener('click', handlePrint);
+
+        // Add subtle animations on input focus
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.01)';
+            });
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
