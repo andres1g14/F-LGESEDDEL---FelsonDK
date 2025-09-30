@@ -7,6 +7,7 @@
     <style>
         :root {
             --primary-color: #4A90E2;
+            --logo-blue-color: #007BFF;
             --secondary-color: #6c757d;
             --bg-light: #f8f9fa;
             --border-color: #dee2e6;
@@ -51,9 +52,12 @@
 
         h2 {
             font-size: 1.75rem;
-            color: var(--primary-color);
             font-weight: 600;
             letter-spacing: 0.5px;
+        }
+
+        #company-logo {
+            color: var(--logo-blue-color);
         }
 
         .company-info {
@@ -61,6 +65,10 @@
             font-size: 0.9rem;
             line-height: 1.8;
             color: var(--secondary-color);
+        }
+
+        .print-only-date {
+            display: none;
         }
 
         h1 {
@@ -128,13 +136,28 @@
             margin-bottom: 2.5rem;
         }
 
-        table {
+        /* Professional Table Styling */
+        .items-section table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+        }
+
+        .items-section table th,
+        .items-section table td {
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .items-section table th:last-child,
+        .items-section table td:last-child {
+            border-right: none;
+        }
+
+        table {
+            margin-bottom: 1.5rem;
         }
 
         thead {
@@ -273,7 +296,15 @@
             }
 
             #company-logo {
-                color: #4A90E2 !important;
+                color: var(--logo-blue-color) !important;
+            }
+
+            .print-only-date {
+                display: block;
+                font-size: 12px;
+                text-align: right;
+                color: #333 !important;
+                margin-top: 0.5rem;
             }
 
             body {
@@ -334,16 +365,17 @@
 <body>
     <div class="container">
         <header>
-            <div>
-                <h2>Felson Watersafe ApS</h2>
+            <div class="header-left">
+                <h2 id="company-logo">Felson Watersafe ApS</h2>
             </div>
-            <div class="company-info">
+            <div class="header-right company-info">
                 <p>Felson Watersafe ApS</p>
                 <p>Gartnervej 4</p>
                 <p>6710 Esbjerg V</p>
                 <p>CVR-nr. DK26813522</p>
                 <p>Tlf. 70206676</p>
                 <p>felson@felson.dk</p>
+                <p class="print-only-date"></p>
             </div>
         </header>
 
@@ -397,82 +429,75 @@
     </div>
 
     <script>
-        // Add Row Functionality
-        document.getElementById('add-row-btn').addEventListener('click', function() {
-            const tbody = document.getElementById('items-table-body');
-            const lastRow = tbody.querySelector('tr:last-child');
-            const newRow = lastRow.cloneNode(true);
-            
-            // Clear the values in the cloned row
-            newRow.querySelectorAll('input').forEach(input => {
-                input.value = '';
-            });
-            
-            tbody.appendChild(newRow);
-        });
-
-        // Delete Row Functionality (Event Delegation)
-        document.getElementById('items-table-body').addEventListener('click', function(e) {
-            if (e.target.classList.contains('delete-row-btn')) {
-                const tbody = document.getElementById('items-table-body');
-                const rows = tbody.querySelectorAll('tr');
-                
-                // Ensure at least one row remains
-                if (rows.length > 1) {
-                    e.target.closest('tr').remove();
-                } else {
-                    alert('Du skal have mindst én række i tabellen.');
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Custom print date
+            const dateElement = document.querySelector('.print-only-date');
+            if (dateElement) {
+                const today = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                dateElement.textContent = 'Udskrevet den: ' + today.toLocaleDateString('da-DK', options);
             }
-        });
 
-        // Print Functionality
-        document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
-        document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
-
-        function prepareAndPrint() {
-            // Store original inputs for restoration
-            const inputs = document.querySelectorAll('input, textarea');
-            const originalElements = [];
-
-            inputs.forEach(input => {
-                // Store the original element and its parent
-                originalElements.push({
-                    element: input,
-                    parent: input.parentNode,
-                    nextSibling: input.nextSibling
-                });
-
-                // Create a span with the input's value
-                const span = document.createElement('span');
-                span.className = 'print-value';
-                span.textContent = input.value || '';
+            // Add Row Functionality
+            document.getElementById('add-row-btn').addEventListener('click', function() {
+                const tbody = document.getElementById('items-table-body');
+                const lastRow = tbody.querySelector('tr:last-child');
+                const newRow = lastRow.cloneNode(true);
                 
-                // Replace input with span
-                input.parentNode.replaceChild(span, input);
+                // Clear the values in the cloned row
+                newRow.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                });
+                
+                tbody.appendChild(newRow);
             });
 
-            // Trigger print dialog
-            window.print();
-
-            // Restore original inputs after print dialog closes
-            window.onafterprint = function() {
-                originalElements.forEach(item => {
-                    const printValue = item.parent.querySelector('.print-value');
-                    if (printValue) {
-                        if (item.nextSibling) {
-                            item.parent.insertBefore(item.element, item.nextSibling);
-                        } else {
-                            item.parent.appendChild(item.element);
-                        }
-                        printValue.remove();
+            // Delete Row Functionality (Event Delegation)
+            document.getElementById('items-table-body').addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-row-btn')) {
+                    const tbody = document.getElementById('items-table-body');
+                    const rows = tbody.querySelectorAll('tr');
+                    
+                    // Ensure at least one row remains
+                    if (rows.length > 1) {
+                        e.target.closest('tr').remove();
+                    } else {
+                        alert('Du skal have mindst én række i tabellen.');
                     }
-                });
-            };
+                }
+            });
 
-            // Fallback for browsers that don't support onafterprint
-            setTimeout(function() {
-                if (document.querySelector('.print-value')) {
+            // Print Functionality
+            document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
+            document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
+
+            function prepareAndPrint() {
+                // Store original inputs for restoration
+                const inputs = document.querySelectorAll('input, textarea');
+                const originalElements = [];
+
+                inputs.forEach(input => {
+                    // Store the original element and its parent
+                    originalElements.push({
+                        element: input,
+                        parent: input.parentNode,
+                        nextSibling: input.nextSibling
+                    });
+
+                    // Create a span with the input's value
+                    const span = document.createElement('span');
+                    span.className = 'print-value';
+                    span.textContent = input.value || '';
+                    
+                    // Replace input with span
+                    input.parentNode.replaceChild(span, input);
+                });
+
+                // Trigger print dialog
+                window.print();
+
+                // Restore original inputs after print dialog closes
+                window.onafterprint = function() {
                     originalElements.forEach(item => {
                         const printValue = item.parent.querySelector('.print-value');
                         if (printValue) {
@@ -484,12 +509,29 @@
                             printValue.remove();
                         }
                     });
-                }
-            }, 1000);
-        }
+                };
 
-        // Set today's date by default
-        document.getElementById('dato').valueAsDate = new Date();
+                // Fallback for browsers that don't support onafterprint
+                setTimeout(function() {
+                    if (document.querySelector('.print-value')) {
+                        originalElements.forEach(item => {
+                            const printValue = item.parent.querySelector('.print-value');
+                            if (printValue) {
+                                if (item.nextSibling) {
+                                    item.parent.insertBefore(item.element, item.nextSibling);
+                                } else {
+                                    item.parent.appendChild(item.element);
+                                }
+                                printValue.remove();
+                            }
+                        });
+                    }
+                }, 1000);
+            }
+
+            // Set today's date by default
+            document.getElementById('dato').valueAsDate = new Date();
+        });
     </script>
 </body>
 </html>
