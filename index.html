@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
         :root {
+            --primary-color: #4A90E2;
             --logo-blue-color: #007BFF;
+            --secondary-color: #6c757d;
+            --bg-light: #f8f9fa;
             --border-color: #dee2e6;
             --text-dark: #212529;
-            --text-light: #6c757d;
-            --bg-light: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
         }
 
-        /* --- Global Styles --- */
         * {
             margin: 0;
             padding: 0;
@@ -22,228 +23,409 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f4f4f9;
-            padding: 2rem;
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            background-color: #e9ecef;
+            padding: 2rem 1rem;
+            min-height: 100vh;
             font-size: 16px;
             color: var(--text-dark);
         }
 
-        /* --- On-Screen Modern Layout --- */
         .container {
             max-width: 900px;
             margin: 0 auto;
+            padding: 0;
             background-color: white;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-        }
-        
-        .content-wrapper {
-             padding: 2.5rem;
+            overflow: hidden;
         }
 
         header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
-            padding: 1.5rem 2.5rem;
+            padding: 2.5rem;
+            padding-bottom: 2rem;
+            background-color: white;
             border-bottom: 2px solid var(--logo-blue-color);
         }
 
-        /* Print-only header is hidden on screen */
-        .print-header {
-            display: none;
+        .header-right-content {
+            text-align: right;
         }
-        
-        #company-logo {
-            color: var(--logo-blue-color);
+
+        h2 {
             font-size: 1.75rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        #company-logo {
+            color: var(--logo-blue-color);
         }
 
         h1 {
             text-align: center;
+            font-size: 2.5rem;
             margin: 2rem 0;
-            font-size: 2.25rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .content-wrapper {
+            padding: 2.5rem;
         }
 
         .details-section {
             display: flex;
-            gap: 2rem;
+            justify-content: space-between;
+            gap: 2.5rem;
             margin-bottom: 2.5rem;
         }
+
         .details-column {
             flex: 1;
         }
-        .form-group {
-            margin-bottom: 1rem;
-        }
+
         label {
             display: block;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-size: 0.95rem;
         }
+
         input[type="text"],
         input[type="date"],
         input[type="number"],
         textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
             border-radius: 6px;
             font-family: inherit;
             font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
+            color: var(--text-dark);
         }
+
         input:focus,
         textarea:focus {
             outline: none;
-            border-color: var(--logo-blue-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
         }
 
-        /* Pro Table Style (On-Screen) */
-        .items-section table { width: 100%; border-collapse: collapse; }
+        textarea {
+            resize: vertical;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .items-section {
+            margin-bottom: 2.5rem;
+        }
+
+        /* === "Super Potente" Minimalist Table Style === */
+        .items-section table {
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+        }
+
         .items-section thead th {
-            text-align: left; padding: 12px 15px; border-bottom: 2px solid var(--text-dark);
-            text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.7px;
+            background-color: transparent;
+            border-bottom: 2px solid #212529;
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #343a40;
         }
-        .items-section tbody tr { border-bottom: 1px solid var(--border-color); }
-        .items-section tbody tr:last-child { border-bottom: none; }
-        .items-section .antal-col { width: 20%; text-align: center; }
-        .items-section .beskrivelse-col { width: 70%; }
-        .items-section .actions-col { width: 10%; text-align: center; }
-        .items-section td { padding: 10px 15px; vertical-align: top; }
-        .items-section td input, .items-section td textarea {
-            width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; font-size: 1rem;
-        }
-        .items-section .antal-col input { text-align: center; }
-        .items-section textarea { resize: vertical; min-height: 42px; }
 
-        .table-actions {
-            margin-top: 1.5rem;
+        .items-section tbody tr {
+            border-bottom: 1px solid #dee2e6;
         }
-        #add-row-btn {
-            background-color: #28a745; color: white; border: none; padding: 0.6rem 1.2rem;
-            border-radius: 5px; cursor: pointer; font-weight: 500;
+
+        .items-section tbody td {
+            padding: 1rem 0.75rem;
+            border: none;
+            color: #495057;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
+
+        .items-section tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .items-section th:first-child,
+        .items-section td:first-child {
+            text-align: center;
+            width: 15%;
+        }
+
+        .items-section td input,
+        .items-section td textarea {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            padding: 0;
+            resize: none;
+        }
+
+        .items-section td input:focus,
+        .items-section td textarea:focus {
+            outline: none;
+        }
+
         .delete-row-btn {
-            background: none; border: none; color: #dc3545; cursor: pointer; font-size: 1.2rem;
+            background-color: transparent;
+            color: var(--danger-color);
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+            border-radius: 4px;
         }
-        
+
+        .delete-row-btn:hover {
+            background-color: rgba(220, 53, 69, 0.1);
+            transform: scale(1.1);
+        }
+
+        #add-row-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+        }
+
+        #add-row-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
         .document-footer {
-            text-align: center; margin-top: 3rem; padding-top: 1.5rem;
-            border-top: 1px solid var(--logo-blue-color); font-size: 0.8rem; color: var(--text-light);
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.85rem;
+            color: #6c757d;
         }
 
         .action-buttons {
-            display: flex; gap: 1rem; justify-content: center; margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem auto;
+            max-width: 900px;
+            padding: 0 1rem;
         }
+
         .action-buttons button {
-            padding: 0.8rem 2rem; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600;
-            border: 2px solid;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            min-width: 200px;
         }
-        #save-pdf-btn { background-color: #fff; border-color: var(--border-color); color: var(--text-dark); }
-        #print-btn { background-color: var(--logo-blue-color); border-color: var(--logo-blue-color); color: #fff; }
 
-        /* --- Responsiveness --- */
+        #save-pdf-btn {
+            background-color: white;
+            color: var(--secondary-color);
+            border: 2px solid var(--border-color);
+        }
+
+        #save-pdf-btn:hover {
+            background-color: var(--bg-light);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
+        }
+
+        #print-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
+        }
+
+        #print-btn.primary:hover {
+            background-color: #357ABD;
+            border-color: #357ABD;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Full Responsiveness */
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .container { padding: 0; border-radius: 0; }
-            .content-wrapper { padding: 1.5rem; }
-            header { justify-content: center; }
-            .details-section { flex-direction: column; }
-            .items-section table thead { display: none; }
-            .items-section table tr { display: block; border: 1px solid var(--border-color); margin-bottom: 1rem; }
-            .items-section table td { display: block; text-align: right; border-bottom: 1px solid #eee; }
-            .items-section table td:last-child { border-bottom: none; }
-            .items-section table td::before { content: attr(data-label); float: left; font-weight: bold; }
-        }
+            header {
+                justify-content: center;
+            }
 
-        /* --- PRINT STYLES (Matches Word Document Reference) --- */
-        @media print {
-            @page { size: A4; margin: 2cm; }
-            body { background: #fff; padding: 0; font-size: 11pt; }
-            * { color: #000 !important; box-shadow: none !important; }
-
-            /* Hide all on-screen UI */
-            .action-buttons, #add-row-btn, .delete-row-btn, header {
-                display: none !important;
+            .header-right-content {
+                text-align: center;
             }
 
             .container {
-                width: 100%; max-width: 100%; padding: 0; margin: 0;
-                border: none; box-shadow: none; border-radius: 0;
+                margin: 0;
+                padding: 1rem;
+                box-shadow: none;
             }
 
-            /* Display the print-only header, styled like the Word doc */
-            .print-header {
-                display: block;
-                text-align: left;
-                margin-bottom: 2rem;
-            }
-            .print-header h2 {
-                font-size: 14pt;
-                font-weight: bold;
+            body {
+                font-size: 15px;
             }
 
-            h1 { font-size: 18pt; margin: 1.5rem 0; }
-
-            /* Reformat details section to a single block */
             .details-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            /* Responsive Table Transformation */
+            .items-section table thead {
+                display: none;
+            }
+
+            .items-section table tr {
                 display: block;
-                margin-bottom: 2rem;
-            }
-            .details-column {
-                margin-bottom: 0.5rem;
+                border: 1px solid #dee2e6;
+                margin-bottom: 1rem;
             }
 
-            /* Classic document table style for printing */
-            .items-section table, .items-section th, .items-section td {
-                border: 1px solid black;
+            .items-section table td {
+                display: block;
+                text-align: right;
+                border: none;
+                border-bottom: 1px solid #f0f0f0;
             }
-            .items-section table {
-                border-collapse: collapse;
-                width: 100%;
-                page-break-inside: auto;
-            }
-            .items-section th, .items-section td {
-                padding: 6px 8px;
-                text-align: left;
-            }
-            .items-section .antal-col { text-align: left; } /* Align left for print */
-            tr { page-break-inside: avoid; page-break-after: auto; }
 
-            /* Position footer at the bottom */
+            .items-section table td:last-child {
+                border-bottom: none;
+            }
+
+            .items-section table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+
             .document-footer {
-                border-top: 1px solid black;
-                text-align: left;
-                font-size: 9pt;
+                margin-top: 2rem;
+                padding-top: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+
+            * {
+                background-color: transparent !important;
                 color: #000 !important;
-                /* Position footer at the bottom of the content flow */
-                margin-top: 3rem;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+
+            #company-logo {
+                color: var(--logo-blue-color) !important;
+            }
+
+            body {
+                background: white !important;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            header {
+                border-bottom: 2px solid #000;
+            }
+
+            #add-row-btn,
+            .delete-row-btn,
+            #save-pdf-btn,
+            #print-btn,
+            .action-buttons {
+                display: none !important;
+            }
+
+            .document-footer {
+                border-top: 1px solid #000;
             }
 
             .print-value {
-                white-space: pre-wrap; /* Preserve newlines */
-                padding: 6px 8px;
+                border: none;
+                padding: 0.5rem 0;
+                display: block;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            input, textarea {
+                border: none !important;
+            }
+
+            .print-value {
+                white-space: pre-wrap;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        
         <header>
-            <h2 id="company-logo">Felson Watersafe ApS</h2>
+            <div class="header-right-content">
+                <h2 id="company-logo">Felson Watersafe ApS</h2>
+            </div>
         </header>
 
         <div class="content-wrapper">
-            <div class="print-header">
-                <h2>Felson Watersafe ApS</h2>
-            </div>
-
             <h1>FØLGESEDDEL</h1>
 
             <section class="details-section">
@@ -259,7 +441,7 @@
                 </div>
                 <div class="details-column">
                     <label for="levering">Levering:</label>
-                    <textarea id="levering" rows="4"></textarea>
+                    <textarea id="levering" rows="5"></textarea>
                 </div>
             </section>
 
@@ -267,24 +449,22 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="antal-col">Antal</th>
-                            <th class="beskrivelse-col">Beskrivelse</th>
-                            <th class="actions-col"></th>
+                            <th>Antal</th>
+                            <th>Beskrivelse</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="items-table-body">
                         <tr>
-                            <td class="antal-col" data-label="Antal"><input type="number" class="antal-input" min="0"></td>
-                            <td class="beskrivelse-col" data-label="Beskrivelse"><textarea class="beskrivelse-input" rows="1"></textarea></td>
-                            <td class="actions-col"><button class="delete-row-btn" title="Slet række">🗑️</button></td>
+                            <td data-label="Antal"><input type="number" class="antal-input" min="0"></td>
+                            <td data-label="Beskrivelse"><textarea class="beskrivelse-input" rows="1"></textarea></td>
+                            <td style="text-align: center;"><button class="delete-row-btn" title="Slet række">🗑️</button></td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="table-actions">
-                    <button type="button" id="add-row-btn">+ Tilføj Række</button>
-                </div>
+                <button type="button" id="add-row-btn">+ Tilføj Række</button>
             </section>
-            
+
             <footer class="document-footer">
                 <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
                 <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
@@ -294,100 +474,122 @@
 
     <div class="action-buttons">
         <button type="button" id="save-pdf-btn">Gem som PDF</button>
-        <button type="button" id="print-btn">Udskriv</button>
+        <button type="button" id="print-btn" class="primary">Udskriv</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
-            // --- CORE FUNCTIONALITY ---
-
-            // 1. Set today's date automatically, but allow changes
-            const dateInput = document.getElementById('dato');
-            if(dateInput) {
-                const today = new Date();
-                // Format to YYYY-MM-DD for the date input
-                today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-                dateInput.valueAsDate = today;
-            }
-
-            // 2. Add Row Functionality
+            // Add Row Functionality
             document.getElementById('add-row-btn').addEventListener('click', function() {
                 const tbody = document.getElementById('items-table-body');
-                const newRow = tbody.rows[0].cloneNode(true);
+                const lastRow = tbody.querySelector('tr:last-child');
+                const newRow = lastRow.cloneNode(true);
                 
+                // Clear the values in the cloned row
                 newRow.querySelectorAll('input, textarea').forEach(input => {
                     input.value = '';
                     if (input.tagName.toLowerCase() === 'textarea') {
-                        input.style.height = 'auto'; // Reset height for cloned textarea
+                        input.style.height = 'auto';
                     }
                 });
+                
                 tbody.appendChild(newRow);
             });
 
-            // 3. Delete Row Functionality (using event delegation)
+            // === Auto-expanding Textarea Logic ===
             const tableBody = document.getElementById('items-table-body');
-            tableBody.addEventListener('click', function(e) {
-                if (e.target && e.target.classList.contains('delete-row-btn')) {
-                    if (tableBody.rows.length > 1) {
+
+            tableBody.addEventListener('input', function(event) {
+                // Only target textareas within the table
+                if (event.target.tagName.toLowerCase() === 'textarea') {
+                    const textarea = event.target;
+                    // Reset height to auto to get the correct scrollHeight
+                    textarea.style.height = 'auto';
+                    // Set the height to the scroll height to fit the content
+                    textarea.style.height = (textarea.scrollHeight) + 'px';
+                }
+            });
+
+            // Delete Row Functionality (Event Delegation)
+            document.getElementById('items-table-body').addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-row-btn')) {
+                    const tbody = document.getElementById('items-table-body');
+                    const rows = tbody.querySelectorAll('tr');
+                    
+                    // Ensure at least one row remains
+                    if (rows.length > 1) {
                         e.target.closest('tr').remove();
                     } else {
-                        alert('Du skal have mindst én række.');
+                        alert('Du skal have mindst én række i tabellen.');
                     }
                 }
             });
 
-            // 4. Auto-expanding Textarea
-            tableBody.addEventListener('input', function(e) {
-                if (e.target && e.target.tagName.toLowerCase() === 'textarea') {
-                    e.target.style.height = 'auto';
-                    e.target.style.height = (e.target.scrollHeight) + 'px';
-                }
-            });
-
-            // 5. Robust Print Button Functionality
-            const printBtn = document.getElementById('print-btn');
-            const savePdfBtn = document.getElementById('save-pdf-btn');
-            
-            if (printBtn) printBtn.addEventListener('click', prepareAndPrint);
-            if (savePdfBtn) savePdfBtn.addEventListener('click', prepareAndPrint);
+            // Print Functionality
+            document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
+            document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
 
             function prepareAndPrint() {
+                // Store original inputs for restoration
+                const inputs = document.querySelectorAll('input, textarea');
                 const originalElements = [];
-                const inputs = document.querySelectorAll('.container input, .container textarea');
 
                 inputs.forEach(input => {
-                    const parent = input.parentNode;
-                    originalElements.push({ original: input, parent: parent });
+                    // Store the original element and its parent
+                    originalElements.push({
+                        element: input,
+                        parent: input.parentNode,
+                        nextSibling: input.nextSibling
+                    });
 
-                    const printValue = document.createElement('div');
-                    printValue.className = 'print-value';
+                    // Create a span with the input's value
+                    const span = document.createElement('span');
+                    span.className = 'print-value';
+                    span.textContent = input.value || '';
+                    span.style.whiteSpace = 'pre-wrap'; // Preserve line breaks for textareas
                     
-                    // Preserve newlines from textarea
-                    printValue.textContent = input.value;
-                    parent.replaceChild(printValue, input);
+                    // Replace input with span
+                    input.parentNode.replaceChild(span, input);
                 });
 
+                // Trigger print dialog
                 window.print();
 
-                // Restore function to bring back input fields
-                function restoreInputs() {
+                // Restore original inputs after print dialog closes
+                window.onafterprint = function() {
                     originalElements.forEach(item => {
                         const printValue = item.parent.querySelector('.print-value');
                         if (printValue) {
-                            item.parent.replaceChild(item.original, printValue);
+                            if (item.nextSibling) {
+                                item.parent.insertBefore(item.element, item.nextSibling);
+                            } else {
+                                item.parent.appendChild(item.element);
+                            }
+                            printValue.remove();
                         }
                     });
-                    // Clean up the event listener to avoid memory leaks
-                    window.removeEventListener('afterprint', restoreInputs);
-                }
+                };
 
-                // Use 'afterprint' event which is more reliable
-                window.addEventListener('afterprint', restoreInputs);
-
-                // Fallback for browsers that might not fire 'afterprint' consistently
-                setTimeout(restoreInputs, 2000); 
+                // Fallback for browsers that don't support onafterprint
+                setTimeout(function() {
+                    if (document.querySelector('.print-value')) {
+                        originalElements.forEach(item => {
+                            const printValue = item.parent.querySelector('.print-value');
+                            if (printValue) {
+                                if (item.nextSibling) {
+                                    item.parent.insertBefore(item.element, item.nextSibling);
+                                } else {
+                                    item.parent.appendChild(item.element);
+                                }
+                                printValue.remove();
+                            }
+                        });
+                    }
+                }, 1000);
             }
+
+            // Set today's date by default
+            document.getElementById('dato').valueAsDate = new Date();
         });
     </script>
 </body>
