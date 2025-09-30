@@ -7,10 +7,10 @@
     <style>
         /* --- 1. Sistema de Diseño y Variables --- */
         :root {
-            --primary-gradient: linear-gradient(135deg,  #00B0F0 0%,  #00B0F0100%);
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --brand: #00B0F0;
             --green-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            --color-primary: #00B0F0;
+            --color-primary: #764ba2;
             --color-text-light: #ffffff;
             --color-text-dark: #2d3748;
             --color-text-muted: #718096;
@@ -398,9 +398,15 @@
 
         /* --- 8. Print Styles --- */
         @media print {
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
             @page {
-                size: A4;
-                margin: 28mm 18mm 3mm 18mm;
+                size: A4 portrait;
+                margin: 0;
             }
 
             * {
@@ -423,55 +429,59 @@
                 border-radius: 0 !important;
                 border: none !important;
                 margin: 0 !important;
-                page-break-after: auto;
             }
 
-            /* ===== HEADER FIJO EN TODAS LAS PÁGINAS ===== */
+            /* ===== HEADER FIJO ===== */
             .card-header {
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 background: #fff !important;
-                border-bottom: 2px solid #00B0F0 !important;
-                color: #000 !important;
-                padding: 7mm 18mm 4mm 18mm !important;
-                z-index: 9999;
+                padding: 8mm 18mm 4mm 18mm !important;
                 display: flex !important;
                 justify-content: flex-end !important;
                 align-items: center !important;
-                height: 12mm !important;
+                border-bottom: 2px solid #00B0F0 !important;
+                z-index: 10000 !important;
+                height: 18mm;
+                box-sizing: border-box;
             }
 
             .logo { 
                 color: #000 !important;
                 font-size: 14pt !important;
                 font-weight: 700 !important;
-                text-align: right !important;
             }
 
             .auto-save-indicator {
                 display: none !important;
             }
 
-            /* ===== CONTENIDO CON MARGEN PARA HEADER/FOOTER ===== */
+            /* ===== CONTENIDO CON ESPACIOS PARA HEADER/FOOTER ===== */
             .card-content {
-                padding: 0 !important;
-                margin-top: 28mm !important;
-                margin-bottom: 26mm !important;
+                padding: 0 18mm !important;
+                margin-top: 24mm !important;
+                margin-bottom: 28mm !important;
+                min-height: calc(297mm - 24mm - 28mm);
             }
 
             .main-title { 
                 color: #000 !important;
                 font-size: 16pt !important;
-                margin-bottom: 6mm !important;
+                margin: 6mm 0 !important;
                 text-align: center !important;
                 font-weight: 700 !important;
+                break-after: avoid !important;
             }
 
             .main-title::after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 2px;
                 background: #00B0F0 !important;
-                height: 2px !important;
+                margin: 3mm auto 0;
             }
 
             .form-grid {
@@ -479,16 +489,18 @@
                 grid-template-columns: 35% 65% !important;
                 gap: 4mm !important;
                 margin-bottom: 6mm !important;
+                break-inside: avoid !important;
             }
 
             .form-group {
-                margin-bottom: 3mm !important;
+                margin-bottom: 2mm !important;
             }
 
             .form-label {
                 font-size: 9pt !important;
                 font-weight: 600 !important;
                 margin-bottom: 1mm !important;
+                display: block;
             }
 
             .form-input, .form-textarea {
@@ -500,6 +512,8 @@
                 font-size: 10pt !important;
                 color: #000 !important;
                 line-height: 1.3 !important;
+                display: block;
+                width: 100%;
             }
 
             .form-textarea {
@@ -513,34 +527,34 @@
             .data-table {
                 width: 100% !important;
                 border-collapse: collapse !important;
-                margin-bottom: 0 !important;
+                margin: 0 !important;
             }
 
             .data-table thead {
                 display: table-header-group !important;
                 background: #00B0F0 !important;
-                page-break-after: avoid !important;
-                page-break-inside: avoid !important;
+                break-after: avoid !important;
+                break-inside: avoid !important;
             }
 
             .data-table th {
                 background: #00B0F0 !important;
                 color: white !important;
-                padding: 2.5mm !important;
+                padding: 2.5mm 3mm !important;
                 font-size: 10pt !important;
                 font-weight: 700 !important;
                 border: 1px solid #00B0F0 !important;
+                text-align: left;
             }
 
             .data-table tbody tr {
-                page-break-inside: avoid !important;
-                page-break-before: auto !important;
-                page-break-after: auto !important;
+                break-inside: avoid !important;
+                break-after: auto !important;
             }
 
             .data-table tbody td {
                 padding: 2mm 3mm !important;
-                border: 1px solid #bbb !important;
+                border: 1px solid #aaa !important;
                 font-size: 10pt !important;
                 vertical-align: top !important;
                 line-height: 1.3 !important;
@@ -557,13 +571,15 @@
                 width: 100% !important;
                 min-height: auto !important;
                 line-height: 1.3 !important;
+                display: block;
             }
 
             .table-textarea {
                 overflow: visible !important;
+                resize: none;
             }
 
-            /* ===== FOOTER FIJO EN TODAS LAS PÁGINAS ===== */
+            /* ===== FOOTER FIJO ===== */
             .card-footer {
                 position: fixed;
                 bottom: 0;
@@ -571,17 +587,21 @@
                 right: 0;
                 background: #fff !important;
                 border-top: 2px solid #00B0F0 !important;
-                padding: 4mm 18mm 4mm 18mm !important;
-                font-size: 8.5pt !important;
-                line-height: 1.4 !important;
+                padding: 5mm 18mm !important;
                 text-align: center !important;
-                z-index: 9999;
-                height: 14mm !important;
+                z-index: 10000 !important;
+                height: 20mm;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
 
             .card-footer p {
-                margin: 0.5mm 0 !important;
+                margin: 0.8mm 0 !important;
                 color: #000 !important;
+                font-size: 8.5pt !important;
+                line-height: 1.4 !important;
             }
 
             /* Ocultar elementos de UI */
@@ -595,7 +615,7 @@
                 display: none !important; 
             }
 
-            /* Ocultar calendario de date input */
+            /* Ocultar controles de inputs */
             input[type="date"]::-webkit-calendar-picker-indicator,
             input[type="date"]::-webkit-inner-spin-button,
             input[type="date"]::-webkit-clear-button { 
@@ -614,7 +634,7 @@
                 -webkit-appearance: none !important;
             }
 
-            /* Formato de fecha mejorado */
+            /* Formato de fecha */
             #dato {
                 display: none !important;
             }
@@ -626,15 +646,21 @@
                 padding: 0 !important;
             }
 
-            /* Forzar altura mínima para evitar cortes */
-            .data-table tbody tr {
-                min-height: 8mm !important;
+            /* Optimizaciones de salto de página */
+            h1, h2, h3, h4, h5, h6 {
+                break-after: avoid !important;
             }
 
-            /* Control adicional de saltos de página */
-            .form-group,
-            .form-grid > div {
-                page-break-inside: avoid !important;
+            .form-group {
+                break-inside: avoid !important;
+            }
+
+            /* Forzar altura mínima del contenido en cada página */
+            .card-content::after {
+                content: '';
+                display: block;
+                height: 0;
+                clear: both;
             }
         }
     </style>
