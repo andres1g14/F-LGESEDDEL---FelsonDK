@@ -454,6 +454,46 @@
                 transform: translateY(0);
             }
         }
+        /* ===== Print: header/footer fijos y tabla que no se corta ===== */
+@page { size: A4; margin: 2.5cm 2cm 2.2cm; }
+
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 1.2rem 3rem !important;   /* más compacto en papel */
+  background: white !important;
+  border-bottom: 1px solid #000 !important;
+  color: #000 !important;
+  z-index: 9999;
+}
+
+.company-name, .document-title {
+  color: #000 !important;            /* clásico BN en impresión */
+}
+
+/* deja espacio para la cabecera fija */
+.content { margin-top: 110px !important; }
+
+/* Footer fijo abajo en todas las páginas */
+.footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: white !important;
+  border-top: 1px solid #000 !important;
+  padding: 10px 16px !important;
+  text-align: center !important;
+  z-index: 9999;
+}
+
+/* reserva espacio para el pie */
+.table-container { margin-bottom: 90px !important; }
+
+/* Cabecera de tabla se repite y filas no se parten */
+.table thead { display: table-header-group; }
+.table tfoot { display: table-footer-group; }
+.table { page-break-inside: auto; }
+.table tr { page-break-inside: avoid; }
+
     </style>
 </head>
 <body>
