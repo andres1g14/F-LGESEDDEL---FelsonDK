@@ -543,6 +543,9 @@
                 z-index: 10000;
                 height: 24mm;
                 box-sizing: border-box;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
             }
 
             .card-header::before {
@@ -551,10 +554,14 @@
 
             .logo {
                 font-size: 18pt;
+                text-align: right;
             }
 
             .logo::after {
-                display: none;
+                right: 0;
+                left: auto;
+                transform: none;
+                background: linear-gradient(90deg, transparent, var(--brand-primary));
             }
 
             .card-content {
