@@ -308,7 +308,7 @@
         @media print {
             @page {
                 size: A4;
-                margin: 18mm;
+                margin: 20mm 18mm;
             }
 
             * {
@@ -319,6 +319,7 @@
             body {
                 background: white;
                 padding: 0;
+                margin: 0;
             }
 
             .app-container {
@@ -331,25 +332,30 @@
                 margin: 0;
             }
 
+            /* Header */
             .card-header {
                 padding: 0 0 5mm 0;
                 border-bottom: 2px solid var(--brand);
+                margin-bottom: 8mm;
                 page-break-after: avoid;
             }
 
             .logo {
                 font-size: 16pt;
+                font-weight: 800;
             }
 
+            /* Contenido */
             .card-content {
                 padding: 0;
+                min-height: 220mm;
             }
 
             .main-title {
                 font-size: 14pt;
                 font-weight: 700;
                 color: var(--text);
-                margin: 8mm 0;
+                margin: 0 0 8mm 0;
                 letter-spacing: 0.2em;
             }
 
@@ -383,6 +389,7 @@
                 font-size: 10pt;
             }
 
+            /* Tabla */
             .data-table {
                 border: 1px solid #ccc;
             }
@@ -411,17 +418,29 @@
                 font-size: 10pt;
             }
 
+            /* Footer - al final de CADA página */
             .card-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: white;
                 border-top: 2px solid var(--brand);
-                padding: 6mm 0 0 0;
-                margin-top: 10mm;
-                page-break-inside: avoid;
+                padding: 5mm 18mm;
+                text-align: center;
             }
 
             .card-footer p {
                 font-size: 8pt;
+                margin: 1mm 0;
             }
 
+            /* Compensar espacio del footer fijo */
+            .card-content {
+                margin-bottom: 25mm;
+            }
+
+            /* Ocultar UI */
             .main-actions, .actions-container, .btn-delete, .toast, .required {
                 display: none;
             }
