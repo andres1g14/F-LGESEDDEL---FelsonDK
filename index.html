@@ -209,129 +209,88 @@
             .btn { width: 100%; }
         }
 
-        /* --- 8. Estilos de Impresión --- */
-        @media print {
-  /* Página A4 y márgenes del área imprimible */
-  @page { size: A4; margin: 2.5cm 2cm 2.2cm; }
-
-  html, body {
-    background: #fff !important;
-    padding: 0 !important;
-    -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+       /* ===== PRINT LAYOUT FIJO (header / footer) ===== */
+@media print {
+  /* Tamaño y márgenes reales de la hoja */
+  @page {
+    size: A4;
+    /* top / right / bottom / left */
+    margin: 22mm 18mm 24mm 18mm;
   }
-  * {
+
+  /* Fondo blanco en impresión */
+  body { background: #fff; padding: 0; }
+
+  /* Quita sombras/bordes de la tarjeta en papel */
+  .document-card {
     box-shadow: none !important;
-    text-shadow: none !important;
-    animation: none !important;
-    transition: none !important;
-    filter: none !important;
+    border-radius: 0 !important;
+    border: none !important;
   }
 
-  /* ===== HEADER FIJO (derecha) ===== */
-  .document-card { border: none !important; }
-  .card-header{
+  /* === Header fijo en todas las páginas === */
+  .card-header {
     position: fixed;
     top: 0; left: 0; right: 0;
     background: #fff !important;
-    border-bottom: 2px solid var(--brand, #00B0F0) !important;
-    padding: 12px 24px !important;
-    z-index: 9999;
-
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important; /* derecha */
-    gap: 4px !important;
-  }
-
-  /* Logo (título empresa) y subtítulo en azul agua */
-  .logo{
-    color: var(--brand, #00B0F0) !important;
-    font-size: 1.05rem !important;
-    font-weight: 700 !important;
-    margin: 0 !important;
-    text-align: right !important;
-  }
-  /* Reutilizamos tu h1 como subtítulo y lo “movemos” al header en print */
-  .main-title{
-    position: static !important;
-    color: var(--brand, #00B0F0) !important;
-    font-size: 0.9rem !important;
-    letter-spacing: .12rem !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    text-align: right !important;
-  }
-
-  /* Reservas de espacio para no chocar con header/footer */
-  .card-content{ margin-top: 180px !important; }
-  .table-section{ padding-bottom: 160px !important; }
-
-  /* ===== FOOTER FIJO (todas las páginas) ===== */
-  .card-footer{
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    background: #fff !important;
-    border-top: 2px solid var(--brand, #00B0F0) !important;
+    border-bottom: 2px solid #00B0F0 !important;   /* línea azul agua */
     color: #000 !important;
+    padding: 14mm 18mm 8mm 18mm !important;        /* más compacto en papel */
+    z-index: 9999;
+  }
+  /* Colores de textos en impresión (negro clásico) */
+  .logo, .main-title { color: #000 !important; }
+
+  /* === Footer fijo en todas las páginas === */
+  .card-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff !important;
+    border-top: 2px solid #00B0F0 !important;      /* línea azul agua arriba del footer */
     text-align: center !important;
-    font-size: .78rem !important;
-    line-height: 1.25 !important;
-    padding: 8px 12px !important;
+    padding: 6mm 18mm 6mm 18mm !important;
+    font-size: 10px !important;                    /* más pequeño para ganar espacio */
+    line-height: 1.35 !important;
     z-index: 9999;
   }
 
-  /* ===== Tabla estilo “documento” ===== */
-  .data-table{
-    width: 100% !important;
-    border-collapse: collapse !important;
-    page-break-inside: auto;
+  /* === Reserva de espacio para header y footer === */
+  .card-content {
+    /* altura aproximada del header */
+    margin-top: 46mm !important;
+    /* altura aproximada del footer */
+    margin-bottom: 30mm !important;
   }
+
+  /* Repite cabecera de tabla y evita cortes feos */
   .data-table thead { display: table-header-group; }
   .data-table tfoot { display: table-footer-group; }
-  .data-table tr    { page-break-inside: avoid; break-inside: avoid; }
+  .data-table, .data-table tr, .data-table td, .data-table th { page-break-inside: avoid; }
+  .data-table { width: 100%; border-collapse: separate; }
 
-  .data-table thead th{
-    background: #fff !important;
-    color: #000 !important;
-    border-bottom: 2px solid var(--brand, #00B0F0) !important;
-    padding: 6px 8px !important;
-    font-weight: 700 !important;
-  }
-  .data-table th, .data-table td{
-    border: none !important;
+  /* Oculta controles de UI y botones en papel */
+  .main-actions, .actions-container, .btn-delete { display: none !important; }
+
+  /* Inputs como texto plano (sin bordes/recuadros) */
+  .form-input, .form-textarea, .table-input, .table-textarea {
     background: transparent !important;
-    color: #000 !important;
-    padding: 6px 8px !important;
-  }
-  /* línea vertical ANTAL | BESKRIVELSE */
-  .data-table th.col-antal, .data-table td:nth-child(1){
-    border-right: 1px solid var(--brand, #00B0F0) !important;
-    text-align: center !important;
-    width: 85px !important;
-  }
-  /* líneas horizontales del cuerpo */
-  .data-table tbody tr{
-    border-bottom: 1px solid var(--brand, #00B0F0) !important;
-  }
-
-  /* ===== Ocultar UI de la app en papel ===== */
-  .main-actions, .actions-container, .btn, .btn-delete { display: none !important; }
-
-  /* Inputs se imprimen como texto, sin cajas ni iconos */
-  .form-input, .form-textarea, .table-input, .table-textarea{
-    border: none !important;
-    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
     outline: none !important;
     padding: 0 !important;
   }
-  input[type="date"]::-webkit-calendar-picker-indicator{ display:none !important; }
-  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
-    -webkit-appearance:none !important; margin:0 !important;
+
+  /* Oculta el icono del calendario al imprimir */
+  input[type="date"]::-webkit-calendar-picker-indicator { display: none !important; }
+  input[type="date"] { -webkit-appearance: none !important; appearance: none !important; }
+
+  /* Fuerza a respetar colores en impresión (Chrome) */
+  .card-header, .data-table thead {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
-  input[type="number"]{ -moz-appearance:textfield; }
 }
+
 
         }
     </style>
