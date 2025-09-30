@@ -498,193 +498,285 @@
                 justify-content: center;
             }
         }
-/* --- Footer siempre al fondo (pantalla) --- */
-html, body {
-  height: 100%;
-}
 
-.app-container {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.document-card {
-  flex: 1;                 /* ocupa el alto disponible */
-  display: flex;
-  flex-direction: column;  /* permite empujar el footer */
-}
-
-.card-content {
-  flex: 1;                 /* empuja el footer al fondo */
-}
-
-.card-footer {
-  margin-top: auto;        /* se queda abajo siempre */
-}
+        /* ============================================
+           PRINT STYLES - SOLUCIÓN DEFINITIVA
+           ============================================ */
         @media print {
-            html,
-            body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
+            /* Configuración de página con márgenes para header/footer */
             @page {
                 size: A4 portrait;
-                margin: 0;
+                margin-top: 22mm;
+                margin-right: 15mm;
+                margin-bottom: 25mm;
+                margin-left: 15mm;
+            }
+
+            /* Forzar colores en impresión */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            html {
+                width: 210mm;
+                height: 297mm;
             }
 
             body {
-                background: white;
-                padding: 0;
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 210mm;
+                min-height: 297mm;
             }
 
             body::before {
-                display: none;
+                display: none !important;
             }
 
             .app-container {
-                max-width: 100%;
+                max-width: 100% !important;
+                width: 100% !important;
             }
 
             .document-card {
-                box-shadow: none;
-                border-radius: 0;
-                margin: 0;
-                background: white;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                background: white !important;
+                backdrop-filter: none !important;
             }
 
+            /* ============================================
+               HEADER FIJO - Aparece en TODAS las páginas
+               ============================================ */
             .card-header {
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
-                background: white;
-                padding: 10mm 18mm 6mm;
-                border-bottom: 2px solid var(--brand-primary);
-                z-index: 10000;
-                height: 24mm;
-                box-sizing: border-box;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
+                background: white !important;
+                padding: 6mm 15mm 4mm 15mm !important;
+                border-bottom: 2px solid var(--brand-primary) !important;
+                z-index: 9999;
+                display: flex !important;
+                justify-content: flex-end !important;
+                align-items: center !important;
+                height: 18mm;
             }
 
             .card-header::before {
-                display: none;
+                display: none !important;
             }
 
             .logo {
-                font-size: 18pt;
-                text-align: right;
+                font-size: 15pt !important;
+                font-weight: 800 !important;
+                color: var(--brand-primary) !important;
+                text-align: right !important;
             }
 
             .logo::after {
-                right: 0;
-                left: auto;
-                transform: none;
-                background: linear-gradient(90deg, transparent, var(--brand-primary));
+                display: none !important;
             }
 
+            /* ============================================
+               CONTENIDO - Con márgenes correctos
+               ============================================ */
             .card-content {
-                padding: 0 18mm;
-                margin-top: 30mm;
-                margin-bottom: 28mm;
+                padding: 0 !important;
+                margin: 0 !important;
             }
 
             .main-title {
-                font-size: 11pt;
-                margin-bottom: 6mm;
+                font-size: 9.5pt !important;
+                font-weight: 600 !important;
+                color: #6b7280 !important;
+                margin: 8mm 0 5mm 0 !important;
+                text-align: center !important;
+                letter-spacing: 0.1em !important;
             }
 
+            /* Formulario */
             .form-grid {
-                grid-template-columns: 32% 68%;
-                gap: 4mm;
-                margin-bottom: 6mm;
+                display: grid !important;
+                grid-template-columns: 28% 72% !important;
+                gap: 4mm !important;
+                margin-bottom: 6mm !important;
+                page-break-inside: avoid !important;
+            }
+
+            .form-group {
+                margin-bottom: 2mm !important;
+                page-break-inside: avoid !important;
             }
 
             .form-label {
-                font-size: 8.5pt;
-                margin-bottom: 1mm;
+                font-size: 7.5pt !important;
+                font-weight: 600 !important;
+                color: #6b7280 !important;
+                margin-bottom: 1mm !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.03em !important;
             }
 
             .form-input,
-            .form-textarea,
-            .table-input,
-            .table-textarea {
-                background: transparent;
-                border: 0;
-                padding: 0;
-                font-size: 9.5pt;
-                box-shadow: none;
+            .form-textarea {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                color: #1a1a1a !important;
+                line-height: 1.4 !important;
             }
 
             .form-textarea {
-                min-height: auto;
+                min-height: auto !important;
             }
 
             #dato {
-                display: none;
+                display: none !important;
             }
 
             .print-only {
-                display: block;
-                font-size: 9.5pt;
+                display: block !important;
+                font-size: 9pt !important;
+                color: #1a1a1a !important;
+            }
+
+            /* Tabla */
+            .table-section {
+                margin-top: 5mm !important;
             }
 
             .data-table {
-                border: 1px solid #ddd;
-                box-shadow: none;
+                width: 100% !important;
+                border: 1px solid #d1d5db !important;
+                border-collapse: collapse !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
             }
 
             .data-table thead {
-                display: table-header-group;
+                display: table-header-group !important;
+                background: var(--brand-primary) !important;
+                page-break-after: avoid !important;
             }
 
             .data-table th {
-                font-size: 9pt;
-                padding: 2.5mm;
+                background: var(--brand-primary) !important;
+                color: white !important;
+                font-size: 8pt !important;
+                font-weight: 700 !important;
+                padding: 2.5mm 3mm !important;
+                border: none !important;
+                text-align: left !important;
+            }
+
+            .data-table th.col-antal {
+                text-align: center !important;
             }
 
             .data-table tbody tr {
-                break-inside: avoid;
+                page-break-inside: avoid !important;
+                background: white !important;
             }
 
             .data-table tbody td {
-                padding: 2mm 3mm;
-                border-bottom: 1px solid #ddd;
-                font-size: 9.5pt;
+                padding: 2.5mm 3mm !important;
+                border-bottom: 1px solid #e5e7eb !important;
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+                color: #1a1a1a !important;
             }
 
+            .data-table tbody tr:last-child td {
+                border-bottom: none !important;
+            }
+
+            .table-input,
+            .table-textarea {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                color: #1a1a1a !important;
+                line-height: 1.3 !important;
+            }
+
+            .table-input.col-antal {
+                text-align: center !important;
+                font-weight: 600 !important;
+                color: var(--brand-primary) !important;
+            }
+
+            /* ============================================
+               FOOTER FIJO - Aparece en TODAS las páginas
+               ============================================ */
             .card-footer {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                background: white;
-                border-top: 2px solid var(--brand-primary);
-                padding: 5mm 18mm;
-                z-index: 10000;
+                background: white !important;
+                border-top: 2px solid var(--brand-primary) !important;
+                padding: 4mm 15mm !important;
+                text-align: center !important;
+                z-index: 9999;
                 height: 20mm;
-                box-sizing: border-box;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
             }
 
             .card-footer p {
-                font-size: 8.5pt;
+                font-size: 7.5pt !important;
+                line-height: 1.5 !important;
+                margin: 0.5mm 0 !important;
+                color: #6b7280 !important;
             }
 
+            /* Ocultar elementos de UI */
             .main-actions,
             .actions-container,
             .btn-delete,
+            .btn-add,
+            .btn-clear,
             .toast,
             .required {
-                display: none;
+                display: none !important;
             }
 
+            /* Ocultar controles de inputs */
             input[type="date"]::-webkit-calendar-picker-indicator,
-            input[type="number"]::-webkit-inner-spin-button {
-                display: none;
+            input[type="date"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+                display: none !important;
+                -webkit-appearance: none !important;
+            }
+
+            input[type="date"],
+            input[type="number"] {
+                -webkit-appearance: none !important;
+                appearance: none !important;
+            }
+
+            /* Prevenir saltos de página problemáticos */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid !important;
+            }
+
+            .form-grid > div {
+                page-break-inside: avoid !important;
+            }
+
+            /* Tipografía profesional */
+            body {
+                font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif !important;
+                -webkit-font-smoothing: antialiased !important;
             }
         }
     </style>
