@@ -1,880 +1,292 @@
 <!DOCTYPE html>
-
 <html lang="da">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
-    <meta name="description" content="Følgeseddel - Felson Watersafe ApS">
-    <title>Følgeseddel - Felson Watersafe ApS</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Følgeseddel - Felson Watersafe ApS</title>
 
-```
-    :root {
-        --primary: #00B0F0;
-        --primary-dark: #0088CC;
-        --primary-light: #33C0F5;
-        --accent: #00D4FF;
-        --success: #00C853;
-        --danger: #FF3D00;
-        --warning: #FFB300;
-        --bg-primary: #FFFFFF;
-        --bg-secondary: #F8FAFB;
-        --bg-tertiary: #EDF2F7;
-        --text-primary: #1A202C;
-        --text-secondary: #4A5568;
-        --text-tertiary: #718096;
-        --border-light: #E2E8F0;
-        --border-medium: #CBD5E0;
-        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
-        --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.15);
-        --radius-sm: 8px;
-        --radius-md: 12px;
-        --radius-lg: 16px;
-        --radius-xl: 24px;
-        --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-        --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-        --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  <!-- Seguridad básica (CSP) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    :root{
+      --primary:#00B0F0;   /* azul agua corporativo */
+      --secondary:#8B5CF6; /* mantenemos por si quieres el degradado */
+      --success:#10B981;
+      --danger:#EF4444;
+      --bg-light:#F9FAFB;
+      --text:#111827;
+      --text-gray:#6B7280;
+      --border:#E5E7EB;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-        }
+    body{
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f1f5f9;
+      min-height:100vh; padding:24px;
     }
 
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
-        background: linear-gradient(135deg, #00B0F0 0%, #0088CC 50%, #006699 100%);
-        min-height: 100vh;
-        padding: clamp(1rem, 3vw, 2.5rem);
-        padding-bottom: clamp(120px, 15vh, 180px);
-        background-size: 400% 400%;
-        animation: gradientFlow 20s ease infinite;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        line-height: 1.6;
-        color: var(--text-primary);
+    .container{max-width:900px; margin:0 auto;}
+    .document{
+      background:#fff; border-radius:16px; overflow:hidden; position:relative;
+      box-shadow:0 20px 40px rgba(0,0,0,.12);
+      display:flex; flex-direction:column;
+      min-height:calc(100vh - 48px);
     }
 
-    @keyframes gradientFlow {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+    /* Faja superior muy sutil */
+    .document::before{
+      content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background: linear-gradient(90deg, var(--primary), #5B21B6, #A78BFA);
     }
 
-    .container {
-        max-width: min(95vw, 1000px);
-        margin: 0 auto;
-        animation: fadeInUp 0.6s var(--transition-base);
+    /* HEADER: ambos textos a la derecha, uno bajo el otro */
+    .header{
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 16px 24px 12px;
+      display:flex; justify-content:flex-end; align-items:flex-start;
+    }
+    .header-right{ text-align:right; }
+    .company-name{
+      color:#fff; font-size:1.45rem; font-weight:800; letter-spacing:-.2px; margin:0;
+    }
+    .document-title{
+      color:rgba(255,255,255,.95); margin:4px 0 0 0;
+      font-size:1.05rem; letter-spacing:2px; text-transform:uppercase; font-weight:600;
     }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(40px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .content{ padding: 16px 24px 20px; flex:1; }
+
+    /* Menos espacio entre Dato / Ordre / Levering */
+    .info-grid{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; margin-bottom:14px;
+    }
+    .field-group{}
+    .field-label{ font-size:.84rem; font-weight:600; color:var(--text-gray); margin-bottom:4px; text-transform:uppercase; letter-spacing:.3px; }
+    .field-input{
+      width:100%; padding:.6rem .75rem; border:2px solid var(--border); border-radius:10px;
+      background:var(--bg-light); font-size:1rem;
+    }
+    .field-input:focus{ outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px rgba(0,176,240,.15); }
+
+    .field-textarea{ resize:vertical; min-height:88px; font-family:inherit; }
+
+    .table-container{ background:var(--bg-light); border-radius:12px; padding:12px; margin-bottom:12px; }
+    table.table{ width:100%; border-collapse:separate; border-spacing:0 .5rem; }
+    .table thead th{
+      text-align:left; padding:.7rem 1rem; color:var(--text-gray); font-weight:700; font-size:.84rem; text-transform:uppercase;
+    }
+    .table tbody tr{ background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+    .table td{ padding:.75rem 1rem; vertical-align:top; }
+    .table td:first-child{ width:120px; border-right:1px solid #d9dee6; } /* separador vertical ANTAL|BESKRIVELSE */
+
+    .table-input{ width:100%; padding:.58rem .7rem; border:1px solid transparent; background:var(--bg-light); border-radius:8px; font:inherit; }
+    .table-input:focus{ outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px rgba(0,176,240,.12); }
+    .table-number{ text-align:center; }
+
+    .btn-delete{
+      background:#fff; border:2px solid var(--danger); color:var(--danger);
+      width:36px; height:36px; border-radius:10px; cursor:pointer;
+    }
+    .btn-delete:hover{ background:var(--danger); color:#fff; }
+
+    .btn-add{
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color:#fff; border:none; padding:.8rem 1.2rem; border-radius:10px; font-weight:700; margin-top:.6rem; cursor:pointer;
     }
 
-    .document {
-        background: var(--bg-primary);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-xl);
-        overflow: hidden;
-        position: relative;
-        backdrop-filter: blur(10px);
+    .actions{ display:flex; gap:.75rem; justify-content:center; margin-top:12px; }
+    .btn-action{ padding:.9rem 1.6rem; border-radius:10px; font-weight:700; cursor:pointer; border:2px solid var(--primary); }
+    .btn.primary{ background:var(--primary); color:#fff; border-color:var(--primary); }
+    .btn.secondary{ background:#fff; color:var(--primary); }
+
+    /* Footer fijo al fondo en pantalla (flex empuja) */
+    .footer{
+      margin-top:auto; padding:14px 16px; text-align:center; color:var(--text-gray);
+      font-size:.82rem; line-height:1.5; border-top:2px solid var(--primary); /* línea separadora azul agua */
+      background:#fff;
     }
 
-    .document::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
-        background-size: 200% 100%;
-        animation: shimmer 3s ease-in-out infinite;
+    /* Responsivo ligero */
+    @media (max-width: 768px){
+      .info-grid{ grid-template-columns:1fr; }
+      .company-name{ font-size:1.25rem; }
+      .document-title{ font-size:.95rem; }
     }
 
-    @keyframes shimmer {
-        0%, 100% { background-position: 0% 0%; }
-        50% { background-position: 100% 0%; }
+    /* ===== PRINT: header & footer fijos en cada página, placeholders visibles, tabla correcta ===== */
+    @page { size: A4; margin: 2.5cm 2cm 2.2cm; }
+
+    @media print{
+      body{ background:#fff !important; padding:0 !important; }
+      .document{ box-shadow:none; border-radius:0; }
+
+      /* Header fijo en todas las páginas */
+      .header{
+        position:fixed; top:0; left:0; right:0;
+        background:#fff !important; border-bottom:1px solid #000 !important;
+        padding:12px 24px !important; z-index:9999;
+        display:flex; justify-content:flex-end; align-items:flex-start;
+      }
+      .company-name, .document-title{ color:#000 !important; }
+      /* Reserva espacio bajo header fijo */
+      .content{ margin-top: 95px !important; }
+
+      /* Footer fijo en todas las páginas */
+      .footer{
+        position:fixed; bottom:0; left:0; right:0; z-index:9999;
+        background:#fff !important; border-top:2px solid #000 !important; /* en BN al imprimir */
+        font-size:.8rem !important; padding:10px 16px !important; color:#000 !important;
+      }
+      /* Reserva espacio antes del pie */
+      .table-container{ margin-bottom: 85px !important; }
+
+      /* Repetir cabecera de tabla y evitar cortes feos */
+      .table thead{ display:table-header-group; }
+      .table tfoot{ display:table-footer-group; }
+      .table{ page-break-inside:auto; }
+      .table tr{ page-break-inside:avoid; }
+
+      /* UI fuera del papel */
+      .btn-add, .btn-delete, .actions{ display:none !important; }
+
+      /* Inputs/textarea como texto limpio */
+      input, textarea{
+        border:none !important; background:transparent !important; box-shadow:none !important; padding:0 !important;
+      }
     }
-
-    .header {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        padding: clamp(2rem, 5vw, 3rem);
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-
-    .header::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -10%;
-        width: 50%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-        animation: floatPattern 15s ease-in-out infinite;
-    }
-
-    @keyframes floatPattern {
-        0%, 100% { transform: translate(0, 0) rotate(0deg); }
-        50% { transform: translate(-20px, 20px) rotate(5deg); }
-    }
-
-    .document-title {
-        color: rgba(255, 255, 255, 0.95);
-        font-size: clamp(0.9rem, 2.5vw, 1.25rem);
-        font-weight: 400;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        position: relative;
-        z-index: 1;
-        align-self: flex-start;
-        text-align: left;
-    }
-
-    .company-name {
-        color: white;
-        font-size: clamp(1.4rem, 4vw, 2.5rem);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        align-self: flex-end;
-        text-align: right;
-    }
-
-    .content {
-        padding: clamp(1.5rem, 4vw, 3rem);
-    }
-
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-        gap: clamp(1rem, 3vw, 2rem);
-        margin-bottom: clamp(2rem, 4vw, 3rem);
-    }
-
-    .field-group {
-        position: relative;
-        transition: transform var(--transition-base);
-    }
-
-    .field-group:focus-within {
-        transform: translateY(-2px);
-    }
-
-    .field-label {
-        font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-        font-weight: 600;
-        color: var(--text-secondary);
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        display: block;
-    }
-
-    .field-input {
-        width: 100%;
-        padding: clamp(0.875rem, 2vw, 1.125rem);
-        border: 2px solid var(--border-light);
-        border-radius: var(--radius-md);
-        font-size: clamp(0.9rem, 1.8vw, 1rem);
-        transition: all var(--transition-base);
-        background: var(--bg-secondary);
-        font-family: inherit;
-        color: var(--text-primary);
-    }
-
-    .field-input:hover {
-        border-color: var(--border-medium);
-        background: var(--bg-primary);
-    }
-
-    .field-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        background: var(--bg-primary);
-        box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.08);
-    }
-
-    .field-textarea {
-        resize: vertical;
-        min-height: clamp(80px, 15vw, 120px);
-        font-family: inherit;
-    }
-
-    .table-container {
-        background: var(--bg-secondary);
-        border-radius: var(--radius-lg);
-        padding: clamp(1rem, 2.5vw, 1.5rem);
-        margin-bottom: 2rem;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .table {
-        width: 100%;
-        min-width: 500px;
-        border-collapse: separate;
-        border-spacing: 0 clamp(0.3rem, 1vw, 0.5rem);
-    }
-
-    .table thead th {
-        text-align: left;
-        padding: clamp(0.75rem, 2vw, 1rem);
-        color: var(--text-secondary);
-        font-weight: 600;
-        font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        white-space: nowrap;
-    }
-
-    .table tbody tr {
-        background: var(--bg-primary);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-sm);
-        transition: all var(--transition-base);
-    }
-
-    .table tbody tr:hover {
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
-    }
-
-    .table tbody td {
-        padding: clamp(0.75rem, 2vw, 1rem);
-        position: relative;
-    }
-
-    .table tbody td:first-child {
-        border-radius: var(--radius-md) 0 0 var(--radius-md);
-        width: clamp(80px, 15%, 120px);
-    }
-
-    .table tbody td:last-child {
-        border-radius: 0 var(--radius-md) var(--radius-md) 0;
-        width: clamp(50px, 8%, 70px);
-        text-align: center;
-    }
-
-    .table-input {
-        width: 100%;
-        padding: clamp(0.5rem, 1.5vw, 0.75rem);
-        border: 1px solid transparent;
-        background: var(--bg-secondary);
-        border-radius: var(--radius-sm);
-        font-family: inherit;
-        font-size: clamp(0.85rem, 1.6vw, 0.95rem);
-        transition: all var(--transition-fast);
-        color: var(--text-primary);
-    }
-
-    .table-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        background: var(--bg-primary);
-        box-shadow: 0 0 0 3px rgba(0, 176, 240, 0.08);
-    }
-
-    .table-number {
-        text-align: center;
-    }
-
-    .btn-delete {
-        background: var(--bg-primary);
-        border: 2px solid var(--danger);
-        color: var(--danger);
-        width: clamp(32px, 6vw, 40px);
-        height: clamp(32px, 6vw, 40px);
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        transition: all var(--transition-base);
-        font-size: clamp(1rem, 2vw, 1.3rem);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 300;
-    }
-
-    .btn-delete:hover {
-        background: var(--danger);
-        color: white;
-        transform: rotate(90deg) scale(1.1);
-    }
-
-    .btn-delete:active {
-        transform: rotate(90deg) scale(0.95);
-    }
-
-    .btn-add {
-        background: linear-gradient(135deg, var(--success) 0%, #00A844 100%);
-        color: white;
-        border: none;
-        padding: clamp(0.875rem, 2vw, 1.125rem) clamp(1.5rem, 3vw, 2.5rem);
-        border-radius: var(--radius-md);
-        font-weight: 600;
-        cursor: pointer;
-        transition: all var(--transition-base);
-        font-size: clamp(0.9rem, 1.8vw, 1rem);
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-top: 1rem;
-        box-shadow: 0 4px 12px rgba(0, 200, 83, 0.25);
-    }
-
-    .btn-add:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 200, 83, 0.35);
-    }
-
-    .btn-add:active {
-        transform: translateY(-1px);
-    }
-
-    .btn-add::before {
-        content: '+';
-        font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-        font-weight: 400;
-        line-height: 1;
-    }
-
-    .actions {
-        display: flex;
-        gap: clamp(0.75rem, 2vw, 1rem);
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: clamp(2rem, 4vw, 3rem);
-    }
-
-    .btn-action {
-        padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 4vw, 3rem);
-        border-radius: var(--radius-md);
-        font-weight: 600;
-        font-size: clamp(0.9rem, 1.8vw, 1rem);
-        cursor: pointer;
-        transition: all var(--transition-base);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        position: relative;
-        overflow: hidden;
-        min-width: clamp(140px, 30vw, 180px);
-    }
-
-    .btn-action::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.4);
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-    }
-
-    .btn-action:active::before {
-        width: 300px;
-        height: 300px;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: white;
-        border: none;
-        box-shadow: 0 4px 14px rgba(0, 176, 240, 0.3);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0, 176, 240, 0.4);
-    }
-
-    .btn-primary:active {
-        transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-        background: var(--bg-primary);
-        color: var(--primary);
-        border: 2px solid var(--primary);
-    }
-
-    .btn-secondary:hover {
-        background: var(--primary);
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0, 176, 240, 0.25);
-    }
-
-    .btn-secondary:active {
-        transform: translateY(-1px);
-    }
-
-    .footer {
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
-        padding: clamp(0.75rem, 2vw, 1.25rem) clamp(1rem, 3vw, 2rem);
-        text-align: center;
-        color: var(--text-secondary);
-        font-size: clamp(0.65rem, 1.4vw, 0.75rem);
-        line-height: 1.5;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        border-top: 2px solid #00B0F0;
-        z-index: 1000;
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .footer p {
-        margin: 0.2rem 0;
-    }
-
-    .footer strong {
-        color: var(--text-primary);
-        font-weight: 600;
-    }
-
-    /* Tablet Optimization (768px - 1024px) */
-    @media (min-width: 768px) and (max-width: 1024px) {
-        body {
-            padding: 2rem;
-            padding-bottom: 140px;
-        }
-
-        .info-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .header {
-            padding: 2.5rem;
-        }
-
-        .table {
-            min-width: 600px;
-        }
-    }
-
-    /* Mobile Optimization (< 768px) */
-    @media (max-width: 767px) {
-        body {
-            padding: 1rem;
-            padding-bottom: 160px;
-        }
-
-        .header {
-            flex-direction: column;
-            gap: 0.75rem;
-            padding: 1.5rem;
-        }
-
-        .document-title {
-            text-align: left;
-            align-self: flex-start;
-        }
-
-        .company-name {
-            text-align: right;
-            align-self: flex-end;
-        }
-
-        .info-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .content {
-            padding: 1.5rem;
-        }
-
-        .actions {
-            flex-direction: column;
-        }
-
-        .btn-action {
-            width: 100%;
-            min-width: auto;
-        }
-
-        .table-container {
-            margin-left: -1.5rem;
-            margin-right: -1.5rem;
-            border-radius: 0;
-            padding: 1rem;
-        }
-    }
-
-    /* Desktop Large (> 1440px) */
-    @media (min-width: 1441px) {
-        .container {
-            max-width: 1200px;
-        }
-    }
-
-    /* Print Styles */
-    @media print {
-        @page {
-            margin-top: 200px;
-            margin-bottom: 140px;
-            margin-left: 20mm;
-            margin-right: 20mm;
-        }
-
-        body {
-            background: white;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 100%;
-        }
-
-        .document {
-            box-shadow: none;
-            border-radius: 0;
-        }
-
-        .document::before {
-            display: none;
-        }
-
-        .header {
-            background: white;
-            border-bottom: 2px solid #00B0F0;
-            padding: 1.5rem 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .header::after {
-            display: none;
-        }
-
-        .company-name {
-            color: var(--primary);
-            text-shadow: none;
-            font-size: 2rem;
-            align-self: flex-end;
-        }
-
-        .document-title {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            align-self: flex-start;
-        }
-
-        .content {
-            padding: 2rem;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 2px solid #00B0F0;
-            padding: 0.75rem 2rem;
-            font-size: 0.7rem;
-        }
-
-        .btn-delete,
-        .btn-add,
-        .actions {
-            display: none !important;
-        }
-
-        .table tbody tr {
-            box-shadow: none;
-            border: 1px solid var(--border-light);
-            page-break-inside: avoid;
-        }
-
-        .table tbody tr:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .table-container {
-            background: transparent;
-            padding: 0;
-        }
-
-        .field-input,
-        .table-input {
-            border: 1px solid var(--border-medium);
-            background: transparent;
-        }
-    }
-
-    /* Animations */
-    .fade-in {
-        animation: fadeIn 0.4s var(--transition-base);
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(8px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Focus visible for accessibility */
-    *:focus-visible {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-    }
-
-    /* Selection styles */
-    ::selection {
-        background: rgba(0, 176, 240, 0.2);
-        color: var(--text-primary);
-    }
-</style>
-```
-
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="document">
-            <div class="header">
-                <h1 class="company-name">FELSON WATERSAFE ApS</h1>
-                <p class="document-title">Følgeseddel</p>
-            </div>
-
-```
-        <div class="content">
-            <div class="info-grid">
-                <div class="field-group">
-                    <label class="field-label" for="dato">Dato</label>
-                    <input type="date" class="field-input" id="dato" aria-label="Dato">
-                </div>
-                <div class="field-group">
-                    <label class="field-label" for="ordre">Ordre Nr.</label>
-                    <input type="text" class="field-input" id="ordre" placeholder="Indtast ordrenummer..." maxlength="50" aria-label="Ordre nummer">
-                </div>
-            </div>
-
-            <div class="field-group">
-                <label class="field-label" for="levering">Leveringsadresse</label>
-                <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..." maxlength="500" aria-label="Leveringsadresse"></textarea>
-            </div>
-
-            <div class="table-container">
-                <table class="table" role="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Antal</th>
-                            <th scope="col">Beskrivelse</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                        <tr class="fade-in">
-                            <td>
-                                <input type="number" class="table-input table-number" min="0" max="999999" placeholder="0" aria-label="Antal">
-                            </td>
-                            <td>
-                                <input type="text" class="table-input" placeholder="Indtast beskrivelse..." maxlength="200" aria-label="Beskrivelse">
-                            </td>
-                            <td>
-                                <button class="btn-delete" title="Slet række" aria-label="Slet række">×</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn-add" id="add-row" aria-label="Tilføj ny række">Tilføj række</button>
-            </div>
-
-            <div class="actions">
-                <button class="btn-action btn-secondary" id="save-pdf" aria-label="Gem som PDF">Gem som PDF</button>
-                <button class="btn-action btn-primary" id="print" aria-label="Udskriv dokument">Udskriv</button>
-            </div>
+  <div class="container">
+    <div class="document">
+      <!-- HEADER (derecha, uno bajo el otro) -->
+      <header class="header">
+        <div class="header-right">
+          <h1 class="company-name">Felson Watersafe ApS</h1>
+          <p class="document-title">Følgeseddel</p>
         </div>
+      </header>
+
+      <!-- CONTENIDO -->
+      <div class="content">
+        <!-- Menos espacio entre campos -->
+        <section class="info-grid">
+          <div class="field-group">
+            <label class="field-label" for="dato">Dato</label>
+            <input type="date" class="field-input" id="dato">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="ordre">Ordre Nr.</label>
+            <input type="text" class="field-input" id="ordre" placeholder="Indtast ordrenummer...">
+          </div>
+          <div class="field-group" style="grid-column:1/-1">
+            <label class="field-label" for="levering">Leveringsadresse</label>
+            <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..."></textarea>
+          </div>
+        </section>
+
+        <!-- TABLA (Antal | Beskrivelse) -->
+        <section class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Antal</th>
+                <th>Beskrivelse</th>
+                <th style="width:60px"></th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <tr>
+                <td><input type="number" class="table-input table-number" min="0" placeholder="0"></td>
+                <td><textarea class="table-input" rows="1" placeholder="Indtast beskrivelse..."></textarea></td>
+                <td style="text-align:center"><button class="btn-delete" title="Slet række">×</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn-add" id="add-row">+ Tilføj række</button>
+        </section>
+
+        <!-- BOTONES -->
+        <div class="actions">
+          <button class="btn-action btn secondary" id="save-pdf">Gem som PDF</button>
+          <button class="btn-action btn primary" id="print">Udskriv</button>
+        </div>
+      </div>
+
+      <!-- FOOTER (línea azul en pantalla; fijo en impresión) -->
+      <footer class="footer">
+        <div><strong>Felson Watersafe ApS</strong></div>
+        <div>Gartnervej 4 • 6710 Esbjerg V</div>
+        <div>CVR: DK26813522 • Tlf: 70 20 66 76 • E-mail: felson@felson.dk</div>
+      </footer>
     </div>
-</div>
+  </div>
 
-<footer class="footer">
-    <p><strong>Felson Watersafe ApS</strong> • Gartnervej 4 • 6710 Esbjerg V • CVR: DK26813522 • Tlf: 70 20 66 76 • E-mail: felson@felson.dk</p>
-</footer>
-
-<script>
-    'use strict';
-
-    // Security: Sanitize input to prevent XSS
-    function sanitizeInput(input) {
-        const div = document.createElement('div');
-        div.textContent = input;
-        return div.innerHTML;
-    }
-
-    // Set today's date
+  <script>
+    // Fecha de hoy por defecto
     const dateInput = document.getElementById('dato');
-    if (dateInput) {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        dateInput.value = `${year}-${month}-${day}`;
-    }
+    if (dateInput) dateInput.valueAsDate = new Date();
 
-    // Add new row with security measures
-    const addRowBtn = document.getElementById('add-row');
-    if (addRowBtn) {
-        addRowBtn.addEventListener('click', function() {
-            const tbody = document.getElementById('table-body');
-            if (tbody && tbody.rows.length < 50) { // Limit rows for security
-                const newRow = document.createElement('tr');
-                newRow.className = 'fade-in';
-                newRow.innerHTML = `
-                    <td>
-                        <input type="number" class="table-input table-number" min="0" max="999999" placeholder="0" aria-label="Antal">
-                    </td>
-                    <td>
-                        <input type="text" class="table-input" placeholder="Indtast beskrivelse..." maxlength="200" aria-label="Beskrivelse">
-                    </td>
-                    <td>
-                        <button class="btn-delete" title="Slet række" aria-label="Slet række">×</button>
-                    </td>
-                `;
-                tbody.appendChild(newRow);
-            } else if (tbody && tbody.rows.length >= 50) {
-                alert('Maksimalt 50 rækker tilladt');
-            }
-        });
-    }
+    // Auto-expand de textarea en tabla
+    document.addEventListener('input', (e)=>{
+      if(e.target.matches('textarea.table-input')){
+        const ta = e.target; ta.style.height='auto'; ta.style.height = ta.scrollHeight + 'px';
+      }
+    });
 
-    // Delete row with animation
-    document.addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('btn-delete')) {
-            const tbody = document.getElementById('table-body');
-            if (tbody && tbody.rows.length > 1) {
-                const row = e.target.closest('tr');
-                if (row) {
-                    row.style.animation = 'fadeIn 0.3s ease reverse';
-                    setTimeout(() => {
-                        if (row.parentNode) {
-                            row.remove();
-                        }
-                    }, 300);
-                }
-            } else {
-                alert('Der skal være mindst én række');
-            }
+    // Añadir fila
+    document.getElementById('add-row')?.addEventListener('click', ()=>{
+      const tbody = document.getElementById('table-body');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="number" class="table-input table-number" min="0" placeholder="0"></td>
+        <td><textarea class="table-input" rows="1" placeholder="Indtast beskrivelse..."></textarea></td>
+        <td style="text-align:center"><button class="btn-delete" title="Slet række">×</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Borrar fila (dejando al menos una)
+    document.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('btn-delete')){
+        const tbody = document.getElementById('table-body');
+        if (tbody.rows.length > 1){
+          e.target.closest('tr').remove();
+        } else {
+          alert('Der skal være mindst én række');
         }
+      }
     });
 
-    // Print functionality
-    function handlePrint() {
-        // Validate inputs before printing
-        const inputs = document.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            if (input.value) {
-                input.value = sanitizeInput(input.value);
-            }
+    // Print (y placeholders visibles en PDF si el campo está vacío)
+    function beforePrintFillPlaceholders(){
+      document.querySelectorAll('input[type="text"], input[type="number"], textarea')
+        .forEach(el=>{
+          if(!el.value && el.placeholder){
+            el.dataset._printedPlaceholder='1';
+            el.value = el.placeholder;
+          }
         });
-        window.print();
+    }
+    function afterPrintRestore(){
+      document.querySelectorAll('[data-_printedPlaceholder="1"]').forEach(el=>{
+        el.value=''; el.removeAttribute('data-_printedPlaceholder');
+      });
+    }
+    window.addEventListener('beforeprint', beforePrintFillPlaceholders);
+    window.addEventListener('afterprint', afterPrintRestore);
+
+    function doPrint(){
+      beforePrintFillPlaceholders();
+      setTimeout(()=>{ window.print(); setTimeout(afterPrintRestore, 300); }, 50);
     }
 
-    const savePdfBtn = document.getElementById('save-pdf');
-    const printBtn = document.getElementById('print');
-    
-    if (savePdfBtn) {
-        savePdfBtn.addEventListener('click', handlePrint);
-    }
-    
-    if (printBtn) {
-        printBtn.addEventListener('click', handlePrint);
-    }
-
-    // Enhanced focus animations
-    const inputs = document.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            const parent = this.closest('.field-group');
-            if (parent) {
-                parent.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
-            }
-        });
-        input.addEventListener('blur', function() {
-            const parent = this.closest('.field-group');
-            if (parent) {
-                parent.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
-            }
-        });
-    });
-
-    // Keyboard navigation enhancement
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.key === 'p') {
-            e.preventDefault();
-            handlePrint();
-        }
-    });
-
-    // Performance: Debounce function for input validation
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Auto-save to session (optional feature)
-    const autoSave = debounce(function() {
-        // Could implement localStorage here if needed
-        console.log('Auto-save triggered');
-    }, 2000);
-
-    // Prevent form injection attacks
-    document.addEventListener('submit', function(e) {
-        e.preventDefault();
-        return false;
-    });
-</script>
-```
-
+    document.getElementById('save-pdf')?.addEventListener('click', doPrint);
+    document.getElementById('print')?.addEventListener('click', doPrint);
+  </script>
 </body>
 </html>
