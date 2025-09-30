@@ -1,583 +1,636 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Følgeseddel - Felson Watersafe ApS</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<?php
+/**
+ * Plugin Name: MAPS - Showcase Pro Section
+ * Description: Adds a highly customizable "Showcase" hero section controlled entirely via the WordPress Customizer.
+ * Version: 1.0.0
+ * Author: MAP's Multiservice (via Gemini)
+ */
 
-        :root {
-            --primary: #1DA1F2;
-            --primary-dark: #4C1D95;
-            --secondary: #8B5CF6;
-            --accent: #A78BFA;
-            --success: #10B981;
-            --danger: #EF4444;
-            --bg-dark: #111827;
-            --bg-light: #F9FAFB;
-            --text-dark: #111827;
-            --text-gray: #6B7280;
-            --border: #E5E7EB;
-        }
+// --- Prevent direct access
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem;
-            animation: gradientShift 15s ease infinite;
-            background-size: 400% 400%;
-        }
+// =============================================================================
+// 1. CUSTOMIZER REGISTRATION
+// =============================================================================
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+/**
+ * Register the Customizer panel, section, settings, and controls.
+ */
+function maps_pro_register_customizer( $wp_customize ) {
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            animation: slideUp 0.6s ease-out;
-        }
+    // --- Custom Range Slider Control ---
+    if ( ! class_exists( 'MAPS_PRO_Range_Slider_Control' ) ) {
+        class MAPS_PRO_Range_Slider_Control extends WP_Customize_Control {
+            public $type = 'maps_range_slider';
+            public $unit = ''; // Add a unit like 'px', 'em', '%'
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .document {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .document::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #5B21B6, #8B5CF6, #A78BFA);
-            animation: colorWave 3s ease-in-out infinite;
-        }
-
-        @keyframes colorWave {
-            0%, 100% { transform: scaleX(1); }
-            50% { transform: scaleX(1.05); }
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 40%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(35deg);
-        }
-
-        .company-name {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .document-title {
-            text-align: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 0.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .content {
-            padding: 3rem;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .field-group {
-            position: relative;
-        }
-
-        .field-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-gray);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .field-input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--bg-light);
-        }
-
-        .field-input:hover {
-            border-color: var(--accent);
-        }
-
-        .field-input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .field-textarea {
-            resize: vertical;
-            min-height: 100px;
-            font-family: inherit;
-        }
-
-        .table-container {
-            background: var(--bg-light);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
-        }
-
-        .table thead th {
-            text-align: left;
-            padding: 1rem;
-            color: var(--text-gray);
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .table tbody tr {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .table tbody tr:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: scale(1.01);
-        }
-
-        .table tbody td {
-            padding: 1rem;
-            position: relative;
-        }
-
-        .table tbody td:first-child {
-            border-radius: 12px 0 0 12px;
-            width: 120px;
-        }
-
-        .table tbody td:last-child {
-            border-radius: 0 12px 12px 0;
-            width: 60px;
-            text-align: center;
-        }
-
-        .table-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid transparent;
-            background: var(--bg-light);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        .table-input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            background: white;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-
-        .table-number {
-            width: 100%;
-            text-align: center;
-        }
-
-        .btn-delete {
-            background: white;
-            border: 2px solid var(--danger);
-            color: var(--danger);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-delete:hover {
-            background: var(--danger);
-            color: white;
-            transform: rotate(90deg) scale(1.1);
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn-add:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-add::before {
-            content: '+';
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 3rem;
-        }
-
-        .btn-action {
-            padding: 1.25rem 3rem;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-action::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-action:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 14px rgba(91, 33, 182, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.5);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.3);
-        }
-
-        .footer {
-            background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .footer-divider {
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            margin: 0 auto 1rem;
-            border-radius: 2px;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
+            public function __construct( $manager, $id, $args = array() ) {
+                parent::__construct( $manager, $id, $args );
+                if ( ! empty( $args['unit'] ) ) {
+                    $this->unit = $args['unit'];
+                }
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
+            public function enqueue() {
+                // You can enqueue custom scripts/styles here if needed
             }
 
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn-action {
-                width: 100%;
-            }
-
-            .company-name {
-                font-size: 1.8rem;
-            }
-        }
-
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            .document {
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            .document::before {
-                display: none;
-            }
-
-            .header {
-                background: white;
-                border-bottom: 3px solid var(--primary);
-                padding: 2rem;
-            }
-
-            .company-name {
-                color: var(--primary);
-            }
-
-            .document-title {
-                color: var(--text-gray);
-            }
-
-            .btn-delete,
-            .btn-add,
-            .actions {
-                display: none !important;
-            }
-
-            .table tbody tr {
-                box-shadow: none;
-                border: 1px solid var(--border);
-            }
-
-            .table tbody tr:hover {
-                transform: none;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="document">
-            <div class="header">
-                <h1 class="company-name">FELSON WATERSAFE ApS</h1>
-                <p class="document-title">Følgeseddel</p>
-            </div>
-
-            <div class="content">
-                <div class="info-grid">
-                    <div class="field-group">
-                        <label class="field-label">Dato</label>
-                        <input type="date" class="field-input" id="dato">
+            public function render_content() {
+                ?>
+                <label>
+                    <?php if ( ! empty( $this->label ) ) : ?>
+                        <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+                    <?php endif; ?>
+                    <?php if ( ! empty( $this->description ) ) : ?>
+                        <span class="description customize-control-description"><?php echo esc_html( $this->description ); ?></span>
+                    <?php endif; ?>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="range" 
+                               <?php $this->input_attrs(); ?>
+                               value="<?php echo esc_attr( $this->value() ); ?>"
+                               <?php $this->link(); ?>
+                               style="flex: 1;"
+                        />
+                        <span class="maps-range-value" style="font-weight: bold; min-width: 40px; text-align: right;">
+                            <?php echo esc_html( $this->value() ); ?><?php echo esc_html( $this->unit ); ?>
+                        </span>
                     </div>
-                    <div class="field-group">
-                        <label class="field-label">Ordre Nr.</label>
-                        <input type="text" class="field-input" id="ordre" placeholder="Indtast ordrenummer...">
-                    </div>
+                </label>
+                <script type="text/javascript">
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // JS to update the value display in real-time
+                        const rangeInput_<?php echo esc_js($this->id); ?> = document.querySelector('input[data-customize-setting-link="<?php echo esc_js($this->id); ?>"]');
+                        if (rangeInput_<?php echo esc_js($this->id); ?>) {
+                             const valueSpan = rangeInput_<?php echo esc_js($this->id); ?>.nextElementSibling;
+                             rangeInput_<?php echo esc_js($this->id); ?>.addEventListener('input', function() {
+                                 valueSpan.textContent = this.value + '<?php echo esc_js($this->unit); ?>';
+                             });
+                        }
+                    });
+                </script>
+                <?php
+            }
+        }
+    }
+
+    // --- Sanitization Callbacks ---
+    function maps_pro_sanitize_checkbox( $checked ) {
+        return ( ( isset( $checked ) && true === $checked ) ? true : false );
+    }
+
+    function maps_pro_sanitize_select( $input, $setting ) {
+        $input = sanitize_key( $input );
+        $choices = $setting->manager->get_control( $setting->id )->choices;
+        return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
+    }
+
+    // 1.1. Add Panel
+    $wp_customize->add_panel( 'maps_showcase_panel', array(
+        'title'       => __( 'MAPS – Showcase Pro', 'generatepress' ),
+        'priority'    => 30,
+        'description' => __( 'Controls for the custom Showcase section.', 'generatepress' ),
+    ) );
+
+    // 1.2. Add Section
+    $wp_customize->add_section( 'maps_showcase_section', array(
+        'title'    => __( 'Showcase Section', 'generatepress' ),
+        'panel'    => 'maps_showcase_panel',
+        'priority' => 10,
+    ) );
+    
+    // --- GENERAL SETTINGS ---
+    $wp_customize->add_setting( 'maps_pro_show_section', [ 'default' => true, 'sanitize_callback' => 'maps_pro_sanitize_checkbox' ] );
+    $wp_customize->add_control( 'maps_pro_show_section', [
+        'type' => 'checkbox', 'section' => 'maps_showcase_section', 'label' => __( 'Show Showcase Section', 'generatepress' ), 'priority' => 1,
+    ]);
+
+    $wp_customize->add_setting( 'maps_pro_homepage_only', [ 'default' => true, 'sanitize_callback' => 'maps_pro_sanitize_checkbox' ] );
+    $wp_customize->add_control( 'maps_pro_homepage_only', [
+        'type' => 'checkbox', 'section' => 'maps_showcase_section', 'label' => __( 'Show only on Homepage', 'generatepress' ), 'priority' => 2,
+    ]);
+
+    $wp_customize->add_setting( 'maps_pro_layout', [ 'default' => 'media_right', 'sanitize_callback' => 'maps_pro_sanitize_select' ] );
+    $wp_customize->add_control( 'maps_pro_layout', [
+        'type' => 'select', 'section' => 'maps_showcase_section', 'label' => __( 'Layout', 'generatepress' ),
+        'choices' => [ 'media_right' => 'Media on Right', 'media_left' => 'Media on Left' ], 'priority' => 3,
+    ]);
+
+    $wp_customize->add_setting( 'maps_pro_visual_mode', [ 'default' => 'image', 'sanitize_callback' => 'maps_pro_sanitize_select' ] );
+    $wp_customize->add_control( 'maps_pro_visual_mode', [
+        'type' => 'select', 'section' => 'maps_showcase_section', 'label' => __( 'Visual Mode', 'generatepress' ),
+        'choices' => [ 'image' => 'Static Image', 'video' => 'Video', 'before_after' => 'Before/After Slider' ], 'priority' => 4,
+    ]);
+
+    // --- TEXT CONTENT ---
+    $text_controls = [
+        'eyebrow' => ['label' => 'Eyebrow Text', 'default' => 'WELCOME TO MAPS'],
+        'title' => ['label' => 'Main Title', 'default' => 'Professional Solutions, Delivered with Precision.'],
+        'lead' => ['label' => 'Subtitle / Lead', 'default' => 'From advanced cleaning to meticulous property care, we provide a suite of services designed for excellence. Let us handle the details, so you can focus on what matters most.'],
+        'btn1_text' => ['label' => 'Primary Button Text', 'default' => 'Our Services'],
+        'btn1_url' => ['label' => 'Primary Button URL', 'default' => '#services'],
+        'btn2_text' => ['label' => 'Ghost Button Text', 'default' => 'Get a Quote'],
+        'btn2_url' => ['label' => 'Ghost Button URL', 'default' => '#contact'],
+        'bullet1_text' => ['label' => 'Bullet #1 Text', 'default' => 'Quality Guaranteed'],
+        'bullet1_icon' => ['label' => 'Bullet #1 Icon (Emoji or Dashicon class)', 'default' => '✅'],
+        'bullet2_text' => ['label' => 'Bullet #2 Text', 'default' => '24/7 Support'],
+        'bullet2_icon' => ['label' => 'Bullet #2 Icon', 'default' => '📞'],
+        'bullet3_text' => ['label' => 'Bullet #3 Text', 'default' => 'Eco-Friendly Options'],
+        'bullet3_icon' => ['label' => 'Bullet #3 Icon', 'default' => '🌿'],
+        'stat1_value' => ['label' => 'Stat #1 Value', 'default' => '1,200+'],
+        'stat1_label' => ['label' => 'Stat #1 Label', 'default' => 'Happy Clients'],
+        'stat2_value' => ['label' => 'Stat #2 Value', 'default' => '15+'],
+        'stat2_label' => ['label' => 'Stat #2 Label', 'default' => 'Years of Experience'],
+        'stat3_value' => ['label' => 'Stat #3 Value', 'default' => '99%'],
+        'stat3_label' => ['label' => 'Stat #3 Label', 'default' => 'Satisfaction Rate'],
+    ];
+
+    $priority = 10;
+    foreach($text_controls as $id => $control) {
+        $wp_customize->add_setting( "maps_pro_{$id}", [ 'default' => $control['default'], 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ] );
+        $wp_customize->add_control( "maps_pro_{$id}", [ 'type' => 'text', 'section' => 'maps_showcase_section', 'label' => __($control['label'], 'generatepress'), 'priority' => $priority ] );
+        if ( in_array($id, ['title', 'lead', 'eyebrow', 'btn1_text', 'btn2_text']) ) {
+            $wp_customize->selective_refresh->add_partial( "maps_pro_{$id}", [
+                'selector' => ".maps-showcase__" . str_replace('_', '-', $id),
+                'render_callback' => function() use ($id) { return get_theme_mod("maps_pro_{$id}"); },
+                'fallback_refresh' => true,
+            ]);
+        }
+        $priority++;
+    }
+
+    // --- MEDIA UPLOADS ---
+    $media_controls = [
+        'image_after' => ['label' => 'Image (or "After" Image)', 'description' => 'Used for Static Image and Before/After modes.'],
+        'image_before' => ['label' => '"Before" Image', 'description' => 'Only used for Before/After mode.'],
+        'video_mp4' => ['label' => 'Video File (MP4)', 'description' => 'For best performance.'],
+        'video_webm' => ['label' => 'Video File (WebM)', 'description' => 'Fallback for some browsers.'],
+        'notification_audio' => ['label' => 'Notification Audio (MP3/WAV)', 'description' => 'Plays on primary button click.'],
+    ];
+    $priority = 40;
+    foreach($media_controls as $id => $control) {
+        $wp_customize->add_setting( "maps_pro_{$id}", [ 'default' => '', 'sanitize_callback' => 'esc_url_raw' ] );
+        $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, "maps_pro_{$id}", [
+            'section' => 'maps_showcase_section', 'label' => __($control['label'], 'generatepress'), 'description' => __($control['description'], 'generatepress'), 'priority' => $priority
+        ]));
+        $priority++;
+    }
+
+    // --- DESIGN & LAYOUT (SLIDERS) ---
+    $slider_controls = [
+        'padding_top' => ['label' => 'Padding Top', 'default' => 100, 'min' => 0, 'max' => 200, 'step' => 5, 'unit' => 'px'],
+        'padding_bottom' => ['label' => 'Padding Bottom', 'default' => 100, 'min' => 0, 'max' => 200, 'step' => 5, 'unit' => 'px'],
+        'margin_top' => ['label' => 'Margin Top', 'default' => 0, 'min' => -50, 'max' => 100, 'step' => 5, 'unit' => 'px'],
+        'margin_bottom' => ['label' => 'Margin Bottom', 'default' => 0, 'min' => 0, 'max' => 100, 'step' => 5, 'unit' => 'px'],
+        'container_width' => ['label' => 'Container Max Width', 'default' => 1200, 'min' => 800, 'max' => 1920, 'step' => 10, 'unit' => 'px'],
+        'title_size' => ['label' => 'Title Font Size (Desktop)', 'default' => 56, 'min' => 24, 'max' => 96, 'step' => 1, 'unit' => 'px'],
+        'lead_size' => ['label' => 'Lead Font Size (Desktop)', 'default' => 20, 'min' => 14, 'max' => 32, 'step' => 1, 'unit' => 'px'],
+    ];
+    $priority = 50;
+    foreach($slider_controls as $id => $control) {
+        $wp_customize->add_setting( "maps_pro_{$id}", [ 'default' => $control['default'], 'sanitize_callback' => 'absint', 'transport' => 'postMessage' ]);
+        $wp_customize->add_control( new MAPS_PRO_Range_Slider_Control( $wp_customize, "maps_pro_{$id}", [
+            'section' => 'maps_showcase_section', 'label' => __($control['label'], 'generatepress'), 'priority' => $priority,
+            'input_attrs' => ['min' => $control['min'], 'max' => $control['max'], 'step' => $control['step']], 'unit' => $control['unit']
+        ]));
+        $priority++;
+    }
+
+    // --- COLORS ---
+    $color_controls = [
+        'bg_color_1' => ['label' => 'Background Gradient Color 1', 'default' => '#f0f4f8'],
+        'bg_color_2' => ['label' => 'Background Gradient Color 2', 'default' => '#ffffff'],
+        'title_color' => ['label' => 'Title Color', 'default' => '#111827'],
+        'text_color' => ['label' => 'Text/Lead Color', 'default' => '#4b5563'],
+        'accent_color' => ['label' => 'Accent/Primary Button Color', 'default' => '#3b82f6'],
+        'stat_card_bg' => ['label' => 'Stat Card Background', 'default' => 'rgba(255, 255, 255, 0.7)'],
+        'stat_card_text' => ['label' => 'Stat Card Text Color', 'default' => '#111827'],
+    ];
+    $priority = 60;
+    foreach($color_controls as $id => $control) {
+        $wp_customize->add_setting( "maps_pro_{$id}", [ 'default' => $control['default'], 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ]);
+        $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "maps_pro_{$id}", [
+            'section' => 'maps_showcase_section', 'label' => __($control['label'], 'generatepress'), 'priority' => $priority,
+        ]));
+        $priority++;
+    }
+
+    // --- EFFECTS & ANIMATIONS (TOGGLES) ---
+    $effect_controls = [
+        'reveal_animation' => ['label' => 'Enable Reveal-on-Scroll Animation', 'default' => true],
+        'parallax_effect' => ['label' => 'Enable Parallax Effect on Media', 'default' => true],
+        'glass_blur_effect' => ['label' => 'Enable Glassmorphism on Stats', 'default' => true],
+        'notification_badge' => ['label' => 'Show Red Notification Badge on Button', 'default' => false],
+    ];
+    $priority = 70;
+    foreach($effect_controls as $id => $control) {
+        $wp_customize->add_setting( "maps_pro_{$id}", [ 'default' => $control['default'], 'sanitize_callback' => 'maps_pro_sanitize_checkbox', 'transport' => 'postMessage' ] );
+        $wp_customize->add_control( "maps_pro_{$id}", [
+            'type' => 'checkbox', 'section' => 'maps_showcase_section', 'label' => __($control['label'], 'generatepress'), 'priority' => $priority
+        ]);
+        $priority++;
+    }
+}
+add_action( 'customize_register', 'maps_pro_register_customizer' );
+
+
+// =============================================================================
+// 2. HTML OUTPUT
+// =============================================================================
+
+/**
+ * Renders the showcase section HTML on the frontend.
+ */
+function maps_pro_render_showcase_section() {
+    
+    // Conditionals: only show if toggled ON, and respect homepage-only setting
+    $show_section = get_theme_mod( 'maps_pro_show_section', true );
+    $homepage_only = get_theme_mod( 'maps_pro_homepage_only', true );
+
+    if ( ! $show_section || ( $homepage_only && ! is_front_page() && ! is_home() ) ) {
+        return;
+    }
+
+    // Fetch all settings
+    $settings = [
+        'layout' => get_theme_mod('maps_pro_layout', 'media_right'),
+        'visual_mode' => get_theme_mod('maps_pro_visual_mode', 'image'),
+        'eyebrow' => get_theme_mod('maps_pro_eyebrow', 'WELCOME TO MAPS'),
+        'title' => get_theme_mod('maps_pro_title', 'Professional Solutions, Delivered with Precision.'),
+        'lead' => get_theme_mod('maps_pro_lead', 'From advanced cleaning to meticulous property care, we provide a suite of services designed for excellence. Let us handle the details, so you can focus on what matters most.'),
+        'btn1_text' => get_theme_mod('maps_pro_btn1_text', 'Our Services'),
+        'btn1_url' => get_theme_mod('maps_pro_btn1_url', '#services'),
+        'btn2_text' => get_theme_mod('maps_pro_btn2_text', 'Get a Quote'),
+        'btn2_url' => get_theme_mod('maps_pro_btn2_url', '#contact'),
+        'bullet1_icon' => get_theme_mod('maps_pro_bullet1_icon', '✅'),
+        'bullet1_text' => get_theme_mod('maps_pro_bullet1_text', 'Quality Guaranteed'),
+        'bullet2_icon' => get_theme_mod('maps_pro_bullet2_icon', '📞'),
+        'bullet2_text' => get_theme_mod('maps_pro_bullet2_text', '24/7 Support'),
+        'bullet3_icon' => get_theme_mod('maps_pro_bullet3_icon', '🌿'),
+        'bullet3_text' => get_theme_mod('maps_pro_bullet3_text', 'Eco-Friendly Options'),
+        'stat1_value' => get_theme_mod('maps_pro_stat1_value', '1,200+'),
+        'stat1_label' => get_theme_mod('maps_pro_stat1_label', 'Happy Clients'),
+        'stat2_value' => get_theme_mod('maps_pro_stat2_value', '15+'),
+        'stat2_label' => get_theme_mod('maps_pro_stat2_label', 'Years of Experience'),
+        'stat3_value' => get_theme_mod('maps_pro_stat3_value', '99%'),
+        'stat3_label' => get_theme_mod('maps_pro_stat3_label', 'Satisfaction Rate'),
+        'image_after' => get_theme_mod('maps_pro_image_after', ''),
+        'image_before' => get_theme_mod('maps_pro_image_before', ''),
+        'video_mp4' => get_theme_mod('maps_pro_video_mp4', ''),
+        'video_webm' => get_theme_mod('maps_pro_video_webm', ''),
+        'notification_audio' => get_theme_mod('maps_pro_notification_audio', ''),
+        'reveal_animation' => get_theme_mod('maps_pro_reveal_animation', true),
+        'parallax_effect' => get_theme_mod('maps_pro_parallax_effect', true),
+        'glass_blur_effect' => get_theme_mod('maps_pro_glass_blur_effect', true),
+        'notification_badge' => get_theme_mod('maps_pro_notification_badge', false),
+    ];
+    
+    // Data attributes for JS/CSS hooks
+    $data_attrs = 'data-layout="' . esc_attr($settings['layout']) . '" ';
+    $data_attrs .= 'data-visual-mode="' . esc_attr($settings['visual_mode']) . '" ';
+    if ($settings['reveal_animation']) $data_attrs .= 'data-reveal-animation="true" ';
+    if ($settings['parallax_effect']) $data_attrs .= 'data-parallax="true" ';
+    if ($settings['glass_blur_effect']) $data_attrs .= 'data-glass-blur="true" ';
+    if ($settings['notification_badge']) $data_attrs .= 'data-notification-badge="true" ';
+    if ($settings['notification_audio']) $data_attrs .= 'data-notification-sound="true" ';
+
+    ?>
+    <section id="maps-showcase" <?php echo $data_attrs; ?>>
+        <div class="maps-showcase__container">
+            <div class="maps-showcase__content">
+                <?php if ($settings['eyebrow']) : ?>
+                <span class="maps-showcase__eyebrow reveal-item"><?php echo esc_html($settings['eyebrow']); ?></span>
+                <?php endif; ?>
+                
+                <?php if ($settings['title']) : ?>
+                <h1 class="maps-showcase__title reveal-item"><?php echo wp_kses_post($settings['title']); ?></h1>
+                <?php endif; ?>
+
+                <?php if ($settings['lead']) : ?>
+                <p class="maps-showcase__lead reveal-item"><?php echo esc_html($settings['lead']); ?></p>
+                <?php endif; ?>
+
+                <div class="maps-showcase__buttons reveal-item">
+                    <?php if ($settings['btn1_text'] && $settings['btn1_url']) : ?>
+                    <a href="<?php echo esc_url($settings['btn1_url']); ?>" class="maps-showcase__button maps-showcase__button--primary">
+                        <?php echo esc_html($settings['btn1_text']); ?>
+                    </a>
+                    <?php endif; ?>
+                    <?php if ($settings['btn2_text'] && $settings['btn2_url']) : ?>
+                    <a href="<?php echo esc_url($settings['btn2_url']); ?>" class="maps-showcase__button maps-showcase__button--ghost">
+                        <?php echo esc_html($settings['btn2_text']); ?>
+                    </a>
+                    <?php endif; ?>
                 </div>
 
-                <div class="field-group">
-                    <label class="field-label">Leveringsadresse</label>
-                    <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..."></textarea>
-                </div>
+                <ul class="maps-showcase__bullets reveal-item">
+                    <?php for ($i=1; $i <= 3; $i++) : ?>
+                        <?php if ($settings["bullet{$i}_text"]) : ?>
+                        <li>
+                            <span class="maps-showcase__bullet-icon"><?php echo esc_html($settings["bullet{$i}_icon"]); ?></span>
+                            <?php echo esc_html($settings["bullet{$i}_text"]); ?>
+                        </li>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </ul>
 
-                <div class="table-container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Antal</th>
-                                <th>Beskrivelse</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            <tr class="fade-in">
-                                <td>
-                                    <input type="number" class="table-input table-number" min="0" placeholder="0">
-                                </td>
-                                <td>
-                                    <input type="text" class="table-input" placeholder="Indtast beskrivelse...">
-                                </td>
-                                <td>
-                                    <button class="btn-delete" title="Slet række">×</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn-add" id="add-row">Tilføj række</button>
-                </div>
-
-                <div class="actions">
-                    <button class="btn-action btn-secondary" id="save-pdf">Gem som PDF</button>
-                    <button class="btn-action btn-primary" id="print">Udskriv</button>
+                <div class="maps-showcase__stats reveal-item">
+                    <?php for ($i=1; $i <= 3; $i++) : ?>
+                         <?php if ($settings["stat{$i}_value"]) : ?>
+                        <div class="maps-showcase__stats-card">
+                            <div class="maps-showcase__stat-value"><?php echo esc_html($settings["stat{$i}_value"]); ?></div>
+                            <div class="maps-showcase__stat-label"><?php echo esc_html($settings["stat{$i}_label"]); ?></div>
+                        </div>
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 </div>
             </div>
 
-            <div class="footer">
-                <div class="footer-divider"></div>
-                <p><strong>Felson Watersafe ApS</strong></p>
-                <p>Gartnervej 4 • 6710 Esbjerg V</p>
-                <p>CVR: DK26813522 • Tlf: 70 20 66 76</p>
-                <p>E-mail: felson@felson.dk</p>
+            <div class="maps-showcase__media">
+                <div class="maps-showcase__media-inner">
+                    <?php if ($settings['visual_mode'] === 'image' && $settings['image_after']) : ?>
+                        <img src="<?php echo esc_url($settings['image_after']); ?>" alt="Showcase Image">
+                    <?php elseif ($settings['visual_mode'] === 'video' && ($settings['video_mp4'] || $settings['video_webm'])) : ?>
+                        <video playsinline autoplay muted loop>
+                            <?php if ($settings['video_mp4']) : ?><source src="<?php echo esc_url($settings['video_mp4']); ?>" type="video/mp4"><?php endif; ?>
+                            <?php if ($settings['video_webm']) : ?><source src="<?php echo esc_url($settings['video_webm']); ?>" type="video/webm"><?php endif; ?>
+                            Your browser does not support the video tag.
+                        </video>
+                    <?php elseif ($settings['visual_mode'] === 'before_after' && $settings['image_before'] && $settings['image_after']) : ?>
+                        <div class="maps-before-after-slider">
+                            <div class="maps-before-after-slider__before">
+                                <img src="<?php echo esc_url($settings['image_before']); ?>" alt="Before">
+                            </div>
+                            <div class="maps-before-after-slider__after">
+                                <img src="<?php echo esc_url($settings['image_after']); ?>" alt="After">
+                            </div>
+                            <input type="range" min="0" max="100" value="50" class="maps-before-after-slider__range" aria-label="Image comparison slider">
+                        </div>
+                    <?php else: ?>
+                        <div class="maps-showcase__media-placeholder">
+                            <span>Please select a visual in the Customizer.</span>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
+        <?php if ($settings['notification_audio']) : ?>
+            <audio id="maps-notification-sound" src="<?php echo esc_url($settings['notification_audio']); ?>" preload="auto"></audio>
+        <?php endif; ?>
+    </section>
+    <?php
+}
+// Hook into a GeneratePress hook. Change this for other themes.
+add_action( 'generate_after_header', 'maps_pro_render_showcase_section', 15 );
 
-    <script>
-        // Set today's date
-        document.getElementById('dato').valueAsDate = new Date();
 
-        // Add new row
-        document.getElementById('add-row').addEventListener('click', function() {
-            const tbody = document.getElementById('table-body');
-            const newRow = document.createElement('tr');
-            newRow.className = 'fade-in';
-            newRow.innerHTML = `
-                <td>
-                    <input type="number" class="table-input table-number" min="0" placeholder="0">
-                </td>
-                <td>
-                    <input type="text" class="table-input" placeholder="Indtast beskrivelse...">
-                </td>
-                <td>
-                    <button class="btn-delete" title="Slet række">×</button>
-                </td>
-            `;
-            tbody.appendChild(newRow);
-        });
+// =============================================================================
+// 3. DYNAMIC CSS & JS ENQUEUE
+// =============================================================================
 
-        // Delete row
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn-delete')) {
-                const tbody = document.getElementById('table-body');
-                if (tbody.rows.length > 1) {
-                    const row = e.target.closest('tr');
-                    row.style.animation = 'fadeIn 0.3s ease reverse';
-                    setTimeout(() => row.remove(), 300);
-                } else {
-                    alert('Der skal være mindst én række');
+/**
+ * Enqueues dynamic CSS variables and frontend JavaScript.
+ */
+function maps_pro_enqueue_assets() {
+    
+    // Only load assets if the section is meant to be displayed
+    $show_section = get_theme_mod( 'maps_pro_show_section', true );
+    $homepage_only = get_theme_mod( 'maps_pro_homepage_only', true );
+    if ( ! $show_section || ( $homepage_only && ! is_front_page() && ! is_home() ) ) {
+        return;
+    }
+    
+    // --- 3.1. DYNAMIC CSS ---
+    $css_vars = "
+    :root {
+        --maps-showcase-padding-top: " . absint(get_theme_mod('maps_pro_padding_top', 100)) . "px;
+        --maps-showcase-padding-bottom: " . absint(get_theme_mod('maps_pro_padding_bottom', 100)) . "px;
+        --maps-showcase-margin-top: " . intval(get_theme_mod('maps_pro_margin_top', 0)) . "px;
+        --maps-showcase-margin-bottom: " . absint(get_theme_mod('maps_pro_margin_bottom', 0)) . "px;
+        --maps-showcase-container-width: " . absint(get_theme_mod('maps_pro_container_width', 1200)) . "px;
+        --maps-showcase-title-size: " . absint(get_theme_mod('maps_pro_title_size', 56)) . "px;
+        --maps-showcase-lead-size: " . absint(get_theme_mod('maps_pro_lead_size', 20)) . "px;
+        --maps-showcase-bg-color-1: " . sanitize_text_field(get_theme_mod('maps_pro_bg_color_1', '#f0f4f8')) . ";
+        --maps-showcase-bg-color-2: " . sanitize_text_field(get_theme_mod('maps_pro_bg_color_2', '#ffffff')) . ";
+        --maps-showcase-title-color: " . sanitize_text_field(get_theme_mod('maps_pro_title_color', '#111827')) . ";
+        --maps-showcase-text-color: " . sanitize_text_field(get_theme_mod('maps_pro_text_color', '#4b5563')) . ";
+        --maps-showcase-accent-color: " . sanitize_text_field(get_theme_mod('maps_pro_accent_color', '#3b82f6')) . ";
+        --maps-showcase-stat-card-bg: " . sanitize_text_field(get_theme_mod('maps_pro_stat_card_bg', 'rgba(255, 255, 255, 0.7)')) . ";
+        --maps-showcase-stat-card-text: " . sanitize_text_field(get_theme_mod('maps_pro_stat_card_text', '#111827')) . ";
+    }";
+    
+    $static_css = "
+    #maps-showcase {
+        background: linear-gradient(135deg, var(--maps-showcase-bg-color-1), var(--maps-showcase-bg-color-2));
+        padding-top: var(--maps-showcase-padding-top);
+        padding-bottom: var(--maps-showcase-padding-bottom);
+        margin-top: var(--maps-showcase-margin-top);
+        margin-bottom: var(--maps-showcase-margin-bottom);
+        overflow: hidden;
+    }
+    .maps-showcase__container {
+        max-width: var(--maps-showcase-container-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 30px;
+        align-items: center;
+    }
+    .maps-showcase__content { grid-column: span 6; }
+    .maps-showcase__media { grid-column: span 6; }
+    
+    #maps-showcase[data-layout='media_left'] .maps-showcase__content { grid-column: 7 / span 6; grid-row: 1; }
+    #maps-showcase[data-layout='media_left'] .maps-showcase__media { grid-column: 1 / span 6; grid-row: 1; }
+    
+    .maps-showcase__eyebrow { display: block; font-size: 14px; font-weight: 600; color: var(--maps-showcase-accent-color); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .maps-showcase__title { font-size: var(--maps-showcase-title-size); color: var(--maps-showcase-title-color); line-height: 1.2; margin: 0 0 1rem; }
+    .maps-showcase__lead { font-size: var(--maps-showcase-lead-size); color: var(--maps-showcase-text-color); line-height: 1.6; max-width: 600px; margin-bottom: 2rem; }
+    
+    .maps-showcase__buttons { display: flex; gap: 1rem; margin-bottom: 2rem; }
+    .maps-showcase__button { display: inline-block; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .maps-showcase__button--primary { background-color: var(--maps-showcase-accent-color); color: white; position: relative; }
+    .maps-showcase__button--primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    #maps-showcase[data-notification-badge='true'] .maps-showcase__button--primary::after { content: ''; position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; background-color: #ef4444; border-radius: 50%; border: 2px solid white; }
+
+    .maps-showcase__button--ghost { background-color: transparent; color: var(--maps-showcase-accent-color); box-shadow: inset 0 0 0 2px var(--maps-showcase-accent-color); }
+    .maps-showcase__button--ghost:hover { background-color: var(--maps-showcase-accent-color); color: white; }
+
+    .maps-showcase__bullets { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-direction: column; gap: 0.8rem; color: var(--maps-showcase-text-color); }
+    .maps-showcase__bullets li { display: flex; align-items: center; gap: 0.8rem; }
+    .maps-showcase__bullet-icon { color: var(--maps-showcase-accent-color); font-size: 1.2em; }
+    
+    .maps-showcase__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
+    .maps-showcase__stats-card { background: var(--maps-showcase-stat-card-bg); color: var(--maps-showcase-stat-card-text); padding: 1.5rem; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .maps-showcase__stats-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    #maps-showcase[data-glass-blur='true'] .maps-showcase__stats-card { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+    .maps-showcase__stat-value { font-size: 2rem; font-weight: 700; line-height: 1; }
+    .maps-showcase__stat-label { font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8; }
+    
+    .maps-showcase__media-inner { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); aspect-ratio: 4/3; }
+    .maps-showcase__media-inner img, .maps-showcase__media-inner video { width: 100%; height: 100%; object-fit: cover; }
+    .maps-showcase__media-placeholder { width:100%; height:100%; display:grid; place-content:center; background:#e2e8f0; color:#94a3b8; }
+    
+    /* Before/After Slider */
+    .maps-before-after-slider { position: relative; height: 100%; width: 100%; }
+    .maps-before-after-slider__before, .maps-before-after-slider__after { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+    .maps-before-after-slider__after { clip-path: inset(0 50% 0 0); }
+    .maps-before-after-slider__range { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: col-resize; }
+    
+    /* Animations */
+    #maps-showcase[data-reveal-animation='true'] .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    #maps-showcase[data-reveal-animation='true'] .reveal-item.is-revealed { opacity: 1; transform: translateY(0); }
+    .reveal-item:nth-child(2) { transition-delay: 0.1s; }
+    .reveal-item:nth-child(3) { transition-delay: 0.2s; }
+    .reveal-item:nth-child(4) { transition-delay: 0.3s; }
+    .reveal-item:nth-child(5) { transition-delay: 0.4s; }
+    
+    /* Responsive */
+    @media (max-width: 991px) {
+        .maps-showcase__container { grid-template-columns: 1fr; gap: 40px; }
+        .maps-showcase__content, .maps-showcase__media { grid-column: span 1; }
+        #maps-showcase[data-layout='media_left'] .maps-showcase__content { grid-row: 1; }
+        .maps-showcase__title { font-size: calc(var(--maps-showcase-title-size) * 0.8); }
+        .maps-showcase__lead { font-size: calc(var(--maps-showcase-lead-size) * 0.9); }
+    }
+    @media (max-width: 768px) {
+        .maps-showcase__title { font-size: calc(var(--maps-showcase-title-size) * 0.7); }
+        .maps-showcase__buttons { flex-direction: column; align-items: flex-start; }
+    }
+    ";
+    
+    wp_add_inline_style( 'generate-style', $css_vars . $static_css );
+
+    // --- 3.2. JAVASCRIPT ---
+    $js_script = "
+    (function() {
+        'use strict';
+        document.addEventListener('DOMContentLoaded', function() {
+            const showcase = document.getElementById('maps-showcase');
+            if (!showcase) return;
+
+            // 1. Reveal on Scroll (Intersection Observer)
+            if (showcase.dataset.revealAnimation === 'true') {
+                const revealItems = showcase.querySelectorAll('.reveal-item');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                revealItems.forEach(item => observer.observe(item));
+            }
+            
+            // 2. Before/After Slider
+            const slider = showcase.querySelector('.maps-before-after-slider__range');
+            if (slider) {
+                const afterImage = showcase.querySelector('.maps-before-after-slider__after');
+                slider.addEventListener('input', (e) => {
+                    afterImage.style.clipPath = `inset(0 \${100 - e.target.value}% 0 0)`;
+                });
+            }
+
+            // 3. Parallax Effect on Media
+            if (showcase.dataset.parallax === 'true' && window.innerWidth > 991) {
+                const mediaElement = showcase.querySelector('.maps-showcase__media-inner');
+                if (mediaElement) {
+                    window.addEventListener('scroll', function() {
+                        const top = showcase.getBoundingClientRect().top;
+                        const speed = -0.2;
+                        const yPos = (top * speed);
+                        mediaElement.style.transform = `translateY(\${yPos}px)`;
+                    });
+                }
+            }
+            
+            // 4. Notification Sound on Button Click
+            if (showcase.dataset.notificationSound === 'true') {
+                const primaryBtn = showcase.querySelector('.maps-showcase__button--primary');
+                const audio = document.getElementById('maps-notification-sound');
+                if (primaryBtn && audio) {
+                    let hasPlayed = false;
+                    primaryBtn.addEventListener('click', function(e) {
+                        if (!hasPlayed) {
+                           audio.play().catch(error => console.log('Audio play failed:', error));
+                           hasPlayed = true;
+                        }
+                    }, { once: true }); // Use { once: true } to auto-remove listener after first click
                 }
             }
         });
+    })();
+    ";
+    
+    // Using a core script handle like 'jquery-core' ensures it loads in the footer.
+    wp_add_inline_script( 'jquery-core', $js_script );
+}
+add_action( 'wp_enqueue_scripts', 'maps_pro_enqueue_assets' );
 
-        // Print functionality
-        function handlePrint() {
-            window.print();
+// =============================================================================
+// 4. LIVE PREVIEW JAVASCRIPT
+// =============================================================================
+
+/**
+ * Adds JS for Customizer live previewing (selective refresh fallbacks).
+ */
+function maps_pro_customizer_live_preview() {
+    $js = "
+    ( function( $ ) {
+        // Simple text updates
+        const simpleText = ['eyebrow', 'title', 'lead', 'btn1_text', 'btn2_text', 'bullet1_text', 'bullet2_text', 'bullet3_text', 'bullet1_icon', 'bullet2_icon', 'bullet3_icon', 'stat1_value', 'stat1_label', 'stat2_value', 'stat2_label', 'stat3_value', 'stat3_label'];
+        simpleText.forEach(function(id) {
+            wp.customize( 'maps_pro_' + id, function( value ) {
+                value.bind( function( newval ) {
+                    $( '.maps-showcase__' + id.replace(/_/g, '-') ).html( newval );
+                } );
+            } );
+        });
+
+        // CSS Variable updates
+        const cssVars = {
+            'padding_top': ['--maps-showcase-padding-top', 'px'],
+            'padding_bottom': ['--maps-showcase-padding-bottom', 'px'],
+            'margin_top': ['--maps-showcase-margin-top', 'px'],
+            'margin_bottom': ['--maps-showcase-margin-bottom', 'px'],
+            'container_width': ['--maps-showcase-container-width', 'px'],
+            'title_size': ['--maps-showcase-title-size', 'px'],
+            'lead_size': ['--maps-showcase-lead-size', 'px'],
+            'bg_color_1': ['--maps-showcase-bg-color-1', ''],
+            'bg_color_2': ['--maps-showcase-bg-color-2', ''],
+            'title_color': ['--maps-showcase-title-color', ''],
+            'text_color': ['--maps-showcase-text-color', ''],
+            'accent_color': ['--maps-showcase-accent-color', ''],
+            'stat_card_bg': ['--maps-showcase-stat-card-bg', ''],
+            'stat_card_text': ['--maps-showcase-stat-card-text', ''],
+        };
+        for (const [key, value] of Object.entries(cssVars)) {
+             wp.customize( 'maps_pro_' + key, function( setting ) {
+                setting.bind( function( newval ) {
+                    document.documentElement.style.setProperty(value[0], newval + value[1]);
+                } );
+            } );
         }
 
-        document.getElementById('save-pdf').addEventListener('click', handlePrint);
-        document.getElementById('print').addEventListener('click', handlePrint);
-
-        // Add subtle animations on input focus
-        document.querySelectorAll('input, textarea').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.01)';
-            });
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
+        // Toggles (data attributes)
+        const toggles = ['reveal_animation', 'parallax_effect', 'glass_blur_effect', 'notification_badge'];
+        toggles.forEach(function(id) {
+             wp.customize( 'maps_pro_' + id, function( value ) {
+                value.bind( function( newval ) {
+                    const showcase = document.getElementById('maps-showcase');
+                    if (showcase) {
+                       showcase.dataset[id.replace(/_([a-z])/g, g => g[1].toUpperCase())] = newval ? 'true' : 'false';
+                    }
+                } );
+            } );
         });
-    </script>
-</body>
-</html>
+        
+    } )( jQuery );
+    ";
+
+    wp_add_inline_script('customize-preview', $js);
+}
+add_action( 'customize_preview_init', 'maps_pro_customizer_live_preview' );
