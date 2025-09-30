@@ -121,9 +121,9 @@
         position: relative;
         overflow: hidden;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
     }
 
     .header::after {
@@ -150,6 +150,8 @@
         text-transform: uppercase;
         position: relative;
         z-index: 1;
+        align-self: flex-start;
+        text-align: left;
     }
 
     .company-name {
@@ -160,6 +162,8 @@
         position: relative;
         z-index: 1;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        align-self: flex-end;
+        text-align: right;
     }
 
     .content {
@@ -487,14 +491,18 @@
 
         .header {
             flex-direction: column;
-            text-align: center;
             gap: 0.75rem;
             padding: 1.5rem;
         }
 
-        .document-title,
+        .document-title {
+            text-align: left;
+            align-self: flex-start;
+        }
+
         .company-name {
-            text-align: center;
+            text-align: right;
+            align-self: flex-end;
         }
 
         .info-grid {
@@ -532,11 +540,20 @@
 
     /* Print Styles */
     @media print {
+        @page {
+            margin-top: 200px;
+            margin-bottom: 140px;
+            margin-left: 20mm;
+            margin-right: 20mm;
+        }
+
         body {
             background: white;
             padding: 0;
-            padding-top: 160px;
-            padding-bottom: 120px;
+        }
+
+        .container {
+            max-width: 100%;
         }
 
         .document {
@@ -551,12 +568,15 @@
         .header {
             background: white;
             border-bottom: 2px solid #00B0F0;
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
         .header::after {
@@ -566,10 +586,18 @@
         .company-name {
             color: var(--primary);
             text-shadow: none;
+            font-size: 2rem;
+            align-self: flex-end;
         }
 
         .document-title {
             color: var(--text-secondary);
+            font-size: 1rem;
+            align-self: flex-start;
+        }
+
+        .content {
+            padding: 2rem;
         }
 
         .footer {
@@ -579,7 +607,8 @@
             right: 0;
             background: white;
             border-top: 2px solid #00B0F0;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 2rem;
+            font-size: 0.7rem;
         }
 
         .btn-delete,
@@ -596,14 +625,18 @@
 
         .table tbody tr:hover {
             transform: none;
+            box-shadow: none;
         }
 
         .table-container {
             background: transparent;
+            padding: 0;
         }
 
-        @page {
-            margin: 2cm 1.5cm;
+        .field-input,
+        .table-input {
+            border: 1px solid var(--border-medium);
+            background: transparent;
         }
     }
 
@@ -642,8 +675,8 @@
     <div class="container">
         <div class="document">
             <div class="header">
-                <p class="document-title">Følgeseddel</p>
                 <h1 class="company-name">FELSON WATERSAFE ApS</h1>
+                <p class="document-title">Følgeseddel</p>
             </div>
 
 ```
