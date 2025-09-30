@@ -64,54 +64,31 @@
             overflow: hidden;
             position: relative;
         }
-
-        .document::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #5B21B6, #8B5CF6, #A78BFA);
-            animation: colorWave 3s ease-in-out infinite;
-        }
-
-        @keyframes colorWave {
-            0%, 100% { transform: scaleX(1); }
-            50% { transform: scaleX(1.05); }
-        }
-
+        
+        /* CORRECTED & CLEANED HEADER STYLES */
         .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
+            background: #fff;
+            padding: 2rem 3rem 1.5rem;
+            text-align: right;
+            border-bottom: 2px solid #3BAFDA;
         }
 
-        .header {
-  background: #fff;                 /* opcional: blanco liso */
-  padding: 1.5rem 2rem 1rem;        /* margen superior e interno */
-  text-align: right;                /* mueve todo el contenido a la derecha */
-  border-bottom: 2px solid #3BAFDA; /* línea azul cielo */
-}
-
-.company-name {
-  color: #3BAFDA;   /* azul cielo corporativo */
-  font-size: 1.4rem;
-  font-weight: 700;
-  text-align: right; /* asegura que el texto se alinee a la derecha */
-  margin: 0;
-}
+        .company-name {
+            color: #3BAFDA;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 0.25rem 0;
+        }
 
         .document-title {
-            text-align: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 0.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-size: 1rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
+        /* END OF HEADER STYLES */
+
 
         .content {
             padding: 3rem;
@@ -386,7 +363,10 @@
             }
 
             .company-name {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
+            }
+             .header {
+                padding: 1.5rem 2rem 1rem;
             }
         }
 
@@ -401,22 +381,23 @@
                 border-radius: 0;
             }
 
-            .document::before {
+            .document::before, .document::after {
                 display: none;
             }
 
             .header {
                 background: white;
-                border-bottom: 3px solid var(--primary);
-                padding: 2rem;
+                border-bottom: 2px solid #000000;
+                padding: 1.5rem 2rem;
+                text-align: right;
             }
 
             .company-name {
-                color: var(--primary);
+                color: #000000;
             }
 
             .document-title {
-                color: var(--text-gray);
+                color: #333333;
             }
 
             .btn-delete,
