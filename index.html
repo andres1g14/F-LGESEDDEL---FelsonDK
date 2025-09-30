@@ -1,679 +1,519 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
+        /* --- 1. Design System & Variables --- */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            --color-primary: #667eea;
+            --color-text-light: #ffffff;
+            --color-text-dark: #2d3748;
+            --color-text-muted: #718096;
+            --color-border: #e2e8f0;
+            --color-bg-light: #f7fafc;
+            --color-danger: #e53e3e;
+            --border-radius: 12px;
+            --shadow-lg: 0 20px 60px -10px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        /* --- 2. General & Body Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            --primary: #00B0F0;
-            --primary-dark: #4C1D95;
-            --secondary: #8B5CF6;
-            --accent: #A78BFA;
-            --success: #10B981;
-            --danger: #EF4444;
-            --bg-dark: #111827;
-            --bg-light: #F9FAFB;
-            --text-dark: #111827;
-            --text-gray: #6B7280;
-            --border: #E5E7EB;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--primary-gradient);
             min-height: 100vh;
             padding: 2rem;
-            animation: gradientShift 15s ease infinite;
-            background-size: 400% 400%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 16px;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* --- 3. Main Application Structure --- */
+        .app-container {
+            width: 100%;
+            max-width: 1000px;
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .document {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .document::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #5B21B6, #8B5CF6, #A78BFA);
-            animation: colorWave 3s ease-in-out infinite;
-        }
-
-        @keyframes colorWave {
-            0%, 100% { transform: scaleX(1); }
-            50% { transform: scaleX(1.05); }
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 3rem;
-            position: relative;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--border-radius);
             overflow: hidden;
         }
-
         .header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  padding: 1.25rem 2rem 1rem;
-  position: relative;
-  overflow: hidden;
-
-  /* NUEVO: apila y alinea a la derecha */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: .35rem;
-}
-
-.company-name {
-  color: white;
-  font-size: 1.6rem;
-  font-weight: 800;
-  text-align: right;
-  letter-spacing: -0.2px;
-  margin: 0;
-}
-
-.document-title {
-  text-align: left;
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.92);
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
+            padding: 2rem 3rem;
+            background: var(--primary-gradient);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .logo {
+            color: var(--color-text-light);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
         .content {
             padding: 3rem;
         }
-
-        /* Antes tenías gap: 2rem; margin-bottom: 3rem; */
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .75rem 1rem;          /* más compacto */
-  margin-bottom: 1rem;       /* más compacto */
-}
-
-.field-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-gray);
-  margin-bottom: .25rem;      /* antes .5rem */
-  text-transform: uppercase;
-  letter-spacing: .3px;
-}
-
-.field-input {
-  width: 100%;
-  padding: .65rem .8rem;      /* antes 1rem; */
-  border: 2px solid var(--border);
-  border-radius: 10px;        /* un poco más compacto */
-  font-size: 1rem;
-  transition: all .2s ease;
-  background: var(--bg-light);
-}
-
-        .field-input:hover {
-            border-color: var(--accent);
-        }
-
-        .field-input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .field-textarea {
-            resize: vertical;
-            min-height: 100px;
-            font-family: inherit;
-        }
-
-        .table-container {
-            background: var(--bg-light);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
-        }
-
-        .table thead th {
-            text-align: left;
-            padding: 1rem;
-            color: var(--text-gray);
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .table tbody tr {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .table tbody tr:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: scale(1.01);
-        }
-
-        .table tbody td {
-            padding: 1rem;
-            position: relative;
-        }
-
-        .table tbody td:first-child {
-            border-radius: 12px 0 0 12px;
-            width: 120px;
-        }
-
-        .table tbody td:last-child {
-            border-radius: 0 12px 12px 0;
-            width: 60px;
+        .title {
             text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .footer {
+            text-align: center;
+            padding: 2rem 3rem;
+            border-top: 1px solid var(--color-border);
+            background: var(--color-bg-light);
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
         }
 
-        .table-input {
+        /* --- 4. Form & Input Styles --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin-bottom: 0.5rem;
+        }
+        .form-input, .form-textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid transparent;
-            background: var(--bg-light);
+            border: 1px solid var(--color-border);
             border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
+            font-size: 1rem;
+            background: var(--color-bg-light);
+            transition: all var(--transition-speed);
         }
-
-        .table-input:focus {
+        .form-input:focus, .form-textarea:focus {
             outline: none;
-            border-color: var(--secondary);
+            border-color: var(--color-primary);
             background: white;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
         }
 
-        .table-number {
+        /* --- 5. Dynamic Table Styles --- */
+        .data-table {
             width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .data-table thead {
+            background: var(--primary-gradient);
+        }
+        .data-table th {
+            padding: 1rem;
+            text-align: left;
+            color: var(--color-text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        .data-table th.col-antal {
+            width: 20%;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .data-table th.col-actions {
+            width: 60px;
+        }
+        .data-table tbody tr {
+            border-bottom: 1px solid var(--color-border);
+        }
+        .data-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        .data-table td {
+            padding: 0.5rem 1rem;
+            vertical-align: top;
+        }
+        .data-table td.col-antal {
+            border-right: 1px solid var(--color-border);
+        }
+        .table-input, .table-textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: transparent;
+        }
+        .table-input:focus, .table-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: white;
+        }
+        .table-textarea {
+            resize: none;
+            overflow: hidden;
+        }
+        .table-input.col-antal {
             text-align: center;
         }
 
-        .btn-delete {
-            background: white;
-            border: 2px solid var(--danger);
-            color: var(--danger);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        /* --- 6. Buttons & Actions --- */
+        .actions-container {
+            margin-top: 1rem;
         }
-
-        .btn-delete:hover {
-            background: var(--danger);
-            color: white;
-            transform: rotate(90deg) scale(1.1);
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
+        .btn {
+            padding: 0.75rem 1.5rem;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
-
+        .btn-add {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
         .btn-add:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
         }
-
-        .btn-add::before {
-            content: '+';
+        .btn-delete {
+            background: transparent;
+            color: var(--color-danger);
             font-size: 1.3rem;
-            font-weight: 700;
+            padding: 0.5rem;
+            border-radius: 50%;
         }
-
-        .actions {
+        .btn-delete:hover {
+            background: #fff5f5;
+            transform: scale(1.1);
+        }
+        .main-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
-
-        .btn-action {
-            padding: 1.25rem 3rem;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-action::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-action:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--primary-gradient);
             color: white;
-            border: none;
-            box-shadow: 0 4px 14px rgba(91, 33, 182, 0.4);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
-
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
-
         .btn-secondary {
             background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
         }
-
         .btn-secondary:hover {
-            background: var(--primary);
+            background: var(--color-primary);
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(91, 33, 182, 0.3);
         }
 
-        .footer {
-  margin-top: auto;                /* empujado al fondo en pantalla */
-  padding: 14px 16px;
-  text-align: center;
-  color: var(--text-gray);
-  font-size: .82rem;               /* más pequeño */
-  line-height: 1.5;
-  border-top: 2px solid var(--primary); /* separador azul agua */
-  background: #fff;
-}
-
-        .footer-divider {
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            margin: 0 auto 1rem;
-            border-radius: 2px;
-        }
-
+        /* --- 7. Responsiveness --- */
         @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .content { padding: 1.5rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .main-actions { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+
+        /* --- 8. Print (WYSIWYG) Styles --- */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
             body {
-                padding: 1rem;
+                padding: 0;
+                background: white; /* Print body background must be white */
             }
-
-            .info-grid {
-                grid-template-columns: 1fr;
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                padding: 2cm;
             }
-
-            .actions {
-                flex-direction: column;
+            .document {
+                box-shadow: none;
+                border-radius: 0;
+                border: none;
             }
-
-            .btn-action {
-                width: 100%;
+            /* Force printing of colors and backgrounds */
+            .header, .data-table thead, .btn, .logo {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
             }
-
-            .company-name {
-                font-size: 1.8rem;
+            .actions-container, .main-actions, .btn-delete {
+                display: none !important;
+            }
+            .form-input, .form-textarea, .table-input, .table-textarea {
+                border-color: #ccc !important;
+                background: #fff !important;
             }
         }
-
-       @media print {
-        /* Respeta colores en impresión */
-html, body, .header, .footer, .table, .table *{
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
-/* —— Inputs sin recuadro ni iconos —— */
-input, textarea{
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  outline: none !important;
-}
-
-/* oculta icono calendario del date */
-input[type="date"]::-webkit-calendar-picker-indicator{
-  display: none !important;
-  -webkit-appearance: none !important;
-}
-/* quita botón de limpiar en Chrome */
-input[type="date"]::-webkit-clear-button{ display:none !important; }
-/* quita flechitas del number */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
-  -webkit-appearance: none !important;
-  margin: 0 !important;
-}
-input[type="number"]{ -moz-appearance: textfield; }
-
-/* —— Tabla clásica (sin tarjetas redondeadas) —— */
-.table-container{
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-.table{
-  border-collapse: collapse !important;
-  border-spacing: 0 !important;
-}
-.table thead th{
-  border-bottom: 1px solid var(--primary) !important;
-  color: #000 !important;
-}
-.table td, .table th{
-  border: 1px solid var(--primary) !important;  /* rejilla azul agua */
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-.table tbody tr{
-  box-shadow: none !important;
-}
-
-/* Si prefieres SOLO el separador vertical (sin rejilla completa),
-   usa esto en lugar de los bordes de arriba:
-.table td, .table th{ border: none !important; }
-.table td:first-child, .table th:first-child{
-  border-right: 1px solid var(--primary) !important;
-}
-.table thead th{ border-bottom: 1px solid var(--primary) !important; }
-*/
-
-/* Mantén también tus reglas de header/footer fijos y márgenes que ya pusimos */
-
-  /* tamaño y márgenes del A4 */
-  @page { size: A4; margin: 2.5cm 2cm 2.2cm; }
-
-  /* respeta colores en impresión */
-  html, body, .header, .footer, .table, .table * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  body { background: #fff !important; padding: 0 !important; }
-  .document { box-shadow: none; border-radius: 0; }
-  .document::before { display: none; }
-
-  /* ===== HEADER fijo en todas las páginas ===== */
-  .header{
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: #fff !important;
-    border-bottom: 2px solid var(--primary) !important; /* azul agua */
-    padding: 12px 24px !important;
-    z-index: 9999;
-
-    /* ambos títulos a la derecha, uno debajo del otro */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: .25rem;
-  }
-  .company-name,
-  .document-title{
-    color: var(--primary) !important;  /* títulos azules en papel */
-  }
-
-  /* deja MÁS espacio para que el contenido no se pegue al header */
-  .content{ margin-top: 140px !important; }  /* si aún lo ves justo, súbelo a 130–140px */
-
-  /* ===== FOOTER fijo en todas las páginas ===== */
-  .footer{
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #fff !important;
-    border-top: 2px solid var(--primary) !important;  /* línea azul agua */
-    font-size: .8rem !important;
-    padding: 10px 16px !important;
-    text-align: center !important;
-    color: #000 !important;
-    z-index: 9999;
-  }
-
-  /* reserva espacio antes del pie (para que no lo pise) */
-  .table-container{ margin-bottom: 90px !important; }
-
-  /* ===== Tabla clásica en azul agua y sin cortes raros ===== */
-  .table thead{ display: table-header-group; }
-  .table tfoot{ display: table-footer-group; }
-  .table{ page-break-inside: auto; }
-  .table tr{ page-break-inside: avoid; }
-  .table thead th{
-    border-bottom: 1px solid var(--primary) !important;
-    color: #000 !important;  /* etiquetas legibles */
-  }
-  .table td, .table th{
-    border: 1px solid var(--primary) !important;     /* rejilla azul agua */
-  }
-  .table td:first-child{
-    border-right: 1px solid var(--primary) !important; /* separador vertical ANTAL | BESKRIVELSE */
-  }
-
-  /* oculta UI en papel */
-  .btn-delete, .btn-add, .actions{ display: none !important; }
-
-  /* inputs/textarea como texto limpio */
-  input, textarea{
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
-}
     </style>
- <script>
-(function () {
-  function beforePrintFillPlaceholders() {
-    document.querySelectorAll('input[type="text"], input[type="number"], textarea')
-      .forEach(el => {
-        if (!el.value && el.placeholder) {
-          el.dataset._printedPlaceholder = '1';
-          el.value = el.placeholder;
-        }
-      });
-  }
-  function afterPrintRestore() {
-    document.querySelectorAll('[data-_printedPlaceholder="1"]').forEach(el => {
-      el.value = '';
-      el.removeAttribute('data-_printedPlaceholder');
-    });
-  }
-
-  window.addEventListener('beforeprint', beforePrintFillPlaceholders);
-  window.addEventListener('afterprint', afterPrintRestore);
-
-  const printBtns = [document.getElementById('save-pdf'), document.getElementById('print')].filter(Boolean);
-  printBtns.forEach(btn => btn.addEventListener('click', () => {
-    beforePrintFillPlaceholders();
-    setTimeout(() => { window.print(); setTimeout(afterPrintRestore, 300); }, 50);
-  }));
-})();
-</script>
-
 </head>
 <body>
-    <div class="container">
+    <main class="app-container">
         <div class="document">
-            <div class="header">
-                <h1 class="company-name">FELSON WATERSAFE ApS</h1>
-                <p class="document-title">Følgeseddel</p>
-            </div>
+            <header class="header">
+                <div class="logo">Felson Watersafe ApS</div>
+            </header>
 
             <div class="content">
-                <div class="info-grid">
-                    <div class="field-group">
-                        <label class="field-label">Dato</label>
-                        <input type="date" class="field-input" id="dato">
+                <h1 class="title">Følgeseddel</h1>
+
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="dato" class="form-label">Dato</label>
+                            <input type="date" class="form-input" id="dato">
+                        </div>
+                        <div class="form-group">
+                            <label for="ordre-nr" class="form-label">Ordre nr.</label>
+                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+                        </div>
                     </div>
-                    <div class="field-group">
-                        <label class="field-label">Ordre Nr.</label>
-                        <input type="text" class="field-input" id="ordre" placeholder="Indtast ordrenummer...">
+                    <div>
+                        <div class="form-group">
+                            <label for="levering" class="form-label">Levering</label>
+                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <div class="field-group">
-                    <label class="field-label">Leveringsadresse</label>
-                    <textarea class="field-input field-textarea" id="levering" placeholder="Indtast leveringsadresse..."></textarea>
-                </div>
-
-                <div class="table-container">
-                    <table class="table">
+                <div class="table-section">
+                    <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Antal</th>
+                                <th class="col-antal">Antal</th>
                                 <th>Beskrivelse</th>
-                                <th></th>
+                                <th class="col-actions"></th>
                             </tr>
                         </thead>
                         <tbody id="table-body">
-                            <tr class="fade-in">
-                                <td>
-                                    <input type="number" class="table-input table-number" min="0" placeholder="0">
-                                </td>
-                                <td>
-                                    <input type="text" class="table-input" placeholder="Indtast beskrivelse...">
-                                </td>
-                                <td>
-                                    <button class="btn-delete" title="Slet række">×</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                            </tbody>
                     </table>
-                    <button class="btn-add" id="add-row">Tilføj række</button>
-                </div>
-
-                <div class="actions">
-                    <button class="btn-action btn-secondary" id="save-pdf">Gem som PDF</button>
-                    <button class="btn-action btn-primary" id="print">Udskriv</button>
+                    <div class="actions-container">
+                        <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="footer">
-                <div class="footer-divider"></div>
-                <p><strong>Felson Watersafe ApS</strong></p>
-                <p>Gartnervej 4 • 6710 Esbjerg V</p>
-                <p>CVR: DK26813522 • Tlf: 70 20 66 76</p>
-                <p>E-mail: felson@felson.dk</p>
-            </div>
+            <footer class="footer">
+                <p>Felson Watersafe ApS • Gartnervej 4 • 6710 Esbjerg V</p>
+                <p>CVR-nr. DK26813522 • Tlf. 70206676 • felson@felson.dk</p>
+            </footer>
         </div>
-    </div>
+        <div class="main-actions">
+            <button class="btn btn-secondary" id="btn-pdf">Gem som PDF</button>
+            <button class="btn btn-primary" id="btn-print">Udskriv</button>
+        </div>
+    </main>
+
+    <template id="table-row-template">
+        <tr>
+            <td class="col-antal">
+                <input type="number" class="table-input col-antal" min="0" placeholder="0">
+            </td>
+            <td>
+                <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
+            </td>
+            <td style="text-align: center;">
+                <button class="btn-delete" title="Slet række">🗑️</button>
+            </td>
+        </tr>
+    </template>
 
     <script>
-        // Set today's date
-        document.getElementById('dato').valueAsDate = new Date();
+        (function() {
+            'use strict';
 
-        // Add new row
-        document.getElementById('add-row').addEventListener('click', function() {
-            const tbody = document.getElementById('table-body');
-            const newRow = document.createElement('tr');
-            newRow.className = 'fade-in';
-            newRow.innerHTML = `
-                <td>
-                    <input type="number" class="table-input table-number" min="0" placeholder="0">
-                </td>
-                <td>
-                    <input type="text" class="table-input" placeholder="Indtast beskrivelse...">
-                </td>
-                <td>
-                    <button class="btn-delete" title="Slet række">×</button>
-                </td>
-            `;
-            tbody.appendChild(newRow);
-        });
+            const F_APP_STORAGE_KEY = 'felsonAppSavedState';
 
-        // Delete row
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn-delete')) {
-                const tbody = document.getElementById('table-body');
-                if (tbody.rows.length > 1) {
-                    const row = e.target.closest('tr');
-                    row.style.animation = 'fadeIn 0.3s ease reverse';
-                    setTimeout(() => row.remove(), 300);
+            // --- DOM Element References ---
+            const datoInput = document.getElementById('dato');
+            const ordreNrInput = document.getElementById('ordre-nr');
+            const leveringTextarea = document.getElementById('levering');
+            const tableBody = document.getElementById('table-body');
+            const addRowBtn = document.getElementById('btn-add');
+            const printBtn = document.getElementById('btn-print');
+            const pdfBtn = document.getElementById('btn-pdf');
+            const rowTemplate = document.getElementById('table-row-template');
+
+            // --- State Management (LocalStorage) ---
+            function saveState() {
+                const tableRows = [];
+                tableBody.querySelectorAll('tr').forEach(row => {
+                    const antal = row.querySelector('.col-antal input').value;
+                    const beskrivelse = row.querySelector('textarea').value;
+                    tableRows.push({ antal, beskrivelse });
+                });
+
+                const state = {
+                    dato: datoInput.value,
+                    ordreNr: ordreNrInput.value,
+                    levering: leveringTextarea.value,
+                    table: tableRows
+                };
+                localStorage.setItem(F_APP_STORAGE_KEY, JSON.stringify(state));
+            }
+
+            function loadState() {
+                const savedState = localStorage.getItem(F_APP_STORAGE_KEY);
+                if (!savedState) {
+                    // If no saved state, add one default row
+                    addRow();
+                    return;
+                }
+
+                const state = JSON.parse(savedState);
+                datoInput.value = state.dato || '';
+                ordreNrInput.value = state.ordreNr || '';
+                leveringTextarea.value = state.levering || '';
+
+                tableBody.innerHTML = ''; // Clear existing rows before loading
+                if (state.table && state.table.length > 0) {
+                    state.table.forEach(rowData => {
+                        addRow(rowData.antal, rowData.beskrivelse);
+                    });
                 } else {
-                    alert('Der skal være mindst én række');
+                    addRow(); // Ensure at least one row exists
                 }
             }
-        });
+            
+            // --- Core Functionality ---
+            function addRow(antal = '', beskrivelse = '') {
+                const newRow = rowTemplate.content.cloneNode(true);
+                newRow.querySelector('.col-antal input').value = antal;
+                const textarea = newRow.querySelector('.table-textarea');
+                textarea.value = beskrivelse;
+                
+                tableBody.appendChild(newRow);
+                autoResizeTextarea(textarea); // Resize after adding
+            }
 
-        // 
+            function autoResizeTextarea(textarea) {
+                if (!textarea) return;
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
+
+            function handlePrint() {
+                document.body.classList.add('is-printing');
+                
+                // Replace inputs with static text for printing
+                const inputsToReplace = document.querySelectorAll('input, textarea');
+                const originalElements = [];
+
+                inputsToReplace.forEach(input => {
+                    const printValue = document.createElement('div');
+                    printValue.className = 'print-value';
+                    if (input.tagName === 'TEXTAREA') {
+                        printValue.innerHTML = input.value.replace(/\n/g, '<br>');
+                    } else if (input.type === 'date' && input.value) {
+                        const date = new Date(input.value);
+                        printValue.textContent = date.toLocaleDateString('da-DK');
+                    } else {
+                        printValue.textContent = input.value;
+                    }
+                    
+                    originalElements.push({ original: input, replacement: printValue });
+                    input.style.display = 'none';
+                    input.parentNode.insertBefore(printValue, input);
+                });
+
+                setTimeout(() => {
+                    window.print();
+                    
+                    // Restore inputs after print dialog
+                    originalElements.forEach(item => {
+                        item.original.style.display = '';
+                        if (item.replacement.parentNode) {
+                            item.replacement.parentNode.removeChild(item.replacement);
+                        }
+                    });
+                    document.body.classList.remove('is-printing');
+                }, 100); // Small delay to ensure DOM updates before print
+            }
+
+
+            // --- Event Listeners ---
+            function setupEventListeners() {
+                // Save state on any input change
+                document.querySelector('.document').addEventListener('input', saveState);
+
+                // Add Row
+                addRowBtn.addEventListener('click', addRow);
+
+                // Delete Row & Auto-Resize (Event Delegation)
+                tableBody.addEventListener('click', (e) => {
+                    if (e.target && e.target.closest('.btn-delete')) {
+                        if (tableBody.rows.length > 1) {
+                            e.target.closest('tr').remove();
+                            saveState();
+                        } else {
+                            alert('Der skal være mindst én række.');
+                        }
+                    }
+                });
+                tableBody.addEventListener('input', (e) => {
+                    if (e.target && e.target.classList.contains('table-textarea')) {
+                        autoResizeTextarea(e.target);
+                    }
+                });
+
+                // Print/Save Buttons
+                printBtn.addEventListener('click', handlePrint);
+                pdfBtn.addEventListener('click', handlePrint);
+            }
+
+            // --- Initialization ---
+            function init() {
+                if (!datoInput.value) {
+                     datoInput.valueAsDate = new Date();
+                }
+                loadState();
+                setupEventListeners();
+                // Initial resize for all loaded textareas
+                tableBody.querySelectorAll('.table-textarea').forEach(autoResizeTextarea);
+            }
+
+            init();
+
+        })();
+    </script>
+</body>
+</html>
