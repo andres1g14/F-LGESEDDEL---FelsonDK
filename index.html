@@ -88,26 +88,20 @@
             overflow: hidden;
         }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 40%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(35deg);
-        }
+        .header {
+  background: #fff;                 /* opcional: blanco liso */
+  padding: 1.5rem 2rem 1rem;        /* margen superior e interno */
+  text-align: right;                /* mueve todo el contenido a la derecha */
+  border-bottom: 2px solid #3BAFDA; /* línea azul cielo */
+}
 
-        .company-name {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
-        }
+.company-name {
+  color: #3BAFDA;   /* azul cielo corporativo */
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: right; /* asegura que el texto se alinee a la derecha */
+  margin: 0;
+}
 
         .document-title {
             text-align: center;
