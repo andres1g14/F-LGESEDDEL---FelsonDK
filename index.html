@@ -12,7 +12,7 @@
         }
 
         :root {
-            --primary: #00B0F0;;
+            --primary: #5B21B6;
             --primary-dark: #4C1D95;
             --secondary: #8B5CF6;
             --accent: #A78BFA;
@@ -88,35 +88,36 @@
             overflow: hidden;
         }
 
-        /* === Header: left title + right company (solo posición) === */
-.header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  padding: 3rem;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between; /* reparte izquierda-derecha */
-  align-items: baseline;          /* o 'center' si lo prefieres */
-}
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(35deg);
+        }
 
-.company-name {
-  color: white;
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0;
-  text-align: right;
-  letter-spacing: -0.2px;
-}
+        .company-name {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
 
-.document-title {
-  margin: 0;
-  font-size: 1.1rem;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-align: left;
-}
-
+        .document-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
         .content {
             padding: 3rem;
@@ -454,42 +455,7 @@
                 transform: translateY(0);
             }
         }
-        /* ===== Print: header/footer fijos y tabla que no se corta ===== */
-@page { size: A4; margin: 2.5cm 2cm 2.2cm; }
-
-.header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  padding: 1.2rem 3rem !important;
-  background: white !important;
-  border-bottom: 1px solid #000 !important;
-  color: #000 !important;
-  z-index: 9999;
-}
-
-.company-name, .document-title {
-  color: #000 !important;
-}
-
-.content { margin-top: 110px !important; }
-
-.footer {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: white !important;
-  border-top: 1px solid #000 !important;
-  padding: 10px 16px !important;
-  text-align: center !important;
-  z-index: 9999;
-}
-
-.table-container { margin-bottom: 90px !important; }
-
-.table thead { display: table-header-group; }
-.table tfoot { display: table-footer-group; }
-.table { page-break-inside: auto; }
-.table tr { page-break-inside: avoid; }
-
+    </style>
 </head>
 <body>
     <div class="container">
@@ -613,34 +579,5 @@
             });
         });
     </script>
-    <script>
-  (function () {
-    function beforePrintFillPlaceholders() {
-      document.querySelectorAll('input[type="text"], input[type="number"], textarea')
-        .forEach(el => {
-          if (!el.value && el.placeholder) {
-            el.dataset._printedPlaceholder = '1';
-            el.value = el.placeholder;
-          }
-        });
-    }
-    function afterPrintRestore() {
-      document.querySelectorAll('[data-_printedPlaceholder="1"]').forEach(el => {
-        el.value = '';
-        el.removeAttribute('data-_printedPlaceholder');
-      });
-    }
-
-    window.addEventListener('beforeprint', beforePrintFillPlaceholders);
-    window.addEventListener('afterprint', afterPrintRestore);
-
-    const printBtns = [document.getElementById('save-pdf'), document.getElementById('print')].filter(Boolean);
-    printBtns.forEach(btn => btn.addEventListener('click', () => {
-      beforePrintFillPlaceholders();
-      setTimeout(() => { window.print(); setTimeout(afterPrintRestore, 300); }, 50);
-    }));
-  })();
-</script>
-
 </body>
 </html>
