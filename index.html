@@ -12,7 +12,7 @@
         }
 
         :root {
-            --primary: #00BFFF;
+            --primary: #5B21B6;
             --primary-dark: #4C1D95;
             --secondary: #8B5CF6;
             --accent: #A78BFA;
@@ -88,20 +88,26 @@
             overflow: hidden;
         }
 
-        .header {
-  background: #fff;               /* blanco limpio */
-  padding: 1.5rem 2rem 1rem;
-  text-align: right;              /* alinea todo el contenido a la derecha */
-  border-bottom: 2px solid #00B0F0; /* línea azul agua */
-}
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -200%;
+            right: 100%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(35deg);
+        }
 
-.company-name {
-  color: #00B0F0;   /* azul agua corporativo */
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin: 0;
-  text-align: right;              /* asegura que el texto esté a la derecha */
-}
+        .company-name {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
 
         .document-title {
             text-align: center;
