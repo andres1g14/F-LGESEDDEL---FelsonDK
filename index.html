@@ -5,400 +5,503 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
-        /* --- 1. Sistema de Diseño y Variables --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --brand: #00B0F0;
-            --green-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            --color-primary: #764ba2;
-            --color-text-light: #ffffff;
-            --color-text-dark: #2d3748;
-            --color-text-muted: #718096;
-            --color-border: #e2e8f0;
-            --color-bg-light: #f7fafc;
-            --color-danger: #e53e3e;
-            --color-success: #48bb78;
-            --border-radius: 12px;
-            --shadow-lg: 0 20px 60px -10px rgba(0, 0, 0, 0.25);
-            --transition-speed: 0.3s;
+            --brand-primary: #00B0F0;
+            --brand-dark: #0090cc;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --bg-light: #f9fafb;
+            --border-light: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
         }
 
-        /* --- 2. Estilos Generales --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: var(--primary-gradient);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00B0F0 100%);
             min-height: 100vh;
-            padding: 2rem;
+            padding: 3rem 1.5rem;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            font-size: 16px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* --- 3. Estructura Principal --- */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 176, 240, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            33% { transform: scale(1.05) rotate(2deg); opacity: 0.9; }
+            66% { transform: scale(0.95) rotate(-2deg); opacity: 0.95; }
+        }
+
         .app-container {
             width: 100%;
-            max-width: 900px;
-        }
-        
-        .document-card {
-            background: white;
-            box-shadow: var(--shadow-lg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            margin-bottom: 2rem;
-            animation: slideIn 0.4s ease-out;
+            max-width: 920px;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes slideIn {
+        .document-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0, 176, 240, 0.1);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(40px) scale(0.96);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
         .card-header {
-            padding: 1.5rem 2.5rem;
-            background: var(--primary-gradient);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            color: var(--color-text-light);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .auto-save-indicator {
-            color: var(--color-text-light);
-            font-size: 0.85rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .auto-save-indicator.show {
-            opacity: 1;
-        }
-
-        .card-content {
-            padding: 2.5rem;
-        }
-        
-        .main-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-text-dark);
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
+            padding: 3rem 3rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border-bottom: 1px solid rgba(0, 176, 240, 0.1);
             position: relative;
+            overflow: hidden;
         }
 
-        .main-title::after {
+        .card-header::before {
             content: '';
             position: absolute;
-            bottom: -10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--brand-primary) 20%, 
+                var(--brand-primary) 80%, 
+                transparent 100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .logo {
+            color: var(--brand-primary);
+            font-size: 2.25rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.02em;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
-            height: 3px;
-            background: var(--brand);
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--brand-primary), transparent);
         }
 
-        .card-footer {
+        .card-content {
+            padding: 3rem;
+        }
+
+        .main-title {
             text-align: center;
-            padding: 1.5rem 2.5rem;
-            background: var(--color-bg-light);
-            color: var(--color-text-muted);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--color-border);
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            position: relative;
         }
 
-        /* --- 4. Formulario --- */
         .form-grid {
             display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
+            grid-template-columns: 260px 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
         }
-        
+
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .form-group:last-child {
             margin-bottom: 0;
         }
 
-        .form-grid > div:first-child .form-group {
-            margin-bottom: 0.75rem;
-        }
-
-        .form-grid > div:first-child .form-group:last-child {
-            margin-bottom: 0;
-        }
-        
         .form-label {
             display: block;
-            font-weight: 500;
-            color: var(--color-text-dark);
+            font-weight: 600;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .required {
-            color: var(--color-danger);
+            color: var(--danger);
             margin-left: 2px;
         }
-        
+
         .form-input, .form-textarea {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            font-size: 1rem;
-            background: var(--color-bg-light);
-            transition: all var(--transition-speed);
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-primary);
+        }
+
+        .form-input:hover {
+            border-color: rgba(0, 176, 240, 0.3);
         }
 
         .form-input:focus, .form-textarea:focus {
             outline: none;
-            border-color: var(--color-primary);
+            border-color: var(--brand-primary);
             background: white;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.15);
-        }
-
-        .form-input.error {
-            border-color: var(--color-danger);
+            box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.08);
         }
 
         .form-textarea {
             resize: vertical;
-            min-height: 122px;
+            min-height: 108px;
+            line-height: 1.5;
         }
 
-        /* --- 5. Tabla Dinámica --- */
+        .form-input.error {
+            border-color: var(--danger);
+            animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
         .table-section {
-            position: relative;
+            margin-top: 2rem;
         }
 
         .data-table {
             width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .data-table thead {
-            background: var(--primary-gradient);
-        }
-        
-        .data-table th {
-            padding: 1rem;
-            text-align: left;
-            color: var(--color-text-light);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-        }
-        
-        .data-table th.col-antal { width: 20%; }
-        .data-table th.col-actions { width: 60px; }
-        
-        .data-table tbody tr {
-            transition: background-color 0.2s;
-            animation: fadeIn 0.3s ease-out;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .data-table thead {
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-dark) 100%);
+        }
+
+        .data-table th {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table th.col-antal {
+            width: 20%;
+            text-align: center;
+        }
+
+        .data-table th.col-actions {
+            width: 60px;
+        }
+
+        .data-table tbody tr {
+            transition: all 0.2s ease;
+            background: white;
         }
 
         .data-table tbody tr:hover {
-            background-color: var(--color-bg-light);
+            background: linear-gradient(90deg, rgba(0, 176, 240, 0.02) 0%, transparent 100%);
+        }
+
+        .data-table tbody tr:not(:last-child) td {
+            border-bottom: 1px solid var(--border-light);
         }
 
         .data-table tbody td {
-            padding: 0.5rem 1rem;
-            border-bottom: 1px solid var(--color-border);
+            padding: 0.875rem 1.25rem;
+            vertical-align: middle;
         }
-        
+
         .table-input, .table-textarea {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid transparent;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 0.9375rem;
+            font-family: 'Inter', sans-serif;
             background: transparent;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
+            color: var(--text-primary);
         }
-        
+
+        .table-input:hover {
+            background: rgba(0, 176, 240, 0.03);
+        }
+
         .table-input:focus, .table-textarea:focus {
             outline: none;
-            border-color: var(--color-primary);
-            background: white;
+            border-color: var(--brand-primary);
+            background: rgba(0, 176, 240, 0.05);
         }
-        
+
         .table-textarea {
             resize: none;
             overflow: hidden;
             min-height: 2.5rem;
+            line-height: 1.5;
         }
-        
+
         .table-input.col-antal {
             text-align: center;
+            font-weight: 600;
+            color: var(--brand-primary);
         }
 
-        /* Ocultar elementos solo para impresión */
-        .print-only {
-            display: none;
-        }
-
-        /* --- 6. Botones --- */
         .actions-container {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
         }
-        
+
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.625rem 1.25rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
+            font-size: 0.8125rem;
             cursor: pointer;
-            transition: all var(--transition-speed);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
-            font-size: 0.9rem;
+            letter-spacing: 0.05em;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
         }
 
         .btn:active {
             transform: translateY(0);
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
         .btn-add {
-            background: var(--green-gradient);
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
             color: white;
         }
 
         .btn-clear {
             background: white;
-            color: var(--color-danger);
-            border: 2px solid var(--color-danger);
+            color: var(--danger);
+            border: 1.5px solid var(--danger);
         }
-        
+
+        .btn-clear:hover {
+            background: var(--danger);
+            color: white;
+        }
+
         .btn-delete {
             background: transparent;
-            color: var(--color-danger);
-            font-size: 1.3rem;
+            color: var(--text-muted);
+            font-size: 1.125rem;
             padding: 0.25rem 0.5rem;
-            border-radius: 4px;
             transition: all 0.2s;
         }
 
         .btn-delete:hover {
-            background: rgba(229, 62, 62, 0.1);
+            color: var(--danger);
             transform: scale(1.1);
         }
-        
+
         .main-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
-        
+
         .btn-primary {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
-        
+
         .btn-secondary {
             background: white;
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
         }
 
         .btn-brand {
-            background: var(--brand);
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-dark) 100%);
             color: white;
         }
 
-        /* Toast Notification */
+        .card-footer {
+            text-align: center;
+            padding: 2rem 3rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 176, 240, 0.02) 100%);
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(0, 176, 240, 0.1);
+        }
+
+        .card-footer p {
+            margin: 0.25rem 0;
+        }
+
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: var(--color-text-dark);
-            color: white;
+            background: white;
+            color: var(--text-primary);
             padding: 1rem 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--shadow-lg);
-            transform: translateY(100px);
+            transform: translateY(100px) scale(0.9);
             opacity: 0;
-            transition: all 0.3s ease-out;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 10000;
-            max-width: 300px;
+            max-width: 320px;
+            border: 1px solid var(--border-light);
         }
 
         .toast.show {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             opacity: 1;
         }
 
         .toast.success {
-            background: var(--color-success);
+            border-left: 3px solid var(--success);
         }
 
         .toast.error {
-            background: var(--color-danger);
+            border-left: 3px solid var(--danger);
         }
 
-        /* --- 7. Responsive --- */
+        .print-only {
+            display: none;
+        }
+
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .card-content { padding: 1.5rem; }
-            .form-grid { grid-template-columns: 1fr; }
-            .main-actions, .actions-container { flex-direction: column; }
-            .btn { width: 100%; justify-content: center; }
-            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .card-content {
+                padding: 2rem 1.5rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .main-actions,
+            .actions-container {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
-        /* --- 8. Print Styles --- */
         @media print {
-            html, body {
+            html,
+            body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
@@ -409,258 +512,149 @@
                 margin: 0;
             }
 
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+            body {
+                background: white;
+                padding: 0;
             }
 
-            body { 
-                background: #fff !important; 
-                padding: 0 !important;
-                margin: 0 !important;
+            body::before {
+                display: none;
             }
 
             .app-container {
-                max-width: 100% !important;
+                max-width: 100%;
             }
 
             .document-card {
-                box-shadow: none !important;
-                border-radius: 0 !important;
-                border: none !important;
-                margin: 0 !important;
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                background: white;
             }
 
-            /* ===== HEADER FIJO ===== */
             .card-header {
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
-                background: #fff !important;
-                padding: 8mm 18mm 4mm 18mm !important;
-                display: flex !important;
-                justify-content: flex-end !important;
-                align-items: center !important;
-                border-bottom: 2px solid #00B0F0 !important;
-                z-index: 10000 !important;
-                height: 18mm;
+                background: white;
+                padding: 10mm 18mm 6mm;
+                border-bottom: 2px solid var(--brand-primary);
+                z-index: 10000;
+                height: 24mm;
                 box-sizing: border-box;
             }
 
-            .logo { 
-                color: #000 !important;
-                font-size: 14pt !important;
-                font-weight: 700 !important;
+            .card-header::before {
+                display: none;
             }
 
-            .auto-save-indicator {
-                display: none !important;
+            .logo {
+                font-size: 18pt;
             }
 
-            /* ===== CONTENIDO CON ESPACIOS PARA HEADER/FOOTER ===== */
+            .logo::after {
+                display: none;
+            }
+
             .card-content {
-                padding: 0 18mm !important;
-                margin-top: 24mm !important;
-                margin-bottom: 38mm !important;
-                min-height: calc(297mm - 24mm - 28mm);
+                padding: 0 18mm;
+                margin-top: 30mm;
+                margin-bottom: 28mm;
             }
 
-            .main-title { 
-                color: #000 !important;
-                font-size: 16pt !important;
-                margin: 6mm 0 !important;
-                text-align: center !important;
-                font-weight: 700 !important;
-                break-after: avoid !important;
-            }
-
-            .main-title::after {
-                content: '';
-                display: block;
-                width: 80px;
-                height: 2px;
-                background: #00B0F0 !important;
-                margin: 3mm auto 0;
+            .main-title {
+                font-size: 11pt;
+                margin-bottom: 6mm;
             }
 
             .form-grid {
-                display: grid !important;
-                grid-template-columns: 35% 65% !important;
-                gap: 4mm !important;
-                margin-bottom: 6mm !important;
-                break-inside: avoid !important;
-            }
-
-            .form-group {
-                margin-bottom: 2mm !important;
+                grid-template-columns: 32% 68%;
+                gap: 4mm;
+                margin-bottom: 6mm;
             }
 
             .form-label {
-                font-size: 9pt !important;
-                font-weight: 600 !important;
-                margin-bottom: 1mm !important;
-                display: block;
+                font-size: 8.5pt;
+                margin-bottom: 1mm;
             }
 
-            .form-input, .form-textarea {
-                background: transparent !important;
-                border: 0 !important;
-                box-shadow: none !important;
-                outline: none !important;
-                padding: 0 !important;
-                font-size: 10pt !important;
-                color: #000 !important;
-                line-height: 1.3 !important;
-                display: block;
-                width: 100%;
+            .form-input,
+            .form-textarea,
+            .table-input,
+            .table-textarea {
+                background: transparent;
+                border: 0;
+                padding: 0;
+                font-size: 9.5pt;
+                box-shadow: none;
             }
 
             .form-textarea {
-                min-height: auto !important;
+                min-height: auto;
             }
 
-            .table-section {
-                margin-top: 4mm !important;
+            #dato {
+                display: none;
+            }
+
+            .print-only {
+                display: block;
+                font-size: 9.5pt;
             }
 
             .data-table {
-                width: 100% !important;
-                border-collapse: collapse !important;
-                margin: 0 !important;
+                border: 1px solid #ddd;
+                box-shadow: none;
             }
 
             .data-table thead {
-                display: table-header-group !important;
-                background: #00B0F0 !important;
-                break-after: avoid !important;
-                break-inside: avoid !important;
+                display: table-header-group;
             }
 
             .data-table th {
-                background: #00B0F0 !important;
-                color: white !important;
-                padding: 2.5mm 3mm !important;
-                font-size: 10pt !important;
-                font-weight: 700 !important;
-                border: 1px solid #00B0F0 !important;
-                text-align: left;
+                font-size: 9pt;
+                padding: 2.5mm;
             }
 
             .data-table tbody tr {
-                break-inside: avoid !important;
-                break-after: auto !important;
+                break-inside: avoid;
             }
 
             .data-table tbody td {
-                padding: 2mm 3mm !important;
-                border: 1px solid #aaa !important;
-                font-size: 10pt !important;
-                vertical-align: top !important;
-                line-height: 1.3 !important;
+                padding: 2mm 3mm;
+                border-bottom: 1px solid #ddd;
+                font-size: 9.5pt;
             }
 
-            .table-input, .table-textarea {
-                background: transparent !important;
-                border: 0 !important;
-                box-shadow: none !important;
-                outline: none !important;
-                padding: 0 !important;
-                font-size: 10pt !important;
-                color: #000 !important;
-                width: 100% !important;
-                min-height: auto !important;
-                line-height: 1.3 !important;
-                display: block;
-            }
-
-            .table-textarea {
-                overflow: visible !important;
-                resize: none;
-            }
-
-            /* ===== FOOTER FIJO ===== */
             .card-footer {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                background: #fff !important;
-                border-top: 2px solid #00B0F0 !important;
-                padding: 5mm 18mm !important;
-                text-align: center !important;
-                z-index: 10000 !important;
+                background: white;
+                border-top: 2px solid var(--brand-primary);
+                padding: 5mm 18mm;
+                z-index: 10000;
                 height: 20mm;
                 box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
             }
 
             .card-footer p {
-                margin: 0.8mm 0 !important;
-                color: #000 !important;
-                font-size: 8.5pt !important;
-                line-height: 1.4 !important;
+                font-size: 8.5pt;
             }
 
-            /* Ocultar elementos de UI */
-            .main-actions, 
-            .actions-container, 
-            .btn-delete, 
-            .btn-add,
-            .btn-clear,
+            .main-actions,
+            .actions-container,
+            .btn-delete,
             .toast,
-            .required { 
-                display: none !important; 
+            .required {
+                display: none;
             }
 
-            /* Ocultar controles de inputs */
             input[type="date"]::-webkit-calendar-picker-indicator,
-            input[type="date"]::-webkit-inner-spin-button,
-            input[type="date"]::-webkit-clear-button { 
-                display: none !important;
-                -webkit-appearance: none !important;
-            }
-
-            input[type="date"] { 
-                -webkit-appearance: none !important;
-                appearance: none !important;
-            }
-
-            input[type="number"]::-webkit-inner-spin-button,
-            input[type="number"]::-webkit-outer-spin-button {
-                display: none !important;
-                -webkit-appearance: none !important;
-            }
-
-            /* Formato de fecha */
-            #dato {
-                display: none !important;
-            }
-
-            .print-only {
-                display: block !important;
-                font-size: 10pt !important;
-                color: #000 !important;
-                padding: 0 !important;
-            }
-
-            /* Optimizaciones de salto de página */
-            h1, h2, h3, h4, h5, h6 {
-                break-after: avoid !important;
-            }
-
-            .form-group {
-                break-inside: avoid !important;
-            }
-
-            /* Forzar altura mínima del contenido en cada página */
-            .card-content::after {
-                content: '';
-                display: block;
-                height: 0;
-                clear: both;
+            input[type="number"]::-webkit-inner-spin-button {
+                display: none;
             }
         }
     </style>
@@ -669,14 +663,11 @@
     <main class="app-container">
         <div class="document-card">
             <header class="card-header">
-                <div class="logo">Felson Watersafe ApS</div>
-                <div class="auto-save-indicator" id="autoSaveIndicator">
-                    <span id="saveStatus">✓ Gemt</span>
-                </div>
+                <h1 class="logo">Felson Watersafe ApS</h1>
             </header>
 
             <div class="card-content">
-                <h1 class="main-title">Følgeseddel</h1>
+                <h2 class="main-title">Følgeseddel</h2>
 
                 <div class="form-grid">
                     <div>
@@ -685,7 +676,7 @@
                                 Dato <span class="required">*</span>
                             </label>
                             <input type="date" class="form-input" id="dato" required>
-                            <div class="print-only" id="dato-print" style="display: none;"></div>
+                            <div class="print-only" id="dato-print"></div>
                         </div>
                         <div class="form-group">
                             <label for="ordre-nr" class="form-label">
@@ -716,12 +707,8 @@
                         <tbody id="table-body"></tbody>
                     </table>
                     <div class="actions-container">
-                        <button class="btn btn-add" id="btn-add" aria-label="Tilføj ny række">
-                            + Tilføj Række
-                        </button>
-                        <button class="btn btn-clear" id="btn-clear" aria-label="Ryd alle data">
-                            🗑️ Ryd Alt
-                        </button>
+                        <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
+                        <button class="btn btn-clear" id="btn-clear">Ryd Alt</button>
                     </div>
                 </div>
             </div>
@@ -731,31 +718,26 @@
                 <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
             </footer>
         </div>
+
         <div class="main-actions">
-            <button class="btn btn-secondary" id="btn-export" aria-label="Eksporter data som JSON">
-                💾 Eksporter Data
-            </button>
-            <button class="btn btn-brand" id="btn-pdf" aria-label="Gem som PDF">
-                📄 Gem som PDF
-            </button>
-            <button class="btn btn-primary" id="btn-print" aria-label="Udskriv følgeseddel">
-                🖨️ Udskriv
-            </button>
+            <button class="btn btn-secondary" id="btn-export">Eksporter Data</button>
+            <button class="btn btn-brand" id="btn-pdf">Gem som PDF</button>
+            <button class="btn btn-primary" id="btn-print">Udskriv</button>
         </div>
     </main>
 
-    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+    <div class="toast" id="toast"></div>
 
     <template id="table-row-template">
         <tr>
             <td>
-                <input type="number" class="table-input col-antal" min="0" placeholder="0" aria-label="Antal varer">
+                <input type="number" class="table-input col-antal" min="0" placeholder="0">
             </td>
             <td>
-                <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare" aria-label="Beskrivelse af vare"></textarea>
+                <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
             </td>
             <td style="text-align: center;">
-                <button class="btn btn-delete" title="Slet række" aria-label="Slet denne række">🗑️</button>
+                <button class="btn btn-delete" title="Slet række">×</button>
             </td>
         </tr>
     </template>
@@ -764,11 +746,9 @@
         (function() {
             'use strict';
 
-            // --- Constants ---
             const STORAGE_KEY = 'felson_followup_data';
             const AUTOSAVE_DELAY = 1000;
 
-            // --- DOM References ---
             const datoInput = document.getElementById('dato');
             const ordreNrInput = document.getElementById('ordre-nr');
             const leveringInput = document.getElementById('levering');
@@ -781,12 +761,9 @@
             const exportBtn = document.getElementById('btn-export');
             const rowTemplate = document.getElementById('table-row-template');
             const toast = document.getElementById('toast');
-            const saveIndicator = document.getElementById('autoSaveIndicator');
-            const saveStatus = document.getElementById('saveStatus');
 
             let autoSaveTimeout;
 
-            // --- Core Functions ---
             function addRow(antal = '', beskrivelse = '') {
                 const newRow = rowTemplate.content.cloneNode(true);
                 const antalInput = newRow.querySelector('.col-antal');
@@ -820,10 +797,7 @@
             function showToast(message, type = 'success') {
                 toast.textContent = message;
                 toast.className = `toast show ${type}`;
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
+                setTimeout(() => toast.classList.remove('show'), 3000);
             }
 
             function validateForm() {
@@ -834,8 +808,7 @@
                     if (!field.value.trim()) {
                         field.classList.add('error');
                         isValid = false;
-                    } else {
-                        field.classList.remove('error');
+                        setTimeout(() => field.classList.remove('error'), 500);
                     }
                 });
 
@@ -846,7 +819,6 @@
                 return isValid;
             }
 
-            // --- Data Persistence ---
             function saveData() {
                 const rows = Array.from(tableBody.querySelectorAll('tr')).map(row => ({
                     antal: row.querySelector('.col-antal').value,
@@ -857,13 +829,11 @@
                     dato: datoInput.value,
                     ordreNr: ordreNrInput.value,
                     levering: leveringInput.value,
-                    rows: rows,
-                    timestamp: new Date().toISOString()
+                    rows: rows
                 };
 
                 try {
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                    showSaveIndicator();
                 } catch (e) {
                     console.error('Kunne ikke gemme data:', e);
                 }
@@ -875,11 +845,9 @@
                     if (!savedData) return false;
 
                     const data = JSON.parse(savedData);
-                    
                     datoInput.value = data.dato || '';
                     ordreNrInput.value = data.ordreNr || '';
                     leveringInput.value = data.levering || '';
-
                     formatDateForPrint();
 
                     tableBody.innerHTML = '';
@@ -897,9 +865,7 @@
             }
 
             function clearAllData() {
-                if (!confirm('Er du sikker på at du vil rydde alle data? Dette kan ikke fortrydes.')) {
-                    return;
-                }
+                if (!confirm('Er du sikker på at du vil rydde alle data?')) return;
 
                 datoInput.value = '';
                 ordreNrInput.value = '';
@@ -920,16 +886,6 @@
                 autoSaveTimeout = setTimeout(saveData, AUTOSAVE_DELAY);
             }
 
-            function showSaveIndicator() {
-                saveStatus.textContent = '✓ Gemt';
-                saveIndicator.classList.add('show');
-                
-                setTimeout(() => {
-                    saveIndicator.classList.remove('show');
-                }, 2000);
-            }
-
-            // --- Export Functionality ---
             function exportData() {
                 const data = {
                     dato: datoInput.value,
@@ -952,10 +908,9 @@
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
 
-                showToast('Data eksporteret!', 'success');
+                showToast('Data eksporteret', 'success');
             }
 
-            // --- Print Functions ---
             function handlePrint() {
                 if (!validateForm()) return;
                 window.print();
@@ -967,31 +922,20 @@
                 window.print();
             }
 
-            // --- Event Listeners Setup ---
             function setupEventListeners() {
-                // Add Row
                 addRowBtn.addEventListener('click', () => addRow());
-
-                // Clear All
                 clearBtn.addEventListener('click', clearAllData);
-
-                // Print & PDF
                 printBtn.addEventListener('click', handlePrint);
                 pdfBtn.addEventListener('click', handlePDF);
-
-                // Export
                 exportBtn.addEventListener('click', exportData);
 
-                // Form inputs auto-save
                 [datoInput, ordreNrInput, leveringInput].forEach(input => {
                     input.addEventListener('input', () => {
                         triggerAutoSave();
                         if (input === datoInput) formatDateForPrint();
                     });
-                    input.addEventListener('blur', () => input.classList.remove('error'));
                 });
 
-                // Table event delegation
                 tableBody.addEventListener('click', (e) => {
                     const deleteBtn = e.target.closest('.btn-delete');
                     if (deleteBtn) {
@@ -1013,34 +957,26 @@
                 });
             }
 
-            // --- Initialization ---
             function init() {
-                // Try to load saved data
                 const hasData = loadData();
 
-                // Set today's date if no saved date
                 if (!datoInput.value) {
                     datoInput.valueAsDate = new Date();
                 }
 
-                // Format date for print
                 formatDateForPrint();
 
-                // Ensure at least one row exists
                 if (tableBody.rows.length === 0) {
                     addRow();
                 }
 
-                // Setup all event listeners
                 setupEventListeners();
 
-                // Show welcome message if data was loaded
                 if (hasData) {
                     showToast('Tidligere data indlæst', 'success');
                 }
             }
 
-            // --- Start Application ---
             init();
 
         })();
