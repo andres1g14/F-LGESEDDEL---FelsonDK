@@ -8,8 +8,7 @@
         /* --- 1. Sistema de Diseño y Variables --- */
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-             /* ... (tus otras variables) ... */
-  --brand: #00B0F0; /* azul agua corporativo */
+            --brand: #00B0F0;
             --green-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             --color-primary: #764ba2;
             --color-text-light: #ffffff;
@@ -18,17 +17,19 @@
             --color-border: #e2e8f0;
             --color-bg-light: #f7fafc;
             --color-danger: #e53e3e;
+            --color-success: #48bb78;
             --border-radius: 12px;
             --shadow-lg: 0 20px 60px -10px rgba(0, 0, 0, 0.25);
             --transition-speed: 0.3s;
         }
 
-        /* --- 2. Estilos Generales y del Body --- */
+        /* --- 2. Estilos Generales --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background: var(--primary-gradient);
@@ -40,33 +41,61 @@
             font-size: 16px;
         }
 
-        /* --- 3. Estructura Principal de la Aplicación --- */
+        /* --- 3. Estructura Principal --- */
         .app-container {
             width: 100%;
             max-width: 900px;
         }
+        
         .document-card {
             background: white;
             box-shadow: var(--shadow-lg);
             border-radius: var(--border-radius);
             overflow: hidden;
             margin-bottom: 2rem;
+            animation: slideIn 0.4s ease-out;
         }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .card-header {
             padding: 1.5rem 2.5rem;
             background: var(--primary-gradient);
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
         }
+        
         .logo {
             color: var(--color-text-light);
             font-size: 1.2rem;
             font-weight: 600;
         }
+
+        .auto-save-indicator {
+            color: var(--color-text-light);
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .auto-save-indicator.show {
+            opacity: 1;
+        }
+
         .card-content {
             padding: 2.5rem;
         }
+        
         .main-title {
             text-align: center;
             font-size: 2rem;
@@ -74,7 +103,20 @@
             color: var(--color-text-dark);
             margin-bottom: 2.5rem;
             text-transform: uppercase;
+            position: relative;
         }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--brand);
+        }
+
         .card-footer {
             text-align: center;
             padding: 1.5rem 2.5rem;
@@ -84,16 +126,18 @@
             border-top: 1px solid var(--color-border);
         }
 
-        /* --- 4. Estilos del Formulario y Campos de Entrada --- */
+        /* --- 4. Formulario --- */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin-bottom: 2.5rem;
         }
+        
         .form-group {
             margin-bottom: 1rem;
         }
+        
         .form-label {
             display: block;
             font-weight: 500;
@@ -101,6 +145,12 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
+
+        .required {
+            color: var(--color-danger);
+            margin-left: 2px;
+        }
+        
         .form-input, .form-textarea {
             width: 100%;
             padding: 0.75rem;
@@ -110,25 +160,37 @@
             background: var(--color-bg-light);
             transition: all var(--transition-speed);
         }
+
         .form-input:focus, .form-textarea:focus {
             outline: none;
             border-color: var(--color-primary);
             background: white;
             box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.15);
         }
+
+        .form-input.error {
+            border-color: var(--color-danger);
+        }
+
         .form-textarea {
             resize: vertical;
             min-height: 122px;
         }
 
-        /* --- 5. Estilos de la Tabla Dinámica --- */
+        /* --- 5. Tabla Dinámica --- */
+        .table-section {
+            position: relative;
+        }
+
         .data-table {
             width: 100%;
             border-collapse: collapse;
         }
+        
         .data-table thead {
             background: var(--primary-gradient);
         }
+        
         .data-table th {
             padding: 1rem;
             text-align: left;
@@ -137,12 +199,35 @@
             text-transform: uppercase;
             font-size: 0.85rem;
         }
+        
         .data-table th.col-antal { width: 20%; }
         .data-table th.col-actions { width: 60px; }
+        
+        .data-table tbody tr {
+            transition: background-color 0.2s;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .data-table tbody tr:hover {
+            background-color: var(--color-bg-light);
+        }
+
         .data-table tbody td {
             padding: 0.5rem 1rem;
             border-bottom: 1px solid var(--color-border);
         }
+        
         .table-input, .table-textarea {
             width: 100%;
             padding: 0.5rem;
@@ -150,22 +235,33 @@
             border-radius: 6px;
             font-size: 1rem;
             background: transparent;
+            transition: all 0.2s;
         }
+        
         .table-input:focus, .table-textarea:focus {
             outline: none;
             border-color: var(--color-primary);
             background: white;
         }
+        
         .table-textarea {
             resize: none;
             overflow: hidden;
+            min-height: 2.5rem;
         }
-        .table-input.col-antal { text-align: center; }
+        
+        .table-input.col-antal {
+            text-align: center;
+        }
 
-        /* --- 6. Estilos de Botones y Acciones --- */
+        /* --- 6. Botones --- */
         .actions-container {
             margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
+        
         .btn {
             padding: 0.75rem 1.5rem;
             border: none;
@@ -175,123 +271,228 @@
             transition: all var(--transition-speed);
             text-transform: uppercase;
             font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .btn-add {
             background: var(--green-gradient);
             color: white;
         }
+
+        .btn-clear {
+            background: white;
+            color: var(--color-danger);
+            border: 2px solid var(--color-danger);
+        }
+        
         .btn-delete {
             background: transparent;
             color: var(--color-danger);
             font-size: 1.3rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
+
+        .btn-delete:hover {
+            background: rgba(229, 62, 62, 0.1);
+            transform: scale(1.1);
+        }
+        
         .main-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
+        
         .btn-primary {
             background: var(--primary-gradient);
             color: white;
         }
+        
         .btn-secondary {
             background: white;
             color: var(--color-primary);
             border: 2px solid var(--color-primary);
         }
 
-        /* --- 7. Adaptabilidad (Responsiveness) --- */
+        .btn-brand {
+            background: var(--brand);
+            color: white;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--color-text-dark);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+            z-index: 10000;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--color-success);
+        }
+
+        .toast.error {
+            background: var(--color-danger);
+        }
+
+        /* --- 7. Responsive --- */
         @media (max-width: 768px) {
             body { padding: 1rem; }
             .card-content { padding: 1.5rem; }
             .form-grid { grid-template-columns: 1fr; }
-            .main-actions { flex-direction: column; }
-            .btn { width: 100%; }
+            .main-actions, .actions-container { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
         }
 
-       /* ===== PRINT LAYOUT FIJO (header / footer) ===== */
-@media print {
-  /* Tamaño y márgenes reales de la hoja */
-  @page {
-    size: A4;
-    /* top / right / bottom / left */
-    margin: 22mm 18mm 24mm 18mm;
-  }
+        /* --- 8. Print Styles --- */
+        @media print {
+            @page {
+                size: A4;
+                margin: 22mm 18mm 24mm 18mm;
+            }
 
-  /* Fondo blanco en impresión */
-  body { background: #fff; padding: 0; }
+            body { 
+                background: #fff; 
+                padding: 0; 
+            }
 
-  /* Quita sombras/bordes de la tarjeta en papel */
-  .document-card {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    border: none !important;
-  }
+            .document-card {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                border: none !important;
+                margin: 0;
+            }
 
-  /* === Header fijo en todas las páginas === */
-  .card-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: #fff !important;
-    border-bottom: 2px solid #00B0F0 !important;   /* línea azul agua */
-    color: #000 !important;
-    padding: 14mm 18mm 8mm 18mm !important;        /* más compacto en papel */
-    z-index: 9999;
-  }
-  /* Colores de textos en impresión (negro clásico) */
-  .logo, .main-title { color: #000 !important; }
+            .card-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: #fff !important;
+                border-bottom: 2px solid var(--brand) !important;
+                color: #000 !important;
+                padding: 14mm 18mm 8mm 18mm !important;
+                z-index: 9999;
+            }
 
-  /* === Footer fijo en todas las páginas === */
-  .card-footer {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #fff !important;
-    border-top: 2px solid #00B0F0 !important;      /* línea azul agua arriba del footer */
-    text-align: center !important;
-    padding: 6mm 18mm 6mm 18mm !important;
-    font-size: 10px !important;                    /* más pequeño para ganar espacio */
-    line-height: 1.35 !important;
-    z-index: 9999;
-  }
+            .logo { 
+                color: #000 !important; 
+            }
 
-  /* Altura reservada para el header fijo */
-.card-content { 
-  margin-top: 46mm !important;    /* prueba 44–48 mm hasta encajar con tu impresora */
-}
+            .auto-save-indicator {
+                display: none !important;
+            }
 
-/* Altura reservada para el footer fijo */
-.card-content { 
-  margin-bottom: 30mm !important; /* sube/baja 1–3 mm si queda hueco o pisa el pie */
-}
+            .main-title { 
+                color: #000 !important; 
+            }
 
-  /* Repite cabecera de tabla y evita cortes feos */
-  .data-table thead { display: table-header-group; }
-  .data-table tfoot { display: table-footer-group; }
-  .data-table, .data-table tr, .data-table td, .data-table th { page-break-inside: avoid; }
-  .data-table { width: 100%; border-collapse: separate; }
+            .main-title::after {
+                background: var(--brand) !important;
+            }
 
-  /* Oculta controles de UI y botones en papel */
-  .main-actions, .actions-container, .btn-delete { display: none !important; }
+            .card-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: #fff !important;
+                border-top: 2px solid var(--brand) !important;
+                text-align: center !important;
+                padding: 6mm 18mm 6mm 18mm !important;
+                font-size: 10px !important;
+                line-height: 1.35 !important;
+                z-index: 9999;
+            }
 
-  /* Inputs como texto plano (sin bordes/recuadros) */
-  .form-input, .form-textarea, .table-input, .table-textarea {
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    outline: none !important;
-    padding: 0 !important;
-  }
+            .card-content {
+                margin-top: 46mm !important;
+                margin-bottom: 30mm !important;
+            }
 
-  /* Oculta el icono del calendario al imprimir */
-  input[type="date"]::-webkit-calendar-picker-indicator { display: none !important; }
-  input[type="date"] { -webkit-appearance: none !important; appearance: none !important; }
+            .data-table thead { 
+                display: table-header-group; 
+                background: var(--brand) !important;
+            }
 
-  /* Fuerza a respetar colores en impresión (Chrome) */
-  .card-header, .data-table thead {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
+            .data-table th {
+                background: var(--brand) !important;
+                color: white !important;
+            }
+
+            .data-table tfoot { 
+                display: table-footer-group; 
+            }
+
+            .data-table, .data-table tr, .data-table td, .data-table th { 
+                page-break-inside: avoid; 
+            }
+
+            .data-table { 
+                width: 100%; 
+                border-collapse: separate; 
+            }
+
+            .main-actions, .actions-container, .btn-delete, .toast { 
+                display: none !important; 
+            }
+
+            .form-input, .form-textarea, .table-input, .table-textarea {
+                background: transparent !important;
+                border: 0 !important;
+                box-shadow: none !important;
+                outline: none !important;
+                padding: 0 !important;
+            }
+
+            input[type="date"]::-webkit-calendar-picker-indicator { 
+                display: none !important; 
+            }
+
+            input[type="date"] { 
+                -webkit-appearance: none !important; 
+                appearance: none !important; 
+            }
+
+            .card-header, .data-table thead {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
@@ -300,6 +501,9 @@
         <div class="document-card">
             <header class="card-header">
                 <div class="logo">Felson Watersafe ApS</div>
+                <div class="auto-save-indicator" id="autoSaveIndicator">
+                    <span id="saveStatus">✓ Gemt</span>
+                </div>
             </header>
 
             <div class="card-content">
@@ -308,18 +512,24 @@
                 <div class="form-grid">
                     <div>
                         <div class="form-group">
-                            <label for="dato" class="form-label">Dato</label>
-                            <input type="date" class="form-input" id="dato">
+                            <label for="dato" class="form-label">
+                                Dato <span class="required">*</span>
+                            </label>
+                            <input type="date" class="form-input" id="dato" required>
                         </div>
                         <div class="form-group">
-                            <label for="ordre-nr" class="form-label">Ordre nr.</label>
-                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+                            <label for="ordre-nr" class="form-label">
+                                Ordre nr. <span class="required">*</span>
+                            </label>
+                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer" required>
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
-                            <label for="levering" class="form-label">Levering</label>
-                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
+                            <label for="levering" class="form-label">
+                                Levering <span class="required">*</span>
+                            </label>
+                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -333,11 +543,15 @@
                                 <th class="col-actions"></th>
                             </tr>
                         </thead>
-                        <tbody id="table-body">
-                            </tbody>
+                        <tbody id="table-body"></tbody>
                     </table>
                     <div class="actions-container">
-                        <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
+                        <button class="btn btn-add" id="btn-add" aria-label="Tilføj ny række">
+                            + Tilføj Række
+                        </button>
+                        <button class="btn btn-clear" id="btn-clear" aria-label="Ryd alle data">
+                            🗑️ Ryd Alt
+                        </button>
                     </div>
                 </div>
             </div>
@@ -348,21 +562,30 @@
             </footer>
         </div>
         <div class="main-actions">
-            <button class="btn btn-secondary" id="btn-pdf">Gem som PDF</button>
-            <button class="btn btn-primary" id="btn-print">Udskriv</button>
+            <button class="btn btn-secondary" id="btn-export" aria-label="Eksporter data som JSON">
+                💾 Eksporter Data
+            </button>
+            <button class="btn btn-brand" id="btn-pdf" aria-label="Gem som PDF">
+                📄 Gem som PDF
+            </button>
+            <button class="btn btn-primary" id="btn-print" aria-label="Udskriv følgeseddel">
+                🖨️ Udskriv
+            </button>
         </div>
     </main>
+
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
     <template id="table-row-template">
         <tr>
             <td>
-                <input type="number" class="table-input col-antal" min="0" placeholder="0">
+                <input type="number" class="table-input col-antal" min="0" placeholder="0" aria-label="Antal varer">
             </td>
             <td>
-                <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
+                <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare" aria-label="Beskrivelse af vare"></textarea>
             </td>
             <td style="text-align: center;">
-                <button class="btn btn-delete" title="Slet række">🗑️</button>
+                <button class="btn btn-delete" title="Slet række" aria-label="Slet denne række">🗑️</button>
             </td>
         </tr>
     </template>
@@ -371,69 +594,265 @@
         (function() {
             'use strict';
 
-            // --- Referencias a Elementos del DOM ---
+            // --- Constants ---
+            const STORAGE_KEY = 'felson_followup_data';
+            const AUTOSAVE_DELAY = 1000;
+
+            // --- DOM References ---
             const datoInput = document.getElementById('dato');
+            const ordreNrInput = document.getElementById('ordre-nr');
+            const leveringInput = document.getElementById('levering');
             const tableBody = document.getElementById('table-body');
             const addRowBtn = document.getElementById('btn-add');
+            const clearBtn = document.getElementById('btn-clear');
             const printBtn = document.getElementById('btn-print');
             const pdfBtn = document.getElementById('btn-pdf');
+            const exportBtn = document.getElementById('btn-export');
             const rowTemplate = document.getElementById('table-row-template');
+            const toast = document.getElementById('toast');
+            const saveIndicator = document.getElementById('autoSaveIndicator');
+            const saveStatus = document.getElementById('saveStatus');
 
-            // --- Funciones Principales ---
-            function addRow() {
-                const newRowFragment = rowTemplate.content.cloneNode(true);
-                tableBody.appendChild(newRowFragment);
+            let autoSaveTimeout;
+
+            // --- Core Functions ---
+            function addRow(antal = '', beskrivelse = '') {
+                const newRow = rowTemplate.content.cloneNode(true);
+                const antalInput = newRow.querySelector('.col-antal');
+                const beskrivelseTextarea = newRow.querySelector('.table-textarea');
+                
+                if (antal) antalInput.value = antal;
+                if (beskrivelse) {
+                    beskrivelseTextarea.value = beskrivelse;
+                    setTimeout(() => autoResizeTextarea(beskrivelseTextarea), 0);
+                }
+                
+                tableBody.appendChild(newRow);
+                triggerAutoSave();
             }
 
             function autoResizeTextarea(textarea) {
                 if (!textarea) return;
-                textarea.style.height = 'auto'; // Resetea la altura
-                textarea.style.height = textarea.scrollHeight + 'px'; // Ajusta a la altura del contenido
+                textarea.style.height = 'auto';
+                textarea.style.height = Math.max(40, textarea.scrollHeight) + 'px';
             }
 
-            // --- Inicialización ---
+            function showToast(message, type = 'success') {
+                toast.textContent = message;
+                toast.className = `toast show ${type}`;
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            function validateForm() {
+                const requiredFields = [datoInput, ordreNrInput, leveringInput];
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('error');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('error');
+                    }
+                });
+
+                if (!isValid) {
+                    showToast('Udfyld venligst alle påkrævede felter', 'error');
+                }
+
+                return isValid;
+            }
+
+            // --- Data Persistence ---
+            function saveData() {
+                const rows = Array.from(tableBody.querySelectorAll('tr')).map(row => ({
+                    antal: row.querySelector('.col-antal').value,
+                    beskrivelse: row.querySelector('.table-textarea').value
+                }));
+
+                const data = {
+                    dato: datoInput.value,
+                    ordreNr: ordreNrInput.value,
+                    levering: leveringInput.value,
+                    rows: rows,
+                    timestamp: new Date().toISOString()
+                };
+
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    showSaveIndicator();
+                } catch (e) {
+                    console.error('Kunne ikke gemme data:', e);
+                }
+            }
+
+            function loadData() {
+                try {
+                    const savedData = localStorage.getItem(STORAGE_KEY);
+                    if (!savedData) return false;
+
+                    const data = JSON.parse(savedData);
+                    
+                    datoInput.value = data.dato || '';
+                    ordreNrInput.value = data.ordreNr || '';
+                    leveringInput.value = data.levering || '';
+
+                    tableBody.innerHTML = '';
+                    if (data.rows && data.rows.length > 0) {
+                        data.rows.forEach(row => addRow(row.antal, row.beskrivelse));
+                    } else {
+                        addRow();
+                    }
+
+                    return true;
+                } catch (e) {
+                    console.error('Kunne ikke indlæse data:', e);
+                    return false;
+                }
+            }
+
+            function clearAllData() {
+                if (!confirm('Er du sikker på at du vil rydde alle data? Dette kan ikke fortrydes.')) {
+                    return;
+                }
+
+                datoInput.value = '';
+                ordreNrInput.value = '';
+                leveringInput.value = '';
+                tableBody.innerHTML = '';
+                addRow();
+
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                    showToast('Alle data er ryddet', 'success');
+                } catch (e) {
+                    console.error('Kunne ikke rydde data:', e);
+                }
+            }
+
+            function triggerAutoSave() {
+                clearTimeout(autoSaveTimeout);
+                autoSaveTimeout = setTimeout(saveData, AUTOSAVE_DELAY);
+            }
+
+            function showSaveIndicator() {
+                saveStatus.textContent = '✓ Gemt';
+                saveIndicator.classList.add('show');
+                
+                setTimeout(() => {
+                    saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            // --- Export Functionality ---
+            function exportData() {
+                const data = {
+                    dato: datoInput.value,
+                    ordreNr: ordreNrInput.value,
+                    levering: leveringInput.value,
+                    rows: Array.from(tableBody.querySelectorAll('tr')).map(row => ({
+                        antal: row.querySelector('.col-antal').value,
+                        beskrivelse: row.querySelector('.table-textarea').value
+                    }))
+                };
+
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `folgeseddel_${data.ordreNr || 'export'}_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+
+                showToast('Data eksporteret!', 'success');
+            }
+
+            // --- Print Functions ---
+            function handlePrint() {
+                if (!validateForm()) return;
+                window.print();
+            }
+
+            function handlePDF() {
+                if (!validateForm()) return;
+                showToast('Vælg "Gem som PDF" i print dialogen', 'success');
+                window.print();
+            }
+
+            // --- Event Listeners Setup ---
+            function setupEventListeners() {
+                // Add Row
+                addRowBtn.addEventListener('click', () => addRow());
+
+                // Clear All
+                clearBtn.addEventListener('click', clearAllData);
+
+                // Print & PDF
+                printBtn.addEventListener('click', handlePrint);
+                pdfBtn.addEventListener('click', handlePDF);
+
+                // Export
+                exportBtn.addEventListener('click', exportData);
+
+                // Form inputs auto-save
+                [datoInput, ordreNrInput, leveringInput].forEach(input => {
+                    input.addEventListener('input', triggerAutoSave);
+                    input.addEventListener('blur', () => input.classList.remove('error'));
+                });
+
+                // Table event delegation
+                tableBody.addEventListener('click', (e) => {
+                    const deleteBtn = e.target.closest('.btn-delete');
+                    if (deleteBtn) {
+                        if (tableBody.rows.length > 1) {
+                            deleteBtn.closest('tr').remove();
+                            triggerAutoSave();
+                            showToast('Række slettet', 'success');
+                        } else {
+                            showToast('Der skal være mindst én række', 'error');
+                        }
+                    }
+                });
+
+                tableBody.addEventListener('input', (e) => {
+                    if (e.target.classList.contains('table-textarea')) {
+                        autoResizeTextarea(e.target);
+                    }
+                    triggerAutoSave();
+                });
+            }
+
+            // --- Initialization ---
             function init() {
-                // 1. Poner la fecha actual
+                // Try to load saved data
+                const hasData = loadData();
+
+                // Set today's date if no saved date
                 if (!datoInput.value) {
                     datoInput.valueAsDate = new Date();
                 }
 
-                // 2. Añadir una fila inicial si la tabla está vacía
+                // Ensure at least one row exists
                 if (tableBody.rows.length === 0) {
                     addRow();
                 }
 
-                // 3. Configurar todos los event listeners
+                // Setup all event listeners
                 setupEventListeners();
+
+                // Show welcome message if data was loaded
+                if (hasData) {
+                    showToast('Tidligere data indlæst', 'success');
+                }
             }
 
-            // --- Configuración de Event Listeners ---
-            function setupEventListeners() {
-                // Añadir Fila
-                addRowBtn.addEventListener('click', addRow);
-
-                // Delegación de Eventos para Borrar Filas y Auto-expandir Textarea
-                tableBody.addEventListener('click', (e) => {
-                    if (e.target && e.target.closest('.btn-delete')) {
-                        if (tableBody.rows.length > 1) {
-                            e.target.closest('tr').remove();
-                        } else {
-                            alert('Der skal være mindst én række.');
-                        }
-                    }
-                });
-                tableBody.addEventListener('input', (e) => {
-                    if (e.target && e.target.classList.contains('table-textarea')) {
-                        autoResizeTextarea(e.target);
-                    }
-                });
-
-                // Botones de Imprimir y Guardar PDF
-                printBtn.addEventListener('click', () => window.print());
-                pdfBtn.addEventListener('click', () => window.print());
-            }
-
-            // --- Iniciar la Aplicación ---
+            // --- Start Application ---
             init();
 
         })();
