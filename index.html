@@ -121,7 +121,6 @@
             margin-bottom: 2.5rem;
         }
 
-        /* === Definitive Pro Table Style === */
         .items-section table {
             width: 100%;
             border-collapse: collapse;
@@ -159,7 +158,6 @@
             padding: 10px 15px;
         }
 
-        /* Style for always-visible input fields */
         .items-section td input,
         .items-section td textarea {
             width: 100%;
@@ -294,7 +292,6 @@
                 gap: 1rem;
             }
 
-            /* Responsive Table Transformation */
             .items-section table thead {
                 display: none;
             }
@@ -345,11 +342,11 @@
             }
         }
 
-        /* Print Styles */
+        /* Print Styles - Classic Document Layout */
         @media print {
             @page {
                 size: A4;
-                margin: 1cm;
+                margin: 2cm;
             }
 
             * {
@@ -357,10 +354,6 @@
                 color: #000 !important;
                 box-shadow: none !important;
                 text-shadow: none !important;
-            }
-
-            #company-logo {
-                color: var(--logo-blue-color) !important;
             }
 
             body {
@@ -376,14 +369,7 @@
                 border-radius: 0;
             }
 
-            header {
-                border-bottom: 2px solid var(--logo-blue-color) !important;
-            }
-
-            .document-footer {
-                border-top: 1px solid var(--logo-blue-color) !important;
-            }
-
+            /* Hide buttons and UI elements */
             #add-row-btn,
             .delete-row-btn,
             #save-pdf-btn,
@@ -392,11 +378,96 @@
                 display: none !important;
             }
 
-            .print-value {
-                white-space: pre-wrap;
-                border: none !important;
-                padding: 10px;
+            /* Print Header - Company name at TOP LEFT */
+            header {
                 display: block;
+                text-align: left;
+                padding: 0;
+                margin-bottom: 1rem;
+                border-bottom: none;
+            }
+
+            #company-logo {
+                text-align: left;
+                font-size: 1.2rem;
+                color: #000 !important;
+            }
+
+            /* Print Title - Centered */
+            h1 {
+                text-align: center;
+                font-size: 1.8rem;
+                margin: 1.5rem 0;
+                color: #000 !important;
+            }
+
+            .content-wrapper {
+                padding: 0;
+            }
+
+            /* Print Details Section - Single block on left */
+            .details-section {
+                display: block;
+                width: 50%;
+                margin-bottom: 2rem;
+            }
+
+            .details-column {
+                margin-bottom: 1rem;
+            }
+
+            label {
+                font-weight: bold;
+                margin-bottom: 0.25rem;
+            }
+
+            /* Print Table - Classic document style with borders */
+            .items-section {
+                margin-bottom: 2rem;
+            }
+
+            .items-section table {
+                border: 1px solid #000;
+            }
+
+            .items-section thead th {
+                background-color: transparent !important;
+                border: 1px solid #000 !important;
+                border-bottom: 1px solid #000 !important;
+                padding: 8px;
+                text-transform: none;
+                letter-spacing: normal;
+            }
+
+            .items-section tbody tr {
+                border: 1px solid #000;
+            }
+
+            .items-section td {
+                border: 1px solid #000 !important;
+                padding: 8px;
+            }
+
+            .print-value {
+                display: block;
+                padding: 0;
+                border: none !important;
+                background: transparent !important;
+            }
+
+            /* Print Footer - At bottom */
+            .document-footer {
+                text-align: center;
+                margin-top: 3rem;
+                padding-top: 1rem;
+                border-top: 1px solid #000 !important;
+                font-size: 0.9rem;
+                color: #000 !important;
+            }
+
+            input, textarea {
+                border: none !important;
+                padding: 0 !important;
             }
 
             table {
@@ -406,10 +477,6 @@
             tr {
                 page-break-inside: avoid;
                 page-break-after: auto;
-            }
-
-            input, textarea {
-                border: 1px solid #000 !important;
             }
         }
     </style>
@@ -480,13 +547,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // A. Automatic Date - Set today's date but allow user to change it
+            const dateInput = document.getElementById('dato');
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${year}-${month}-${day}`;
+
             // Add Row Functionality
             document.getElementById('add-row-btn').addEventListener('click', function() {
                 const tbody = document.getElementById('items-table-body');
                 const lastRow = tbody.querySelector('tr:last-child');
                 const newRow = lastRow.cloneNode(true);
                 
-                // Clear the values in the cloned row
                 newRow.querySelectorAll('input, textarea').forEach(input => {
                     input.value = '';
                     if (input.tagName.toLowerCase() === 'textarea') {
@@ -508,7 +582,7 @@
                 }
             });
 
-            // Delete Row Functionality (Event Delegation)
+            // Delete Row Functionality
             tableBody.addEventListener('click', function(e) {
                 if (e.target.classList.contains('delete-row-btn')) {
                     const rows = tableBody.querySelectorAll('tr');
@@ -521,7 +595,7 @@
                 }
             });
 
-            // Print Functionality
+            // B. Robust Print Functionality
             document.getElementById('save-pdf-btn').addEventListener('click', prepareAndPrint);
             document.getElementById('print-btn').addEventListener('click', prepareAndPrint);
 
@@ -538,15 +612,40 @@
 
                     const span = document.createElement('span');
                     span.className = 'print-value';
+                    
                     // Using textContent for security (XSS prevention)
-                    span.textContent = input.value || '';
+                    // Convert newlines to <br> for textareas
+                    if (input.tagName.toLowerCase() === 'textarea') {
+                        const lines = (input.value || '').split('\n');
+                        lines.forEach((line, index) => {
+                            span.appendChild(document.createTextNode(line));
+                            if (index < lines.length - 1) {
+                                span.appendChild(document.createElement('br'));
+                            }
+                        });
+                    } else {
+                        span.textContent = input.value || '';
+                    }
                     
                     input.parentNode.replaceChild(span, input);
                 });
 
+                // Trigger print dialog
                 window.print();
 
+                // Restore mechanism using onafterprint
                 window.onafterprint = function() {
+                    restoreInputs();
+                };
+
+                // Fallback restoration for browsers that don't support onafterprint
+                setTimeout(function() {
+                    if (document.querySelector('.print-value')) {
+                        restoreInputs();
+                    }
+                }, 1000);
+
+                function restoreInputs() {
                     originalElements.forEach(item => {
                         const printValue = item.parent.querySelector('.print-value');
                         if (printValue) {
@@ -558,27 +657,8 @@
                             printValue.remove();
                         }
                     });
-                };
-
-                setTimeout(function() {
-                    if (document.querySelector('.print-value')) {
-                        originalElements.forEach(item => {
-                            const printValue = item.parent.querySelector('.print-value');
-                            if (printValue) {
-                                if (item.nextSibling) {
-                                    item.parent.insertBefore(item.element, item.nextSibling);
-                                } else {
-                                    item.parent.appendChild(item.element);
-                                }
-                                printValue.remove();
-                            }
-                        });
-                    }
-                }, 1000);
+                }
             }
-
-            // Set today's date by default
-            document.getElementById('dato').valueAsDate = new Date();
         });
     </script>
 </body>
