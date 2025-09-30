@@ -577,6 +577,40 @@
     </div>
 
     <script>
+        <script>
+  // Mostrar placeholder como valor real solo durante la impresión
+  (function(){
+    function beforePrintFillPlaceholders() {
+      document.querySelectorAll('input[type="text"], input[type="number"], textarea')
+        .forEach(el => {
+          if (!el.value && el.placeholder) {
+            el.dataset._printedPlaceholder = '1';
+            el.value = el.placeholder;
+          }
+        });
+    }
+
+    function afterPrintRestore() {
+      document.querySelectorAll('[data-_printed-placeholder="1"], [data-_printed_placeholder="1"]')
+        .forEach(el => {
+          // fallback: dos nombres por si algún minificador cambia guiones bajos
+          el.value = '';
+          delete el.dataset._printedPlaceholder;
+          delete el.dataset._printed_placeholder;
+        });
+    }
+
+    // Soporta la mayoría de navegadores
+    window.addEventListener('beforeprint', beforePrintFillPlaceholders);
+    window.addEventListener('afterprint', afterPrintRestore);
+
+    // Fallback por si afterprint no dispara en algunos entornos
+    // envuelve tu llamada window.print() así si quieres forzarlo:
+    // function doPrint(){ beforePrintFillPlaceholders(); setTimeout(()=>{ window.print(); setTimeout(afterPrintRestore, 300); }, 50); }
+    // y usa doPrint() en tus botones
+  })();
+</script>
+
         // Set today's date
         document.getElementById('dato').valueAsDate = new Date();
 
