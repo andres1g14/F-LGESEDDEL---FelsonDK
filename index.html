@@ -129,13 +129,25 @@
         /* --- 4. Formulario --- */
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 2rem;
             margin-bottom: 2.5rem;
         }
         
         .form-group {
             margin-bottom: 1rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-grid > div:first-child .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-grid > div:first-child .form-group:last-child {
+            margin-bottom: 0;
         }
         
         .form-label {
@@ -388,7 +400,7 @@
         @media print {
             @page {
                 size: A4;
-                margin: 25mm 18mm 22mm 18mm;
+                margin: 20mm 18mm 18mm 18mm;
             }
 
             * {
@@ -421,19 +433,20 @@
                 left: 0;
                 right: 0;
                 background: #fff !important;
-                border-bottom: 3px solid #00B0F0 !important;
+                border-bottom: 2px solid #00B0F0 !important;
                 color: #000 !important;
-                padding: 8mm 18mm 5mm 18mm !important;
+                padding: 6mm 18mm 4mm 18mm !important;
                 z-index: 9999;
-                display: block !important;
+                display: flex !important;
+                justify-content: flex-end !important;
+                align-items: center !important;
             }
 
             .logo { 
                 color: #000 !important;
-                font-size: 16pt !important;
+                font-size: 14pt !important;
                 font-weight: 700 !important;
-                text-align: center !important;
-                display: block !important;
+                text-align: right !important;
             }
 
             .auto-save-indicator {
@@ -443,15 +456,16 @@
             /* ===== CONTENIDO CON MARGEN PARA HEADER/FOOTER ===== */
             .card-content {
                 padding: 0 !important;
-                margin-top: 25mm !important;
-                margin-bottom: 22mm !important;
+                margin-top: 20mm !important;
+                margin-bottom: 18mm !important;
             }
 
             .main-title { 
                 color: #000 !important;
-                font-size: 18pt !important;
-                margin-bottom: 8mm !important;
+                font-size: 16pt !important;
+                margin-bottom: 6mm !important;
                 text-align: center !important;
+                font-weight: 700 !important;
             }
 
             .main-title::after {
@@ -460,14 +474,20 @@
             }
 
             .form-grid {
-                margin-bottom: 8mm !important;
-                gap: 6mm !important;
+                display: grid !important;
+                grid-template-columns: 35% 65% !important;
+                gap: 4mm !important;
+                margin-bottom: 6mm !important;
+            }
+
+            .form-group {
+                margin-bottom: 3mm !important;
             }
 
             .form-label {
-                font-size: 10pt !important;
+                font-size: 9pt !important;
                 font-weight: 600 !important;
-                margin-bottom: 2mm !important;
+                margin-bottom: 1mm !important;
             }
 
             .form-input, .form-textarea {
@@ -475,32 +495,37 @@
                 border: 0 !important;
                 box-shadow: none !important;
                 outline: none !important;
-                padding: 1mm 0 !important;
+                padding: 0 !important;
                 font-size: 10pt !important;
                 color: #000 !important;
+                line-height: 1.3 !important;
+            }
+
+            .form-textarea {
+                min-height: auto !important;
             }
 
             .table-section {
-                margin-top: 6mm !important;
-                page-break-inside: auto;
+                margin-top: 4mm !important;
             }
 
             .data-table {
                 width: 100% !important;
                 border-collapse: collapse !important;
                 margin-bottom: 0 !important;
-                page-break-inside: auto;
             }
 
             .data-table thead {
                 display: table-header-group !important;
                 background: #00B0F0 !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
             }
 
             .data-table th {
                 background: #00B0F0 !important;
                 color: white !important;
-                padding: 3mm !important;
+                padding: 2.5mm !important;
                 font-size: 10pt !important;
                 font-weight: 700 !important;
                 border: 1px solid #00B0F0 !important;
@@ -508,14 +533,16 @@
 
             .data-table tbody tr {
                 page-break-inside: avoid !important;
+                page-break-before: auto !important;
                 page-break-after: auto !important;
             }
 
             .data-table tbody td {
-                padding: 2.5mm 3mm !important;
-                border: 1px solid #ccc !important;
+                padding: 2mm 3mm !important;
+                border: 1px solid #bbb !important;
                 font-size: 10pt !important;
                 vertical-align: top !important;
+                line-height: 1.3 !important;
             }
 
             .table-input, .table-textarea {
@@ -528,10 +555,10 @@
                 color: #000 !important;
                 width: 100% !important;
                 min-height: auto !important;
+                line-height: 1.3 !important;
             }
 
             .table-textarea {
-                line-height: 1.4 !important;
                 overflow: visible !important;
             }
 
@@ -542,16 +569,16 @@
                 left: 0;
                 right: 0;
                 background: #fff !important;
-                border-top: 3px solid #00B0F0 !important;
-                padding: 5mm 18mm 5mm 18mm !important;
-                font-size: 9pt !important;
-                line-height: 1.5 !important;
+                border-top: 2px solid #00B0F0 !important;
+                padding: 4mm 18mm 4mm 18mm !important;
+                font-size: 8.5pt !important;
+                line-height: 1.4 !important;
                 text-align: center !important;
                 z-index: 9999;
             }
 
             .card-footer p {
-                margin: 1mm 0 !important;
+                margin: 0.5mm 0 !important;
                 color: #000 !important;
             }
 
@@ -594,7 +621,18 @@
                 display: block !important;
                 font-size: 10pt !important;
                 color: #000 !important;
-                padding: 1mm 0 !important;
+                padding: 0 !important;
+            }
+
+            /* Forzar altura mínima para evitar cortes */
+            .data-table tbody tr {
+                min-height: 8mm !important;
+            }
+
+            /* Control adicional de saltos de página */
+            .form-group,
+            .form-grid > div {
+                page-break-inside: avoid !important;
             }
         }
     </style>
