@@ -498,6 +498,30 @@
                 justify-content: center;
             }
         }
+/* --- Footer siempre al fondo (pantalla) --- */
+html, body {
+  height: 100%;
+}
+
+.app-container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.document-card {
+  flex: 1;                 /* ocupa el alto disponible */
+  display: flex;
+  flex-direction: column;  /* permite empujar el footer */
+}
+
+.card-content {
+  flex: 1;                 /* empuja el footer al fondo */
+}
+
+.card-footer {
+  margin-top: auto;        /* se queda abajo siempre */
+}
 
         @media print {
             html,
