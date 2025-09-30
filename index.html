@@ -88,36 +88,35 @@
             overflow: hidden;
         }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 40%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(35deg);
-        }
+        /* === Header: left title + right company (solo posición) === */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between; /* reparte izquierda-derecha */
+  align-items: baseline;          /* o 'center' si lo prefieres */
+}
 
-        .company-name {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
-        }
+.company-name {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  text-align: right;
+  letter-spacing: -0.2px;
+}
 
-        .document-title {
-            text-align: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 0.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+.document-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
 
         .content {
             padding: 3rem;
