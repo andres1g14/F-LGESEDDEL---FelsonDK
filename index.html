@@ -1,491 +1,207 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Følgeseddel - Felson Watersafe ApS</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Følgeseddel - Felson Watersafe ApS</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      min-height:100vh;padding:2rem;display:flex;justify-content:center;align-items:center
+    }
+    .app-container{width:100%;max-width:1000px}
+    .document{background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.3);border-radius:12px;overflow:hidden}
+    .header{padding:2rem 3rem;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;justify-content:flex-end;align-items:center}
+    .logo{color:#fff;font-size:1.5rem;font-weight:700;letter-spacing:1px}
+    .content{padding:3rem}
+    .title{text-align:center;font-size:2rem;font-weight:700;color:#2d3748;margin-bottom:2.5rem;text-transform:uppercase;letter-spacing:2px}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    /* ===== Details (Dato left | Levering right | Ordre nr. full width below) ===== */
+    .form-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2.5rem;align-items:start
+    }
+    .form-group{margin-bottom:1.5rem}
+    .form-group.full{grid-column:1 / -1} /* full width row */
+    .form-label{display:block;font-weight:600;color:#4a5568;margin-bottom:.5rem;font-size:.95rem}
+    .form-input,.form-textarea{
+      width:100%;padding:.75rem;border:2px solid #e2e8f0;border-radius:8px;font:inherit;font-size:1rem;transition:.3s;background:#f7fafc
+    }
+    .form-input:focus,.form-textarea:focus{outline:none;border-color:#667eea;background:#fff;box-shadow:0 0 0 3px rgba(102,126,234,.1)}
+    .form-textarea{resize:vertical;min-height:100px}
 
-        .app-container {
-            width: 100%;
-            max-width: 1000px;
-        }
+    /* ===== Table ===== */
+    .table-section{margin-bottom:2rem}
+    .data-table{width:100%;border-collapse:separate;border-spacing:0;border:2px solid #e2e8f0;border-radius:8px;overflow:hidden}
+    .data-table thead{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
+    .data-table th{padding:1rem;text-align:left;color:#fff;font-weight:600;text-transform:uppercase;font-size:.85rem;letter-spacing:.5px}
+    .data-table th:first-child{width:20%;border-right:2px solid rgba(255,255,255,.3)}
+    .data-table tbody tr{border-bottom:1px solid #e2e8f0}
+    .data-table tbody tr:last-child{border-bottom:none}
+    .data-table td{padding:.75rem 1rem}
+    .data-table td:first-child{border-right:1px solid #e2e8f0}
+    .table-input{width:100%;padding:.5rem;border:1px solid #cbd5e0;border-radius:6px;font:inherit;font-size:.95rem;transition:.2s}
+    .table-input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,.1)}
+    .table-textarea{resize:none;overflow:hidden}
+    .btn-delete{background:transparent;border:none;color:#e53e3e;cursor:pointer;font-size:1.3rem;padding:.5rem;transition:.2s;border-radius:6px}
+    .btn-delete:hover{background:#fff5f5;transform:scale(1.1)}
 
-        .document {
-            background: white;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            overflow: hidden;
-        }
+    /* ===== Buttons ===== */
+    .btn-add{
+      background:linear-gradient(135deg,#48bb78 0%,#38a169 100%);color:#fff;border:none;
+      padding:.75rem 1.5rem;border-radius:8px;font-weight:600;cursor:pointer;transition:.3s;
+      box-shadow:0 4px 12px rgba(72,187,120,.3)
+    }
+    .btn-add:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(72,187,120,.4)}
+    .actions{display:flex;gap:1rem;justify-content:center;margin-top:2rem}
+    .btn-action{padding:1rem 2.5rem;border:none;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:.5px}
+    .btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;box-shadow:0 4px 12px rgba(102,126,234,.4)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,.5)}
+    .btn-secondary{background:#fff;color:#667eea;border:2px solid #667eea}
+    .btn-secondary:hover{background:#667eea;color:#fff;transform:translateY(-2px)}
 
-        .header {
-            padding: 2rem 3rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
+    .footer{text-align:center;padding:2rem 3rem;border-top:2px solid #e2e8f0;background:#f7fafc;color:#718096;font-size:.9rem}
 
-        .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+    @media (max-width:768px){
+      body{padding:1rem}
+      .content{padding:2rem 1.5rem}
+      .form-grid{grid-template-columns:1fr;gap:1rem}
+      .actions{flex-direction:column}
+      .btn-action{width:100%}
+    }
 
-        .content {
-            padding: 3rem;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background: #f7fafc;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .table-section {
-            margin-bottom: 2rem;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .data-table thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .data-table th {
-            padding: 1rem;
-            text-align: left;
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        .data-table th:first-child {
-            width: 20%;
-            border-right: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .data-table tbody tr {
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .data-table tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        .data-table td {
-            padding: 0.75rem 1rem;
-        }
-
-        .data-table td:first-child {
-            border-right: 1px solid #e2e8f0;
-        }
-
-        .table-input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
-
-        .table-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .table-textarea {
-            resize: none;
-            overflow: hidden;
-        }
-
-        .btn-delete {
-            background: transparent;
-            border: none;
-            color: #e53e3e;
-            cursor: pointer;
-            font-size: 1.3rem;
-            padding: 0.5rem;
-            transition: all 0.2s;
-            border-radius: 6px;
-        }
-
-        .btn-delete:hover {
-            background: #fff5f5;
-            transform: scale(1.1);
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
-        }
-
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
-        }
-
-        .footer {
-            text-align: center;
-            padding: 2rem 3rem;
-            border-top: 2px solid #e2e8f0;
-            background: #f7fafc;
-            color: #718096;
-            font-size: 0.9rem;
-        }
-
-        .actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .btn-action {
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-
-            .content {
-                padding: 2rem 1.5rem;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn-action {
-                width: 100%;
-            }
-        }
-
-        @media print {
-            @page {
-                size: A4;
-                margin: 2cm;
-            }
-
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            .app-container {
-                max-width: 100%;
-            }
-
-            .document {
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            .header {
-                background: white;
-                border-bottom: 2px solid #667eea;
-            }
-
-            .logo {
-                color: #667eea;
-            }
-
-            .data-table thead {
-                background: white;
-                border-bottom: 2px solid #000;
-            }
-
-            .data-table th {
-                color: #000;
-                border-right: 1px solid #000;
-            }
-
-            .data-table td {
-                border: 1px solid #000;
-            }
-
-            .actions,
-            .btn-add,
-            .btn-delete {
-                display: none !important;
-            }
-
-            .print-value {
-                display: block;
-                padding: 0.5rem;
-            }
-        }
-    </style>
+    /* ===== Print (clásico limpio) ===== */
+    @media print{
+      @page{ size:A4; margin:2cm }
+      body{ background:#fff; padding:0 }
+      .document{ box-shadow:none; border-radius:0 }
+      .header{ background:#fff; border-bottom:2px solid #667eea }
+      .logo{ color:#667eea }
+      /* Ocultar UI */
+      .actions, .btn-add, .btn-delete{ display:none !important }
+      /* Encabezado de tabla clásico */
+      .data-table thead{ background:#fff; border-bottom:2px solid #000 }
+      .data-table th{ color:#000; border-right:1px solid #000 }
+      /* Celdas con rejilla y separador vertical entre columnas 1|2 */
+      .data-table td{ border:1px solid #000 }
+      .data-table td:first-child{ border-right:1px solid #000 }
+      /* Ocultar la 3ª columna (icono eliminar) en print */
+      .data-table th:nth-child(3), .data-table td:nth-child(3){ display:none !important }
+      /* Inputs como texto plano (sin recuadros) */
+      input, textarea{ border:none !important; background:transparent !important; padding:0 !important; box-shadow:none !important }
+      .print-value{ display:block; padding:.5rem }
+    }
+  </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="document">
-            <div class="header">
-                <div class="logo">FELSON WATERSAFE ApS</div>
+  <div class="app-container">
+    <div class="document">
+      <div class="header">
+        <div class="logo">FELSON WATERSAFE ApS</div>
+      </div>
+
+      <div class="content">
+        <h1 class="title">FØLGESEDDEL</h1>
+
+        <!-- Dato (izq) | Levering (der) en la misma fila -->
+        <div class="form-grid">
+          <div>
+            <div class="form-group">
+              <label class="form-label" for="dato">Dato</label>
+              <input type="date" class="form-input" id="dato">
             </div>
-
-            <div class="content">
-                <h1 class="title">Følgeseddel</h1>
-
-                <div class="form-grid">
-                    <div>
-                        <div class="form-group">
-                            <label class="form-label">Dato</label>
-                            <input type="date" class="form-input" id="dato">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-group">
-                            <label class="form-label">Ordre nr.</label>
-                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Levering</label>
-                            <textarea class="form-textarea" id="levering" placeholder="Leveringsadresse"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="table-section">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Antal</th>
-                                <th>Beskrivelse</th>
-                                <th style="width: 60px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            <tr>
-                                <td>
-                                    <input type="number" class="table-input" min="0" placeholder="0">
-                                </td>
-                                <td>
-                                    <textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea>
-                                </td>
-                                <td style="text-align: center;">
-                                    <button class="btn-delete" title="Slet række">🗑️</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn-add" id="btn-add">+ Tilføj Række</button>
-                </div>
-
-                <div class="actions">
-                    <button class="btn-action btn-secondary" id="btn-pdf">Gem som PDF</button>
-                    <button class="btn-action btn-primary" id="btn-print">Udskriv</button>
-                </div>
+          </div>
+          <div>
+            <div class="form-group">
+              <label class="form-label" for="levering">Levering</label>
+              <textarea class="form-textarea" id="levering" placeholder="Leveringsadresse"></textarea>
             </div>
-
-            <div class="footer">
-                <p>Felson Watersafe ApS • Gartnervej 4 • 6710 Esbjerg V</p>
-                <p>CVR-nr. DK26813522 • Tlf. 70206676 • felson@felson.dk</p>
-            </div>
+          </div>
+          <!-- Ordre nr. a todo el ancho debajo -->
+          <div class="form-group full">
+            <label class="form-label" for="ordre-nr">Ordre nr.</label>
+            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+          </div>
         </div>
+
+        <div class="table-section">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Antal</th>
+                <th>Beskrivelse</th>
+                <th style="width:60px;"></th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <tr>
+                <td><input type="number" class="table-input" min="0" placeholder="0"></td>
+                <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
+                <td style="text-align:center;"><button class="btn-delete" title="Slet række">🗑️</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn-add" id="btn-add">+ Tilføj Række</button>
+        </div>
+
+        <div class="actions">
+          <button class="btn-action btn-secondary" id="btn-pdf">Gem som PDF</button>
+          <button class="btn-action btn-primary" id="btn-print">Udskriv</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Felson Watersafe ApS • Gartnervej 4 • 6710 Esbjerg V</p>
+        <p>CVR-nr. DK26813522 • Tlf. 70206676 • felson@felson.dk</p>
+      </div>
     </div>
+  </div>
 
-    <script>
-        (function() {
-            'use strict';
+  <script>
+    (function(){
+      'use strict';
 
-            // Set today's date
-            document.getElementById('dato').valueAsDate = new Date();
+      // Fecha de hoy
+      const d = document.getElementById('dato');
+      if(d) d.valueAsDate = new Date();
 
-            // Auto-resize textareas
-            document.addEventListener('input', function(e) {
-                if (e.target.classList.contains('table-textarea')) {
-                    e.target.style.height = 'auto';
-                    e.target.style.height = e.target.scrollHeight + 'px';
-                }
-            });
+      // Auto-resize textareas de la tabla
+      document.addEventListener('input', e => {
+        if(e.target.classList.contains('table-textarea')){
+          e.target.style.height = 'auto';
+          e.target.style.height = e.target.scrollHeight + 'px';
+        }
+      });
 
-            // Add row
-            document.getElementById('btn-add').addEventListener('click', function() {
-                const tbody = document.getElementById('table-body');
-                const row = tbody.rows[0].cloneNode(true);
-                row.querySelectorAll('input, textarea').forEach(el => {
-                    el.value = '';
-                    if (el.classList.contains('table-textarea')) {
-                        el.style.height = 'auto';
-                    }
-                });
-                tbody.appendChild(row);
-            });
+      // Añadir fila
+      document.getElementById('btn-add').addEventListener('click', () => {
+        const tbody = document.getElementById('table-body');
+        const base = tbody.rows[0].cloneNode(true);
+        base.querySelectorAll('input, textarea').forEach(el => {
+          el.value = '';
+          if(el.classList.contains('table-textarea')) el.style.height = 'auto';
+        });
+        tbody.appendChild(base);
+      });
 
-            // Delete row
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('btn-delete')) {
-                    const tbody = document.getElementById('table-body');
-                    if (tbody.rows.length > 1) {
-                        e.target.closest('tr').remove();
-                    } else {
-                        alert('Skal have mindst én række');
-                    }
-                }
-            });
+      // Eliminar fila
+      document.addEventListener('click', e => {
+        if(e.target.classList.contains('btn-delete')){
+          const tbody = document.getElementById('table-body');
+          if(tbody.rows.length > 1){
+            e.target.closest('tr').remove();
+          }else{
+            alert('Skal have mindst én række');
+          }
+        }
+      });
 
-            // Print function
-            function handlePrint() {
-                const inputs = document.querySelectorAll('input, textarea');
-                const saved = [];
-
-                inputs.forEach(input => {
-                    const span = document.createElement('span');
-                    span.className = 'print-value';
-                    
-                    if (input.tagName === 'TEXTAREA') {
-                        span.innerHTML = (input.value || '').replace(/\n/g, '<br>');
-                    } else {
-                        span.textContent = input.value || '';
-                    }
-
-                    saved.push({
-                        input: input,
-                        parent: input.parentNode,
-                        next: input.nextSibling
-                    });
-
-                    input.parentNode.replaceChild(span, input);
-                });
-
-                setTimeout(() => {
-                    window.print();
-                    setTimeout(() => {
-                        saved.forEach(item => {
-                            const span = item.parent.querySelector('.print-value');
-                            if (span) {
-                                item.parent.replaceChild(item.input, span);
-                            }
-                        });
-                    }, 100);
-                }, 100);
-            }
-
-            document.getElementById('btn-pdf').addEventListener('click', handlePrint);
-            document.getElementById('btn-print').addEventListener('click', handlePrint);
-        })();
-    </script>
+      // Imprimir (oculta botones por CSS; inputs ya se ven como texto liso)
+      const printNow = () => window.print();
+      document.getElementById('btn-pdf').addEventListener('click', printNow);
+      document.getElementById('btn-print').addEventListener('click', printNow);
+    })();
+  </script>
 </body>
 </html>
