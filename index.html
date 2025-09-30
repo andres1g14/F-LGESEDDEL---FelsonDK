@@ -12,7 +12,7 @@
         }
 
         :root {
-            --primary: #00B0F0;
+            --primary: #00B0F0;;
             --primary-dark: #4C1D95;
             --secondary: #8B5CF6;
             --accent: #A78BFA;
@@ -88,26 +88,36 @@
             overflow: hidden;
         }
 
-        .header {
-  padding: 1.5rem 2rem 1rem;
-  display: flex;
-  justify-content: space-between; /* reparte izq-der */
-  align-items: center;
-}
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(35deg);
+        }
 
         .company-name {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0;
-  text-align: left;
-}
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
 
         .document-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 30;
-  text-align: rigth;
-}
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
         .content {
             padding: 3rem;
@@ -445,68 +455,6 @@
                 transform: translateY(0);
             }
         }
-        @media print {
-  @page {
-    size: A4;
-    margin: 2.5cm 2cm 2cm; /* ajusta si quieres más/menos margen */
-  }
-
-  /* Cabecera fija arriba en TODAS las páginas */
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0; right: 0;
-    background: #fff !important;
-    border-bottom: 1px solid #000 !important;
-    padding: 10px 24px !important;
-    z-index: 9999;
-  }
-
-  /* Espacio para que el contenido no se meta debajo del header */
-  .content {
-    /* altura aproximada del header: ajusta si te queda corto/largo */
-    margin-top: 80px !important;
-  }
-
-  /* Footer SIEMPRE fijo abajo en TODAS las páginas */
-  .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0; right: 0;
-    background: #fff !important;
-    border-top: 1px solid #000 !important;
-    padding: 8px 16px !important;
-    text-align: center !important;
-    z-index: 9999;
-  }
-
-  /* Reserva espacio para el footer */
-  .content,
-  .table-container {
-    margin-bottom: 80px !important; /* altura aprox del footer */
-  }
-
-  /* Repetir encabezado de la tabla automáticamente en cada página */
-  .table thead { display: table-header-group; }
-  .table tfoot { display: table-footer-group; }
-
-  /* Evitar que una fila se corte entre páginas */
-  .table tr { page-break-inside: avoid; }
-  .table { page-break-inside: auto; }
-
-  /* Ocultar UI en el PDF si aún no lo haces */
-  .actions, .btn-add, .btn-delete { display: none !important; }
-
-  /* Inputs/textarea se ven como texto (sin recuadro) pero mantendremos el placeholder con JS */
-  input, textarea {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
-}
-
-
     </style>
 </head>
 <body>
@@ -577,39 +525,6 @@
     </div>
 
     <script>
-  // Mostrar placeholder como valor real solo durante la impresión
-  (function(){
-    function beforePrintFillPlaceholders() {
-      document.querySelectorAll('input[type="text"], input[type="number"], textarea')
-        .forEach(el => {
-          if (!el.value && el.placeholder) {
-            el.dataset._printedPlaceholder = '1';
-            el.value = el.placeholder;
-          }
-        });
-    }
-
-    function afterPrintRestore() {
-      document.querySelectorAll('[data-_printed-placeholder="1"], [data-_printed_placeholder="1"]')
-        .forEach(el => {
-          // fallback: dos nombres por si algún minificador cambia guiones bajos
-          el.value = '';
-          delete el.dataset._printedPlaceholder;
-          delete el.dataset._printed_placeholder;
-        });
-    }
-
-    // Soporta la mayoría de navegadores
-    window.addEventListener('beforeprint', beforePrintFillPlaceholders);
-    window.addEventListener('afterprint', afterPrintRestore);
-
-    // Fallback por si afterprint no dispara en algunos entornos
-    // envuelve tu llamada window.print() así si quieres forzarlo:
-    // function doPrint(){ beforePrintFillPlaceholders(); setTimeout(()=>{ window.print(); setTimeout(afterPrintRestore, 300); }, 50); }
-    // y usa doPrint() en tus botones
-  })();
-</script>
-
         // Set today's date
         document.getElementById('dato').valueAsDate = new Date();
 
