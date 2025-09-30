@@ -88,36 +88,26 @@
             overflow: hidden;
         }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -200%;
-            right: 100%;
-            width: 40%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(35deg);
-        }
+        .header {
+  padding: 1.5rem 2rem 1rem;
+  display: flex;
+  justify-content: space-between; /* reparte izq-der */
+  align-items: center;
+}
 
         .company-name {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
-        }
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  text-align: right;
+}
 
         .document-title {
-            text-align: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 0.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: left;
+}
 
         .content {
             padding: 3rem;
