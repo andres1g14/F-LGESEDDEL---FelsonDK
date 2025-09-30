@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="UTF-8">
@@ -88,36 +88,37 @@
             overflow: hidden;
         }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 40%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(35deg);
-        }
+        .header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 1.25rem 2rem 1rem;
+  position: relative;
+  overflow: hidden;
 
-        .company-name {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
-        }
+  /* NUEVO: apila y alinea a la derecha */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .35rem;
+}
 
-        .document-title {
-            text-align: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 0.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+.company-name {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-align: right;
+  letter-spacing: -0.2px;
+  margin: 0;
+}
+
+.document-title {
+  text-align: right;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
         .content {
             padding: 3rem;
