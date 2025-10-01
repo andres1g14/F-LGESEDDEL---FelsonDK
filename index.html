@@ -397,64 +397,63 @@
 
 /* ======== PRINT ========= */
 @media print {
-  /* medidas fijas */
   :root{
-    --print-header-h: 24mm;
-    --print-footer-h: 22mm;
+    --print-header: 24mm;
+    --print-footer: 22mm;
     --print-pad-lr: 18mm;
   }
 
+  /* Página a sangre, sin márgenes del navegador */
   @page { size: A4 portrait; margin: 0; }
 
   html, body { background:#fff !important; padding:0; margin:0; }
   body::before{ display:none !important; }
 
-  /* Oculta UI/no impresión */
+  /* Oculta UI/no-impresión */
   .main-actions,
   .actions-container, .btn-delete,
   .toast, .security-badge, .security-modal { display:none !important; }
 
-  /* Quita tarjetas/efectos que ensucian */
+  /* Quita estilos de tarjeta para impresión */
   .document-card, .card-content, .card-header, .card-footer {
     background:#fff !important; border:0 !important; box-shadow:none !important;
     border-radius:0 !important; margin:0 !important;
   }
 
-  /* Clona header/footer: ocultamos los originales y usamos los fijos */
+  /* Oculta los originales en print (usaremos los fijos) */
   .card-header, .card-footer { visibility:hidden !important; height:0 !important; padding:0 !important; }
 
   /* HEADER fijo en todas las páginas */
   .print-header-fixed{
+    position:fixed; top:0; left:0; right:0; height:var(--print-header);
+    z-index:10000; background:#fff; border-bottom:2px solid #00B0F0;
     display:block !important;
-    position:fixed; top:0; left:0; right:0; height:var(--print-header-h);
-    z-index:10000; background:#fff;
-    border-bottom:2px solid #00B0F0;
   }
   .print-header-fixed .ph-inner{
-    box-sizing:border-box;
-    height:100%; padding:10mm var(--print-pad-lr) 6mm var(--print-pad-lr);
+    box-sizing:border-box; height:100%;
+    padding:10mm var(--print-pad-lr) 6mm var(--print-pad-lr);
     display:flex; align-items:center; justify-content:flex-end;
   }
-  .ph-logo{ font: 700 18pt/1 "Inter", Arial, sans-serif; color:#00B0F0; }
+  .ph-logo{ font:700 18pt/1 "Inter", Arial, sans-serif; color:#00B0F0; }
 
   /* FOOTER fijo en todas las páginas */
   .print-footer-fixed{
+    position:fixed; bottom:0; left:0; right:0; height:var(--print-footer);
+    z-index:10000; background:#fff; border-top:2px solid #00B0F0;
     display:block !important;
-    position:fixed; bottom:0; left:0; right:0; height:var(--print-footer-h);
-    z-index:10000; background:#fff;
-    border-top:2px solid #00B0F0;
   }
   .print-footer-fixed .pf-inner{
     box-sizing:border-box; height:100%;
     padding:6mm var(--print-pad-lr);
-    text-align:center; font: 400 8.5pt/1.4 "Inter", Arial, sans-serif; color:#333;
+    text-align:center; font:400 8.5pt/1.4 "Inter", Arial, sans-serif; color:#333;
   }
 
-  /* Reserva de espacio para que nada invada header/footer */
+  /* Reserva de espacio para que el contenido NO pise header/footer */
   .card-content{
     padding:0 var(--print-pad-lr) !important;
-    margin-top: calc(var(--print-header-h) + 6mm) !important;
-    margin-bottom: calc(var(--print-footer-h) + 6mm) !important;
+    margin-top: calc(var(--print-header) + 6mm) !important;
+    margin-bottom: calc(var(--print-footer) + 6mm) !important;
+    box-sizing:border-box;
   }
 
   /* Formularios en modo tinta */
@@ -466,11 +465,11 @@
   #dato::-webkit-calendar-picker-indicator,
   input[type="number"]::-webkit-inner-spin-button{ display:none !important; }
 
-  /* Tabla: cabecera repetida y filas sin cortes feos */
+  /* Tabla con cabecera repetida y sin cortes feos */
   .data-table{
     width:100%; border:1px solid #ddd !important;
     border-collapse:separate !important; border-spacing:0 !important;
-    page-break-inside:auto;
+    page-break-inside:auto; margin-bottom:4mm;
   }
   .data-table thead{
     display:table-header-group;
@@ -480,65 +479,16 @@
   .data-table th{
     color:#fff !important; padding:2.5mm !important; font-size:9pt !important;
   }
-  .data-table tbody tr{ break-inside:avoid; page-break-inside:avoid; }
+  .data-table tr, .data-table tbody tr{ break-inside:avoid; page-break-inside:avoid; }
   .data-table td{
     padding:2mm 3mm !important; border-bottom:1px solid #e5e7eb !important; font-size:10pt !important;
   }
-@media print {
-  :root {
-    /* Alturas reales del header/footer impresos */
-    --print-header: 24mm;
-    --print-footer: 22mm;
-  }
-
-  /* Nada de márgenes del navegador */
-  @page { size: A4 portrait; margin: 0; }
-
-  /* Reserva de espacio arriba y abajo para que el contenido no se meta debajo */
-  .app-container,
-  .card-content,
-  main.app-container {
-    /* Deja holgura suficiente para borde + texto del footer */
-    margin-top: calc(var(--print-header) + 6mm) !important;
-    margin-bottom: calc(var(--print-footer) + 6mm) !important;
-    box-sizing: border-box;
-  }
-
-  /* Evita cortes raros en la tabla y separa un pelín del borde inferior */
-  .data-table { break-inside: auto; page-break-inside: auto; margin-bottom: 4mm; }
-  .data-table tr,
-  .data-table tbody tr { break-inside: avoid; page-break-inside: avoid; }
-  .data-table thead { display: table-header-group; }
-
-  /* El footer y el header siguen fijos */
-  .print-header-fixed { position: fixed; top: 0; left: 0; right: 0; height: var(--print-header); }
-  .print-footer-fixed { position: fixed; bottom: 0; left: 0; right: 0; height: var(--print-footer); }
 }
 
     </style>
 </head>
 <body>
     <div class="security-badge">🔒 Sikker og krypteret</div>
-<body>
-  <!-- HEADER y FOOTER fijos para impresión -->
-  <div class="print-header-fixed">
-    <div class="ph-inner">
-      <span class="ph-logo">Felson Watersafe ApS</span>
-    </div>
-  </div>
-
-  <div class="print-footer-fixed">
-    <div class="pf-inner">
-      <div>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</div>
-      <div>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</div>
-    </div>
-  </div>
-
-  <!-- aquí ya va tu código existente -->
-  <main class="app-container">
-    ...
-  </main>
-</body>
 
     <main class="app-container">
         <div class="document-card">
