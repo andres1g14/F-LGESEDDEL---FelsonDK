@@ -279,6 +279,122 @@
             opacity: 1;
         }
 
+        /* Modal de seguridad */
+        .security-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .security-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .security-modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .security-modal.show .security-modal-content {
+            transform: scale(1);
+        }
+
+        .security-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--brand);
+        }
+
+        .security-modal-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .security-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .security-modal-body {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 0.9375rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .security-modal-body p {
+            margin-bottom: 1rem;
+        }
+
+        .security-modal-body strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .security-modal-features {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .security-modal-features ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .security-modal-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .security-modal-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .security-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, var(--brand) 0%, #0090cc 100%);
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
@@ -349,6 +465,47 @@
 
     <div class="toast" id="toast"></div>
 
+    <div class="security-modal" id="securityModal">
+        <div class="security-modal-content">
+            <div class="security-modal-header">
+                <div class="security-modal-icon">🔒</div>
+                <h3 class="security-modal-title">Sikkerhed og Databeskyttelse</h3>
+            </div>
+            <div class="security-modal-body">
+                <p>
+                    Velkommen til Felson Watersafe ApS følgeseddel system. Vi tager din datasikkerhed alvorligt og ønsker at informere dig om, hvordan dine oplysninger beskyttes.
+                </p>
+                
+                <div class="security-modal-features">
+                    <ul>
+                        <li>AES-256 kryptering af alle gemte data</li>
+                        <li>Lokal lagring uden eksterne servere</li>
+                        <li>Automatisk krypteret backup</li>
+                        <li>Ingen data deles med tredjeparter</li>
+                        <li>GDPR-kompatibel databehandling</li>
+                    </ul>
+                </div>
+
+                <p>
+                    <strong>Hvordan fungerer det?</strong><br>
+                    Alle dine følgesedler gemmes krypteret i din browsers lokale hukommelse ved hjælp af avanceret AES-256 kryptering. Dette sikrer, at kun du kan tilgå dine data. Ingen oplysninger sendes til eksterne servere eller deles med nogen.
+                </p>
+
+                <p>
+                    <strong>Din databeskyttelse:</strong><br>
+                    Vi følger GDPR (General Data Protection Regulation) retningslinjer. Du har fuld kontrol over dine data og kan til enhver tid slette dem ved at bruge "Ryd Alt" funktionen. Dine ordreoplysninger forbliver fortrolige og sikre.
+                </p>
+
+                <p style="font-size: 0.875rem; color: #9ca3af; margin-top: 1.5rem;">
+                    Ved at fortsætte accepterer du vores sikkerhedspraksis og bekræfter, at du har læst denne information om databeskyttelse.
+                </p>
+            </div>
+            <div class="security-modal-actions">
+                <button class="btn btn-accept" id="acceptSecurityBtn">Forstået og Accepter</button>
+            </div>
+        </div>
+    </div>
+
     <template id="table-row-template">
         <tr>
             <td><input type="number" class="table-input col-antal" min="0" placeholder="0"></td>
@@ -366,6 +523,7 @@
             const { jsPDF } = window.jspdf;
             const STORAGE_KEY = 'felson_encrypted_data';
             const ENCRYPTION_KEY = 'FelsonWatersafe2025SecureKey';
+            const SECURITY_ACCEPTED_KEY = 'felson_security_accepted';
             
             const datoInput = document.getElementById('dato');
             const ordreNrInput = document.getElementById('ordre-nr');
@@ -377,8 +535,27 @@
             const pdfBtn = document.getElementById('btn-pdf');
             const rowTemplate = document.getElementById('table-row-template');
             const toast = document.getElementById('toast');
+            const securityModal = document.getElementById('securityModal');
+            const acceptSecurityBtn = document.getElementById('acceptSecurityBtn');
             
             let autoSaveTimeout;
+
+            // Mostrar modal de seguridad al cargar
+            function checkSecurityAcceptance() {
+                const accepted = localStorage.getItem(SECURITY_ACCEPTED_KEY);
+                if (!accepted) {
+                    setTimeout(() => {
+                        securityModal.classList.add('show');
+                    }, 500);
+                }
+            }
+
+            // Aceptar y cerrar modal
+            acceptSecurityBtn.addEventListener('click', () => {
+                localStorage.setItem(SECURITY_ACCEPTED_KEY, 'true');
+                securityModal.classList.remove('show');
+                showToast('Sikkerhedsindstillinger accepteret');
+            });
 
             function encrypt(data) {
                 return CryptoJS.AES.encrypt(JSON.stringify(data), ENCRYPTION_KEY).toString();
@@ -645,6 +822,9 @@
             }
 
             function init() {
+                // Verificar aceptación de seguridad
+                checkSecurityAcceptance();
+                
                 const hasData = loadData();
                 if (!datoInput.value) datoInput.valueAsDate = new Date();
                 if (tableBody.rows.length === 0) addRow();
