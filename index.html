@@ -415,7 +415,7 @@
 
             @page {
                 size: A4;
-                margin: 15mm; /* Standard margins for all content */
+                margin: 30mm 15mm 25mm 15mm;
             }
 
             body, html {
@@ -454,16 +454,23 @@
                 background: white !important;
                 backdrop-filter: none !important;
                 display: block !important;
+                position: relative !important;
             }
 
-            /* Header on every page - but only logo */
+            /* Header fijo en la parte superior de cada página */
             .card-header {
-                padding: 0 0 5mm 0 !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 25mm;
+                padding: 5mm 15mm !important;
                 background: white !important;
                 border-bottom: 2px solid #00B0F0 !important;
-                text-align: right;
-                margin-bottom: 6mm !important;
-                page-break-after: avoid !important;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                z-index: 9999;
             }
 
             .logo {
@@ -472,14 +479,37 @@
                 font-weight: 800 !important;
             }
 
-            /* Content area */
+            /* Footer fijo en la parte inferior de cada página */
+            .card-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 20mm;
+                padding: 3mm 15mm !important;
+                border-top: 2px solid #00B0F0 !important;
+                background: white !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+            .card-footer p {
+                font-size: 8pt !important;
+                color: #666 !important;
+                margin: 1mm 0 !important;
+                line-height: 1.4 !important;
+            }
+
+            /* Contenido fluye entre header y footer */
             .card-content {
                 padding: 0 !important;
                 margin: 0 !important;
                 background: white !important;
             }
 
-            /* Title and form - only on first page */
             .main-title {
                 font-size: 14pt !important;
                 font-weight: 700 !important;
@@ -526,7 +556,7 @@
                 resize: none !important;
             }
 
-            /* Table - can span multiple pages */
+            /* Tabla - puede expandirse a múltiples páginas */
             .data-table {
                 border-collapse: collapse !important;
                 border: 1px solid #ccc !important;
@@ -538,7 +568,7 @@
             }
 
             .data-table thead {
-                display: table-header-group !important; /* Repeat header on every page */
+                display: table-header-group !important;
                 background: #00B0F0 !important;
             }
 
@@ -550,7 +580,6 @@
                 font-weight: 600 !important;
             }
 
-            /* Ensure table rows break properly across pages */
             .data-table tbody tr {
                 page-break-inside: avoid !important;
                 page-break-after: auto !important;
@@ -576,24 +605,7 @@
                 width: 100% !important;
             }
 
-            /* Footer on last page */
-            .card-footer {
-                padding: 6mm 0 0 0 !important;
-                border-top: 2px solid #00B0F0 !important;
-                margin-top: 8mm !important;
-                page-break-inside: avoid !important;
-                background: white !important;
-                text-align: center;
-            }
-
-            .card-footer p {
-                font-size: 8pt !important;
-                color: #666 !important;
-                margin: 1mm 0 !important;
-                line-height: 1.4 !important;
-            }
-
-            /* Hide browser's default date/number controls in print */
+            /* Ocultar controles de navegador */
             input[type="date"]::-webkit-calendar-picker-indicator,
             input[type="number"]::-webkit-inner-spin-button,
             input[type="number"]::-webkit-outer-spin-button {
@@ -602,7 +614,7 @@
                 margin: 0 !important;
             }
 
-            /* Orphans and widows control */
+            /* Control de huérfanas y viudas */
             p, .form-group, .data-table tbody tr {
                 orphans: 2;
                 widows: 2;
