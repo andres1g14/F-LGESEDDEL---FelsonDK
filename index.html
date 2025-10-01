@@ -395,127 +395,97 @@
             color: white;
         }
 
-/* ===== PRINT: reemplaza todo tu @media print por esto ===== */
+/* ======== PRINT ========= */
 @media print {
-  /* --- 0) Variables de medida para no fallar con el espacio --- */
+  /* medidas fijas */
   :root{
-    --print-header-h: 24mm;   /* alto header fijo */
-    --print-footer-h: 22mm;   /* alto footer fijo */
-    --print-pad-lr: 18mm;     /* padding laterales de la zona de contenido */
+    --print-header-h: 24mm;
+    --print-footer-h: 22mm;
+    --print-pad-lr: 18mm;
   }
 
-  /* --- 1) Página en blanco, sin gradientes ni sombras --- */
   @page { size: A4 portrait; margin: 0; }
-  html, body, .app-container, .document-card, .card-content {
-    background: #fff !important;
-  }
-  body::before { display: none !important; }                /* mata el overlay decorativo */
-  * {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-  }
 
-  /* --- 2) Oculta todo lo no imprimible y cualquier “resto” UI --- */
+  html, body { background:#fff !important; padding:0; margin:0; }
+  body::before{ display:none !important; }
+
+  /* Oculta UI/no impresión */
   .main-actions,
-  .actions-container, .actions-container * ,
-  .btn-delete,
-  .toast,
-  .security-badge,
-  .security-modal, .security-modal * ,
-  [data-nonprint],
-  .print-hint {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
+  .actions-container, .btn-delete,
+  .toast, .security-badge, .security-modal { display:none !important; }
+
+  /* Quita tarjetas/efectos que ensucian */
+  .document-card, .card-content, .card-header, .card-footer {
+    background:#fff !important; border:0 !important; box-shadow:none !important;
+    border-radius:0 !important; margin:0 !important;
   }
 
-  /* --- 3) Header/ footer fijos + reserva de espacio en el contenido --- */
-  .document-card {               /* tu “página” */
-    margin: 0 !important;
-    border: 0 !important;
-    page-break-after: always;    /* cada document-card imprime como páginas continuas */
+  /* Clona header/footer: ocultamos los originales y usamos los fijos */
+  .card-header, .card-footer { visibility:hidden !important; height:0 !important; padding:0 !important; }
+
+  /* HEADER fijo en todas las páginas */
+  .print-header-fixed{
+    display:block !important;
+    position:fixed; top:0; left:0; right:0; height:var(--print-header-h);
+    z-index:10000; background:#fff;
+    border-bottom:2px solid #00B0F0;
+  }
+  .print-header-fixed .ph-inner{
+    box-sizing:border-box;
+    height:100%; padding:10mm var(--print-pad-lr) 6mm var(--print-pad-lr);
+    display:flex; align-items:center; justify-content:flex-end;
+  }
+  .ph-logo{ font: 700 18pt/1 "Inter", Arial, sans-serif; color:#00B0F0; }
+
+  /* FOOTER fijo en todas las páginas */
+  .print-footer-fixed{
+    display:block !important;
+    position:fixed; bottom:0; left:0; right:0; height:var(--print-footer-h);
+    z-index:10000; background:#fff;
+    border-top:2px solid #00B0F0;
+  }
+  .print-footer-fixed .pf-inner{
+    box-sizing:border-box; height:100%;
+    padding:6mm var(--print-pad-lr);
+    text-align:center; font: 400 8.5pt/1.4 "Inter", Arial, sans-serif; color:#333;
   }
 
-  .card-header{
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--print-header-h);
-    padding: 10mm var(--print-pad-lr) 6mm;
-    background: #fff !important;
-    border-bottom: 2px solid var(--brand) !important;
-    box-sizing: border-box;
-    display: flex; justify-content: flex-end; align-items: center;
-  }
-  .card-header::before{ display:none !important; }  /* quita la línea animada */
-  .logo{ font-size: 18pt !important; text-align: right; }
-
-  .card-footer{
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: var(--print-footer-h);
-    padding: 6mm var(--print-pad-lr);
-    background: #fff !important;
-    border-top: 2px solid var(--brand) !important;
-    box-sizing: border-box;
-    text-align: center;
-  }
-  .card-footer p{ font-size: 8.5pt !important; margin: 0.5mm 0; }
-
-  /* deja un “hueco” real para que nada invada header/ footer */
+  /* Reserva de espacio para que nada invada header/footer */
   .card-content{
-    margin-top: calc(var(--print-header-h) + 6mm);
-    margin-bottom: calc(var(--print-footer-h) + 6mm);
-    padding: 0 var(--print-pad-lr) !important;
+    padding:0 var(--print-pad-lr) !important;
+    margin-top: calc(var(--print-header-h) + 6mm) !important;
+    margin-bottom: calc(var(--print-footer-h) + 6mm) !important;
   }
 
-  /* --- 4) Campos y etiquetas en modo tinta --- */
-  .form-label{ font-weight: 700; font-size: 9pt !important; margin-bottom: 2mm; }
+  /* Formularios en modo tinta */
+  .form-label{ font-weight:700; font-size:9pt !important; margin-bottom:2mm; }
   .form-input, .form-textarea, .table-input, .table-textarea{
-    background: transparent !important;
-    border: 0 !important;
-    padding: 0 !important;
-    font-size: 10pt !important;
-    box-shadow: none !important;
+    background:transparent !important; border:0 !important; padding:0 !important;
+    box-shadow:none !important; font-size:10pt !important;
   }
   #dato::-webkit-calendar-picker-indicator,
-  input[type="number"]::-webkit-inner-spin-button{
-    display:none !important;
-  }
+  input[type="number"]::-webkit-inner-spin-button{ display:none !important; }
 
-  /* --- 5) Tabla amigable para impresión --- */
+  /* Tabla: cabecera repetida y filas sin cortes feos */
   .data-table{
-    border: 1px solid #ddd !important;
-    width: 100%;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    page-break-inside: auto;
+    width:100%; border:1px solid #ddd !important;
+    border-collapse:separate !important; border-spacing:0 !important;
+    page-break-inside:auto;
   }
   .data-table thead{
-    display: table-header-group; /* repite cabecera en cada página */
-    -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-    background: var(--brand) !important;
+    display:table-header-group;
+    background:#00B0F0 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
   .data-table th{
-    color: #fff !important;
-    padding: 2.5mm !important;
-    font-size: 9pt !important;
+    color:#fff !important; padding:2.5mm !important; font-size:9pt !important;
   }
-  .data-table tbody tr{
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
+  .data-table tbody tr{ break-inside:avoid; page-break-inside:avoid; }
   .data-table td{
-    padding: 2mm 3mm !important;
-    border-bottom: 1px solid #e5e7eb !important;
-    font-size: 10pt !important;
+    padding:2mm 3mm !important; border-bottom:1px solid #e5e7eb !important; font-size:10pt !important;
   }
 }
+
     </style>
 </head>
 <body>
