@@ -396,164 +396,82 @@
         }
 
        @media print {
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: white;
+  /* --- medidas consistentes en mm --- */
+  :root{
+    --print-header-h: 26mm;
+    --print-footer-h: 20mm;
+    --print-side-pad: 18mm;
   }
 
-  @page {
-    size: A4 portrait;
-    margin: 0; /* controlamos márgenes con padding/margins internos */
+  html, body { margin:0; padding:0; height:100%; background:#fff; }
+  @page { size: A4 portrait; margin:0; }
+
+  .app-container{ max-width:100%; }
+
+  .document-card{
+    box-shadow:none; border-radius:0; margin:0;
+    /* permite que el contenido fluya entre páginas */
+    page-break-after: auto;
   }
 
-  /* Ocultar UI no imprimible */
-  .security-badge,
-  .main-actions,
-  .actions-container,
-  .btn-delete,
-  .toast,
-  .security-modal {
-    display: none !important;
-  }
-
-  .app-container {
-    max-width: 100%;
-  }
-
-  .document-card {
-    box-shadow: none;
-    border-radius: 0;
-    margin: 0;
-    background: white;
-    page-break-after: always;
-  }
-
-  /* ===== HEADER FIJO ===== */
-  .card-header {
+  /* HEADER FIJO (ya lo tenías, lo dejo completo) */
+  .card-header{
     position: fixed;
-    top: 0; left: 0; right: 0;
-    background: white;
-    padding: 10mm 18mm 6mm; /* alto + padding superior */
-    border-bottom: 2px solid var(--brand);
-    z-index: 10000;
-    height: 24mm;            /* altura total reservada del header */
-    box-sizing: border-box;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    top:0; left:0; right:0;
+    height: var(--print-header-h);
+    padding: 10mm var(--print-side-pad) 6mm;
+    background:#fff;
+    border-bottom: 2px solid var(--brand-primary);
+    z-index: 1000;
   }
+  .card-header::before{ display:none; }
+  .logo{ font-size:18pt; text-align:right; }
+  .logo::after{ display:none; }
 
-  .card-header::before { display: none; } /* quita barra animada en print */
-
-  .logo {
-    font-size: 18pt;
-    text-align: right;
-  }
-
-  .logo::after {
-    right: 0; left: auto; transform: none;
-    background: linear-gradient(90deg, transparent, var(--brand));
-  }
-
-  /* ===== FOOTER FIJO ===== */
-  .card-footer {
+  /* FOOTER FIJO EN TODAS LAS PÁGINAS */
+  .card-footer{
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: white;
-    border-top: 2px solid var(--brand);
-    padding: 5mm 18mm;       /* espacio interno del pie */
-    z-index: 10000;
-    height: 20mm;            /* altura del footer */
-    box-sizing: border-box;
+    bottom:0; left:0; right:0;
+    height: var(--print-footer-h);
+    padding: 5mm var(--print-side-pad);
+    background:#fff;
+    border-top: 2px solid var(--brand-primary);
+    z-index: 1000;
+  }
+  .card-footer p{ font-size:8.5pt; margin:0; }
 
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  /* RESERVA DE ESPACIO (para que nada “cuelgue”) */
+  .card-content{
+    /* sin padding lateral aquí; lo damos con márgenes */
+    padding:0;
+    margin:
+      calc(var(--print-header-h) + 4mm)      /* arriba: deja hueco para header */
+      var(--print-side-pad)                  /* laterales */
+      calc(var(--print-footer-h) + 6mm);     /* abajo: deja hueco para footer */
   }
 
-  .card-footer p {
-    font-size: 8.5pt;
-    margin: 0.5mm 0;
-  }
-
-  /* ===== CONTENIDO: reserva espacios de header y footer ===== */
-  .card-content {
-    padding: 0 18mm;
-    margin-top: 30mm;        /* > height del header (24mm) para respirar */
-    margin-bottom: 28mm;     /* > height del footer (20mm) para respirar */
-  }
-
-  .main-title {
-    font-size: 11pt;
-    margin-bottom: 6mm;
-  }
-
-  /* Compactar el bloque de formulario (menos aire entre los campos) */
-  .form-grid {
-    grid-template-columns: 32% 68%;
-    gap: 4mm;
-    margin-bottom: 6mm;
-  }
-
-  .form-label {
-    font-size: 8.5pt;
-    margin-bottom: 1mm;
-  }
-
-  .form-input,
-  .form-textarea,
-  .table-input,
-  .table-textarea {
-    background: transparent;
-    border: 0;
-    padding: 0;
-    font-size: 9.5pt;
-    box-shadow: none;
-  }
-
-  .form-textarea { min-height: auto; }
-
-  /* Fecha: remove ícono calendario y spinners para evitar “cajas” */
-  #dato::-webkit-calendar-picker-indicator,
-  input[type="number"]::-webkit-inner-spin-button {
-    display: none !important;
-  }
-
-  /* ===== TABLA ===== */
-  .data-table {
-    border: 1px solid #ddd;
-    box-shadow: none;
-    margin-top: 6mm;
-  }
-
-  .data-table thead {
-    display: table-header-group;        /* repite encabezado en cada página */
+  /* TABLA: cabecera repetida y cortes seguros */
+  .data-table{ border:1px solid #ddd; box-shadow:none; page-break-inside:auto; }
+  .data-table thead{
+    display: table-header-group;             /* se repite en cada página */
     background: var(--brand) !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
+  .data-table th{
+    color:#fff !important; font-size:9pt; padding:2.5mm;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .data-table tbody{ display: table-row-group; }
+  .data-table tr{ page-break-inside: avoid; }
+  .data-table td{ padding:2mm 3mm; font-size:9.5pt; border-bottom:1px solid #ddd; }
+  .data-table tbody tr:last-child td{ border-bottom:0; } /* que no choque con el footer */
 
-  .data-table th {
-    font-size: 9pt;
-    padding: 2.5mm;
-    color: #fff !important;
-  }
-
-  .data-table tbody tr {
-    page-break-inside: avoid;           /* evita cortar filas */
-  }
-
-  .data-table tbody td {
-    padding: 2mm 3mm;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 9.5pt;
-  }
+  /* Quita UI */
+  .main-actions, .actions-container, .btn-delete, .toast, .required{ display:none !important; }
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="number"]::-webkit-inner-spin-button{ display:none; }
 }
+
     </style>
 </head>
 <body>
