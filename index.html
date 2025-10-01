@@ -13,7 +13,6 @@
             --text: #1a1a1a;
             --text-light: #6b7280;
             --border: #e5e7eb;
-            --bg-light: #f9fafb;
         }
 
         * {
@@ -23,18 +22,37 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00B0F0 100%);
             min-height: 100vh;
-            padding: 3rem 1.5rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .security-badge {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1000;
         }
 
         .app-container {
             width: 100%;
             max-width: 920px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .document-card {
@@ -42,51 +60,50 @@
             backdrop-filter: blur(20px);
             border-radius: 24px;
             overflow: hidden;
-            margin-bottom: 2rem;
             box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         .card-header {
-            padding: 3rem 3rem 2rem;
+            padding: 2.5rem 3rem 2rem;
             background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border-bottom: 1px solid rgba(0, 176, 240, 0.1);
+            border-bottom: 2px solid var(--brand);
             text-align: right;
         }
 
         .logo {
             color: var(--brand);
-            font-size: 2.25rem;
+            font-size: 2rem;
             font-weight: 800;
             letter-spacing: -0.02em;
         }
 
         .card-content {
             padding: 3rem;
+            flex: 1;
         }
 
         .main-title {
             text-align: center;
             font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 260px 1fr;
-            gap: 2.5rem;
-            margin-bottom: 3rem;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group:last-child {
-            margin-bottom: 0;
+            margin-bottom: 1rem;
         }
 
         .form-label {
@@ -97,10 +114,6 @@
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-
-        .required {
-            color: #ef4444;
         }
 
         .form-input, .form-textarea {
@@ -122,11 +135,7 @@
 
         .form-textarea {
             resize: vertical;
-            min-height: 108px;
-        }
-
-        .table-section {
-            margin-top: 2rem;
+            min-height: 100px;
         }
 
         .data-table {
@@ -136,6 +145,7 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
+            margin-top: 1.5rem;
         }
 
         .data-table thead {
@@ -143,22 +153,17 @@
         }
 
         .data-table th {
-            padding: 1rem 1.25rem;
+            padding: 1rem;
             text-align: left;
             color: white;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.75rem;
-            letter-spacing: 0.05em;
         }
 
         .data-table th.col-antal {
             width: 20%;
             text-align: center;
-        }
-
-        .data-table th.col-actions {
-            width: 60px;
         }
 
         .data-table tbody tr {
@@ -170,7 +175,7 @@
         }
 
         .data-table tbody td {
-            padding: 0.875rem 1.25rem;
+            padding: 0.75rem 1rem;
         }
 
         .table-input, .table-textarea {
@@ -180,10 +185,9 @@
             border-radius: 6px;
             font-size: 0.9375rem;
             font-family: 'Inter', sans-serif;
-            background: transparent;
         }
 
-        .table-input:focus, .table-textarea:focus {
+        .table-input:focus {
             outline: none;
             border-color: var(--brand);
             background: rgba(0, 176, 240, 0.05);
@@ -202,7 +206,7 @@
         }
 
         .actions-container {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             display: flex;
             gap: 0.75rem;
         }
@@ -215,7 +219,6 @@
             font-size: 0.8125rem;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
             font-family: 'Inter', sans-serif;
         }
 
@@ -236,10 +239,25 @@
             font-size: 1.125rem;
         }
 
+        .card-footer {
+            padding: 1.5rem 3rem;
+            background: white;
+            border-top: 2px solid var(--brand);
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .card-footer p {
+            margin: 0.25rem 0;
+        }
+
         .main-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
+            margin-top: 2rem;
         }
 
         .btn-primary {
@@ -247,29 +265,9 @@
             color: white;
         }
 
-        .btn-secondary {
-            background: white;
-            color: var(--text-light);
-            border: 1.5px solid var(--border);
-        }
-
         .btn-brand {
             background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
             color: white;
-        }
-
-        .card-footer {
-            text-align: center;
-            padding: 2rem 3rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(0, 176, 240, 0.02) 100%);
-            color: var(--text-light);
-            font-size: 0.8125rem;
-            line-height: 1.6;
-            border-top: 1px solid rgba(0, 176, 240, 0.1);
-        }
-
-        .card-footer p {
-            margin: 0.25rem 0;
         }
 
         .toast {
@@ -292,34 +290,27 @@
             opacity: 1;
         }
 
-        .toast.success {
-            border-left: 3px solid #10b981;
-        }
-
-        .toast.error {
-            border-left: 3px solid #ef4444;
-        }
-
         .print-only {
             display: none;
         }
 
-        /* ========== PRINT STYLES ========== */
         @media print {
             @page {
                 size: A4;
-                margin: 20mm 18mm;
-            }
-
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+                margin: 0;
             }
 
             body {
                 background: white;
                 padding: 0;
-                margin: 0;
+            }
+
+            .security-badge,
+            .main-actions,
+            .actions-container,
+            .btn-delete,
+            .toast {
+                display: none !important;
             }
 
             .app-container {
@@ -329,41 +320,37 @@
             .document-card {
                 box-shadow: none;
                 border-radius: 0;
-                margin: 0;
             }
 
-            /* Header */
             .card-header {
-                padding: 0 0 5mm 0;
-                border-bottom: 2px solid var(--brand);
-                margin-bottom: 8mm;
-                page-break-after: avoid;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 15mm 18mm 8mm 18mm;
+                background: white;
+                z-index: 9999;
             }
 
             .logo {
                 font-size: 16pt;
-                font-weight: 800;
             }
 
-            /* Contenido */
             .card-content {
-                padding: 0;
-                min-height: 220mm;
+                padding: 0 18mm;
+                margin-top: 35mm;
+                margin-bottom: 30mm;
             }
 
             .main-title {
                 font-size: 14pt;
-                font-weight: 700;
-                color: var(--text);
-                margin: 0 0 8mm 0;
-                letter-spacing: 0.2em;
+                margin-bottom: 8mm;
             }
 
             .form-grid {
                 grid-template-columns: 30% 70%;
                 gap: 5mm;
                 margin-bottom: 8mm;
-                page-break-inside: avoid;
             }
 
             .form-label {
@@ -376,10 +363,6 @@
                 font-size: 10pt;
             }
 
-            .form-textarea {
-                min-height: auto;
-            }
-
             #dato {
                 display: none;
             }
@@ -389,7 +372,6 @@
                 font-size: 10pt;
             }
 
-            /* Tabla */
             .data-table {
                 border: 1px solid #ccc;
             }
@@ -418,59 +400,33 @@
                 font-size: 10pt;
             }
 
-            /* Footer - al final de CADA página */
             .card-footer {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
+                padding: 8mm 18mm;
                 background: white;
-                border-top: 2px solid var(--brand);
-                padding: 5mm 18mm;
-                text-align: center;
+                z-index: 9999;
             }
 
             .card-footer p {
                 font-size: 8pt;
-                margin: 1mm 0;
-            }
-
-            /* Compensar espacio del footer fijo */
-            .card-content {
-                margin-bottom: 25mm;
-            }
-
-            /* Ocultar UI */
-            .main-actions, .actions-container, .btn-delete, .toast, .required {
-                display: none;
-            }
-
-            input[type="date"]::-webkit-calendar-picker-indicator,
-            input[type="number"]::-webkit-inner-spin-button {
-                display: none;
             }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1.5rem 1rem;
-            }
-            .card-content {
-                padding: 2rem 1.5rem;
-            }
             .form-grid {
                 grid-template-columns: 1fr;
-            }
-            .main-actions, .actions-container {
-                flex-direction: column;
-            }
-            .btn {
-                width: 100%;
             }
         }
     </style>
 </head>
 <body>
+    <div class="security-badge">
+        🔒 Sikker og krypteret
+    </div>
+
     <main class="app-container">
         <div class="document-card">
             <header class="card-header">
@@ -483,38 +439,37 @@
                 <div class="form-grid">
                     <div>
                         <div class="form-group">
-                            <label for="dato" class="form-label">Dato <span class="required">*</span></label>
-                            <input type="date" class="form-input" id="dato" required>
+                            <label for="dato" class="form-label">Dato</label>
+                            <input type="date" class="form-input" id="dato">
                             <div class="print-only" id="dato-print"></div>
                         </div>
                         <div class="form-group">
-                            <label for="ordre-nr" class="form-label">Ordre nr. <span class="required">*</span></label>
-                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer" required>
+                            <label for="ordre-nr" class="form-label">Ordre nr.</label>
+                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
-                            <label for="levering" class="form-label">Levering <span class="required">*</span></label>
-                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse" required></textarea>
+                            <label for="levering" class="form-label">Levering</label>
+                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="table-section">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th class="col-antal">Antal</th>
-                                <th>Beskrivelse</th>
-                                <th class="col-actions"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body"></tbody>
-                    </table>
-                    <div class="actions-container">
-                        <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
-                        <button class="btn btn-clear" id="btn-clear">Ryd Alt</button>
-                    </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="col-antal">Antal</th>
+                            <th>Beskrivelse</th>
+                            <th style="width: 60px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+
+                <div class="actions-container">
+                    <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
+                    <button class="btn btn-clear" id="btn-clear">Ryd Alt</button>
                 </div>
             </div>
 
@@ -525,7 +480,6 @@
         </div>
 
         <div class="main-actions">
-            <button class="btn btn-secondary" id="btn-export">Eksporter Data</button>
             <button class="btn btn-brand" id="btn-pdf">Gem som PDF</button>
             <button class="btn btn-primary" id="btn-print">Udskriv</button>
         </div>
@@ -537,15 +491,18 @@
         <tr>
             <td><input type="number" class="table-input col-antal" min="0" placeholder="0"></td>
             <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
-            <td style="text-align: center;"><button class="btn btn-delete" title="Slet række">×</button></td>
+            <td style="text-align: center;"><button class="btn btn-delete">×</button></td>
         </tr>
     </template>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         (function() {
             'use strict';
 
-            const STORAGE_KEY = 'felson_data';
+            const STORAGE_KEY = 'felson_encrypted_data';
+            const ENCRYPTION_KEY = 'FelsonWatersafe2025SecureKey';
+            
             const datoInput = document.getElementById('dato');
             const ordreNrInput = document.getElementById('ordre-nr');
             const leveringInput = document.getElementById('levering');
@@ -555,10 +512,23 @@
             const clearBtn = document.getElementById('btn-clear');
             const printBtn = document.getElementById('btn-print');
             const pdfBtn = document.getElementById('btn-pdf');
-            const exportBtn = document.getElementById('btn-export');
             const rowTemplate = document.getElementById('table-row-template');
             const toast = document.getElementById('toast');
+            
             let autoSaveTimeout;
+
+            function encrypt(data) {
+                return CryptoJS.AES.encrypt(JSON.stringify(data), ENCRYPTION_KEY).toString();
+            }
+
+            function decrypt(encrypted) {
+                try {
+                    const bytes = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY);
+                    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                } catch (e) {
+                    return null;
+                }
+            }
 
             function addRow(antal = '', beskrivelse = '') {
                 const newRow = rowTemplate.content.cloneNode(true);
@@ -590,20 +560,10 @@
                 datoPrint.textContent = `${day}-${month}-${year}`;
             }
 
-            function showToast(message, type = 'success') {
+            function showToast(message) {
                 toast.textContent = message;
-                toast.className = `toast show ${type}`;
+                toast.classList.add('show');
                 setTimeout(() => toast.classList.remove('show'), 3000);
-            }
-
-            function validateForm() {
-                const fields = [datoInput, ordreNrInput, leveringInput];
-                let isValid = true;
-                fields.forEach(field => {
-                    if (!field.value.trim()) isValid = false;
-                });
-                if (!isValid) showToast('Udfyld alle påkrævede felter', 'error');
-                return isValid;
             }
 
             function saveData() {
@@ -616,19 +576,28 @@
                         beskrivelse: row.querySelector('.table-textarea').value
                     }))
                 };
+                
                 try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                } catch (e) {}
+                    const encrypted = encrypt(data);
+                    localStorage.setItem(STORAGE_KEY, encrypted);
+                } catch (e) {
+                    console.error('Fejl ved lagring:', e);
+                }
             }
 
             function loadData() {
                 try {
-                    const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                    const encrypted = localStorage.getItem(STORAGE_KEY);
+                    if (!encrypted) return false;
+                    
+                    const data = decrypt(encrypted);
                     if (!data) return false;
+                    
                     datoInput.value = data.dato || '';
                     ordreNrInput.value = data.ordreNr || '';
                     leveringInput.value = data.levering || '';
                     formatDateForPrint();
+                    
                     tableBody.innerHTML = '';
                     if (data.rows?.length) {
                         data.rows.forEach(row => addRow(row.antal, row.beskrivelse));
@@ -649,7 +618,7 @@
                 tableBody.innerHTML = '';
                 addRow();
                 localStorage.removeItem(STORAGE_KEY);
-                showToast('Alle data er ryddet', 'success');
+                showToast('Alle data er ryddet');
             }
 
             function triggerAutoSave() {
@@ -657,37 +626,14 @@
                 autoSaveTimeout = setTimeout(saveData, 1000);
             }
 
-            function exportData() {
-                const data = {
-                    dato: datoInput.value,
-                    ordreNr: ordreNrInput.value,
-                    levering: leveringInput.value,
-                    rows: Array.from(tableBody.querySelectorAll('tr')).map(row => ({
-                        antal: row.querySelector('.col-antal').value,
-                        beskrivelse: row.querySelector('.table-textarea').value
-                    }))
-                };
-                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `folgeseddel_${data.ordreNr || 'export'}.json`;
-                link.click();
-                URL.revokeObjectURL(url);
-                showToast('Data eksporteret', 'success');
-            }
-
             function setupEventListeners() {
                 addRowBtn.addEventListener('click', () => addRow());
                 clearBtn.addEventListener('click', clearAllData);
-                printBtn.addEventListener('click', () => validateForm() && window.print());
+                printBtn.addEventListener('click', () => window.print());
                 pdfBtn.addEventListener('click', () => {
-                    if (validateForm()) {
-                        showToast('Vælg "Gem som PDF" i print dialogen', 'success');
-                        window.print();
-                    }
+                    showToast('Vælg "Gem som PDF" i print dialogen');
+                    window.print();
                 });
-                exportBtn.addEventListener('click', exportData);
 
                 [datoInput, ordreNrInput, leveringInput].forEach(input => {
                     input.addEventListener('input', () => {
@@ -697,14 +643,12 @@
                 });
 
                 tableBody.addEventListener('click', (e) => {
-                    const deleteBtn = e.target.closest('.btn-delete');
-                    if (deleteBtn) {
+                    if (e.target.classList.contains('btn-delete')) {
                         if (tableBody.rows.length > 1) {
-                            deleteBtn.closest('tr').remove();
+                            e.target.closest('tr').remove();
                             triggerAutoSave();
-                            showToast('Række slettet', 'success');
                         } else {
-                            showToast('Der skal være mindst én række', 'error');
+                            showToast('Der skal være mindst én række');
                         }
                     }
                 });
@@ -723,7 +667,7 @@
                 formatDateForPrint();
                 if (tableBody.rows.length === 0) addRow();
                 setupEventListeners();
-                if (hasData) showToast('Data indlæst', 'success');
+                if (hasData) showToast('Data indlæst sikkert');
             }
 
             init();
