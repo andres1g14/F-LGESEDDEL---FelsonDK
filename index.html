@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
         :root {
             --brand: #00B0F0;
@@ -245,7 +245,7 @@
             font-size: 0.8125rem;
             color: var(--text-light);
             line-height: 1.6;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .card-footer p {
@@ -465,7 +465,7 @@
             .main-title {
                 font-size: 12pt !important;
                 margin-bottom: 5mm !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .form-grid {
@@ -476,14 +476,14 @@
 
             .form-label {
                 font-size: 8pt !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .form-input, .form-textarea {
                 border: none !important;
                 padding: 0 !important;
                 font-size: 9pt !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .data-table {
@@ -500,7 +500,7 @@
                 font-size: 8pt !important;
                 padding: 2mm !important;
                 background: var(--brand) !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .data-table tbody tr {
@@ -510,14 +510,14 @@
             .data-table tbody td {
                 padding: 2mm !important;
                 font-size: 9pt !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .table-input, .table-textarea {
                 border: none !important;
                 padding: 0 !important;
                 font-size: 9pt !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             /* Footer approach - fixed at bottom of every page */
@@ -532,13 +532,13 @@
                 text-align: center;
                 z-index: 9999;
                 page-break-inside: avoid !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .card-footer p {
                 font-size: 7pt !important;
                 margin: 0.5mm 0 !important;
-                font-family: 'Roboto', sans-serif !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             /* Alternative: add page number */
@@ -781,122 +781,188 @@
                 
                 let currentY = margin;
                 let pageNumber = 1;
+                let isFirstPage = true;
 
                 function drawHeader() {
+                    // Gradiente superior (simulado con rectángulo)
                     doc.setFillColor(0, 176, 240);
-                    doc.rect(0, 0, pageWidth, 2, 'F');
-                    doc.setFontSize(16);
+                    doc.rect(0, 0, pageWidth, 3, 'F');
+                    
+                    // Logo con sombra efecto
+                    doc.setFontSize(18);
                     doc.setTextColor(0, 176, 240);
                     doc.setFont('helvetica', 'bold');
-                    doc.text('Felson Watersafe ApS', pageWidth - margin, 15, { align: 'right' });
+                    doc.text('Felson Watersafe ApS', pageWidth - margin, 16, { align: 'right' });
+                    
+                    // Línea decorativa
+                    doc.setDrawColor(0, 176, 240);
+                    doc.setLineWidth(0.5);
+                    doc.line(margin, 20, pageWidth - margin, 20);
+                }
+
+                function drawCompanyInfo() {
+                    // Box con información de la empresa - solo primera página
+                    doc.setFillColor(245, 250, 255); // Azul muy claro
+                    doc.roundedRect(margin, currentY, 70, 25, 2, 2, 'F');
+                    
+                    doc.setFontSize(7);
+                    doc.setTextColor(60, 60, 60);
+                    doc.setFont('helvetica', 'normal');
+                    
+                    const infoY = currentY + 4;
+                    doc.text('Felson Watersafe ApS', margin + 3, infoY);
+                    doc.text('Gartnervej 4', margin + 3, infoY + 4);
+                    doc.text('6710 Esbjerg V', margin + 3, infoY + 8);
+                    doc.text('CVR-nr. DK26813522', margin + 3, infoY + 12);
+                    doc.text('Tlf. 70206676', margin + 3, infoY + 16);
+                    doc.text('felson@felson.dk', margin + 3, infoY + 20);
+                    
+                    currentY += 28;
                 }
 
                 function drawFooter() {
                     const footerY = pageHeight - 20;
-                    doc.setFillColor(0, 176, 240);
-                    doc.rect(0, footerY - 5, pageWidth, 2, 'F');
-                    doc.setFontSize(8);
+                    
+                    // Línea decorativa superior
+                    doc.setDrawColor(0, 176, 240);
+                    doc.setLineWidth(0.5);
+                    doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
+                    
+                    // Gradiente inferior (simulado)
+                    doc.setFillColor(240, 248, 255);
+                    doc.rect(0, footerY - 3, pageWidth, 1, 'F');
+                    
+                    doc.setFontSize(7);
                     doc.setTextColor(100);
                     doc.setFont('helvetica', 'normal');
                     doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', pageWidth / 2, footerY, { align: 'center' });
-                    doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', pageWidth / 2, footerY + 5, { align: 'center' });
-                    doc.setFontSize(9);
-                    doc.setTextColor(120);
-                    doc.text(`Side ${pageNumber}`, margin, footerY + 5);
+                    doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', pageWidth / 2, footerY + 4, { align: 'center' });
+                    
+                    // Número de página con estilo
+                    doc.setFillColor(0, 176, 240);
+                    doc.roundedRect(margin - 2, footerY - 2, 15, 6, 1, 1, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(8);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`Side ${pageNumber}`, margin + 5.5, footerY + 2, { align: 'center' });
                 }
 
                 function addNewPage() {
                     drawFooter();
                     doc.addPage();
                     pageNumber++;
+                    isFirstPage = false;
                     currentY = margin;
                     drawHeader();
                     currentY = 25;
                 }
 
+                // Primera página
                 drawHeader();
                 currentY = 25;
+                
+                // Info de empresa en primera página
+                drawCompanyInfo();
 
+                // Título con efecto moderno
+                doc.setFillColor(0, 176, 240);
+                doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 10, 2, 2, 'F');
                 doc.setFontSize(14);
-                doc.setTextColor(0);
+                doc.setTextColor(255, 255, 255);
                 doc.setFont('helvetica', 'bold');
-                doc.text('FØLGESEDDEL', pageWidth / 2, currentY, { align: 'center' });
-                currentY += 12;
+                doc.text('FØLGESEDDEL', pageWidth / 2, currentY + 6.5, { align: 'center' });
+                currentY += 14;
 
                 const datoInput = document.getElementById('dato');
                 const ordreNrInput = document.getElementById('ordre-nr');
                 const leveringInput = document.getElementById('levering');
 
-                doc.setFontSize(9);
-                doc.setFont('helvetica', 'bold');
-                doc.text('DATO', margin, currentY);
-                doc.text('LEVERING', pageWidth / 2, currentY);
+                // Sección de datos con fondo
+                doc.setFillColor(250, 250, 250);
+                doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 26, 2, 2, 'F');
                 
-                doc.setFontSize(10);
+                currentY += 4;
+                doc.setFontSize(8);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(0, 176, 240);
+                doc.text('DATO', margin + 3, currentY);
+                doc.text('LEVERING', pageWidth / 2 + 5, currentY);
+                
+                doc.setFontSize(9);
+                doc.setTextColor(40, 40, 40);
                 doc.setFont('helvetica', 'normal');
                 const fecha = datoInput.value ? new Date(datoInput.value + 'T00:00:00').toLocaleDateString('da-DK') : '';
-                doc.text(fecha, margin, currentY + 6);
+                doc.text(fecha, margin + 3, currentY + 5);
                 
-                const leveringLines = doc.splitTextToSize(leveringInput.value || '', pageWidth / 2 - 25);
-                doc.text(leveringLines, pageWidth / 2, currentY + 6);
+                const leveringLines = doc.splitTextToSize(leveringInput.value || '', pageWidth / 2 - 30);
+                doc.text(leveringLines, pageWidth / 2 + 5, currentY + 5);
 
-                doc.setFontSize(9);
+                doc.setFontSize(8);
                 doc.setFont('helvetica', 'bold');
-                doc.text('ORDRE NR.', margin, currentY + 10);
-                doc.setFontSize(10);
+                doc.setTextColor(0, 176, 240);
+                doc.text('ORDRE NR.', margin + 3, currentY + 10);
+                doc.setFontSize(9);
+                doc.setTextColor(40, 40, 40);
                 doc.setFont('helvetica', 'normal');
-                doc.text(ordreNrInput.value || '', margin, currentY + 16);
+                doc.text(ordreNrInput.value || '', margin + 3, currentY + 15);
                 
-                currentY += Math.max(22, leveringLines.length * 5 + 12);
+                currentY += Math.max(24, leveringLines.length * 5 + 16);
 
+                // Tabla con efecto moderno
                 doc.setFillColor(0, 176, 240);
-                doc.rect(margin, currentY, pageWidth - 2 * margin, 8, 'F');
+                doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 9, 2, 2, 'F');
                 doc.setTextColor(255);
                 doc.setFont('helvetica', 'bold');
-                doc.setFontSize(9);
-                doc.text('ANTAL', margin + 5, currentY + 5);
-                doc.text('BESKRIVELSE', margin + 35, currentY + 5);
-                currentY += 10;
+                doc.setFontSize(8);
+                doc.text('ANTAL', margin + 5, currentY + 6);
+                doc.text('BESKRIVELSE', margin + 35, currentY + 6);
+                currentY += 11;
 
                 const tableBody = document.getElementById('table-body');
                 const rows = Array.from(tableBody.querySelectorAll('tr'));
-                doc.setTextColor(0);
+                doc.setTextColor(40, 40, 40);
                 doc.setFont('helvetica', 'normal');
-                doc.setFontSize(10);
+                doc.setFontSize(9);
 
-                rows.forEach((row) => {
+                rows.forEach((row, index) => {
                     const antal = row.querySelector('.col-antal').value || '0';
                     const beskrivelse = row.querySelector('.table-textarea').value || '';
                     
                     const beskrivelseLines = doc.splitTextToSize(beskrivelse, pageWidth - margin - 45);
-                    const rowHeight = Math.max(6, beskrivelseLines.length * 5);
+                    const rowHeight = Math.max(7, beskrivelseLines.length * 5);
 
                     if (currentY + rowHeight > usableHeight) {
                         addNewPage();
                         
+                        // Re-dibujar header de tabla
                         doc.setFillColor(0, 176, 240);
-                        doc.rect(margin, currentY, pageWidth - 2 * margin, 8, 'F');
+                        doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 9, 2, 2, 'F');
                         doc.setTextColor(255);
                         doc.setFont('helvetica', 'bold');
-                        doc.setFontSize(9);
-                        doc.text('ANTAL', margin + 5, currentY + 5);
-                        doc.text('BESKRIVELSE', margin + 35, currentY + 5);
-                        currentY += 10;
-                        doc.setTextColor(0);
+                        doc.setFontSize(8);
+                        doc.text('ANTAL', margin + 5, currentY + 6);
+                        doc.text('BESKRIVELSE', margin + 35, currentY + 6);
+                        currentY += 11;
+                        doc.setTextColor(40, 40, 40);
                         doc.setFont('helvetica', 'normal');
-                        doc.setFontSize(10);
+                        doc.setFontSize(9);
+                    }
+
+                    // Fila con fondo alternado
+                    if (index % 2 === 0) {
+                        doc.setFillColor(248, 250, 252);
+                        doc.rect(margin, currentY - 1, pageWidth - 2 * margin, rowHeight, 'F');
                     }
 
                     doc.setTextColor(0, 176, 240);
                     doc.setFont('helvetica', 'bold');
-                    doc.setFontSize(10);
                     doc.text(antal, margin + 15, currentY + 4, { align: 'center' });
-                    doc.setTextColor(0);
+                    doc.setTextColor(40, 40, 40);
                     doc.setFont('helvetica', 'normal');
-                    doc.setFontSize(10);
                     doc.text(beskrivelseLines, margin + 35, currentY + 4);
                     
-                    doc.setDrawColor(200);
+                    doc.setDrawColor(220, 220, 220);
+                    doc.setLineWidth(0.2);
                     doc.line(margin, currentY + rowHeight, pageWidth - margin, currentY + rowHeight);
                     
                     currentY += rowHeight + 1;
