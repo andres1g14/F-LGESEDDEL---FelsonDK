@@ -395,82 +395,50 @@
             color: white;
         }
 
-       @media print {
-  /* --- medidas consistentes en mm --- */
-  :root{
-    --print-header-h: 26mm;
-    --print-footer-h: 20mm;
-    --print-side-pad: 18mm;
-  }
+     @media print {
+    /* Footer fijo */
+    .card-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 25mm; /* espacio reservado */
+        background: white;
+        border-top: 2px solid var(--brand);
+        padding: 6mm 18mm;
+        text-align: center;
+        box-sizing: border-box;
+    }
 
-  html, body { margin:0; padding:0; height:100%; background:#fff; }
-  @page { size: A4 portrait; margin:0; }
+    .card-footer p {
+        font-size: 8pt;
+        margin: 2mm 0;
+    }
 
-  .app-container{ max-width:100%; }
+    /* Deja espacio para el footer en el contenido */
+    .card-content {
+        margin-bottom: 30mm; /* mismo o un poco más que height del footer */
+    }
 
-  .document-card{
-    box-shadow:none; border-radius:0; margin:0;
-    /* permite que el contenido fluya entre páginas */
-    page-break-after: auto;
-  }
+    /* Header fijo */
+    .card-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 2px solid var(--brand);
+        padding: 8mm 18mm;
+        text-align: right;
+        height: 20mm;
+        box-sizing: border-box;
+    }
 
-  /* HEADER FIJO (ya lo tenías, lo dejo completo) */
-  .card-header{
-    position: fixed;
-    top:0; left:0; right:0;
-    height: var(--print-header-h);
-    padding: 10mm var(--print-side-pad) 6mm;
-    background:#fff;
-    border-bottom: 2px solid var(--brand-primary);
-    z-index: 1000;
-  }
-  .card-header::before{ display:none; }
-  .logo{ font-size:18pt; text-align:right; }
-  .logo::after{ display:none; }
-
-  /* FOOTER FIJO EN TODAS LAS PÁGINAS */
-  .card-footer{
-    position: fixed;
-    bottom:0; left:0; right:0;
-    height: var(--print-footer-h);
-    padding: 5mm var(--print-side-pad);
-    background:#fff;
-    border-top: 2px solid var(--brand-primary);
-    z-index: 1000;
-  }
-  .card-footer p{ font-size:8.5pt; margin:0; }
-
-  /* RESERVA DE ESPACIO (para que nada “cuelgue”) */
-  .card-content{
-    /* sin padding lateral aquí; lo damos con márgenes */
-    padding:0;
-    margin:
-      calc(var(--print-header-h) + 4mm)      /* arriba: deja hueco para header */
-      var(--print-side-pad)                  /* laterales */
-      calc(var(--print-footer-h) + 6mm);     /* abajo: deja hueco para footer */
-  }
-
-  /* TABLA: cabecera repetida y cortes seguros */
-  .data-table{ border:1px solid #ddd; box-shadow:none; page-break-inside:auto; }
-  .data-table thead{
-    display: table-header-group;             /* se repite en cada página */
-    background: var(--brand) !important;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  }
-  .data-table th{
-    color:#fff !important; font-size:9pt; padding:2.5mm;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  }
-  .data-table tbody{ display: table-row-group; }
-  .data-table tr{ page-break-inside: avoid; }
-  .data-table td{ padding:2mm 3mm; font-size:9.5pt; border-bottom:1px solid #ddd; }
-  .data-table tbody tr:last-child td{ border-bottom:0; } /* que no choque con el footer */
-
-  /* Quita UI */
-  .main-actions, .actions-container, .btn-delete, .toast, .required{ display:none !important; }
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="number"]::-webkit-inner-spin-button{ display:none; }
+    .card-content {
+        margin-top: 28mm; /* deja espacio para header */
+    }
 }
+
 
     </style>
 </head>
