@@ -395,6 +395,135 @@
             color: white;
         }
 
+        @media print {
+            body, html {
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .security-badge,
+            .main-actions,
+            .actions-container,
+            .btn-delete,
+            .toast,
+            .security-modal {
+                display: none !important;
+            }
+
+            .app-container {
+                max-width: 100%;
+            }
+
+            .document-card {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                page-break-after: always;
+            }
+
+            .card-header {
+                padding: 15mm 20mm 8mm 20mm;
+                border-bottom: 2px solid var(--brand);
+            }
+
+            .logo {
+                font-size: 18pt;
+            }
+
+            .card-content {
+                padding: 10mm 20mm;
+            }
+
+            .main-title {
+                font-size: 16pt;
+                margin-bottom: 8mm;
+            }
+
+            .form-grid {
+                grid-template-columns: 30% 70%;
+                gap: 8mm;
+                margin-bottom: 6mm;
+            }
+
+            .form-group {
+                margin-bottom: 0;
+            }
+
+            .form-group[style*="margin-bottom"] {
+                margin-bottom: 6mm !important;
+            }
+
+            .form-label {
+                font-size: 9pt;
+                font-weight: 700;
+                margin-bottom: 2mm;
+            }
+
+            .form-input,
+            .form-textarea {
+                border: none;
+                padding: 0;
+                font-size: 10pt;
+                color: #000;
+            }
+
+            .form-input[style*="max-width"] {
+                max-width: 100% !important;
+            }
+
+            .form-textarea {
+                min-height: auto;
+            }
+
+            .data-table {
+                border: 1px solid #ccc;
+                margin-top: 8mm;
+            }
+
+            .data-table thead {
+                display: table-header-group;
+                background: var(--brand) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .data-table th {
+                font-size: 9pt;
+                padding: 3mm;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .data-table tbody tr {
+                page-break-inside: avoid;
+            }
+
+            .data-table tbody td {
+                padding: 2.5mm 3mm;
+                font-size: 10pt;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .table-input,
+            .table-textarea {
+                border: none;
+                padding: 0;
+                font-size: 10pt;
+            }
+
+            .card-footer {
+                padding: 8mm 20mm;
+                border-top: 2px solid var(--brand);
+                page-break-inside: avoid;
+            }
+
+            .card-footer p {
+                font-size: 8pt;
+            }
+        }
+
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
@@ -420,18 +549,17 @@
                             <label for="dato" class="form-label">Dato</label>
                             <input type="date" class="form-input" id="dato">
                         </div>
+                        <div class="form-group">
+                            <label for="ordre-nr" class="form-label">Ordre nr.</label>
+                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+                        </div>
                     </div>
                     <div>
                         <div class="form-group">
                             <label for="levering" class="form-label">Levering</label>
-                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
+                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse" style="min-height: 90px;"></textarea>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 2.5rem;">
-                    <label for="ordre-nr" class="form-label">Ordre nr.</label>
-                    <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer" style="max-width: 300px;">
                 </div>
 
                 <table class="data-table">
@@ -660,15 +788,13 @@
                 
                 const leveringLines = doc.splitTextToSize(leveringInput.value || '', pageWidth / 2 - 25);
                 doc.text(leveringLines, pageWidth / 2, currentY + 6);
-                
-                currentY += Math.max(12, leveringLines.length * 5 + 8);
 
                 doc.setFont('helvetica', 'bold');
-                doc.text('ORDRE NR.', margin, currentY);
+                doc.text('ORDRE NR.', margin, currentY + 10);
                 doc.setFont('helvetica', 'normal');
-                doc.text(ordreNrInput.value || '', margin, currentY + 6);
+                doc.text(ordreNrInput.value || '', margin, currentY + 16);
                 
-                currentY += 12;
+                currentY += Math.max(22, leveringLines.length * 5 + 12);
 
                 // Tabla
                 doc.setFillColor(0, 176, 240);
