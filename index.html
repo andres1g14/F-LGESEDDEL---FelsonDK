@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
 
         :root {
             --brand: #00B0F0;
@@ -245,6 +245,7 @@
             font-size: 0.8125rem;
             color: var(--text-light);
             line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
         }
 
         .card-footer p {
@@ -405,7 +406,14 @@
         @media print {
             @page {
                 size: A4;
-                margin: 20mm;
+                margin-top: 20mm;
+                margin-bottom: 30mm;
+                margin-left: 15mm;
+                margin-right: 15mm;
+                
+                @bottom-center {
+                    content: element(footer);
+                }
             }
 
             * {
@@ -436,6 +444,8 @@
                 box-shadow: none !important;
                 border-radius: 0 !important;
                 margin: 0 !important;
+                position: relative !important;
+                min-height: 100vh;
             }
 
             .card-header {
@@ -455,6 +465,7 @@
             .main-title {
                 font-size: 12pt !important;
                 margin-bottom: 5mm !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
             .form-grid {
@@ -465,17 +476,20 @@
 
             .form-label {
                 font-size: 8pt !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
             .form-input, .form-textarea {
                 border: none !important;
                 padding: 0 !important;
                 font-size: 9pt !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
             .data-table {
                 border: 1px solid #ccc !important;
                 margin-top: 5mm !important;
+                margin-bottom: 15mm !important;
             }
 
             .data-table thead {
@@ -486,6 +500,7 @@
                 font-size: 8pt !important;
                 padding: 2mm !important;
                 background: var(--brand) !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
             .data-table tbody tr {
@@ -495,25 +510,45 @@
             .data-table tbody td {
                 padding: 2mm !important;
                 font-size: 9pt !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
             .table-input, .table-textarea {
                 border: none !important;
                 padding: 0 !important;
                 font-size: 9pt !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
+            /* Footer approach - fixed at bottom of every page */
             .card-footer {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                padding: 5mm 20mm !important;
+                padding: 5mm 15mm !important;
+                background: white !important;
+                border-top: 2px solid var(--brand) !important;
+                text-align: center;
+                z-index: 9999;
                 page-break-inside: avoid !important;
+                font-family: 'Roboto', sans-serif !important;
             }
 
             .card-footer p {
                 font-size: 7pt !important;
+                margin: 0.5mm 0 !important;
+                font-family: 'Roboto', sans-serif !important;
+            }
+
+            /* Alternative: add page number */
+            .card-footer::after {
+                content: counter(page);
+                position: absolute;
+                left: 15mm;
+                bottom: 5mm;
+                font-size: 8pt;
+                color: #666;
             }
 
             input::-webkit-calendar-picker-indicator,
