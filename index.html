@@ -484,6 +484,35 @@
   .data-table td{
     padding:2mm 3mm !important; border-bottom:1px solid #e5e7eb !important; font-size:10pt !important;
   }
+@media print {
+  :root {
+    /* Alturas reales del header/footer impresos */
+    --print-header: 24mm;
+    --print-footer: 22mm;
+  }
+
+  /* Nada de márgenes del navegador */
+  @page { size: A4 portrait; margin: 0; }
+
+  /* Reserva de espacio arriba y abajo para que el contenido no se meta debajo */
+  .app-container,
+  .card-content,
+  main.app-container {
+    /* Deja holgura suficiente para borde + texto del footer */
+    margin-top: calc(var(--print-header) + 6mm) !important;
+    margin-bottom: calc(var(--print-footer) + 6mm) !important;
+    box-sizing: border-box;
+  }
+
+  /* Evita cortes raros en la tabla y separa un pelín del borde inferior */
+  .data-table { break-inside: auto; page-break-inside: auto; margin-bottom: 4mm; }
+  .data-table tr,
+  .data-table tbody tr { break-inside: avoid; page-break-inside: avoid; }
+  .data-table thead { display: table-header-group; }
+
+  /* El footer y el header siguen fijos */
+  .print-header-fixed { position: fixed; top: 0; left: 0; right: 0; height: var(--print-header); }
+  .print-footer-fixed { position: fixed; bottom: 0; left: 0; right: 0; height: var(--print-footer); }
 }
 
     </style>
