@@ -395,27 +395,35 @@
             color: white;
         }
 
- @media print {
-  /* Fondo 100% blanco y sin efectos */
-  html, body, .app-container, .document-card, .card-content {
-    background: #ffffff !important;
-  }
-  * {
-    box-shadow: none !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-    border-radius: 0 !important;
+/* ===== PRINT: reemplaza todo tu @media print por esto ===== */
+@media print {
+  /* --- 0) Variables de medida para no fallar con el espacio --- */
+  :root{
+    --print-header-h: 24mm;   /* alto header fijo */
+    --print-footer-h: 22mm;   /* alto footer fijo */
+    --print-pad-lr: 18mm;     /* padding laterales de la zona de contenido */
   }
 
-  /* Ocultar TODO lo no imprimible (añadimos selectores extra) */
+  /* --- 1) Página en blanco, sin gradientes ni sombras --- */
+  @page { size: A4 portrait; margin: 0; }
+  html, body, .app-container, .document-card, .card-content {
+    background: #fff !important;
+  }
+  body::before { display: none !important; }                /* mata el overlay decorativo */
+  * {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+
+  /* --- 2) Oculta todo lo no imprimible y cualquier “resto” UI --- */
   .main-actions,
-  .actions-container,
-  .actions-container *,
+  .actions-container, .actions-container * ,
   .btn-delete,
   .toast,
   .security-badge,
-  .security-modal,
-  .security-modal *,
+  .security-modal, .security-modal * ,
   [data-nonprint],
   .print-hint {
     display: none !important;
@@ -426,35 +434,88 @@
     overflow: hidden !important;
   }
 
-  /* Header/ Footer fijos + espacio reservado */
-  .card-header {
+  /* --- 3) Header/ footer fijos + reserva de espacio en el contenido --- */
+  .document-card {               /* tu “página” */
+    margin: 0 !important;
+    border: 0 !important;
+    page-break-after: always;    /* cada document-card imprime como páginas continuas */
+  }
+
+  .card-header{
     position: fixed;
     top: 0; left: 0; right: 0;
+    height: var(--print-header-h);
+    padding: 10mm var(--print-pad-lr) 6mm;
     background: #fff !important;
-    border-bottom: 2px solid var(--brand);
-    padding: 8mm 18mm;
-    height: 20mm; box-sizing: border-box;
+    border-bottom: 2px solid var(--brand) !important;
+    box-sizing: border-box;
+    display: flex; justify-content: flex-end; align-items: center;
   }
-  .card-footer {
+  .card-header::before{ display:none !important; }  /* quita la línea animada */
+  .logo{ font-size: 18pt !important; text-align: right; }
+
+  .card-footer{
     position: fixed;
     bottom: 0; left: 0; right: 0;
+    height: var(--print-footer-h);
+    padding: 6mm var(--print-pad-lr);
     background: #fff !important;
-    border-top: 2px solid var(--brand);
-    padding: 6mm 18mm;
-    height: 22mm; box-sizing: border-box;
+    border-top: 2px solid var(--brand) !important;
+    box-sizing: border-box;
     text-align: center;
   }
-  /* Dejar hueco para header y footer en el contenido */
-  .card-content { margin-top: 28mm; margin-bottom: 28mm; }
+  .card-footer p{ font-size: 8.5pt !important; margin: 0.5mm 0; }
 
-  /* Cabecera de tabla se repite por página */
-  .data-table thead { display: table-header-group; }
+  /* deja un “hueco” real para que nada invada header/ footer */
+  .card-content{
+    margin-top: calc(var(--print-header-h) + 6mm);
+    margin-bottom: calc(var(--print-footer-h) + 6mm);
+    padding: 0 var(--print-pad-lr) !important;
+  }
 
-  /* Evitar que filas queden partidas raro */
-  .data-table tbody tr { break-inside: avoid; page-break-inside: avoid; }
+  /* --- 4) Campos y etiquetas en modo tinta --- */
+  .form-label{ font-weight: 700; font-size: 9pt !important; margin-bottom: 2mm; }
+  .form-input, .form-textarea, .table-input, .table-textarea{
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    font-size: 10pt !important;
+    box-shadow: none !important;
+  }
+  #dato::-webkit-calendar-picker-indicator,
+  input[type="number"]::-webkit-inner-spin-button{
+    display:none !important;
+  }
+
+  /* --- 5) Tabla amigable para impresión --- */
+  .data-table{
+    border: 1px solid #ddd !important;
+    width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    page-break-inside: auto;
+  }
+  .data-table thead{
+    display: table-header-group; /* repite cabecera en cada página */
+    -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+    background: var(--brand) !important;
+  }
+  .data-table th{
+    color: #fff !important;
+    padding: 2.5mm !important;
+    font-size: 9pt !important;
+  }
+  .data-table tbody tr{
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .data-table td{
+    padding: 2mm 3mm !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    font-size: 10pt !important;
+  }
 }
-
-
     </style>
 </head>
 <body>
