@@ -395,48 +395,63 @@
             color: white;
         }
 
-     @media print {
-    /* Footer fijo */
-    .card-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 25mm; /* espacio reservado */
-        background: white;
-        border-top: 2px solid var(--brand);
-        padding: 6mm 18mm;
-        text-align: center;
-        box-sizing: border-box;
-    }
+ @media print {
+  /* Fondo 100% blanco y sin efectos */
+  html, body, .app-container, .document-card, .card-content {
+    background: #ffffff !important;
+  }
+  * {
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    border-radius: 0 !important;
+  }
 
-    .card-footer p {
-        font-size: 8pt;
-        margin: 2mm 0;
-    }
+  /* Ocultar TODO lo no imprimible (añadimos selectores extra) */
+  .main-actions,
+  .actions-container,
+  .actions-container *,
+  .btn-delete,
+  .toast,
+  .security-badge,
+  .security-modal,
+  .security-modal *,
+  [data-nonprint],
+  .print-hint {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
 
-    /* Deja espacio para el footer en el contenido */
-    .card-content {
-        margin-bottom: 30mm; /* mismo o un poco más que height del footer */
-    }
+  /* Header/ Footer fijos + espacio reservado */
+  .card-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #fff !important;
+    border-bottom: 2px solid var(--brand);
+    padding: 8mm 18mm;
+    height: 20mm; box-sizing: border-box;
+  }
+  .card-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff !important;
+    border-top: 2px solid var(--brand);
+    padding: 6mm 18mm;
+    height: 22mm; box-sizing: border-box;
+    text-align: center;
+  }
+  /* Dejar hueco para header y footer en el contenido */
+  .card-content { margin-top: 28mm; margin-bottom: 28mm; }
 
-    /* Header fijo */
-    .card-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: white;
-        border-bottom: 2px solid var(--brand);
-        padding: 8mm 18mm;
-        text-align: right;
-        height: 20mm;
-        box-sizing: border-box;
-    }
+  /* Cabecera de tabla se repite por página */
+  .data-table thead { display: table-header-group; }
 
-    .card-content {
-        margin-top: 28mm; /* deja espacio para header */
-    }
+  /* Evitar que filas queden partidas raro */
+  .data-table tbody tr { break-inside: avoid; page-break-inside: avoid; }
 }
 
 
