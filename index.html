@@ -76,6 +76,10 @@
             font-weight: 800;
         }
 
+        .company-info {
+            display: none;
+        }
+
         .card-content {
             padding: 3rem;
         }
@@ -402,13 +406,10 @@
             color: white;
         }
 
-        /* ============================================
-           ESTILOS DE IMPRESIÓN - EXACTO AL PDF
-           ============================================ */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 20mm 15mm 30mm 15mm;
+                margin: 15mm;
             }
 
             * {
@@ -446,14 +447,14 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
+                page-break-after: auto !important;
             }
 
-            /* Línea azul superior de página */
             .card-header {
                 padding: 0 !important;
                 background: white !important;
                 border: none !important;
-                margin-bottom: 0 !important;
+                margin-bottom: 10mm !important;
                 page-break-after: avoid !important;
                 position: relative !important;
             }
@@ -461,20 +462,40 @@
             .card-header::before {
                 content: '' !important;
                 display: block !important;
-                width: calc(100% + 30mm) !important;
-                height: 4mm !important;
+                width: 210mm !important;
+                height: 3mm !important;
                 background: #00B0F0 !important;
                 position: absolute !important;
-                top: -20mm !important;
+                top: -15mm !important;
                 left: -15mm !important;
             }
 
             .logo {
-                font-size: 16pt !important;
+                font-size: 18pt !important;
                 color: #00B0F0 !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 font-weight: bold !important;
                 text-align: right !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .company-info {
+                display: block !important;
+                position: absolute !important;
+                top: 28mm !important;
+                left: 0 !important;
+                width: 68mm !important;
+                background: #f5f5f5 !important;
+                padding: 3mm !important;
+                font-size: 7.5pt !important;
+                line-height: 1.6 !important;
+                color: #3c3c3c !important;
+                font-family: Arial, Helvetica, sans-serif !important;
+                border-radius: 2mm !important;
+            }
+
+            .company-info p {
                 margin: 0 !important;
                 padding: 0 !important;
             }
@@ -482,29 +503,9 @@
             .card-content {
                 padding: 0 !important;
                 position: relative !important;
-                margin-top: 8mm !important;
+                padding-top: 0 !important;
             }
 
-            /* Caja de información de la empresa (solo primera página) */
-            .form-grid::before {
-                content: 'Felson Watersafe ApS\AGARTNERVEJ 4\A6710 Esbjerg V\ACVR-nr. DK26813522\ATlf. 70206676\Afelson@felson.dk' !important;
-                white-space: pre-line !important;
-                display: block !important;
-                position: absolute !important;
-                top: 25mm !important;
-                left: 0 !important;
-                width: 70mm !important;
-                background: #f5f5f5 !important;
-                padding: 3mm !important;
-                font-size: 8pt !important;
-                line-height: 1.7 !important;
-                color: #3c3c3c !important;
-                font-family: Arial, sans-serif !important;
-                border-radius: 2mm !important;
-                box-sizing: border-box !important;
-            }
-
-            /* Título FØLGESEDDEL */
             .main-title {
                 font-size: 13pt !important;
                 background: #00B0F0 !important;
@@ -514,40 +515,37 @@
                 margin: 0 0 5mm 0 !important;
                 border-radius: 2mm !important;
                 page-break-after: avoid !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 font-weight: bold !important;
-                letter-spacing: 1mm !important;
+                letter-spacing: 0.8mm !important;
             }
 
-            /* Formulario con fondo gris */
             .form-grid {
                 display: block !important;
                 background: #f5f5f5 !important;
-                padding: 3mm !important;
+                padding: 4mm !important;
                 border-radius: 2mm !important;
                 margin-bottom: 5mm !important;
                 page-break-inside: avoid !important;
+                min-height: 28mm !important;
                 position: relative !important;
-                min-height: 32mm !important;
-            }
-
-            .form-grid > div {
-                display: block !important;
             }
 
             .form-grid > div:first-child {
                 width: 50% !important;
-                float: left !important;
+                display: inline-block !important;
+                vertical-align: top !important;
             }
 
             .form-grid > div:last-child {
-                width: 50% !important;
-                float: right !important;
+                width: 48% !important;
+                display: inline-block !important;
+                vertical-align: top !important;
+                margin-left: 2% !important;
             }
 
             .form-group {
-                margin-bottom: 4mm !important;
-                clear: both !important;
+                margin-bottom: 3mm !important;
             }
 
             .form-label {
@@ -555,7 +553,7 @@
                 color: #00B0F0 !important;
                 font-weight: bold !important;
                 margin-bottom: 1mm !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 text-transform: uppercase !important;
                 display: block !important;
             }
@@ -566,19 +564,17 @@
                 font-size: 9pt !important;
                 color: #2d2d2d !important;
                 background: transparent !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 width: 100% !important;
                 line-height: 1.4 !important;
             }
 
-            /* Tabla */
             .data-table {
                 width: 100% !important;
-                border-collapse: separate !important;
+                border-collapse: collapse !important;
                 margin-top: 5mm !important;
                 border: 1px solid #00B0F0 !important;
                 border-radius: 2mm !important;
-                clear: both !important;
             }
 
             .data-table thead {
@@ -592,9 +588,9 @@
                 color: white !important;
                 font-weight: bold !important;
                 border: none !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 text-transform: uppercase !important;
-                letter-spacing: 0.5pt !important;
+                letter-spacing: 0.3pt !important;
             }
 
             .data-table th.col-antal {
@@ -618,8 +614,8 @@
                 padding: 2.5mm 3mm !important;
                 font-size: 9pt !important;
                 color: #2d2d2d !important;
-                border-bottom: 0.5pt solid #dddddd !important;
-                font-family: Arial, sans-serif !important;
+                border-bottom: 0.3pt solid #ddd !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 line-height: 1.3 !important;
             }
 
@@ -633,7 +629,7 @@
                 font-size: 9pt !important;
                 background: transparent !important;
                 color: #2d2d2d !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
                 width: 100% !important;
                 line-height: 1.3 !important;
             }
@@ -644,7 +640,6 @@
                 text-align: center !important;
             }
 
-            /* Footer fijo en todas las páginas */
             .card-footer {
                 position: fixed !important;
                 bottom: 0 !important;
@@ -669,39 +664,28 @@
                 border-radius: 2mm !important;
                 font-size: 8pt !important;
                 font-weight: bold !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
             }
 
             .card-footer p {
-                font-size: 8pt !important;
+                font-size: 7.5pt !important;
                 margin: 0.5mm 0 !important;
                 color: #666 !important;
                 line-height: 1.5 !important;
-                font-family: Arial, sans-serif !important;
+                font-family: Arial, Helvetica, sans-serif !important;
             }
 
-            /* Ocultar controles de inputs */
             input[type="date"]::-webkit-calendar-picker-indicator,
             input[type="number"]::-webkit-inner-spin-button,
             input[type="number"]::-webkit-outer-spin-button {
                 display: none !important;
                 -webkit-appearance: none !important;
             }
-
-            /* Continuación en página 2+ sin la info de empresa */
-            @page :first {
-                margin-top: 20mm;
-            }
         }
 
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
-            }
-
-            .security-badge {
-                font-size: 0.7rem;
-                padding: 0.4rem 0.8rem;
             }
 
             .card-header, .card-content, .card-footer {
@@ -748,6 +732,14 @@
         <div class="document-card">
             <header class="card-header">
                 <h1 class="logo">Felson Watersafe ApS</h1>
+                <div class="company-info">
+                    <p>Felson Watersafe ApS</p>
+                    <p>Gartnervej 4</p>
+                    <p>6710 Esbjerg V</p>
+                    <p>CVR-nr. DK26813522</p>
+                    <p>Tlf. 70206676</p>
+                    <p>felson@felson.dk</p>
+                </div>
             </header>
 
             <div class="card-content">
