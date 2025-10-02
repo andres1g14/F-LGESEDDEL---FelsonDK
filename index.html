@@ -404,30 +404,28 @@
         }
 
         @media print {
-            /* Cross-browser page setup */
+            /* Page setup with space for fixed footer */
             @page {
                 size: A4 portrait;
-                margin: 20mm 15mm;
-            }
-
-            @page :first {
                 margin-top: 15mm;
+                margin-bottom: 30mm;
+                margin-left: 15mm;
+                margin-right: 15mm;
             }
 
-            /* Force exact colors in all browsers */
+            /* Force exact colors */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
             }
 
-            /* Reset everything */
             html, body {
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 width: 100% !important;
-                height: auto !important;
+                height: 100% !important;
             }
 
             /* Hide non-printable elements */
@@ -439,10 +437,8 @@
             .security-modal,
             button {
                 display: none !important;
-                visibility: hidden !important;
             }
 
-            /* Container setup */
             .app-container {
                 max-width: 100% !important;
                 width: 100% !important;
@@ -456,17 +452,15 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
-                page-break-after: auto;
             }
 
-            /* Header - appears on every page */
+            /* Header */
             .card-header {
                 padding: 0 0 5mm 0 !important;
                 background: white !important;
                 border-bottom: 2px solid #00B0F0 !important;
                 margin-bottom: 5mm !important;
                 page-break-after: avoid !important;
-                page-break-inside: avoid !important;
             }
 
             .logo {
@@ -476,10 +470,10 @@
                 font-weight: 800 !important;
             }
 
-            /* Content area */
+            /* Content with space for footer */
             .card-content {
                 padding: 0 !important;
-                margin: 0 !important;
+                padding-bottom: 35mm !important;
             }
 
             /* Title */
@@ -496,7 +490,7 @@
                 font-weight: 700 !important;
             }
 
-            /* Form section */
+            /* Form */
             .form-grid {
                 display: grid !important;
                 grid-template-columns: 35% 65% !important;
@@ -510,11 +504,9 @@
 
             .form-group {
                 margin-bottom: 3mm !important;
-                page-break-inside: avoid !important;
             }
 
             .form-label {
-                display: block !important;
                 font-size: 8pt !important;
                 color: #00B0F0 !important;
                 font-weight: 700 !important;
@@ -530,7 +522,6 @@
                 color: #000 !important;
                 background: transparent !important;
                 font-family: 'Poppins', sans-serif !important;
-                width: 100% !important;
             }
 
             /* Table */
@@ -538,14 +529,12 @@
                 width: 100% !important;
                 border-collapse: collapse !important;
                 margin-top: 5mm !important;
-                margin-bottom: 5mm !important;
+                margin-bottom: 8mm !important;
                 border: 1px solid #ccc !important;
             }
 
-            /* Table header - repeats on every page */
             .data-table thead {
                 display: table-header-group !important;
-                break-inside: avoid !important;
             }
 
             .data-table th {
@@ -555,7 +544,6 @@
                 color: white !important;
                 font-weight: 700 !important;
                 border: none !important;
-                text-align: left !important;
                 font-family: 'Poppins', sans-serif !important;
             }
 
@@ -563,14 +551,8 @@
                 text-align: center !important;
             }
 
-            /* Table body */
-            .data-table tbody {
-                break-inside: auto !important;
-            }
-
             .data-table tbody tr {
                 page-break-inside: avoid !important;
-                break-inside: avoid !important;
             }
 
             .data-table tbody tr:nth-child(even) {
@@ -592,7 +574,6 @@
                 background: transparent !important;
                 color: #000 !important;
                 font-family: 'Poppins', sans-serif !important;
-                width: 100% !important;
             }
 
             .table-input.col-antal {
@@ -601,16 +582,19 @@
                 text-align: center !important;
             }
 
-            /* Footer - appears at bottom of every page */
+            /* FOOTER FIJO - Aparece en todas las páginas */
             .card-footer {
-                display: table-footer-group !important;
-                margin-top: 8mm !important;
-                padding-top: 5mm !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                padding: 4mm 15mm !important;
                 border-top: 2px solid #00B0F0 !important;
                 text-align: center !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
                 background: white !important;
+                z-index: 9999 !important;
+                page-break-inside: avoid !important;
             }
 
             .card-footer p {
@@ -621,46 +605,12 @@
                 font-family: 'Poppins', sans-serif !important;
             }
 
-            /* Orphans and widows control */
-            p, h1, h2, h3 {
-                orphans: 3;
-                widows: 3;
-            }
-
             /* Hide input controls */
             input[type="date"]::-webkit-calendar-picker-indicator,
             input[type="number"]::-webkit-inner-spin-button,
             input[type="number"]::-webkit-outer-spin-button {
                 display: none !important;
                 -webkit-appearance: none !important;
-                appearance: none !important;
-            }
-
-            /* Ensure links don't show URLs */
-            a[href]:after {
-                content: none !important;
-            }
-
-            /* iOS/Safari specific fixes */
-            @supports (-webkit-overflow-scrolling: touch) {
-                .card-footer {
-                    position: static !important;
-                }
-            }
-
-            /* Firefox specific fixes */
-            @-moz-document url-prefix() {
-                .data-table thead {
-                    display: table-header-group !important;
-                }
-            }
-
-            /* Ensure proper page breaks */
-            .form-grid,
-            .data-table thead,
-            .card-footer {
-                page-break-after: avoid !important;
-                page-break-before: auto !important;
             }
         }
 
