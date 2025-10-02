@@ -403,241 +403,262 @@
             color: white;
         }
 
-       /* ===== PRINT: footer fijo abajo + espacio reservado ===== */
-@media print {
-  /* Define la altura del pie y usa la misma en @page + contenido */
-  :root { --print-footer-h: 28mm; } /* ajusta si lo quieres más alto/bajo */
+        @media print {
+            /* Page setup with space for fixed footer */
+            @page {
+                size: A4 portrait;
+                margin-top: 15mm;
+                margin-bottom: 30mm;
+                margin-left: 15mm;
+                margin-right: 15mm;
+            }
 
-  /* Márgenes de la página (dentro de los cuales vive el contenido).
-     Pon especial atención al BOTTOM, debe ser >= altura del footer */
-  @page {
-    size: A4 portrait;
-    margin: 15mm 15mm calc(var(--print-footer-h) + 2mm) 15mm;
-    /* top right bottom left */
-  }
+            /* Force exact colors */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
 
-  /* Fuerza colores/fuentes y quita adornos de la app web */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
-  html, body {
-    background: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: visible !important;
-  }
+            html, body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
 
-  /* Ocultar UI no imprimible */
-  .security-badge,
-  .main-actions,
-  .actions-container,
-  .btn-delete,
-  .toast,
-  .security-modal,
-  button {
-    display: none !important;
-  }
+            /* Hide non-printable elements */
+            .security-badge,
+            .main-actions,
+            .actions-container,
+            .btn-delete,
+            .toast,
+            .security-modal,
+            button {
+                display: none !important;
+            }
 
-  /* Contenedor “plano” en impresión */
-  .app-container,
-  .document-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    background: #fff !important;
-  }
+            .app-container {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
 
-  /* CABECERA (línea superior y borde inferior azul como el PDF) */
-  .card-header {
-    padding: 0 0 5mm 0 !important;
-    margin: 0 0 5mm 0 !important;
-    background: #fff !important;
-    border-bottom: 2px solid #00B0F0 !important;
-    position: relative;
-    page-break-after: avoid !important;
-  }
-  .card-header::before {
-    content: "";
-    position: absolute;
-    top: -3mm; left: 0; right: 0;
-    height: 3mm;
-    background: #00B0F0;
-  }
-  .logo { color:#00B0F0 !important; font-weight:800 !important; font-size:18pt !important; }
+            .document-card {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
 
-  /* Espacio inferior del contenido = altura del footer */
-  .card-content {
-    padding: 0 !important;
-    padding-bottom: var(--print-footer-h) !important;
-  }
+            /* Header */
+            .card-header {
+                padding: 0 0 5mm 0 !important;
+                background: white !important;
+                border-bottom: 2px solid #00B0F0 !important;
+                margin-bottom: 5mm !important;
+                page-break-after: avoid !important;
+            }
 
-  /* Título como franja azul */
-  .main-title {
-    font: 700 14pt/1 'Poppins', sans-serif !important;
-    letter-spacing: .2em !important;
-    text-transform: uppercase !important;
-    color: #fff !important;
-    background: #00B0F0 !important;
-    text-align: center !important;
-    padding: 3mm 5mm !important;
-    margin: 0 0 5mm 0 !important;
-    border-radius: 2mm !important;
-    page-break-after: avoid !important;
-  }
+            .logo {
+                font-size: 16pt !important;
+                color: #00B0F0 !important;
+                font-family: 'Inter', sans-serif !important;
+                font-weight: 800 !important;
+            }
 
-  /* Formulario y tabla (igual que el PDF) */
-  .form-grid {
-    display: grid !important;
-    grid-template-columns: 35% 65% !important;
-    gap: 4mm !important;
-    padding: 3mm !important;
-    margin-bottom: 5mm !important;
-    background: #f5f5f5 !important;
-    border-radius: 2mm !important;
-    page-break-inside: avoid !important;
-  }
-  .form-label { color:#00B0F0 !important; font-weight:700 !important; font-size:8pt !important; }
-  .form-input, .form-textarea {
-    border: 0 !important; padding: 0 !important; background: transparent !important; font-size:9pt !important;
-  }
+            /* Content with space for footer */
+            .card-content {
+                padding: 0 !important;
+                padding-bottom: 35mm !important;
+            }
 
-  .data-table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    border: 1px solid #ccc !important;
-    margin-top: 5mm !important;
-    margin-bottom: 8mm !important;
-  }
-  .data-table thead { display: table-header-group !important; }
-  .data-table thead th {
-    background: #00B0F0 !important; color:#fff !important;
-    font-weight:700 !important; font-size:8.5pt !important;
-    padding: 3mm 2mm !important; text-transform: uppercase !important; border:0 !important;
-  }
-  .data-table th.col-antal { text-align:center !important; width:20% !important; }
-  .data-table tbody tr { page-break-inside: avoid !important; }
-  .data-table tbody tr:nth-child(even){ background:#f9f9f9 !important; }
-  .data-table td {
-    font-size:9pt !important; color:#000 !important;
-    padding: 2.5mm 2mm !important; border-bottom: 1px solid #ddd !important;
-  }
-  .table-input, .table-textarea { border:0 !important; padding:0 !important; background:transparent !important; }
-  .table-input.col-antal { color:#00B0F0 !important; font-weight:700 !important; text-align:center !important; }
+            /* Title */
+            .main-title {
+                font-size: 13pt !important;
+                background: #00B0F0 !important;
+                color: white !important;
+                padding: 3mm 5mm !important;
+                text-align: center !important;
+                margin-bottom: 5mm !important;
+                border-radius: 2mm !important;
+                page-break-after: avoid !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 700 !important;
+            }
 
-  /* ===== FOOTER FIJO: siempre pegado al borde inferior imprimible ===== */
-  .card-footer {
-    position: fixed !important;
-    left: 0 !important; right: 0 !important; bottom: 0 !important;
-    height: var(--print-footer-h) !important;
-    padding: 6mm 15mm 4mm !important;  /* deja aire dentro del pie */
-    border-top: 2px solid #00B0F0 !important;
-    background: #fff !important;
-    text-align: center !important;
-    z-index: 9999 !important;
-  }
-  .card-footer p {
-    margin: 1mm 0 !important;
-    color: #666 !important;
-    font-size: 8pt !important;
-    line-height: 1.5 !important;
-  }
+            /* Form */
+            .form-grid {
+                display: grid !important;
+                grid-template-columns: 35% 65% !important;
+                gap: 4mm !important;
+                margin-bottom: 5mm !important;
+                background: #f5f5f5 !important;
+                padding: 3mm !important;
+                border-radius: 2mm !important;
+                page-break-inside: avoid !important;
+            }
 
-  /* Insignia "Side N" dentro del área del pie */
-  .card-footer::before {
-    content: "Side " counter(page);
-    position: absolute; left: 15mm; bottom: 6mm;
-    display: inline-block;
-    padding: 1mm 4mm;
-    border-radius: 2mm;
-    background: #00B0F0;
-    color: #fff;
-    font-weight: 700;
-    font-size: 8pt;
-  }
+            .form-group {
+                margin-bottom: 3mm !important;
+            }
 
-  /* Quitar controles nativos de inputs */
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button { display:none !important; -webkit-appearance:none !important; }
-}
-/* === PRINT: footer fijo, pegado abajo de la zona imprimible === */
-@media print {
-  /* Ajustes en mm (puedes tocar estas 3 variables si quieres) */
-  :root{
-    --mT: 15mm;      /* margen superior */
-    --mR: 15mm;      /* margen derecho  */
-    --mB: 12mm;      /* margen inferior (pequeño para que no se vea hueco) */
-    --mL: 15mm;      /* margen izquierdo */
-    --footerH: 10mm; /* altura del footer */
-  }
+            .form-label {
+                font-size: 8pt !important;
+                color: #00B0F0 !important;
+                font-weight: 700 !important;
+                margin-bottom: 1mm !important;
+                font-family: 'Poppins', sans-serif !important;
+                text-transform: uppercase !important;
+            }
 
-  /* Márgenes reales de la página */
-  @page {
-    size: A4 portrait;
-    margin: var(--mT) var(--mR) var(--mB) var(--mL);
-  }
+            .form-input, .form-textarea {
+                border: none !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                color: #000 !important;
+                background: transparent !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
 
-  /* Fuerza colores exactos y limpia el lienzo */
-  *{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  html,body{ background:#fff !important; margin:0 !important; padding:0 !important; }
+            /* Table */
+            .data-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin-top: 5mm !important;
+                margin-bottom: 8mm !important;
+                border: 1px solid #ccc !important;
+            }
 
-  /* UI que no se imprime */
-  .security-badge, .main-actions, .actions-container, .btn-delete, .toast, .security-modal, button {
-    display:none !important;
-  }
+            .data-table thead {
+                display: table-header-group !important;
+            }
 
-  /* El contenido deja hueco para el footer (mismo alto) */
-  .card-content{ padding:0 !important; padding-bottom: var(--footerH) !important; }
+            .data-table th {
+                font-size: 9pt !important;
+                padding: 3mm 2mm !important;
+                background: #00B0F0 !important;
+                color: white !important;
+                font-weight: 700 !important;
+                border: none !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
 
-  /* Encabezado de tabla siempre en cada página */
-  .data-table{ width:100% !important; border-collapse:collapse !important; }
-  .data-table thead{ display: table-header-group !important; }
-  .data-table tbody tr{ page-break-inside: avoid !important; }
+            .data-table th.col-antal {
+                text-align: center !important;
+            }
 
-  /* === EL FOOTER: fijo y pegado a la base de la ZONA IMPRIMIBLE ===
-     En “paged media” Chrome posiciona los fixed respecto al área imprimible.
-     Por eso, con bottom:0 se queda justo arriba del margen inferior (sin colgar). */
-  .card-footer{
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;            /* <- clave: pega el pie al borde inferior imprimible */
-    height: var(--footerH) !important;
-    background:#fff !important;
-    border-top:2px solid #00B0F0 !important;
-    text-align:center !important;
-    padding: 6mm 15mm 4mm !important; /* aire interno del pie */
-    z-index:9999 !important;
-  }
-  .card-footer p{
-    margin: 1mm 0 !important;
-    color:#666 !important;
-    font-size:8pt !important;
-    line-height:1.5 !important;
-  }
+            .data-table tbody tr {
+                page-break-inside: avoid !important;
+            }
 
-  /* Insignia “Side N” usando el contador de página nativo */
-  .card-footer::before{
-    content: "Side " counter(page);
-    position: absolute;
-    left: 15mm;
-    bottom: 6mm;
-    padding: 1mm 4mm;
-    border-radius: 2mm;
-    background:#00B0F0;
-    color:#fff;
-    font-weight:700;
-    font-size:8pt;
-  }
-}
+            .data-table tbody tr:nth-child(even) {
+                background: #f9f9f9 !important;
+            }
 
+            .data-table tbody td {
+                padding: 2.5mm 2mm !important;
+                font-size: 9pt !important;
+                color: #000 !important;
+                border-bottom: 1px solid #ddd !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
+
+            .table-input, .table-textarea {
+                border: none !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                background: transparent !important;
+                color: #000 !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
+
+            .table-input.col-antal {
+                color: #00B0F0 !important;
+                font-weight: 700 !important;
+                text-align: center !important;
+            }
+
+            /* FOOTER FIJO - Aparece en todas las páginas */
+            .card-footer {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                padding: 4mm 15mm !important;
+                border-top: 2px solid #00B0F0 !important;
+                text-align: center !important;
+                background: white !important;
+                z-index: 9999 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .card-footer p {
+                font-size: 8pt !important;
+                margin: 1mm 0 !important;
+                color: #666 !important;
+                line-height: 1.5 !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
+
+            /* Hide input controls */
+            input[type="date"]::-webkit-calendar-picker-indicator,
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+                display: none !important;
+                -webkit-appearance: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .security-badge {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .card-header, .card-content, .card-footer {
+                padding: 1.5rem !important;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .main-title {
+                font-size: 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .data-table th, .data-table td {
+                padding: 0.6rem 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .actions-container, .main-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .security-modal-content {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
     </style>
 </head>
 <body>
