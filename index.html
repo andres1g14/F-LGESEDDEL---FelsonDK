@@ -406,10 +406,7 @@
         @media print {
             @page {
                 size: A4;
-                margin-top: 15mm;
-                margin-bottom: 30mm;
-                margin-left: 15mm;
-                margin-right: 15mm;
+                margin: 15mm;
             }
 
             * {
@@ -440,26 +437,35 @@
                 box-shadow: none !important;
                 border-radius: 0 !important;
                 margin: 0 !important;
-                position: relative !important;
             }
 
             /* Header moderno */
             .card-header {
-                padding: 0 0 5mm 0 !important;
+                padding: 0 0 3mm 0 !important;
                 background: white !important;
                 page-break-after: avoid !important;
                 position: relative;
-                border-bottom: 3px solid #00B0F0 !important;
+                margin-bottom: 5mm !important;
             }
 
             .card-header::before {
                 content: '';
                 position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
+                top: -5mm;
+                left: -15mm;
+                right: -15mm;
                 height: 3px;
                 background: linear-gradient(90deg, #00B0F0 0%, #0090cc 100%);
+            }
+
+            .card-header::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: -15mm;
+                right: -15mm;
+                height: 2px;
+                background: #00B0F0;
             }
 
             .logo {
@@ -468,48 +474,53 @@
                 font-family: 'Inter', sans-serif !important;
             }
 
-            /* Box de información de empresa - solo primera página */
-            .card-content::before {
+            .card-content {
+                padding: 0 !important;
+                position: relative;
+            }
+
+            /* Box de información - primera página */
+            .card-content > .main-title::before {
                 content: 'Felson Watersafe ApS\ABartnervej 4\A6710 Esbjerg V\ACVR-nr. DK26813522\ATlf. 70206676\Afelson@felson.dk';
                 white-space: pre;
+                display: block;
                 position: absolute;
                 left: 0;
-                top: 30mm;
+                top: -28mm;
                 background: #F5FAFF;
-                padding: 4mm;
-                border-radius: 3mm;
+                padding: 3mm;
+                border-radius: 2mm;
                 font-size: 7pt;
-                line-height: 1.6;
+                line-height: 1.7;
                 font-family: 'Poppins', sans-serif;
                 color: #3c3c3c;
                 border: 1px solid #e0f2fe;
-            }
-
-            .card-content {
-                padding: 0 !important;
-                padding-top: 25mm !important;
+                width: 55mm;
             }
 
             /* Título moderno */
             .main-title {
-                font-size: 13pt !important;
-                margin-bottom: 6mm !important;
+                font-size: 12pt !important;
+                margin-bottom: 5mm !important;
+                margin-top: 32mm !important;
                 font-family: 'Poppins', sans-serif !important;
                 background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%) !important;
                 color: white !important;
                 padding: 3mm !important;
-                border-radius: 3mm !important;
+                border-radius: 2mm !important;
                 text-align: center !important;
+                page-break-after: avoid !important;
             }
 
             /* Sección de datos con fondo */
             .form-grid {
-                grid-template-columns: 40% 60% !important;
-                gap: 5mm !important;
-                margin-bottom: 6mm !important;
+                grid-template-columns: 35% 65% !important;
+                gap: 4mm !important;
+                margin-bottom: 5mm !important;
                 background: #fafafa !important;
-                padding: 4mm !important;
-                border-radius: 3mm !important;
+                padding: 3mm !important;
+                border-radius: 2mm !important;
+                page-break-inside: avoid !important;
             }
 
             .form-label {
@@ -522,7 +533,7 @@
             .form-input, .form-textarea {
                 border: none !important;
                 padding: 0 !important;
-                font-size: 9pt !important;
+                font-size: 8.5pt !important;
                 font-family: 'Poppins', sans-serif !important;
                 color: #282828 !important;
             }
@@ -530,9 +541,9 @@
             /* Tabla moderna */
             .data-table {
                 border: none !important;
-                margin-top: 6mm !important;
-                margin-bottom: 15mm !important;
-                border-radius: 3mm !important;
+                margin-top: 5mm !important;
+                margin-bottom: 8mm !important;
+                border-radius: 2mm !important;
                 overflow: hidden !important;
             }
 
@@ -542,7 +553,7 @@
 
             .data-table th {
                 font-size: 8pt !important;
-                padding: 3mm !important;
+                padding: 2.5mm !important;
                 background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%) !important;
                 color: white !important;
                 font-family: 'Poppins', sans-serif !important;
@@ -559,17 +570,17 @@
             }
 
             .data-table tbody td {
-                padding: 2.5mm !important;
-                font-size: 9pt !important;
+                padding: 2mm !important;
+                font-size: 8.5pt !important;
                 font-family: 'Poppins', sans-serif !important;
                 color: #282828 !important;
-                border-bottom: 1px solid #e5e7eb !important;
+                border-bottom: 0.5px solid #e5e7eb !important;
             }
 
             .table-input, .table-textarea {
                 border: none !important;
                 padding: 0 !important;
-                font-size: 9pt !important;
+                font-size: 8.5pt !important;
                 font-family: 'Poppins', sans-serif !important;
             }
 
@@ -578,28 +589,35 @@
                 font-weight: 600 !important;
             }
 
-            /* Footer fijo moderno */
+            /* Footer - NO fixed, fluye naturalmente */
             .card-footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 4mm 15mm !important;
+                padding: 4mm 0 !important;
                 background: white !important;
-                border-top: 0.5mm solid #00B0F0 !important;
+                border-top: none !important;
                 text-align: center;
-                z-index: 9999;
                 page-break-inside: avoid !important;
                 font-family: 'Poppins', sans-serif !important;
+                margin-top: 10mm !important;
+                position: relative;
             }
 
             .card-footer::before {
                 content: '';
                 position: absolute;
-                bottom: 100%;
-                left: 0;
-                right: 0;
+                top: -2mm;
+                left: -15mm;
+                right: -15mm;
                 height: 2px;
+                background: #00B0F0;
+            }
+
+            .card-footer::after {
+                content: '';
+                position: absolute;
+                top: -1mm;
+                left: -15mm;
+                right: -15mm;
+                height: 1px;
                 background: linear-gradient(90deg, transparent 0%, #00B0F0 50%, transparent 100%);
             }
 
@@ -608,21 +626,7 @@
                 margin: 1mm 0 !important;
                 font-family: 'Poppins', sans-serif !important;
                 color: #666 !important;
-            }
-
-            /* Número de página con badge */
-            .card-footer::after {
-                content: 'Side ' counter(page);
-                position: absolute;
-                left: 15mm;
-                bottom: 4mm;
-                background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%);
-                color: white;
-                padding: 1.5mm 4mm;
-                border-radius: 2mm;
-                font-size: 8pt;
-                font-weight: 600;
-                font-family: 'Poppins', sans-serif;
+                line-height: 1.5 !important;
             }
 
             input::-webkit-calendar-picker-indicator,
