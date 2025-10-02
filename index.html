@@ -404,146 +404,263 @@
         }
 
         @media print {
+            /* Cross-browser page setup */
             @page {
-                size: A4;
-                margin: 15mm;
+                size: A4 portrait;
+                margin: 20mm 15mm;
             }
 
+            @page :first {
+                margin-top: 15mm;
+            }
+
+            /* Force exact colors in all browsers */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
 
-            body {
+            /* Reset everything */
+            html, body {
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
+                width: 100% !important;
+                height: auto !important;
             }
 
+            /* Hide non-printable elements */
             .security-badge,
             .main-actions,
             .actions-container,
             .btn-delete,
             .toast,
-            .security-modal {
+            .security-modal,
+            button {
                 display: none !important;
+                visibility: hidden !important;
             }
 
+            /* Container setup */
             .app-container {
                 max-width: 100% !important;
+                width: 100% !important;
                 margin: 0 !important;
+                padding: 0 !important;
             }
 
             .document-card {
                 box-shadow: none !important;
                 border-radius: 0 !important;
                 margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                page-break-after: auto;
             }
 
+            /* Header - appears on every page */
             .card-header {
-                padding: 0 0 4mm 0 !important;
+                padding: 0 0 5mm 0 !important;
                 background: white !important;
                 border-bottom: 2px solid #00B0F0 !important;
                 margin-bottom: 5mm !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
             }
 
             .logo {
-                font-size: 14pt !important;
+                font-size: 16pt !important;
                 color: #00B0F0 !important;
+                font-family: 'Inter', sans-serif !important;
+                font-weight: 800 !important;
             }
 
+            /* Content area */
             .card-content {
                 padding: 0 !important;
+                margin: 0 !important;
             }
 
+            /* Title */
             .main-title {
-                font-size: 12pt !important;
+                font-size: 13pt !important;
                 background: #00B0F0 !important;
                 color: white !important;
-                padding: 2.5mm !important;
+                padding: 3mm 5mm !important;
                 text-align: center !important;
-                margin-bottom: 4mm !important;
+                margin-bottom: 5mm !important;
                 border-radius: 2mm !important;
+                page-break-after: avoid !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 700 !important;
             }
 
+            /* Form section */
             .form-grid {
+                display: grid !important;
                 grid-template-columns: 35% 65% !important;
                 gap: 4mm !important;
                 margin-bottom: 5mm !important;
-                background: #fafafa !important;
+                background: #f5f5f5 !important;
                 padding: 3mm !important;
                 border-radius: 2mm !important;
+                page-break-inside: avoid !important;
+            }
+
+            .form-group {
+                margin-bottom: 3mm !important;
+                page-break-inside: avoid !important;
             }
 
             .form-label {
+                display: block !important;
                 font-size: 8pt !important;
                 color: #00B0F0 !important;
-                font-weight: 600 !important;
+                font-weight: 700 !important;
+                margin-bottom: 1mm !important;
+                font-family: 'Poppins', sans-serif !important;
+                text-transform: uppercase !important;
             }
 
             .form-input, .form-textarea {
                 border: none !important;
                 padding: 0 !important;
                 font-size: 9pt !important;
+                color: #000 !important;
+                background: transparent !important;
+                font-family: 'Poppins', sans-serif !important;
+                width: 100% !important;
             }
 
+            /* Table */
             .data-table {
-                margin-top: 4mm !important;
-                border: none !important;
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin-top: 5mm !important;
+                margin-bottom: 5mm !important;
+                border: 1px solid #ccc !important;
             }
 
+            /* Table header - repeats on every page */
             .data-table thead {
                 display: table-header-group !important;
+                break-inside: avoid !important;
             }
 
             .data-table th {
-                font-size: 8pt !important;
-                padding: 2mm !important;
+                font-size: 9pt !important;
+                padding: 3mm 2mm !important;
                 background: #00B0F0 !important;
                 color: white !important;
+                font-weight: 700 !important;
+                border: none !important;
+                text-align: left !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
+
+            .data-table th.col-antal {
+                text-align: center !important;
+            }
+
+            /* Table body */
+            .data-table tbody {
+                break-inside: auto !important;
             }
 
             .data-table tbody tr {
                 page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
 
             .data-table tbody tr:nth-child(even) {
-                background: #f8fafc !important;
+                background: #f9f9f9 !important;
             }
 
             .data-table tbody td {
-                padding: 2mm !important;
-                font-size: 8.5pt !important;
-                border-bottom: 0.5px solid #ddd !important;
+                padding: 2.5mm 2mm !important;
+                font-size: 9pt !important;
+                color: #000 !important;
+                border-bottom: 1px solid #ddd !important;
+                font-family: 'Poppins', sans-serif !important;
             }
 
             .table-input, .table-textarea {
                 border: none !important;
                 padding: 0 !important;
-                font-size: 8.5pt !important;
+                font-size: 9pt !important;
+                background: transparent !important;
+                color: #000 !important;
+                font-family: 'Poppins', sans-serif !important;
+                width: 100% !important;
             }
 
             .table-input.col-antal {
                 color: #00B0F0 !important;
-                font-weight: 600 !important;
-            }
-
-            .card-footer {
-                margin-top: 10mm !important;
-                padding-top: 4mm !important;
-                border-top: 2px solid #00B0F0 !important;
+                font-weight: 700 !important;
                 text-align: center !important;
             }
 
-            .card-footer p {
-                font-size: 7pt !important;
-                margin: 1mm 0 !important;
-                color: #666 !important;
+            /* Footer - appears at bottom of every page */
+            .card-footer {
+                display: table-footer-group !important;
+                margin-top: 8mm !important;
+                padding-top: 5mm !important;
+                border-top: 2px solid #00B0F0 !important;
+                text-align: center !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                background: white !important;
             }
 
-            input::-webkit-calendar-picker-indicator,
-            input::-webkit-inner-spin-button {
+            .card-footer p {
+                font-size: 8pt !important;
+                margin: 1mm 0 !important;
+                color: #666 !important;
+                line-height: 1.5 !important;
+                font-family: 'Poppins', sans-serif !important;
+            }
+
+            /* Orphans and widows control */
+            p, h1, h2, h3 {
+                orphans: 3;
+                widows: 3;
+            }
+
+            /* Hide input controls */
+            input[type="date"]::-webkit-calendar-picker-indicator,
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
                 display: none !important;
+                -webkit-appearance: none !important;
+                appearance: none !important;
+            }
+
+            /* Ensure links don't show URLs */
+            a[href]:after {
+                content: none !important;
+            }
+
+            /* iOS/Safari specific fixes */
+            @supports (-webkit-overflow-scrolling: touch) {
+                .card-footer {
+                    position: static !important;
+                }
+            }
+
+            /* Firefox specific fixes */
+            @-moz-document url-prefix() {
+                .data-table thead {
+                    display: table-header-group !important;
+                }
+            }
+
+            /* Ensure proper page breaks */
+            .form-grid,
+            .data-table thead,
+            .card-footer {
+                page-break-after: avoid !important;
+                page-break-before: auto !important;
             }
         }
 
