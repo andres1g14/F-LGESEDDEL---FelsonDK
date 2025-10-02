@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Følgeseddel - Felson Watersafe ApS</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
         :root {
             --brand: #00B0F0;
@@ -245,7 +245,6 @@
             font-size: 0.8125rem;
             color: var(--text-light);
             line-height: 1.6;
-            font-family: 'Poppins', sans-serif;
         }
 
         .card-footer p {
@@ -403,17 +402,15 @@
             color: white;
         }
 
+        /* ============================================
+           ESTILOS DE IMPRESIÓN - EXACTO AL PDF
+           ============================================ */
         @media print {
-            /* Page setup with space for fixed footer */
             @page {
                 size: A4 portrait;
-                margin-top: 15mm;
-                margin-bottom: 30mm;
-                margin-left: 15mm;
-                margin-right: 15mm;
+                margin: 20mm 15mm 30mm 15mm;
             }
 
-            /* Force exact colors */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -424,11 +421,8 @@
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
             }
 
-            /* Hide non-printable elements */
             .security-badge,
             .main-actions,
             .actions-container,
@@ -454,83 +448,137 @@
                 background: white !important;
             }
 
-            /* Header */
+            /* Línea azul superior de página */
             .card-header {
-                padding: 0 0 5mm 0 !important;
+                padding: 0 !important;
                 background: white !important;
-                border-bottom: 2px solid #00B0F0 !important;
-                margin-bottom: 5mm !important;
+                border: none !important;
+                margin-bottom: 0 !important;
                 page-break-after: avoid !important;
+                position: relative !important;
+            }
+
+            .card-header::before {
+                content: '' !important;
+                display: block !important;
+                width: calc(100% + 30mm) !important;
+                height: 4mm !important;
+                background: #00B0F0 !important;
+                position: absolute !important;
+                top: -20mm !important;
+                left: -15mm !important;
             }
 
             .logo {
                 font-size: 16pt !important;
                 color: #00B0F0 !important;
-                font-family: 'Inter', sans-serif !important;
-                font-weight: 800 !important;
+                font-family: Arial, sans-serif !important;
+                font-weight: bold !important;
+                text-align: right !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
 
-            /* Content with space for footer */
             .card-content {
                 padding: 0 !important;
-                padding-bottom: 35mm !important;
+                position: relative !important;
+                margin-top: 8mm !important;
             }
 
-            /* Title */
+            /* Caja de información de la empresa (solo primera página) */
+            .form-grid::before {
+                content: 'Felson Watersafe ApS\AGARTNERVEJ 4\A6710 Esbjerg V\ACVR-nr. DK26813522\ATlf. 70206676\Afelson@felson.dk' !important;
+                white-space: pre-line !important;
+                display: block !important;
+                position: absolute !important;
+                top: 25mm !important;
+                left: 0 !important;
+                width: 70mm !important;
+                background: #f5f5f5 !important;
+                padding: 3mm !important;
+                font-size: 8pt !important;
+                line-height: 1.7 !important;
+                color: #3c3c3c !important;
+                font-family: Arial, sans-serif !important;
+                border-radius: 2mm !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Título FØLGESEDDEL */
             .main-title {
                 font-size: 13pt !important;
                 background: #00B0F0 !important;
                 color: white !important;
-                padding: 3mm 5mm !important;
+                padding: 3mm !important;
                 text-align: center !important;
-                margin-bottom: 5mm !important;
+                margin: 0 0 5mm 0 !important;
                 border-radius: 2mm !important;
                 page-break-after: avoid !important;
-                font-family: 'Poppins', sans-serif !important;
-                font-weight: 700 !important;
+                font-family: Arial, sans-serif !important;
+                font-weight: bold !important;
+                letter-spacing: 1mm !important;
             }
 
-            /* Form */
+            /* Formulario con fondo gris */
             .form-grid {
-                display: grid !important;
-                grid-template-columns: 35% 65% !important;
-                gap: 4mm !important;
-                margin-bottom: 5mm !important;
+                display: block !important;
                 background: #f5f5f5 !important;
                 padding: 3mm !important;
                 border-radius: 2mm !important;
+                margin-bottom: 5mm !important;
                 page-break-inside: avoid !important;
+                position: relative !important;
+                min-height: 32mm !important;
+            }
+
+            .form-grid > div {
+                display: block !important;
+            }
+
+            .form-grid > div:first-child {
+                width: 50% !important;
+                float: left !important;
+            }
+
+            .form-grid > div:last-child {
+                width: 50% !important;
+                float: right !important;
             }
 
             .form-group {
-                margin-bottom: 3mm !important;
+                margin-bottom: 4mm !important;
+                clear: both !important;
             }
 
             .form-label {
                 font-size: 8pt !important;
                 color: #00B0F0 !important;
-                font-weight: 700 !important;
+                font-weight: bold !important;
                 margin-bottom: 1mm !important;
-                font-family: 'Poppins', sans-serif !important;
+                font-family: Arial, sans-serif !important;
                 text-transform: uppercase !important;
+                display: block !important;
             }
 
             .form-input, .form-textarea {
                 border: none !important;
                 padding: 0 !important;
                 font-size: 9pt !important;
-                color: #000 !important;
+                color: #2d2d2d !important;
                 background: transparent !important;
-                font-family: 'Poppins', sans-serif !important;
+                font-family: Arial, sans-serif !important;
+                width: 100% !important;
+                line-height: 1.4 !important;
             }
 
-            /* Table */
+            /* Tabla */
             .data-table {
                 width: 100% !important;
-                border-collapse: collapse !important;
+                border-collapse: separate !important;
                 margin-top: 5mm !important;
-                margin-bottom: 8mm !important;
-                border: 1px solid #ccc !important;
+                border: 1px solid #00B0F0 !important;
+                border-radius: 2mm !important;
+                clear: both !important;
             }
 
             .data-table thead {
@@ -538,17 +586,20 @@
             }
 
             .data-table th {
-                font-size: 9pt !important;
-                padding: 3mm 2mm !important;
+                font-size: 8.5pt !important;
+                padding: 3mm !important;
                 background: #00B0F0 !important;
                 color: white !important;
-                font-weight: 700 !important;
+                font-weight: bold !important;
                 border: none !important;
-                font-family: 'Poppins', sans-serif !important;
+                font-family: Arial, sans-serif !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.5pt !important;
             }
 
             .data-table th.col-antal {
                 text-align: center !important;
+                width: 15% !important;
             }
 
             .data-table tbody tr {
@@ -556,15 +607,24 @@
             }
 
             .data-table tbody tr:nth-child(even) {
-                background: #f9f9f9 !important;
+                background: #f8fafc !important;
+            }
+
+            .data-table tbody tr:nth-child(odd) {
+                background: white !important;
             }
 
             .data-table tbody td {
-                padding: 2.5mm 2mm !important;
+                padding: 2.5mm 3mm !important;
                 font-size: 9pt !important;
-                color: #000 !important;
-                border-bottom: 1px solid #ddd !important;
-                font-family: 'Poppins', sans-serif !important;
+                color: #2d2d2d !important;
+                border-bottom: 0.5pt solid #dddddd !important;
+                font-family: Arial, sans-serif !important;
+                line-height: 1.3 !important;
+            }
+
+            .data-table tbody tr:last-child td {
+                border-bottom: none !important;
             }
 
             .table-input, .table-textarea {
@@ -572,45 +632,65 @@
                 padding: 0 !important;
                 font-size: 9pt !important;
                 background: transparent !important;
-                color: #000 !important;
-                font-family: 'Poppins', sans-serif !important;
+                color: #2d2d2d !important;
+                font-family: Arial, sans-serif !important;
+                width: 100% !important;
+                line-height: 1.3 !important;
             }
 
             .table-input.col-antal {
                 color: #00B0F0 !important;
-                font-weight: 700 !important;
+                font-weight: bold !important;
                 text-align: center !important;
             }
 
-            /* FOOTER FIJO - Aparece en todas las páginas */
+            /* Footer fijo en todas las páginas */
             .card-footer {
                 position: fixed !important;
                 bottom: 0 !important;
                 left: 0 !important;
                 right: 0 !important;
                 width: 100% !important;
-                padding: 4mm 15mm !important;
-                border-top: 2px solid #00B0F0 !important;
+                padding: 3mm 15mm !important;
+                border-top: 2pt solid #00B0F0 !important;
                 text-align: center !important;
                 background: white !important;
-                z-index: 9999 !important;
                 page-break-inside: avoid !important;
+            }
+
+            .card-footer::before {
+                content: 'Side ' counter(page) !important;
+                position: absolute !important;
+                left: 15mm !important;
+                bottom: 3mm !important;
+                background: #00B0F0 !important;
+                color: white !important;
+                padding: 1.5mm 5mm !important;
+                border-radius: 2mm !important;
+                font-size: 8pt !important;
+                font-weight: bold !important;
+                font-family: Arial, sans-serif !important;
             }
 
             .card-footer p {
                 font-size: 8pt !important;
-                margin: 1mm 0 !important;
+                margin: 0.5mm 0 !important;
                 color: #666 !important;
                 line-height: 1.5 !important;
-                font-family: 'Poppins', sans-serif !important;
+                font-family: Arial, sans-serif !important;
             }
 
-            /* Hide input controls */
+            /* Ocultar controles de inputs */
             input[type="date"]::-webkit-calendar-picker-indicator,
             input[type="number"]::-webkit-inner-spin-button,
             input[type="number"]::-webkit-outer-spin-button {
                 display: none !important;
                 -webkit-appearance: none !important;
+            }
+
+            /* Continuación en página 2+ sin la info de empresa */
+            @page :first {
+                margin-top: 20mm;
             }
         }
 
@@ -841,25 +921,21 @@
                 let isFirstPage = true;
 
                 function drawHeader() {
-                    // Gradiente superior (simulado con rectángulo)
                     doc.setFillColor(0, 176, 240);
                     doc.rect(0, 0, pageWidth, 3, 'F');
                     
-                    // Logo con sombra efecto
                     doc.setFontSize(18);
                     doc.setTextColor(0, 176, 240);
                     doc.setFont('helvetica', 'bold');
                     doc.text('Felson Watersafe ApS', pageWidth - margin, 16, { align: 'right' });
                     
-                    // Línea decorativa
                     doc.setDrawColor(0, 176, 240);
                     doc.setLineWidth(0.5);
                     doc.line(margin, 20, pageWidth - margin, 20);
                 }
 
                 function drawCompanyInfo() {
-                    // Box con información de la empresa - solo primera página
-                    doc.setFillColor(245, 250, 255); // Azul muy claro
+                    doc.setFillColor(245, 250, 255);
                     doc.roundedRect(margin, currentY, 70, 25, 2, 2, 'F');
                     
                     doc.setFontSize(7);
@@ -880,12 +956,10 @@
                 function drawFooter() {
                     const footerY = pageHeight - 20;
                     
-                    // Línea decorativa superior
                     doc.setDrawColor(0, 176, 240);
                     doc.setLineWidth(0.5);
                     doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
                     
-                    // Gradiente inferior (simulado)
                     doc.setFillColor(240, 248, 255);
                     doc.rect(0, footerY - 3, pageWidth, 1, 'F');
                     
@@ -895,7 +969,6 @@
                     doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', pageWidth / 2, footerY, { align: 'center' });
                     doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', pageWidth / 2, footerY + 4, { align: 'center' });
                     
-                    // Número de página con estilo
                     doc.setFillColor(0, 176, 240);
                     doc.roundedRect(margin - 2, footerY - 2, 15, 6, 1, 1, 'F');
                     doc.setTextColor(255, 255, 255);
@@ -914,14 +987,11 @@
                     currentY = 25;
                 }
 
-                // Primera página
                 drawHeader();
                 currentY = 25;
                 
-                // Info de empresa en primera página
                 drawCompanyInfo();
 
-                // Título con efecto moderno
                 doc.setFillColor(0, 176, 240);
                 doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 10, 2, 2, 'F');
                 doc.setFontSize(14);
@@ -934,7 +1004,6 @@
                 const ordreNrInput = document.getElementById('ordre-nr');
                 const leveringInput = document.getElementById('levering');
 
-                // Sección de datos con fondo
                 doc.setFillColor(250, 250, 250);
                 doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 26, 2, 2, 'F');
                 
@@ -965,7 +1034,6 @@
                 
                 currentY += Math.max(24, leveringLines.length * 5 + 16);
 
-                // Tabla con efecto moderno
                 doc.setFillColor(0, 176, 240);
                 doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 9, 2, 2, 'F');
                 doc.setTextColor(255);
@@ -991,7 +1059,6 @@
                     if (currentY + rowHeight > usableHeight) {
                         addNewPage();
                         
-                        // Re-dibujar header de tabla
                         doc.setFillColor(0, 176, 240);
                         doc.roundedRect(margin, currentY, pageWidth - 2 * margin, 9, 2, 2, 'F');
                         doc.setTextColor(255);
@@ -1005,7 +1072,6 @@
                         doc.setFontSize(9);
                     }
 
-                    // Fila con fondo alternado
                     if (index % 2 === 0) {
                         doc.setFillColor(248, 250, 252);
                         doc.rect(margin, currentY - 1, pageWidth - 2 * margin, rowHeight, 'F');
@@ -1109,32 +1175,27 @@
                 const printBtn = document.getElementById('btn-print');
                 const pdfBtn = document.getElementById('btn-pdf');
 
-                // Security badge click
                 securityBadge.onclick = function() {
                     securityModal.classList.add('show');
                 };
 
-                // Check security acceptance
                 const accepted = localStorage.getItem(SECURITY_ACCEPTED_KEY);
                 if (!accepted) {
                     setTimeout(() => securityModal.classList.add('show'), 500);
                 }
 
-                // Accept button
                 acceptSecurityBtn.onclick = function() {
                     localStorage.setItem(SECURITY_ACCEPTED_KEY, 'true');
                     securityModal.classList.remove('show');
                     showToast('Sikkerhedsindstillinger accepteret');
                 };
 
-                // Close modal on background click
                 securityModal.onclick = function(e) {
                     if (e.target === securityModal) {
                         securityModal.classList.remove('show');
                     }
                 };
 
-                // Button events
                 addRowBtn.onclick = () => addRow();
                 clearBtn.onclick = clearAllData;
                 pdfBtn.onclick = generatePDF;
@@ -1143,12 +1204,10 @@
                     setTimeout(() => window.print(), 500);
                 };
 
-                // Input events
                 [datoInput, ordreNrInput, leveringInput].forEach(input => {
                     input.addEventListener('input', triggerAutoSave);
                 });
 
-                // Table events
                 tableBody.addEventListener('click', (e) => {
                     if (e.target.classList.contains('btn-delete')) {
                         if (tableBody.rows.length > 1) {
@@ -1167,14 +1226,12 @@
                     triggerAutoSave();
                 });
 
-                // Load data and init
                 const hasData = loadData();
                 if (!datoInput.value) datoInput.valueAsDate = new Date();
                 if (tableBody.rows.length === 0) addRow();
                 if (hasData) showToast('Data indlæst');
             }
 
-            // Start when DOM is ready
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
