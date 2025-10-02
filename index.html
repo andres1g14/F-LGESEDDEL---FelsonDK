@@ -1,587 +1,736 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;">
-    <title>Følgeseddel - Felson Watersafe ApS</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Følgeseddel - Felson Watersafe ApS</title>
 
-        /* --- 1. Sistema de Diseño y Variables --- */
-        :root {
-            --brand: #00B0F0;
-            --brand-dark: #008fbf;
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --success: #10B981;
-            --danger: #EF4444;
-            --text-dark: #1a202c;
-            --text-light: #4a5568;
-            --border-color: #e2e8f0;
-            --bg-light: #f7fafc;
-            --bg-white: rgba(255, 255, 255, 0.95);
-            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-        /* --- 2. Estilos Globales y Animaciones --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00B0F0 100%);
-            background-size: 400% 400%;
-            min-height: 100vh;
-            padding: 2rem;
-            animation: gradientBG 20s ease infinite;
-            color: var(--text-dark);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+  <style>
+    :root {
+      --brand: #00B0F0;
+      --text: #1a1a1a;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
 
-        /* --- 3. Estructura y Tarjeta Principal --- */
-        .app-container {
-            width: 100%;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-        .document-card {
-            background: var(--bg-white);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            margin-bottom: 2rem;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeIn 0.8s 0.2s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        .card-header {
-            padding: 2.5rem 3rem;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(240,249,255,0.8) 100%);
-            border-bottom: 2px solid var(--brand);
-            text-align: right;
-        }
-        .logo {
-            color: var(--brand);
-            font-size: 2rem;
-            font-weight: 800;
-        }
-        .card-content {
-            padding: 3rem;
-        }
-        .main-title {
-            text-align: center;
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-        .card-footer {
-            padding: 1.5rem 3rem;
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-light);
-            line-height: 1.6;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* --- 4. Formularios y Campos de Entrada --- */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-        .form-group { margin-bottom: 1rem; }
-        .form-label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1.5px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            transition: var(--transition);
-        }
-        .form-input:focus, .form-textarea:focus {
-            outline: none;
-            border-color: var(--brand);
-            box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.1);
-        }
-        .form-textarea {
-            resize: vertical;
-            min-height: 105px;
-        }
-        
-        /* --- 5. Tabla Dinámica --- */
-        .data-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 1.5rem;
-        }
-        .data-table thead {
-            background: linear-gradient(135deg, var(--brand) 0%, #0090cc 100%);
-        }
-        .data-table th {
-            padding: 1rem;
-            text-align: left;
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-        }
-        .data-table th.col-antal { width: 20%; text-align: center; }
-        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border-color); }
-        .data-table tbody td { padding: 0.75rem 1rem; }
-        .table-input, .table-textarea {
-            width: 100%; padding: 0.5rem; border: 1px solid transparent; border-radius: 6px; font-size: 0.9375rem;
-        }
-        .table-input:focus, .table-textarea:focus {
-            outline: none; border-color: var(--brand); background: rgba(0, 176, 240, 0.05);
-        }
-        .table-textarea { resize: none; overflow: hidden; min-height: 2.5rem; }
-        .table-input.col-antal { text-align: center; font-weight: 600; color: var(--brand); }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00B0F0 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
 
-        /* --- 6. Botones y Acciones --- */
-        .btn {
-            padding: 0.75rem 1.5rem; border: none; border-radius: 10px;
-            font-weight: 600; font-size: 0.875rem; cursor: pointer; text-transform: uppercase;
-            font-family: 'Inter', sans-serif; transition: var(--transition);
-        }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .actions-container { margin-top: 1rem; display: flex; gap: 0.75rem; }
-        .btn-add { background: var(--success); color: white; }
-        .btn-clear { background: white; color: var(--danger); border: 1.5px solid var(--danger); }
-        .btn-delete { background: transparent; color: #9ca3af; font-size: 1.125rem; }
-        .main-actions { display: flex; gap: 1rem; justify-content: center; }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-brand { background: linear-gradient(135deg, var(--brand) 0%, #0090cc 100%); color: white; }
+    /* ===== Badge ===== */
+    .security-badge {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(16, 185, 129, 0.9);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .security-badge:hover { background: rgba(16,185,129,1); transform: scale(1.05); }
 
-        /* --- 7. Componentes de UI Adicionales --- */
-        .toast {
-            position: fixed; bottom: -100px; right: 2rem; background: var(--text-dark); color: white;
-            padding: 1rem 1.5rem; border-radius: 12px; box-shadow: var(--shadow);
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 10000;
-        }
-        .toast.show { transform: translateY(-120px); }
-        #login-overlay {
-            position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 99999;
-        }
-        #login-overlay.show { display: flex; }
-        .login-card {
-            background: white; border-radius: var(--border-radius); padding: 2rem; width: 100%; max-width: 400px;
-        }
-        
-        /* --- 8. Estilos de Impresión (WYSIWYG) --- */
-        @media print {
-            @page { size: A4; margin: 2cm; }
-            body { padding: 0; background: white; }
-            .main-actions, .actions-container, .btn-delete, #login-overlay { display: none !important; }
-            .document-card { box-shadow: none; border-radius: 0; margin: 0; padding: 0; }
-            input, textarea { border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
-        }
-    </style>
+    .app-container { width: 100%; max-width: 920px; margin: 0 auto; }
+
+    .document-card {
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      margin-bottom: 2rem;
+    }
+
+    .card-header {
+      padding: 2.5rem 3rem 2rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+      border-bottom: 2px solid var(--brand);
+      text-align: right;
+    }
+
+    .logo { color: var(--brand); font-size: 2rem; font-weight: 800; }
+
+    .card-content { padding: 3rem; }
+
+    .main-title {
+      text-align: center;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.8125rem;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.9375rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none; border-color: var(--brand);
+      box-shadow: 0 0 0 4px rgba(0,176,240,0.08);
+    }
+    .form-textarea { resize: vertical; min-height: 100px; }
+
+    .data-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    .data-table thead { background: linear-gradient(135deg, var(--brand) 0%, #0090cc 100%); }
+    .data-table th {
+      padding: 1rem; text-align: left; color: white; font-weight: 600;
+      text-transform: uppercase; font-size: 0.75rem;
+    }
+    .data-table th.col-antal { width: 20%; text-align: center; }
+    .data-table tbody tr { background: white; }
+    .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+    .data-table tbody td { padding: 0.75rem 1rem; }
+
+    .table-input, .table-textarea {
+      width: 100%; padding: 0.5rem;
+      border: 1px solid transparent; border-radius: 6px;
+      font-size: 0.9375rem; font-family: 'Inter', sans-serif;
+    }
+    .table-input:focus { outline: none; border-color: var(--brand); background: rgba(0,176,240,0.05); }
+    .table-textarea { resize: none; overflow: hidden; min-height: 2.5rem; }
+    .table-input.col-antal { text-align: center; font-weight: 600; color: var(--brand); }
+
+    .actions-container { margin-top: 1rem; display: flex; gap: 0.75rem; }
+    .btn {
+      padding: 0.625rem 1.25rem; border: none; border-radius: 10px; font-weight: 600;
+      font-size: 0.8125rem; cursor: pointer; text-transform: uppercase; font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-add { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+    .btn-clear { background: white; color: #ef4444; border: 1.5px solid #ef4444; }
+    .btn-delete { background: transparent; color: #9ca3af; font-size: 1.125rem; }
+
+    .card-footer {
+      padding: 1.5rem 3rem; background: white; border-top: 2px solid var(--brand);
+      text-align: center; font-size: 0.8125rem; color: var(--text-light); line-height: 1.6; font-family: 'Poppins', sans-serif;
+    }
+    .card-footer p { margin: 0.25rem 0; }
+
+    .main-actions { display: flex; gap: 1rem; justify-content: center; }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .btn-brand { background: linear-gradient(135deg, var(--brand) 0%, #0090cc 100%); color: white; }
+
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; background: white; padding: 1rem 1.5rem;
+      border-radius: 12px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      transform: translateY(100px); opacity: 0; transition: all 0.4s; z-index: 10000; border: 1px solid var(--border);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    .security-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 1rem; opacity: 0; visibility: hidden; transition: all 0.3s;
+    }
+    .security-modal.show { opacity: 1; visibility: visible; }
+    .security-modal-content {
+      background: white; border-radius: 16px; max-width: 600px; width: 100%; padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,.5); transform: scale(0.9); transition: transform 0.3s;
+    }
+    .security-modal.show .security-modal-content { transform: scale(1); }
+    .security-modal-header {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--brand);
+    }
+    .security-modal-icon {
+      width: 48px; height: 48px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color:#fff;
+    }
+    .security-modal-title { font-size: 1.5rem; font-weight: 700; color: var(--text); }
+    .security-modal-body { color: var(--text-light); line-height: 1.7; font-size: 0.9375rem; margin-bottom: 1.5rem; }
+    .security-modal-features { background: #f9fafb; border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+    .security-modal-features ul { list-style: none; margin: 0; padding: 0; }
+    .security-modal-features li { padding: 0.5rem 0; display: flex; align-items: center; gap: 0.75rem; }
+    .security-modal-features li::before { content: '✓'; color: #10b981; font-weight: 700; font-size: 1.125rem; }
+    .security-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+    .btn-accept { background: linear-gradient(135deg, var(--brand) 0%, #0090cc 100%); color: white; }
+
+    /* ====== LOGIN simple ====== */
+    body.locked .app-container,
+    body.locked .security-badge,
+    body.locked .main-actions { display: none !important; }
+
+    #login-overlay{
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, rgba(102,126,234,.9), rgba(118,75,162,.9));
+      backdrop-filter: blur(10px); z-index: 99999;
+    }
+    #login-card{
+      width:min(420px, 92vw); background:#fff; border-radius:16px; padding:24px 22px;
+      box-shadow:0 20px 50px rgba(0,0,0,.25); font-family:'Inter', sans-serif;
+    }
+    #login-card h2{ margin:0 0 14px; font-weight:800; color:#111; font-size:1.25rem; }
+    #login-card p{ margin:0 0 16px; color:#6b7280; font-size:.92rem; }
+    .login-field{ display:flex; gap:10px; margin:12px 0 6px; }
+    .login-field input{
+      flex:1; padding:12px 14px; border:1.5px solid #e5e7eb; border-radius:10px; font-size:.95rem;
+    }
+    .login-field button{
+      padding:12px 16px; border:none; border-radius:10px; cursor:pointer; font-weight:700;
+      background:linear-gradient(135deg, #00B0F0, #0090cc); color:#fff;
+    }
+    #login-error{ color:#ef4444; font-size:.85rem; min-height:1.1em; }
+    #logoutBtn{
+      position:fixed; left:1rem; top:1rem; z-index:1000;
+      background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:.5rem .75rem; font-size:.8rem; display:none;
+    }
+    body.auth #logoutBtn{ display:block; }
+
+    /* Header de impresión oculto en pantalla */
+    .card-print-header{ display:none; }
+
+    /* ====== PRINT ====== */
+    @media print {
+      @page { size: A4 portrait; margin: 25mm 15mm 30mm 15mm; }
+
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+
+      html, body { background: white !important; padding: 0 !important; margin: 0 !important; width: 100% !important; height: 100% !important; }
+
+      /* No imprimir UI extra */
+      #login-overlay, #logoutBtn, .security-badge, .main-actions, .actions-container, .btn-delete, .toast, .security-modal, button { display: none !important; }
+
+      .app-container { max-width: 100% !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .document-card { box-shadow: none !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; background: white !important; }
+
+      .card-header {
+        padding: 0 0 5mm 0 !important; background: white !important; border-bottom: 2px solid #00B0F0 !important; margin-bottom: 5mm !important; page-break-after: avoid !important;
+      }
+      .logo { font-size: 16pt !important; color: #00B0F0 !important; font-family: 'Inter', sans-serif !important; font-weight: 800 !important; }
+
+      /* Header fijo en TODAS las páginas */
+      .card-print-header{
+        display:block !important;
+        position: fixed !important;
+        top: 0 !important; left: 0 !important; right: 0 !important;
+        padding: 4mm 15mm !important;
+        border-bottom: 2px solid #00B0F0 !important;
+        text-align: center !important;
+        background: #fff !important;
+        z-index: 9998 !important;
+      }
+      .card-print-header p{
+        font-size: 8pt !important; margin: 1mm 0 !important; color: #666 !important; line-height: 1.4 !important; font-family: 'Poppins', sans-serif !important;
+      }
+
+      .card-content { padding: 0 !important; padding-top: 30mm !important; padding-bottom: 35mm !important; }
+
+      .main-title{
+        font-size: 13pt !important; background: #00B0F0 !important; color: white !important; padding: 3mm 5mm !important;
+        text-align: center !important; margin-bottom: 5mm !important; border-radius: 2mm !important; page-break-after: avoid !important;
+        font-family: 'Poppins', sans-serif !important; font-weight: 700 !important;
+      }
+
+      .form-grid{
+        display: grid !important; grid-template-columns: 35% 65% !important; gap: 4mm !important; margin-bottom: 5mm !important;
+        background: #f5f5f5 !important; padding: 3mm !important; border-radius: 2mm !important; page-break-inside: avoid !important;
+      }
+      .form-group{ margin-bottom: 3mm !important; }
+      .form-label{ font-size: 8pt !important; color:#00B0F0 !important; font-weight: 700 !important; margin-bottom: 1mm !important; font-family: 'Poppins', sans-serif !important; text-transform: uppercase !important; }
+      .form-input, .form-textarea{ border:none !important; padding:0 !important; font-size: 9pt !important; color:#000 !important; background: transparent !important; font-family: 'Poppins', sans-serif !important; }
+
+      .data-table{ width:100% !important; border-collapse: collapse !important; margin-top: 5mm !important; margin-bottom: 8mm !important; border: 1px solid #ccc !important; }
+      .data-table thead{ display: table-header-group !important; }
+      .data-table th{
+        font-size: 9pt !important; padding: 3mm 2mm !important; background: #00B0F0 !important; color:white !important; font-weight:700 !important; border:none !important; font-family:'Poppins',sans-serif !important;
+      }
+      .data-table th.col-antal{ text-align:center !important; }
+      .data-table tbody tr{ page-break-inside: avoid !important; }
+      .data-table tbody tr:nth-child(even){ background:#f9f9f9 !important; }
+      .data-table tbody td{ padding: 2.5mm 2mm !important; font-size: 9pt !important; color: #000 !important; border-bottom: 1px solid #ddd !important; font-family: 'Poppins', sans-serif !important; }
+      .table-input, .table-textarea{ border:none !important; padding:0 !important; font-size: 9pt !important; background: transparent !important; color:#000 !important; font-family:'Poppins',sans-serif !important; }
+      .table-input.col-antal{ color:#00B0F0 !important; font-weight: 700 !important; text-align:center !important; }
+
+      /* Footer fijo en TODAS las páginas */
+      .card-footer{
+        position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+        width: 100% !important; padding: 4mm 15mm !important; border-top: 2px solid #00B0F0 !important; text-align: center !important; background: white !important;
+        z-index: 9999 !important; page-break-inside: avoid !important;
+      }
+      .card-footer p{ font-size: 8pt !important; margin: 1mm 0 !important; color: #666 !important; line-height: 1.5 !important; font-family: 'Poppins', sans-serif !important; }
+    }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .security-badge{ font-size: .7rem; padding: .4rem .8rem; }
+      .card-header, .card-content, .card-footer { padding: 1.5rem !important; }
+      .logo { font-size: 1.5rem; }
+      .main-title { font-size: 1rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .data-table th, .data-table td { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
+      .actions-container, .main-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .security-modal-content{ max-height: 90vh; overflow-y: auto; }
+    }
+  </style>
 </head>
-<body>
 
-    <div id="login-overlay">
-        <div class="login-card">
-            <h2 style="font-weight: 800; margin-bottom: 0.5rem;">Adgangskontrol</h2>
-            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Indtast adgangskode for at fortsætte.</p>
-            <div id="setup-view" style="display: none;">
-                <label class="form-label">Opret Bruger</label>
-                <input type="text" id="setup-user" class="form-input" placeholder="Brugernavn">
-                <label class="form-label" style="margin-top:1rem;">Opret Adgangskode</label>
-                <input type="password" id="setup-pass" class="form-input" placeholder="••••••••">
-                <button id="setup-btn" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Opret og Log Ind</button>
-            </div>
-            <div id="login-view">
-                <label class="form-label">Adgangskode</label>
-                <input type="password" id="login-pass" class="form-input" placeholder="••••••••">
-                <div id="login-error" style="color: var(--danger); font-size: 0.875rem; margin-top: 0.5rem; min-height: 1.2em;"></div>
-                <button id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Log Ind</button>
-            </div>
-        </div>
+<body class="locked">
+  <!-- ===== LOGIN simple ===== -->
+  <div id="login-overlay" aria-hidden="false">
+    <div id="login-card">
+      <h2>Acceso restringido</h2>
+      <p>Introduce la clave para entrar al portal.</p>
+      <div class="login-field">
+        <input id="loginPass" type="password" placeholder="Clave de acceso" autocomplete="current-password" />
+        <button id="loginBtn">Entrar</button>
+      </div>
+      <div id="login-error"></div>
+      <label style="display:flex;align-items:center;gap:.5rem;margin-top:8px;color:#6b7280;font-size:.9rem;">
+        <input type="checkbox" id="rememberMe"> Recordarme en este equipo
+      </label>
     </div>
-    
-    <main class="app-container" style="display: none;">
-        <div class="document-card">
-            <header class="card-header">
-                <h1 class="logo">Felson Watersafe ApS</h1>
-            </header>
+  </div>
+  <button id="logoutBtn" title="Cerrar sesión">Salir</button>
 
-            <div class="card-content">
-                <h2 class="main-title">Følgeseddel</h2>
+  <!-- ===== UI ===== -->
+  <div class="security-badge" id="securityBadge">🔒 Sikker og krypteret</div>
 
-                <div class="form-grid">
-                    <div>
-                        <div class="form-group">
-                            <label for="dato" class="form-label">Dato</label>
-                            <input type="date" class="form-input" id="dato">
-                        </div>
-                        <div class="form-group">
-                            <label for="ordre-nr" class="form-label">Ordre nr.</label>
-                            <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-group">
-                            <label for="levering" class="form-label">Levering</label>
-                            <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
-                        </div>
-                    </div>
-                </div>
+  <main class="app-container">
+    <div class="document-card">
+      <header class="card-header">
+        <h1 class="logo">Felson Watersafe ApS</h1>
+      </header>
 
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th class="col-antal">Antal</th>
-                            <th>Beskrivelse</th>
-                            <th class="col-actions"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body"></tbody>
-                </table>
-                <div class="actions-container">
-                    <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
-                    <button class="btn btn-clear" id="btn-clear">Ryd Alt</button>
-                </div>
+      <div class="card-content">
+        <!-- Header SOLO de impresión -->
+        <div class="card-print-header" aria-hidden="true">
+          <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
+          <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
+        </div>
+
+        <h2 class="main-title">Følgeseddel</h2>
+
+        <div class="form-grid">
+          <div>
+            <div class="form-group">
+              <label for="dato" class="form-label">Dato</label>
+              <input type="date" class="form-input" id="dato">
             </div>
-
-            <footer class="card-footer">
-                <p><strong>Felson Watersafe ApS</strong> / Gartnervej 4 / 6710 Esbjerg V</p>
-                <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
-            </footer>
+            <div class="form-group">
+              <label for="ordre-nr" class="form-label">Ordre nr.</label>
+              <input type="text" class="form-input" id="ordre-nr" placeholder="Indtast ordrenummer">
+            </div>
+          </div>
+          <div>
+            <div class="form-group">
+              <label for="levering" class="form-label">Levering</label>
+              <textarea class="form-textarea" id="levering" placeholder="Indtast leveringsadresse" style="min-height: 90px;"></textarea>
+            </div>
+          </div>
         </div>
 
-        <div class="main-actions">
-            <button class="btn btn-brand" id="btn-pdf">📄 Generer PDF</button>
-            <button class="btn btn-primary" id="btn-print">🖨️ Udskriv</button>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="col-antal">Antal</th>
+              <th>Beskrivelse</th>
+              <th style="width: 60px;"></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+
+        <div class="actions-container">
+          <button class="btn btn-add" id="btn-add">+ Tilføj Række</button>
+          <button class="btn btn-clear" id="btn-clear">Ryd Alt</button>
         </div>
-    </main>
+      </div>
 
-    <div class="toast" id="toast"></div>
+      <footer class="card-footer">
+        <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
+        <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
+      </footer>
+    </div>
 
-    <template id="table-row-template">
-        <tr>
-            <td><input type="number" class="table-input col-antal" min="0" placeholder="0"></td>
-            <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
-            <td style="text-align: center;"><button class="btn-delete" title="Slet række">×</button></td>
-        </tr>
-    </template>
+    <div class="main-actions">
+      <button class="btn btn-brand" id="btn-pdf">📄 Generer PDF</button>
+      <button class="btn btn-primary" id="btn-print">🖨️ Udskriv</button>
+    </div>
+  </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <script>
-        (function() {
-            'use strict';
+  <div class="toast" id="toast"></div>
 
-            // --- MÓDULO DE CONFIGURACIÓN Y CONSTANTES ---
-            const CONFIG = {
-                STORAGE_KEYS: {
-                    AUTH: 'felson_auth_hash',
-                    DATA: 'felson_encrypted_data'
-                },
-                AUTOSAVE_DELAY: 1500, // ms
-            };
+  <!-- Modal de seguridad (tu info) -->
+  <div class="security-modal" id="securityModal">
+    <div class="security-modal-content">
+      <div class="security-modal-header">
+        <div class="security-modal-icon">🔒</div>
+        <h3 class="security-modal-title">Sikkerhed og Databeskyttelse</h3>
+      </div>
+      <div class="security-modal-body">
+        <p>Velkommen til Felson Watersafe ApS følgeseddel system. Vi tager din datasikkerhed alvorligt og ønsker at informere dig om, hvordan dine oplysninger beskyttes.</p>
+        <div class="security-modal-features">
+          <ul>
+            <li>AES-256 kryptering af alle gemte data</li>
+            <li>Lokal lagring uden eksterne servere</li>
+            <li>Automatisk krypteret backup</li>
+            <li>Ingen data deles med tredjeparter</li>
+            <li>GDPR-kompatibel databehandling</li>
+          </ul>
+        </div>
+        <p><strong>Hvordan fungerer det?</strong><br> Alle dine følgesedler gemmes krypteret i din browsers lokale hukommelse ved hjælp af avanceret AES-256 kryptering. Dette sikrer, at kun du kan tilgå dine data. Ingen oplysninger sendes til eksterne servere eller deles med nogen.</p>
+        <p><strong>Din databeskyttelse:</strong><br> Vi følger GDPR. Du har fuld kontrol over dine data og kan til enhver tid slette dem med “Ryd Alt”.</p>
+        <p style="font-size: .875rem; color:#9ca3af; margin-top: 1.5rem;">Ved at fortsætte accepterer du vores sikkerhedspraksis og bekræfter, at du har læst denne information om databeskyttelse.</p>
+      </div>
+      <div class="security-modal-actions">
+        <button class="btn btn-accept" id="acceptSecurityBtn">Forstået og Accepter</button>
+      </div>
+    </div>
+  </div>
 
-            // --- MÓDULO DE REFERENCIAS AL DOM ---
-            const DOM = {
-                loginOverlay: document.getElementById('login-overlay'),
-                loginView: document.getElementById('login-view'),
-                setupView: document.getElementById('setup-view'),
-                loginPass: document.getElementById('login-pass'),
-                loginBtn: document.getElementById('login-btn'),
-                loginError: document.getElementById('login-error'),
-                setupUser: document.getElementById('setup-user'),
-                setupPass: document.getElementById('setup-pass'),
-                setupBtn: document.getElementById('setup-btn'),
-                appContainer: document.querySelector('.app-container'),
-                datoInput: document.getElementById('dato'),
-                ordreNrInput: document.getElementById('ordre-nr'),
-                leveringTextarea: document.getElementById('levering'),
-                tableBody: document.getElementById('table-body'),
-                addRowBtn: document.getElementById('btn-add'),
-                clearBtn: document.getElementById('btn-clear'),
-                printBtn: document.getElementById('btn-print'),
-                pdfBtn: document.getElementById('btn-pdf'),
-                rowTemplate: document.getElementById('table-row-template'),
-                toast: document.getElementById('toast'),
-            };
+  <!-- Template fila -->
+  <template id="table-row-template">
+    <tr>
+      <td><input type="number" class="table-input col-antal" min="0" placeholder="0"></td>
+      <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
+      <td style="text-align:center;"><button class="btn btn-delete">×</button></td>
+    </tr>
+  </template>
 
-            let autoSaveTimeout;
-            let currentPassword = '';
+  <!-- Libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-            // --- MÓDULO DE AUTENTICACIÓN Y SEGURIDAD ---
-            const AuthModule = {
-                async hash(data) {
-                    const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data));
-                    return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-                },
-                async verifyPassword(password) {
-                    const savedHash = localStorage.getItem(CONFIG.STORAGE_KEYS.AUTH);
-                    if (!savedHash) return false;
-                    const inputHash = await this.hash(password);
-                    return inputHash === savedHash;
-                },
-                async setPassword(user, password) {
-                    const hash = await this.hash(password);
-                    localStorage.setItem(CONFIG.STORAGE_KEYS.AUTH, hash);
-                },
-                isAuthenticated() {
-                    return !!currentPassword;
-                },
-                login(password) {
-                    currentPassword = password;
-                    DOM.loginOverlay.classList.remove('show');
-                    DOM.appContainer.style.display = 'block';
-                    UIModule.showToast('Adgang godkendt');
-                    AppModule.init();
-                },
-                logout() {
-                    currentPassword = '';
-                    DOM.loginOverlay.classList.add('show');
-                    DOM.appContainer.style.display = 'none';
-                }
-            };
+  <!-- ===== LOGIN simple (front) ===== -->
+  <script>
+    (function(){
+      const TOKEN_KEY = 'felson_portal_token';
+      const REMEMBER_KEY = 'felson_portal_remember';
+      /* ⚠️ CAMBIA TU CLAVE AQUI (solo demostrativa; para producción usa backend) */
+      const PASSWORD = 'Felson2025!';
 
-            // --- MÓDULO DE GESTIÓN DE DATOS (CIFRADO Y LOCALSTORAGE) ---
-            const StorageModule = {
-                encrypt(data) {
-                    if (!AuthModule.isAuthenticated()) return null;
-                    return CryptoJS.AES.encrypt(JSON.stringify(data), currentPassword).toString();
-                },
-                decrypt(encryptedData) {
-                    if (!AuthModule.isAuthenticated()) return null;
-                    try {
-                        const bytes = CryptoJS.AES.decrypt(encryptedData, currentPassword);
-                        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-                    } catch (e) {
-                        console.error("Decryption failed:", e);
-                        UIModule.showToast('Fejl: Kunne ikke indlæse data. Forkert adgangskode?', 'error');
-                        return null;
-                    }
-                },
-                saveState() {
-                    const tableRows = Array.from(DOM.tableBody.querySelectorAll('tr')).map(row => ({
-                        antal: row.querySelector('.col-antal').value,
-                        beskrivelse: row.querySelector('.table-textarea').value
-                    }));
-                    const state = {
-                        dato: DOM.datoInput.value,
-                        ordreNr: DOM.ordreNrInput.value,
-                        levering: DOM.leveringTextarea.value,
-                        rows: tableRows
-                    };
-                    const encryptedState = this.encrypt(state);
-                    if (encryptedState) {
-                        localStorage.setItem(CONFIG.STORAGE_KEYS.DATA, encryptedState);
-                    }
-                },
-                loadState() {
-                    const encryptedState = localStorage.getItem(CONFIG.STORAGE_KEYS.DATA);
-                    if (!encryptedState) {
-                        AppModule.addInitialRow();
-                        return;
-                    }
-                    const state = this.decrypt(encryptedState);
-                    if (!state) { // Decryption failed
-                        AppModule.addInitialRow();
-                        return;
-                    }
-                    DOM.datoInput.value = state.dato;
-                    DOM.ordreNrInput.value = state.ordreNr;
-                    DOM.leveringTextarea.value = state.levering;
-                    DOM.tableBody.innerHTML = '';
-                    if (state.rows && state.rows.length > 0) {
-                        state.rows.forEach(row => AppModule.addRow(row.antal, row.beskrivelse));
-                    } else {
-                        AppModule.addInitialRow();
-                    }
-                    UIModule.showToast('Data indlæst');
-                },
-                clearState() {
-                    if (confirm('Er du sikker på, at du vil rydde alle indtastede data? Denne handling kan ikke fortrydes.')) {
-                        localStorage.removeItem(CONFIG.STORAGE_KEYS.DATA);
-                        DOM.ordreNrInput.value = '';
-                        DOM.leveringTextarea.value = '';
-                        DOM.tableBody.innerHTML = '';
-                        AppModule.addInitialRow();
-                        AppModule.setInitialDate();
-                        UIModule.showToast('Alle data er ryddet');
-                    }
-                }
-            };
+      const body = document.body;
+      const ovr  = document.getElementById('login-overlay');
+      const pass = document.getElementById('loginPass');
+      const btn  = document.getElementById('loginBtn');
+      const err  = document.getElementById('login-error');
+      const rem  = document.getElementById('rememberMe');
+      const logoutBtn = document.getElementById('logoutBtn');
 
-            // --- MÓDULO DE INTERFAZ DE USUARIO (UI) ---
-            const UIModule = {
-                showToast(message, type = 'success') {
-                    DOM.toast.textContent = message;
-                    DOM.toast.style.background = type === 'error' ? 'var(--danger)' : 'var(--text-dark)';
-                    DOM.toast.classList.add('show');
-                    setTimeout(() => DOM.toast.classList.remove('show'), 3000);
-                },
-                autoResizeTextarea(textarea) {
-                    if (!textarea) return;
-                    textarea.style.height = 'auto';
-                    textarea.style.height = `${textarea.scrollHeight}px`;
-                }
-            };
+      function unlock(){
+        body.classList.remove('locked'); body.classList.add('auth');
+        if(ovr){ ovr.style.display = 'none'; ovr.setAttribute('aria-hidden','true'); }
+        if(rem?.checked){ localStorage.setItem(TOKEN_KEY, 'ok'); localStorage.setItem(REMEMBER_KEY, '1'); }
+        else { sessionStorage.setItem(TOKEN_KEY, 'ok'); }
+      }
+      function lock(){
+        body.classList.add('locked'); body.classList.remove('auth');
+        if(ovr){ ovr.style.display = 'flex'; ovr.setAttribute('aria-hidden','false'); }
+        sessionStorage.removeItem(TOKEN_KEY);
+        if(!localStorage.getItem(REMEMBER_KEY)) localStorage.removeItem(TOKEN_KEY);
+      }
+      function alreadyAuth(){ return sessionStorage.getItem(TOKEN_KEY)==='ok' || localStorage.getItem(TOKEN_KEY)==='ok'; }
+      function tryLogin(){
+        err.textContent = '';
+        if(pass.value.trim() === PASSWORD){ unlock(); pass.value=''; }
+        else { err.textContent = 'Clave incorrecta'; pass.focus(); }
+      }
 
-            // --- MÓDULO DE GENERACIÓN DE PDF ---
-            const PDFModule = {
-                generate() {
-                    UIModule.showToast('Genererer PDF...');
-                    try {
-                        const { jsPDF } = window.jspdf;
-                        const doc = new jsPDF();
-                        // ... (Aquí iría la lógica compleja de creación de PDF como en el ejemplo anterior)
-                        // Por simplicidad en este ejemplo, usaremos una versión más simple.
-                        doc.text("Følgeseddel", 20, 20);
-                        doc.text(`Dato: ${DOM.datoInput.value}`, 20, 30);
-                        doc.text(`Ordre Nr: ${DOM.ordreNrInput.value}`, 20, 40);
-                        // etc.
-                        doc.save(`folgeseddel_${DOM.ordreNrInput.value || 'udkast'}.pdf`);
-                    } catch (e) {
-                        console.error("PDF generation failed:", e);
-                        UIModule.showToast('Fejl ved PDF-generering', 'error');
-                    }
-                }
-            };
+      if(alreadyAuth()) unlock(); else lock();
 
-            // --- MÓDULO PRINCIPAL DE LA APLICACIÓN ---
-            const AppModule = {
-                init() {
-                    this.setInitialDate();
-                    StorageModule.loadState();
-                    this.setupEventListeners();
-                    // Initial resize for all loaded textareas
-                    DOM.tableBody.querySelectorAll('.table-textarea').forEach(UIModule.autoResizeTextarea);
-                },
-                setInitialDate() {
-                    if (!DOM.datoInput.value) {
-                        DOM.datoInput.valueAsDate = new Date();
-                    }
-                },
-                addRow(antal = '', beskrivelse = '') {
-                    const newRow = DOM.rowTemplate.content.cloneNode(true);
-                    newRow.querySelector('.col-antal').value = antal;
-                    const textarea = newRow.querySelector('.table-textarea');
-                    textarea.value = beskrivelse;
-                    DOM.tableBody.appendChild(newRow);
-                    UIModule.autoResizeTextarea(textarea);
-                },
-                addInitialRow() {
-                    if (DOM.tableBody.rows.length === 0) {
-                        this.addRow();
-                    }
-                },
-                triggerAutoSave() {
-                    clearTimeout(autoSaveTimeout);
-                    autoSaveTimeout = setTimeout(() => {
-                        StorageModule.saveState();
-                        UIModule.showToast('Automatisk gemt');
-                    }, CONFIG.AUTOSAVE_DELAY);
-                },
-                setupEventListeners() {
-                    document.querySelector('.document-card').addEventListener('input', this.triggerAutoSave);
-                    DOM.addRowBtn.addEventListener('click', () => this.addRow());
-                    DOM.clearBtn.addEventListener('click', StorageModule.clearState);
-                    DOM.tableBody.addEventListener('click', (e) => {
-                        if (e.target && e.target.closest('.btn-delete')) {
-                            if (DOM.tableBody.rows.length > 1) {
-                                e.target.closest('tr').remove();
-                                this.triggerAutoSave();
-                            } else {
-                                UIModule.showToast('Der skal være mindst én række', 'error');
-                            }
-                        }
-                    });
-                    DOM.tableBody.addEventListener('input', (e) => {
-                        if (e.target && e.target.classList.contains('table-textarea')) {
-                            UIModule.autoResizeTextarea(e.target);
-                        }
-                    });
-                    DOM.printBtn.addEventListener('click', () => window.print());
-                    DOM.pdfBtn.addEventListener('click', PDFModule.generate);
-                }
-            };
+      btn?.addEventListener('click', tryLogin);
+      pass?.addEventListener('keydown', e => { if(e.key==='Enter') tryLogin(); });
+      logoutBtn?.addEventListener('click', ()=>{
+        localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(REMEMBER_KEY); sessionStorage.removeItem(TOKEN_KEY); lock();
+      });
 
-            // --- LÓGICA DE INICIO Y AUTENTICACIÓN ---
-            async function bootstrap() {
-                const savedHash = localStorage.getItem(CONFIG.STORAGE_KEYS.AUTH);
-                if (savedHash) {
-                    DOM.loginView.style.display = 'block';
-                    DOM.setupView.style.display = 'none';
-                    DOM.loginOverlay.classList.add('show');
-                    DOM.loginPass.focus();
-                    DOM.loginBtn.onclick = async () => {
-                        const pass = DOM.loginPass.value;
-                        if (await AuthModule.verifyPassword(pass)) {
-                            AuthModule.login(pass);
-                        } else {
-                            DOM.loginError.textContent = 'Forkert adgangskode.';
-                        }
-                    };
-                    DOM.loginPass.onkeydown = (e) => {
-                        if (e.key === 'Enter') DOM.loginBtn.click();
-                    };
-                } else {
-                    DOM.setupView.style.display = 'block';
-                    DOM.loginView.style.display = 'none';
-                    DOM.loginOverlay.classList.add('show');
-                    DOM.setupUser.focus();
-                    DOM.setupBtn.onclick = async () => {
-                        const user = DOM.setupUser.value;
-                        const pass = DOM.setupPass.value;
-                        if (user && pass) {
-                            await AuthModule.setPassword(user, pass);
-                            AuthModule.login(pass);
-                        } else {
-                            alert('Brugernavn og adgangskode er påkrævet.');
-                        }
-                    };
-                }
-            }
+      // Bloquear acciones críticas si no hay login
+      const guard = (fn) => (...a) => { if(!alreadyAuth()){ alert('Acceso restringido. Inicia sesión.'); return; } return fn(...a); };
+      window.addEventListener('DOMContentLoaded', ()=>{
+        const printBtn = document.getElementById('btn-print');
+        const pdfBtn   = document.getElementById('btn-pdf');
+        if(printBtn){ printBtn.onclick = guard(() => window.print()); }
+        if(pdfBtn && typeof window.generatePDF === 'function'){
+          const orig = window.generatePDF; window.generatePDF = guard(orig);
+          pdfBtn.onclick = window.generatePDF;
+        }
+      });
+    })();
+  </script>
 
-            bootstrap();
+  <!-- ===== App lógica ===== -->
+  <script>
+    (function() {
+      'use strict';
+      const { jsPDF } = window.jspdf;
+      const STORAGE_KEY = 'felson_encrypted_data';
+      const ENCRYPTION_KEY = 'FelsonWatersafe2025SecureKey';
+      const SECURITY_ACCEPTED_KEY = 'felson_security_accepted';
+      let autoSaveTimeout;
 
-        })();
-    </script>
+      function encrypt(data){ return CryptoJS.AES.encrypt(JSON.stringify(data), ENCRYPTION_KEY).toString(); }
+      function decrypt(encrypted){
+        try{ const bytes = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY); return JSON.parse(bytes.toString(CryptoJS.enc.Utf8)); }
+        catch(e){ return null; }
+      }
+
+      function addRow(antal = '', beskrivelse = '') {
+        const tableBody = document.getElementById('table-body');
+        const rowTemplate = document.getElementById('table-row-template');
+        const newRow = rowTemplate.content.cloneNode(true);
+        const antalInput = newRow.querySelector('.col-antal');
+        const beskrivelseTextarea = newRow.querySelector('.table-textarea');
+        if (antal) antalInput.value = antal;
+        if (beskrivelse) { beskrivelseTextarea.value = beskrivelse; setTimeout(() => autoResizeTextarea(beskrivelseTextarea), 0); }
+        tableBody.appendChild(newRow);
+        triggerAutoSave();
+      }
+      function autoResizeTextarea(textarea){ if(!textarea) return; textarea.style.height='auto'; textarea.style.height = Math.max(40, textarea.scrollHeight) + 'px'; }
+      function showToast(message){ const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); }
+
+      function generatePDF() {
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 20;
+        const footerHeight = 25;
+        const usableHeight = pageHeight - footerHeight - 30;
+
+        let currentY = margin;
+        let pageNumber = 1;
+
+        function drawHeader(){
+          doc.setFillColor(0,176,240); doc.rect(0,0,pageWidth,3,'F');
+          doc.setFontSize(18); doc.setTextColor(0,176,240); doc.setFont('helvetica','bold'); doc.text('Felson Watersafe ApS', pageWidth - margin, 16, { align:'right' });
+          doc.setDrawColor(0,176,240); doc.setLineWidth(0.5); doc.line(margin,20,pageWidth-margin,20);
+        }
+        function drawCompanyInfo(){
+          doc.setFillColor(245,250,255); doc.roundedRect(margin, currentY, 70, 25, 2,2, 'F');
+          doc.setFontSize(7); doc.setTextColor(60,60,60); doc.setFont('helvetica','normal');
+          const y = currentY+4;
+          doc.text('Felson Watersafe ApS', margin+3, y);
+          doc.text('Gartnervej 4',        margin+3, y+4);
+          doc.text('6710 Esbjerg V',      margin+3, y+8);
+          doc.text('CVR-nr. DK26813522',  margin+3, y+12);
+          doc.text('Tlf. 70206676',       margin+3, y+16);
+          doc.text('felson@felson.dk',    margin+3, y+20);
+          currentY += 28;
+        }
+        function drawFooter(){
+          const footerY = pageHeight - 20;
+          doc.setDrawColor(0,176,240); doc.setLineWidth(0.5); doc.line(margin, footerY-5, pageWidth-margin, footerY-5);
+          doc.setFillColor(240,248,255); doc.rect(0, footerY-3, pageWidth, 1, 'F');
+          doc.setFontSize(7); doc.setTextColor(100); doc.setFont('helvetica','normal');
+          doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', pageWidth/2, footerY, {align:'center'});
+          doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', pageWidth/2, footerY+4, {align:'center'});
+          doc.setFillColor(0,176,240); doc.roundedRect(margin-2, footerY-2, 15, 6, 1,1, 'F');
+          doc.setTextColor(255,255,255); doc.setFontSize(8); doc.setFont('helvetica','bold');
+          doc.text(`Side ${pageNumber}`, margin+5.5, footerY+2, {align:'center'});
+        }
+        function addNewPage(){ drawFooter(); doc.addPage(); pageNumber++; currentY = margin; drawHeader(); currentY = 25; }
+
+        drawHeader(); currentY = 25; drawCompanyInfo();
+
+        doc.setFillColor(0,176,240);
+        doc.roundedRect(margin, currentY, pageWidth - 2*margin, 10, 2,2, 'F');
+        doc.setFontSize(14); doc.setTextColor(255,255,255); doc.setFont('helvetica','bold');
+        doc.text('FØLGESEDDEL', pageWidth/2, currentY + 6.5, { align:'center' });
+        currentY += 14;
+
+        const datoInput = document.getElementById('dato');
+        const ordreNrInput = document.getElementById('ordre-nr');
+        const leveringInput = document.getElementById('levering');
+
+        doc.setFillColor(250,250,250);
+        doc.roundedRect(margin, currentY, pageWidth - 2*margin, 26, 2,2, 'F');
+        currentY += 4;
+
+        doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(0,176,240);
+        doc.text('DATO', margin+3, currentY);
+        doc.text('LEVERING', pageWidth/2 + 5, currentY);
+
+        doc.setFontSize(9); doc.setTextColor(40,40,40); doc.setFont('helvetica','normal');
+        const fecha = datoInput.value ? new Date(datoInput.value + 'T00:00:00').toLocaleDateString('da-DK') : '';
+        doc.text(fecha, margin+3, currentY+5);
+        const leveringLines = doc.splitTextToSize(leveringInput.value || '', pageWidth/2 - 30);
+        doc.text(leveringLines, pageWidth/2 + 5, currentY+5);
+
+        doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(0,176,240);
+        doc.text('ORDRE NR.', margin+3, currentY+10);
+        doc.setFontSize(9); doc.setTextColor(40,40,40); doc.setFont('helvetica','normal');
+        doc.text(ordreNrInput.value || '', margin+3, currentY+15);
+
+        currentY += Math.max(24, leveringLines.length*5 + 16);
+
+        doc.setFillColor(0,176,240);
+        doc.roundedRect(margin, currentY, pageWidth - 2*margin, 9, 2,2, 'F');
+        doc.setTextColor(255); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+        doc.text('ANTAL', margin + 5, currentY + 6);
+        doc.text('BESKRIVELSE', margin + 35, currentY + 6);
+        currentY += 11;
+
+        const tableBody = document.getElementById('table-body');
+        const rows = Array.from(tableBody.querySelectorAll('tr'));
+        doc.setTextColor(40,40,40); doc.setFont('helvetica','normal'); doc.setFontSize(9);
+
+        rows.forEach((row, index) => {
+          const antal = row.querySelector('.col-antal').value || '0';
+          const beskrivelse = row.querySelector('.table-textarea').value || '';
+          const lines = doc.splitTextToSize(beskrivelse, pageWidth - margin - 45);
+          const rowH = Math.max(7, lines.length * 5);
+
+          if (currentY + rowH > usableHeight) {
+            addNewPage();
+            doc.setFillColor(0,176,240);
+            doc.roundedRect(margin, currentY, pageWidth - 2*margin, 9, 2,2, 'F');
+            doc.setTextColor(255); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+            doc.text('ANTAL', margin + 5, currentY + 6);
+            doc.text('BESKRIVELSE', margin + 35, currentY + 6);
+            currentY += 11;
+            doc.setTextColor(40,40,40); doc.setFont('helvetica','normal'); doc.setFontSize(9);
+          }
+
+          if (index % 2 === 0) { doc.setFillColor(248,250,252); doc.rect(margin, currentY-1, pageWidth - 2*margin, rowH, 'F'); }
+
+          doc.setTextColor(0,176,240); doc.setFont('helvetica','bold');
+          doc.text(antal, margin + 15, currentY + 4, { align:'center' });
+          doc.setTextColor(40,40,40); doc.setFont('helvetica','normal');
+          doc.text(lines, margin + 35, currentY + 4);
+
+          doc.setDrawColor(220,220,220); doc.setLineWidth(0.2);
+          doc.line(margin, currentY + rowH, pageWidth - margin, currentY + rowH);
+          currentY += rowH + 1;
+        });
+
+        drawFooter();
+        doc.save(`folgeseddel_${ordreNrInput.value || 'dokument'}.pdf`);
+        showToast('PDF genereret!');
+      }
+      // Exponer para el botón y para el guard del login
+      window.generatePDF = generatePDF;
+
+      function saveData(){
+        const datoInput = document.getElementById('dato');
+        const ordreNrInput = document.getElementById('ordre-nr');
+        const leveringInput = document.getElementById('levering');
+        const tableBody = document.getElementById('table-body');
+        const data = {
+          dato: datoInput.value, ordreNr: ordreNrInput.value, levering: leveringInput.value,
+          rows: Array.from(tableBody.querySelectorAll('tr')).map(row => ({
+            antal: row.querySelector('.col-antal').value,
+            beskrivelse: row.querySelector('.table-textarea').value
+          }))
+        };
+        try { localStorage.setItem(STORAGE_KEY, encrypt(data)); } catch(e){}
+      }
+      function loadData(){
+        try{
+          const encrypted = localStorage.getItem(STORAGE_KEY);
+          if(!encrypted) return false;
+          const data = decrypt(encrypted); if(!data) return false;
+          document.getElementById('dato').value = data.dato || '';
+          document.getElementById('ordre-nr').value = data.ordreNr || '';
+          document.getElementById('levering').value = data.levering || '';
+          const tableBody = document.getElementById('table-body'); tableBody.innerHTML = '';
+          if (data.rows?.length) data.rows.forEach(r => addRow(r.antal, r.beskrivelse)); else addRow();
+          return true;
+        }catch(e){ return false; }
+      }
+      function clearAllData(){
+        if(!confirm('Er du sikker på at du vil rydde alle data?')) return;
+        document.getElementById('dato').value = '';
+        document.getElementById('ordre-nr').value = '';
+        document.getElementById('levering').value = '';
+        const tableBody = document.getElementById('table-body'); tableBody.innerHTML = ''; addRow();
+        localStorage.removeItem(STORAGE_KEY); showToast('Alle data er ryddet');
+      }
+      function triggerAutoSave(){ clearTimeout(autoSaveTimeout); autoSaveTimeout = setTimeout(saveData, 1000); }
+
+      function init(){
+        const securityModal = document.getElementById('securityModal');
+        const securityBadge = document.getElementById('securityBadge');
+        const acceptSecurityBtn = document.getElementById('acceptSecurityBtn');
+        const datoInput = document.getElementById('dato');
+        const ordreNrInput = document.getElementById('ordre-nr');
+        const leveringInput = document.getElementById('levering');
+        const tableBody = document.getElementById('table-body');
+        const addRowBtn = document.getElementById('btn-add');
+        const clearBtn = document.getElementById('btn-clear');
+        const printBtn = document.getElementById('btn-print');
+        const pdfBtn = document.getElementById('btn-pdf');
+
+        securityBadge.onclick = () => securityModal.classList.add('show');
+        if (!localStorage.getItem(SECURITY_ACCEPTED_KEY)) setTimeout(() => securityModal.classList.add('show'), 500);
+        acceptSecurityBtn.onclick = () => { localStorage.setItem(SECURITY_ACCEPTED_KEY, 'true'); securityModal.classList.remove('show'); showToast('Sikkerhedsindstillinger accepteret'); };
+        securityModal.onclick = (e) => { if(e.target === securityModal) securityModal.classList.remove('show'); };
+
+        addRowBtn.onclick = () => addRow();
+        clearBtn.onclick = clearAllData;
+
+        // Botones: su handler final lo refuerza el guard del login
+        if (printBtn) printBtn.onclick = () => window.print();
+        if (pdfBtn)   pdfBtn.onclick = () => window.generatePDF && window.generatePDF();
+
+        [datoInput, ordreNrInput, leveringInput].forEach(i => i.addEventListener('input', triggerAutoSave));
+
+        tableBody.addEventListener('click', (e) => {
+          if (e.target.classList.contains('btn-delete')) {
+            if (tableBody.rows.length > 1) { e.target.closest('tr').remove(); triggerAutoSave(); }
+            else { showToast('Der skal være mindst én række'); }
+          }
+        });
+        tableBody.addEventListener('input', (e) => {
+          if (e.target.classList.contains('table-textarea')) autoResizeTextarea(e.target);
+          triggerAutoSave();
+        });
+
+        const hasData = loadData();
+        if (!datoInput.value) datoInput.valueAsDate = new Date();
+        if (tableBody.rows.length === 0) addRow();
+        if (hasData) showToast('Data indlæst');
+      }
+
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+      else init();
+    })();
+  </script>
 </body>
 </html>
