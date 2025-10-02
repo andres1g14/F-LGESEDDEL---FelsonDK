@@ -517,7 +517,192 @@ body.auth #logoutBtn{ display:block; }
 
 </head>
 <body>
-    <body class="locked">
+  <!-- Modal de acceso -->
+<div id="authModal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:99999;">
+  <div style="width:min(92vw,420px);background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.25);overflow:hidden;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;">
+    <div style="padding:18px 20px;border-bottom:2px solid #00B0F0;display:flex;align-items:center;gap:10px">
+      <div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#10b981,#059669);display:grid;place-items:center;color:#fff;font-weight:800">🔒</div>
+      <div style="font-weight:800;color:#1a1a1a">Acceso protegido</div>
+    </div>
+
+    <div id="authViewLogin" style="padding:18px 20px;display:none">
+      <div style="color:#6b7280;font-size:.95rem;margin-bottom:12px">Ingresa tu usuario y clave.</div>
+      <label style="display:block;font-size:.8rem;color:#6b7280;margin:10px 0 6px">Usuario</label>
+      <input id="authUser" type="text" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:10px">
+      <label style="display:block;font-size:.8rem;color:#6b7280;margin:12px 0 6px">Clave</label>
+      <input id="authPass" type="password" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:10px">
+      <div id="authErr" style="color:#ef4444;font-size:.85rem;margin-top:8px;display:none"></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+        <button id="authBtnLogin" style="padding:10px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#00B0F0,#0090cc);color:#fff;font-weight:700;cursor:pointer">Entrar</button>
+      </div>
+    </div>
+
+    <div id="authViewSetup" style="padding:18px 20px;display:none">
+      <div style="color:#6b7280;font-size:.95rem;margin-bottom:12px">Crea usuario y clave (opcional: PIN para acceso rápido por URL).</div>
+      <label style="display:block;font-size:.8rem;color:#6b7280;margin:10px 0 6px">Nuevo usuario</label>
+      <input id="setupUser" type="text" placeholder="ej. felson" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:10px">
+      <label style="display:block;font-size:.8rem;color:#6b7280;margin:12px 0 6px">Nueva clave</label>
+      <input id="setupPass" type="password" placeholder="••••••••" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:10px">
+      <label style="display:block;font-size:.8rem;color:#6b7280;margin:12px 0 6px">PIN (opcional)</label>
+      <input id="setupPin" type="text" placeholder="ej. 1234" style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:10px">
+      <div id="setupErr" style="color:#ef4444;font-size:.85rem;margin-top:8px;display:none"></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+        <button id="authBtnSave" style="padding:10px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:700;cursor:pointer">Guardar</button>
+      </div>
+      <div style="font-size:.8rem;color:#9ca3af;margin-top:10px">Luego podrás cambiarlo entrando con <code>?setcreds=1</code> o con <b>Alt+Shift+L</b>.</div>
+    </div>
+  </div>
+</div>
+<script>
+(() => {
+  const LS_KEY = 'fw_portal_auth';
+  const LS_SESSION = 'fw_portal_auth_session';
+
+  const $ = s => document.querySelector(s);
+  const modal = $('#authModal');
+  const viewLogin = $('#authViewLogin');
+  const viewSetup = $('#authViewSetup');
+
+  // Util: SHA-256 (WebCrypto) -> hex
+  async function sha256Hex(str) {
+    const enc = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+  const rnd = n => Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b => b.toString(16).padStart(2,'0')).join('');
+
+  function parseQS(){
+    const q = {};
+    location.search.replace(/^\?/, '').split('&').filter(Boolean).forEach(p => {
+      const [k,v] = p.split('=');
+      q[decodeURIComponent(k)] = decodeURIComponent(v||'');
+    });
+    return q;
+  }
+
+  function getCreds(){
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || ''); } catch(e){ return null; }
+  }
+  function setCreds(obj){
+    localStorage.setItem(LS_KEY, JSON.stringify(obj));
+  }
+  function setSession(v){ sessionStorage.setItem(LS_SESSION, v ? '1' : ''); }
+  function hasSession(){ return sessionStorage.getItem(LS_SESSION) === '1'; }
+
+  function show(el){ el.style.display = 'block'; }
+  function hide(el){ el.style.display = 'none'; }
+
+  function lockUI(){ show(modal); }
+  function unlockUI(){ hide(modal); setSession(true); }
+
+  async function tryLogin(user, pass){
+    const saved = getCreds();
+    if(!saved) return false;
+    const cand = await sha256Hex(saved.salt + ':' + user + ':' + pass);
+    return cand === saved.hash;
+  }
+
+  async function tryPin(pin){
+    const saved = getCreds();
+    if(!saved || !saved.pinHash) return false;
+    const cand = await sha256Hex(saved.pinSalt + ':' + pin);
+    return cand === saved.pinHash;
+  }
+
+  function openLogin(){
+    show(modal); show(viewLogin); hide(viewSetup);
+    $('#authErr').style.display = 'none';
+    $('#authUser').focus();
+  }
+
+  function openSetup(){
+    show(modal); hide(viewLogin); show(viewSetup);
+    $('#setupErr').style.display = 'none';
+    $('#setupUser').focus();
+  }
+
+  // Eventos
+  $('#authBtnLogin')?.addEventListener('click', async () => {
+    const u = $('#authUser').value.trim();
+    const p = $('#authPass').value;
+    if(await tryLogin(u,p)){ unlockUI(); }
+    else {
+      const err = $('#authErr');
+      err.textContent = 'Usuario o clave inválidos.';
+      err.style.display = 'block';
+    }
+  });
+
+  $('#authBtnSave')?.addEventListener('click', async () => {
+    const u = $('#setupUser').value.trim();
+    const p = $('#setupPass').value;
+    const pin = $('#setupPin').value.trim();
+
+    if(!u || !p){
+      const e = $('#setupErr'); e.textContent = 'Usuario y clave son obligatorios.'; e.style.display = 'block'; return;
+    }
+    const salt = rnd(16);
+    const hash = await sha256Hex(salt + ':' + u + ':' + p);
+    const out = { salt, hash, userHint: u.slice(0,2) + '***' };
+
+    if(pin){
+      const pinSalt = rnd(8);
+      out.pinSalt = pinSalt;
+      out.pinHash = await sha256Hex(pinSalt + ':' + pin);
+    }
+    setCreds(out);
+    unlockUI();
+    alert('Credenciales guardadas. Para cambiarlas: ?setcreds=1 o Alt+Shift+L.');
+  });
+
+  // Atajos: cambiar credenciales / salir / reset
+  window.addEventListener('keydown', (e) => {
+    if(e.altKey && e.shiftKey && e.key.toLowerCase() === 'l'){
+      openSetup();
+    }
+  });
+
+  (async function boot(){
+    const qs = parseQS();
+
+    if(qs.resetcreds === '1'){
+      localStorage.removeItem(LS_KEY);
+      sessionStorage.removeItem(LS_SESSION);
+      openSetup(); return;
+    }
+    if(qs.logout === '1'){
+      sessionStorage.removeItem(LS_SESSION);
+      openLogin(); return;
+    }
+    // Si piden setcreds, solo abrir asistente (aunque estén dentro)
+    if(qs.setcreds === '1'){
+      openSetup(); return;
+    }
+
+    const creds = getCreds();
+
+    // PIN por URL
+    if(qs.pin && creds){
+      if(await tryPin(qs.pin)){ unlockUI(); return; }
+      // Si pin incorrecto, caer a login normal
+    }
+
+    if(!creds){
+      // Primera vez → asistente
+      openSetup(); return;
+    }
+
+    if(hasSession()){
+      // Ya logueado en esta pestaña
+      return;
+    }
+
+    // Pedir login normal
+    openLogin();
+  })();
+})();
+</script>
+  <body class="locked">
   <!-- Login Overlay -->
   <div id="login-overlay" aria-hidden="false">
     <div id="login-card">
