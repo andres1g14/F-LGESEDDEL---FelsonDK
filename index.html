@@ -403,262 +403,211 @@
             color: white;
         }
 
-        @media print {
-            /* Page setup with space for fixed footer */
-            @page {
-                size: A4 portrait;
-                margin-top: 15mm;
-                margin-bottom: 30mm;
-                margin-left: 15mm;
-                margin-right: 15mm;
-            }
+        /* ===== PRINT: Match PDF look & layout ===== */
+@media print {
 
-            /* Force exact colors */
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
+  /* A4 con margen inferior para footer fijo */
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 30mm 15mm; /* top right bottom left */
+  }
 
-            html, body {
-                background: white !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-            }
+  /* Forzar colores exactos y tipografías */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    font-family: 'Poppins', 'Inter', Arial, sans-serif !important;
+  }
 
-            /* Hide non-printable elements */
-            .security-badge,
-            .main-actions,
-            .actions-container,
-            .btn-delete,
-            .toast,
-            .security-modal,
-            button {
-                display: none !important;
-            }
+  html, body {
+    background: #fff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
 
-            .app-container {
-                max-width: 100% !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
+  /* Ocultar UI no imprimible */
+  .security-badge,
+  .main-actions,
+  .actions-container,
+  .btn-delete,
+  .toast,
+  .security-modal,
+  button {
+    display: none !important;
+  }
 
-            .document-card {
-                box-shadow: none !important;
-                border-radius: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-            }
+  /* Contenedor al 100% */
+  .app-container,
+  .document-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
 
-            /* Header */
-            .card-header {
-                padding: 0 0 5mm 0 !important;
-                background: white !important;
-                border-bottom: 2px solid #00B0F0 !important;
-                margin-bottom: 5mm !important;
-                page-break-after: avoid !important;
-            }
+  /* CABECERA como en PDF: línea superior + borde inferior azul */
+  .card-header {
+    padding: 0 0 5mm 0 !important;
+    margin: 0 0 5mm 0 !important;
+    background: #fff !important;
+    border-bottom: 2px solid #00B0F0 !important;
+    page-break-after: avoid !important;
+    position: relative;
+  }
+  /* “Gradiente superior” simulado: línea azul fina como en PDF */
+  .card-header::before {
+    content: "";
+    position: absolute;
+    top: -3mm; left: 0; right: 0;
+    height: 3mm;
+    background: #00B0F0;
+  }
 
-            .logo {
-                font-size: 16pt !important;
-                color: #00B0F0 !important;
-                font-family: 'Inter', sans-serif !important;
-                font-weight: 800 !important;
-            }
+  .logo {
+    font-size: 18pt !important;
+    font-weight: 800 !important;
+    color: #00B0F0 !important;
+  }
 
-            /* Content with space for footer */
-            .card-content {
-                padding: 0 !important;
-                padding-bottom: 35mm !important;
-            }
+  .card-content {
+    padding: 0 !important;
+    padding-bottom: 35mm !important; /* espacio para footer fijo */
+  }
 
-            /* Title */
-            .main-title {
-                font-size: 13pt !important;
-                background: #00B0F0 !important;
-                color: white !important;
-                padding: 3mm 5mm !important;
-                text-align: center !important;
-                margin-bottom: 5mm !important;
-                border-radius: 2mm !important;
-                page-break-after: avoid !important;
-                font-family: 'Poppins', sans-serif !important;
-                font-weight: 700 !important;
-            }
+  /* Título “FØLGESEDDEL” como la franja azul del PDF */
+  .main-title {
+    font-size: 14pt !important;
+    font-weight: 700 !important;
+    font-family: 'Poppins', sans-serif !important;
+    color: #fff !important;
+    background: #00B0F0 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: .2em !important;
+    padding: 3mm 5mm !important;
+    margin: 0 0 5mm 0 !important;
+    border-radius: 2mm !important;
+    page-break-after: avoid !important;
+  }
 
-            /* Form */
-            .form-grid {
-                display: grid !important;
-                grid-template-columns: 35% 65% !important;
-                gap: 4mm !important;
-                margin-bottom: 5mm !important;
-                background: #f5f5f5 !important;
-                padding: 3mm !important;
-                border-radius: 2mm !important;
-                page-break-inside: avoid !important;
-            }
+  /* Bloque de formulario con dos columnas como en PDF */
+  .form-grid {
+    display: grid !important;
+    grid-template-columns: 35% 65% !important;
+    gap: 4mm !important;
+    padding: 3mm !important;
+    margin-bottom: 5mm !important;
+    background: #f5f5f5 !important;
+    border-radius: 2mm !important;
+    page-break-inside: avoid !important;
+  }
+  .form-label {
+    color: #00B0F0 !important;
+    font-weight: 700 !important;
+    font-size: 8pt !important;
+    text-transform: uppercase !important;
+    margin-bottom: 1mm !important;
+  }
+  .form-input, .form-textarea {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 9pt !important;
+    color: #000 !important;
+    background: transparent !important;
+  }
 
-            .form-group {
-                margin-bottom: 3mm !important;
-            }
+  /* Tabla */
+  .data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1px solid #ccc !important;
+    margin-top: 5mm !important;
+    margin-bottom: 8mm !important;
+  }
+  /* Encabezado SIEMPRE en cada página */
+  .data-table thead { display: table-header-group !important; }
+  .data-table tfoot { display: table-footer-group !important; }
 
-            .form-label {
-                font-size: 8pt !important;
-                color: #00B0F0 !important;
-                font-weight: 700 !important;
-                margin-bottom: 1mm !important;
-                font-family: 'Poppins', sans-serif !important;
-                text-transform: uppercase !important;
-            }
+  .data-table thead tr th {
+    background: #00B0F0 !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    font-size: 8.5pt !important;
+    padding: 3mm 2mm !important;
+    border: none !important;
+    text-transform: uppercase !important;
+  }
+  .data-table th.col-antal { text-align: center !important; width: 20% !important; }
 
-            .form-input, .form-textarea {
-                border: none !important;
-                padding: 0 !important;
-                font-size: 9pt !important;
-                color: #000 !important;
-                background: transparent !important;
-                font-family: 'Poppins', sans-serif !important;
-            }
+  .data-table tbody tr { page-break-inside: avoid !important; }
+  .data-table tbody tr:nth-child(even) { background: #f9f9f9 !important; }
+  .data-table tbody td {
+    font-size: 9pt !important;
+    color: #000 !important;
+    padding: 2.5mm 2mm !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+  .table-input, .table-textarea {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 9pt !important;
+    background: transparent !important;
+    color: #000 !important;
+  }
+  .table-input.col-antal {
+    color: #00B0F0 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
 
-            /* Table */
-            .data-table {
-                width: 100% !important;
-                border-collapse: collapse !important;
-                margin-top: 5mm !important;
-                margin-bottom: 8mm !important;
-                border: 1px solid #ccc !important;
-            }
+  /* FOOTER FIJO EN TODAS LAS PÁGINAS (como el PDF) */
+  .card-footer {
+    position: fixed !important;
+    left: 0 !important; right: 0 !important; bottom: 0 !important;
+    width: 100% !important;
+    padding: 4mm 15mm !important;
+    background: #fff !important;
+    border-top: 2px solid #00B0F0 !important;
+    text-align: center !important;
+    z-index: 9999 !important;
+  }
+  .card-footer p {
+    font-size: 8pt !important;
+    margin: 1mm 0 !important;
+    color: #666 !important;
+    line-height: 1.5 !important;
+  }
 
-            .data-table thead {
-                display: table-header-group !important;
-            }
+  /* Badge de número de página como el “Side X” del PDF */
+  .card-footer::before {
+    content: "Side " counter(page);
+    position: absolute;
+    left: 15mm;
+    bottom: 6mm;
+    display: inline-block;
+    padding: 1mm 4mm;
+    border-radius: 2mm;
+    background: #00B0F0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 8pt;
+  }
 
-            .data-table th {
-                font-size: 9pt !important;
-                padding: 3mm 2mm !important;
-                background: #00B0F0 !important;
-                color: white !important;
-                font-weight: 700 !important;
-                border: none !important;
-                font-family: 'Poppins', sans-serif !important;
-            }
-
-            .data-table th.col-antal {
-                text-align: center !important;
-            }
-
-            .data-table tbody tr {
-                page-break-inside: avoid !important;
-            }
-
-            .data-table tbody tr:nth-child(even) {
-                background: #f9f9f9 !important;
-            }
-
-            .data-table tbody td {
-                padding: 2.5mm 2mm !important;
-                font-size: 9pt !important;
-                color: #000 !important;
-                border-bottom: 1px solid #ddd !important;
-                font-family: 'Poppins', sans-serif !important;
-            }
-
-            .table-input, .table-textarea {
-                border: none !important;
-                padding: 0 !important;
-                font-size: 9pt !important;
-                background: transparent !important;
-                color: #000 !important;
-                font-family: 'Poppins', sans-serif !important;
-            }
-
-            .table-input.col-antal {
-                color: #00B0F0 !important;
-                font-weight: 700 !important;
-                text-align: center !important;
-            }
-
-            /* FOOTER FIJO - Aparece en todas las páginas */
-            .card-footer {
-                position: fixed !important;
-                bottom: 0 !important;
-                left: 0 !important;
-                right: 0 !important;
-                width: 100% !important;
-                padding: 4mm 15mm !important;
-                border-top: 2px solid #00B0F0 !important;
-                text-align: center !important;
-                background: white !important;
-                z-index: 9999 !important;
-                page-break-inside: avoid !important;
-            }
-
-            .card-footer p {
-                font-size: 8pt !important;
-                margin: 1mm 0 !important;
-                color: #666 !important;
-                line-height: 1.5 !important;
-                font-family: 'Poppins', sans-serif !important;
-            }
-
-            /* Hide input controls */
-            input[type="date"]::-webkit-calendar-picker-indicator,
-            input[type="number"]::-webkit-inner-spin-button,
-            input[type="number"]::-webkit-outer-spin-button {
-                display: none !important;
-                -webkit-appearance: none !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-
-            .security-badge {
-                font-size: 0.7rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .card-header, .card-content, .card-footer {
-                padding: 1.5rem !important;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .main-title {
-                font-size: 1rem;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .data-table th, .data-table td {
-                padding: 0.6rem 0.5rem;
-                font-size: 0.85rem;
-            }
-
-            .actions-container, .main-actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .security-modal-content {
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-        }
+  /* Quitar controles nativos de inputs en impresión */
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+  }
+}
     </style>
 </head>
 <body>
