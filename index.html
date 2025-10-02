@@ -406,14 +406,10 @@
         @media print {
             @page {
                 size: A4;
-                margin-top: 20mm;
+                margin-top: 15mm;
                 margin-bottom: 30mm;
                 margin-left: 15mm;
                 margin-right: 15mm;
-                
-                @bottom-center {
-                    content: element(footer);
-                }
             }
 
             * {
@@ -445,38 +441,82 @@
                 border-radius: 0 !important;
                 margin: 0 !important;
                 position: relative !important;
-                min-height: 100vh;
             }
 
+            /* Header moderno */
             .card-header {
                 padding: 0 0 5mm 0 !important;
                 background: white !important;
                 page-break-after: avoid !important;
+                position: relative;
+                border-bottom: 3px solid #00B0F0 !important;
+            }
+
+            .card-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #00B0F0 0%, #0090cc 100%);
             }
 
             .logo {
-                font-size: 14pt !important;
+                font-size: 16pt !important;
+                color: #00B0F0 !important;
+                font-family: 'Inter', sans-serif !important;
+            }
+
+            /* Box de información de empresa - solo primera página */
+            .card-content::before {
+                content: 'Felson Watersafe ApS\ABartnervej 4\A6710 Esbjerg V\ACVR-nr. DK26813522\ATlf. 70206676\Afelson@felson.dk';
+                white-space: pre;
+                position: absolute;
+                left: 0;
+                top: 30mm;
+                background: #F5FAFF;
+                padding: 4mm;
+                border-radius: 3mm;
+                font-size: 7pt;
+                line-height: 1.6;
+                font-family: 'Poppins', sans-serif;
+                color: #3c3c3c;
+                border: 1px solid #e0f2fe;
             }
 
             .card-content {
                 padding: 0 !important;
+                padding-top: 25mm !important;
             }
 
+            /* Título moderno */
             .main-title {
-                font-size: 12pt !important;
-                margin-bottom: 5mm !important;
+                font-size: 13pt !important;
+                margin-bottom: 6mm !important;
                 font-family: 'Poppins', sans-serif !important;
+                background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%) !important;
+                color: white !important;
+                padding: 3mm !important;
+                border-radius: 3mm !important;
+                text-align: center !important;
             }
 
+            /* Sección de datos con fondo */
             .form-grid {
                 grid-template-columns: 40% 60% !important;
                 gap: 5mm !important;
-                margin-bottom: 5mm !important;
+                margin-bottom: 6mm !important;
+                background: #fafafa !important;
+                padding: 4mm !important;
+                border-radius: 3mm !important;
             }
 
             .form-label {
                 font-size: 8pt !important;
                 font-family: 'Poppins', sans-serif !important;
+                color: #00B0F0 !important;
+                font-weight: 600 !important;
             }
 
             .form-input, .form-textarea {
@@ -484,12 +524,16 @@
                 padding: 0 !important;
                 font-size: 9pt !important;
                 font-family: 'Poppins', sans-serif !important;
+                color: #282828 !important;
             }
 
+            /* Tabla moderna */
             .data-table {
-                border: 1px solid #ccc !important;
-                margin-top: 5mm !important;
+                border: none !important;
+                margin-top: 6mm !important;
                 margin-bottom: 15mm !important;
+                border-radius: 3mm !important;
+                overflow: hidden !important;
             }
 
             .data-table thead {
@@ -498,19 +542,28 @@
 
             .data-table th {
                 font-size: 8pt !important;
-                padding: 2mm !important;
-                background: var(--brand) !important;
+                padding: 3mm !important;
+                background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%) !important;
+                color: white !important;
                 font-family: 'Poppins', sans-serif !important;
+                font-weight: 600 !important;
+                border: none !important;
             }
 
             .data-table tbody tr {
                 page-break-inside: avoid !important;
             }
 
+            .data-table tbody tr:nth-child(even) {
+                background: #f8fafc !important;
+            }
+
             .data-table tbody td {
-                padding: 2mm !important;
+                padding: 2.5mm !important;
                 font-size: 9pt !important;
                 font-family: 'Poppins', sans-serif !important;
+                color: #282828 !important;
+                border-bottom: 1px solid #e5e7eb !important;
             }
 
             .table-input, .table-textarea {
@@ -520,35 +573,56 @@
                 font-family: 'Poppins', sans-serif !important;
             }
 
-            /* Footer approach - fixed at bottom of every page */
+            .table-input.col-antal {
+                color: #00B0F0 !important;
+                font-weight: 600 !important;
+            }
+
+            /* Footer fijo moderno */
             .card-footer {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                padding: 5mm 15mm !important;
+                padding: 4mm 15mm !important;
                 background: white !important;
-                border-top: 2px solid var(--brand) !important;
+                border-top: 0.5mm solid #00B0F0 !important;
                 text-align: center;
                 z-index: 9999;
                 page-break-inside: avoid !important;
                 font-family: 'Poppins', sans-serif !important;
             }
 
-            .card-footer p {
-                font-size: 7pt !important;
-                margin: 0.5mm 0 !important;
-                font-family: 'Poppins', sans-serif !important;
+            .card-footer::before {
+                content: '';
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent 0%, #00B0F0 50%, transparent 100%);
             }
 
-            /* Alternative: add page number */
+            .card-footer p {
+                font-size: 7pt !important;
+                margin: 1mm 0 !important;
+                font-family: 'Poppins', sans-serif !important;
+                color: #666 !important;
+            }
+
+            /* Número de página con badge */
             .card-footer::after {
-                content: counter(page);
+                content: 'Side ' counter(page);
                 position: absolute;
                 left: 15mm;
-                bottom: 5mm;
+                bottom: 4mm;
+                background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%);
+                color: white;
+                padding: 1.5mm 4mm;
+                border-radius: 2mm;
                 font-size: 8pt;
-                color: #666;
+                font-weight: 600;
+                font-family: 'Poppins', sans-serif;
             }
 
             input::-webkit-calendar-picker-indicator,
