@@ -986,8 +986,7 @@
                 };
 
                 // Eventos de impresión del navegador
-                window.addEventListener('beforeprint', prepareForPrint);
-                window.addEventListener('afterprint', cleanupAfterPrint);
+                printBtn.onclick = () => window.print();
 
                 // Input events
                 [datoInput, ordreNrInput, leveringInput].forEach(input => {
