@@ -403,98 +403,69 @@
             color: white;
         }
 
-        /* === PRINT: footer fijo y repetido por página === */
 @media print {
-  /* Ajusta si quieres (mm) */
-  :root{
-    --mT: 15mm;      /* margen superior */
-    --mR: 15mm;      /* margen derecho  */
-    --mB: 12mm;      /* margen inferior (pequeño para no dejar hueco) */
-    --mL: 15mm;      /* margen izquierdo */
-    --footerH: 20mm; /* altura del footer */
+  /* Márgenes de página: deja espacio para header y footer fijos */
+  @page {
+    size: A4 portrait;
+    /* top, right, bottom, left */
+    margin: 25mm 15mm 30mm 15mm;  /* ↑ más alto para el header */
   }
 
-  @page { size: A4 portrait; margin: var(--mT) var(--mR) var(--mB) var(--mL); }
-
-  *{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  html, body{ background:#fff !important; margin:0 !important; padding:0 !important; width:100% !important; height:100% !important; }
-
-  /* Oculta UI no imprimible */
-  .security-badge, .main-actions, .actions-container, .btn-delete, .toast, .security-modal, button{
-    display:none !important;
+  /* Header fijo en TODAS las páginas */
+  .card-print-header{
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    padding: 4mm 15mm !important;
+    border-bottom: 2px solid #00B0F0 !important;
+    text-align: center !important;
+    background: #fff !important;
+    z-index: 9998 !important;
+  }
+  .card-print-header p{
+    font-size: 8pt !important;
+    margin: 1mm 0 !important;
+    color: #666 !important;
+    line-height: 1.4 !important;
+    font-family: 'Poppins', sans-serif !important;
   }
 
-  .app-container{ max-width:100% !important; width:100% !important; margin:0 !important; padding:0 !important; }
-  .document-card{ box-shadow:none !important; border-radius:0 !important; margin:0 !important; padding:0 !important; background:#fff !important; }
-
-  /* Header */
-  .card-header{
-    padding:0 0 5mm 0 !important;
-    background:#fff !important;
-    border-bottom:2px solid #00B0F0 !important;
-    margin-bottom:5mm !important;
-    page-break-after: avoid !important;
-  }
-  .logo{ font-size:16pt !important; color:#00B0F0 !important; font-weight:800 !important; }
-
-  /* El contenido deja hueco EXACTO para el footer */
-  .card-content{ padding:0 !important; padding-bottom: var(--footerH) !important; }
-
-  /* Título */
-  .main-title{
-    font-size:13pt !important; background:#00B0F0 !important; color:#fff !important;
-    padding:3mm 5mm !important; text-align:center !important; margin-bottom:5mm !important; border-radius:2mm !important;
-    page-break-after: avoid !important;
-    font-family:'Poppins',sans-serif !important; font-weight:700 !important;
-  }
-
-  /* Form */
-  .form-grid{
-    display:grid !important; grid-template-columns:35% 65% !important; gap:4mm !important; margin-bottom:5mm !important;
-    background:#f5f5f5 !important; padding:3mm !important; border-radius:2mm !important; page-break-inside: avoid !important;
-  }
-  .form-label{ font-size:8pt !important; color:#00B0F0 !important; font-weight:700 !important; margin-bottom:1mm !important; text-transform:uppercase !important; }
-  .form-input, .form-textarea{ border:none !important; padding:0 !important; font-size:9pt !important; color:#000 !important; background:transparent !important; font-family:'Poppins',sans-serif !important; }
-
-  /* Tabla */
-  .data-table{ width:100% !important; border-collapse:collapse !important; margin-top:5mm !important; margin-bottom:8mm !important; border:1px solid #ccc !important; }
-  .data-table thead{ display: table-header-group !important; }
-  .data-table th{
-    font-size:9pt !important; padding:3mm 2mm !important; background:#00B0F0 !important; color:#fff !important; font-weight:700 !important; border:none !important;
-    font-family:'Poppins',sans-serif !important;
-  }
-  .data-table th.col-antal{ text-align:center !important; }
-  .data-table tbody tr{ page-break-inside: avoid !important; }
-  .data-table tbody tr:nth-child(even){ background:#f9f9f9 !important; }
-  .data-table tbody td{ padding:2.5mm 2mm !important; font-size:9pt !important; color:#000 !important; border-bottom:1px solid #ddd !important; font-family:'Poppins',sans-serif !important; }
-  .table-input, .table-textarea{ border:none !important; padding:0 !important; font-size:9pt !important; background:transparent !important; color:#000 !important; font-family:'Poppins',sans-serif !important; }
-  .table-input.col-antal{ color:#00B0F0 !important; font-weight:700 !important; text-align:center !important; }
-
-  /* === FOOTER FIJO / REPETIDO === */
+  /* Footer fijo en TODAS las páginas (tu footer actual) */
   .card-footer{
     position: fixed !important;
-    left: 0 !important; right: 0 !important; bottom: 0 !important;
-    height: var(--footerH) !important;
-    padding: 6mm 15mm 4mm !important;
-    background:#fff !important; border-top:2px solid #00B0F0 !important; text-align:center !important;
-    z-index:9999 !important; page-break-inside: avoid !important;
+    bottom: 0 !important;
+    left: 0 !important; right: 0 !important;
+    width: 100% !important;
+    padding: 4mm 15mm !important;
+    border-top: 2px solid #00B0F0 !important;
+    text-align: center !important;
+    background: white !important;
+    z-index: 9999 !important;
+    page-break-inside: avoid !important;
   }
-  .card-footer p{ font-size:8pt !important; margin:1mm 0 !important; color:#666 !important; line-height:1.5 !important; font-family:'Poppins',sans-serif !important; }
-
-  /* Página “Side N” con contador nativo */
-  .card-footer::before{
-    content: "Side " counter(page);
-    position:absolute; left:15mm; bottom:6mm;
-    padding:1mm 4mm; border-radius:2mm; background:#00B0F0; color:#fff; font-weight:700; font-size:8pt;
+  .card-footer p{
+    font-size: 8pt !important;
+    margin: 1mm 0 !important;
+    color: #666 !important;
+    line-height: 1.5 !important;
+    font-family: 'Poppins', sans-serif !important;
   }
 
-  /* Oculta UI de inputs (spinners, etc.) */
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button{
-    display:none !important; -webkit-appearance:none !important;
+  /* Asegurar que el contenido no quede debajo del header/footer fijos */
+  .card-content{
+    padding-top: 30mm !important;   /* espacio para el header fijo */
+    padding-bottom: 35mm !important;/* ya lo tenías para el footer */
+  }
+
+  /* Quita sombras, bordes redondeados, etc. ya lo tenías */
+  .document-card{
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
   }
 }
+
 
     </style>
     <style>
@@ -581,6 +552,12 @@ body.auth #logoutBtn{ display:block; }
             </header>
 
             <div class="card-content">
+                <!-- Header SOLO para impresión -->
+<div class="card-print-header" id="printHeader" aria-hidden="true">
+  <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
+  <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
+</div>
+
                 <h2 class="main-title">Følgeseddel</h2>
 
                 <div class="form-grid">
