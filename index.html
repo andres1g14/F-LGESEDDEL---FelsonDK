@@ -607,7 +607,73 @@
     display: none !important;
     -webkit-appearance: none !important;
   }
+/* === PRINT: footer fijo exactamente dentro de los márgenes === */
+@media print {
+  /* Define tus márgenes y altura del footer UNA SOLA VEZ */
+  :root{
+    --mT: 15mm;        /* margen superior */
+    --mR: 15mm;        /* margen derecho  */
+    --mB: 30mm;        /* margen inferior (>= altura del footer) */
+    --mL: 15mm;        /* margen izquierdo */
+    --footerH: 24mm;   /* altura real del footer */
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: var(--mT) var(--mR) var(--mB) var(--mL);
+  }
+
+  /* Reserva hueco en el contenido para que nunca pise al footer */
+  .card-content{
+    padding-bottom: var(--footerH) !important;
+  }
+
+  /* Fija el footer alineado con los márgenes de la página */
+  .card-footer{
+    position: fixed !important;
+
+    /* OJO: ancla a la caja de la página usando los mismos márgenes */
+    left:   var(--mL) !important;
+    right:  var(--mR) !important;
+
+    /* Colócalo justo encima del margen inferior:
+       bottom = margenBajo - alturaFooter  → así su base queda a --mB */
+    bottom: calc(var(--mB) - var(--footerH)) !important;
+
+    height: var(--footerH) !important;
+
+    /* Estilo (los tuyos) */
+    background: #fff !important;
+    border-top: 2px solid #00B0F0 !important;
+    padding: 6mm 0 0 !important;   /* ajusta si quieres más/menos aire */
+    text-align: center !important;
+    z-index: 9999 !important;
+  }
+
+  .card-footer p{
+    margin: 1mm 0 !important;
+    color: #666 !important;
+    font-size: 8pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Etiqueta "Side N" dentro del pie */
+  .card-footer::before{
+    content: "Side " counter(page);
+    position: absolute;
+    left: 0;                 /* dentro del ancho útil del footer */
+    transform: translateX(-6mm); /* opcional: sácalo un pelín a la izquierda */
+    bottom: 6mm;
+    display: inline-block;
+    padding: 1mm 4mm;
+    border-radius: 2mm;
+    background: #00B0F0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 8pt;
+  }
 }
+
     </style>
 </head>
 <body>
