@@ -497,8 +497,81 @@
 }
 
     </style>
+    <style>
+/* === LOGIN LIGERO PARA PORTAL INTERNO === */
+
+/* Oculta toda la app mientras no haya login */
+body.locked .app-container,
+body.locked .security-badge,
+body.locked .main-actions { display:none !important; }
+
+/* Overlay de login */
+#login-overlay{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg, rgba(102,126,234,.9), rgba(118,75,162,.9));
+  backdrop-filter: blur(10px);
+  z-index: 99999; 
+}
+#login-card{
+  width:min(420px, 92vw); background:#fff; border-radius:16px; padding:24px 22px;
+  box-shadow:0 20px 50px rgba(0,0,0,.25); font-family:'Inter', sans-serif;
+}
+#login-card h2{ margin:0 0 14px; font-weight:800; color:#111; font-size:1.25rem; }
+#login-card p{ margin:0 0 16px; color:#6b7280; font-size:.92rem; }
+.login-field{
+  display:flex; gap:10px; margin:12px 0 6px;
+}
+.login-field input{
+  flex:1; padding:12px 14px; border:1.5px solid #e5e7eb; border-radius:10px; font-size:.95rem;
+}
+.login-field button{
+  padding:12px 16px; border:none; border-radius:10px; cursor:pointer; font-weight:700;
+  background:linear-gradient(135deg, #00B0F0, #0090cc); color:#fff;
+}
+#login-error{ color:#ef4444; font-size:.85rem; min-height:1.1em; }
+
+/* Botón salir (opcional) */
+#logoutBtn{
+  position:fixed; left:1rem; top:1rem; z-index:1000;
+  background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:.5rem .75rem;
+  font-size:.8rem; display:none;
+}
+body.auth #logoutBtn{ display:block; }
+
+/* En impresión nunca mostrar login */
+@media print{
+  #login-overlay, #logoutBtn{ display:none !important; }
+}
+</style>
+
 </head>
 <body>
+    <body class="locked">
+  <!-- Login Overlay -->
+  <div id="login-overlay" aria-hidden="false">
+    <div id="login-card">
+      <h2>Acceso restringido</h2>
+      <p>Introduce la clave para entrar al portal.</p>
+
+      <div class="login-field">
+        <input id="loginPass" type="password" placeholder="Clave de acceso" autocomplete="current-password" />
+        <button id="loginBtn">Entrar</button>
+      </div>
+      <div id="login-error"></div>
+
+      <label style="display:flex;align-items:center;gap:.5rem;margin-top:8px;color:#6b7280;font-size:.9rem;">
+        <input type="checkbox" id="rememberMe"> Recordarme en este equipo
+      </label>
+    </div>
+  </div>
+
+  <!-- (opcional) botón salir -->
+  <button id="logoutBtn" title="Cerrar sesión">Salir</button>
+
+  <!-- lo que ya tenías: badge, main.app-container, etc. -->
+  <div class="security-badge" id="securityBadge">🔒 Sikker og krypteret</div>
+  <!-- ... tu HTML existente sigue igual ... -->
+
     <div class="security-badge" id="securityBadge">🔒 Sikker og krypteret</div>
 
     <main class="app-container">
@@ -612,6 +685,97 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
+        <script>
+/* === Login simple de portal interno === */
+(function(){
+  const TOKEN_KEY = 'felson_portal_token';
+  const REMEMBER_KEY = 'felson_portal_remember';
+  // ⚠️ Define tu clave aquí (puede ser un PIN). Para algo más fuerte usa hash en servidor.
+  const PASSWORD = 'Felson2025!';
+
+  const body = document.body;
+  const ovr  = document.getElementById('login-overlay');
+  const pass = document.getElementById('loginPass');
+  const btn  = document.getElementById('loginBtn');
+  const err  = document.getElementById('login-error');
+  const rem  = document.getElementById('rememberMe');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  function unlock(){
+    body.classList.remove('locked');
+    body.classList.add('auth');
+    if(ovr){ ovr.style.display = 'none'; ovr.setAttribute('aria-hidden','true'); }
+    // Persistencia
+    if(rem?.checked) {
+      localStorage.setItem(TOKEN_KEY, 'ok');
+      localStorage.setItem(REMEMBER_KEY, '1');
+    } else {
+      sessionStorage.setItem(TOKEN_KEY, 'ok');
+    }
+  }
+
+  function lock(){
+    body.classList.add('locked');
+    body.classList.remove('auth');
+    if(ovr){ ovr.style.display = 'flex'; ovr.setAttribute('aria-hidden','false'); }
+    // Limpia todo
+    sessionStorage.removeItem(TOKEN_KEY);
+    if(!localStorage.getItem(REMEMBER_KEY)) localStorage.removeItem(TOKEN_KEY);
+  }
+
+  function alreadyAuth(){
+    return sessionStorage.getItem(TOKEN_KEY)==='ok' || localStorage.getItem(TOKEN_KEY)==='ok';
+  }
+
+  function tryLogin(){
+    err.textContent = '';
+    if(pass.value.trim() === PASSWORD){
+      unlock();
+      pass.value = '';
+    }else{
+      err.textContent = 'Clave incorrecta';
+      pass.focus();
+    }
+  }
+
+  // Auto
+  if(alreadyAuth()){ unlock(); } else { lock(); }
+
+  // Eventos
+  btn?.addEventListener('click', tryLogin);
+  pass?.addEventListener('keydown', e => { if(e.key==='Enter') tryLogin(); });
+  logoutBtn?.addEventListener('click', ()=>{
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(REMEMBER_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
+    lock();
+  });
+
+  // Evita imprimir o generar PDF si no hay login
+  const guardAction = (fn) => (...args) => {
+    if(!alreadyAuth()){ alert('Acceso restringido. Inicia sesión.'); return; }
+    return fn(...args);
+  };
+
+  // Hook rápido a tus botones si existen
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const printBtn = document.getElementById('btn-print');
+    const pdfBtn   = document.getElementById('btn-pdf');
+    if(printBtn){ 
+      const orig = () => window.print();
+      printBtn.onclick = guardAction(orig);
+    }
+    if(pdfBtn){
+      // Tu función generatePDF ya existe en tu script. La “envolvemos” si está en window.
+      if(typeof window.generatePDF === 'function'){
+        const orig = window.generatePDF;
+        window.generatePDF = guardAction(orig);
+      }
+    }
+  });
+})();
+</script>
+
         (function() {
             'use strict';
 
