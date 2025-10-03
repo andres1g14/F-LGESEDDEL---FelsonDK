@@ -787,6 +787,40 @@
             margin-top: 1rem;
         }
 
+        .success-box {
+            background: #d1fae5;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            color: #065f46;
+            margin-top: 1rem;
+        }
+
+        .verification-code {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .verification-code input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .verification-code input:focus {
+            outline: none;
+            border-color: #00B0F0;
+            box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.1);
+        }
+
         @media (max-width: 768px) {
             body { padding: 1rem; }
             .form { grid-template-columns: 1fr; }
@@ -997,6 +1031,7 @@
             <div class="badge logout-badge" id="logoutBadge">🚪 Log ud</div>
             <div style="display: flex; gap: 0.5rem;">
                 <div class="badge settings-badge" id="settingsBadge">⚙️ Indstillinger</div>
+                <div class="badge" style="background: rgba(251, 191, 36, 0.9); color: white;" id="linkAccountBadge">🔗 Tilknyt Konto</div>
                 <div class="badge security-badge" id="securityBadge">🔒 Sikkerhed</div>
             </div>
         </div>
@@ -1148,6 +1183,10 @@
                 <div class="warning-box">
                     ⚠️ <strong>Vigtigt:</strong> Dine ændringer gemmes kun i denne session. Ved genstart bruges standard login.
                 </div>
+                
+                <div class="info-box" style="margin-top: 1rem;">
+                    💡 <strong>DEMO NOTE:</strong> Dette system simulerer email-funktionalitet. I produktion ville reelle emails blive sendt via en server (f.eks. SendGrid, AWS SES).
+                </div>
             </div>
             <div class="modal-actions">
                 <button class="btn btn-clear" id="closeSettingsBtn">Luk</button>
@@ -1192,6 +1231,90 @@
         </div>
     </div>
 
+    <!-- Link Account Modal -->
+    <div class="modal" id="linkAccountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">🔗</div>
+                <h3 class="modal-title">Tilknyt Konto med Email</h3>
+            </div>
+            <div class="modal-body">
+                <div class="login-success" id="linkSuccess"></div>
+                <div class="login-error" id="linkError"></div>
+
+                <div id="linkStep1">
+                    <p style="margin-bottom: 1.5rem;">
+                        Tilknyt din konto med en email for at aktivere:
+                    </p>
+                    <div class="features">
+                        <ul>
+                            <li>Automatisk login på denne enhed</li>
+                            <li>Sikker adgangskode gendannelse</li>
+                            <li>Multi-device sync (kommende)</li>
+                            <li>To-faktor autentificering</li>
+                        </ul>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 1.5rem;">
+                        <input type="email" class="login-input" id="linkEmail" name="link-email" placeholder="Din email adresse" autocomplete="email">
+                        <span class="input-icon">📧</span>
+                    </div>
+
+                    <button class="btn btn-brand" id="sendVerificationBtn" style="margin-top: 1rem; width: 100%;">📨 Send Verifikationskode</button>
+                </div>
+
+                <div id="linkStep2" style="display: none;">
+                    <p style="margin-bottom: 1rem;">
+                        Vi har sendt en 6-cifret verifikationskode til:<br>
+                        <strong id="sentToEmail" style="color: #00B0F0;"></strong>
+                    </p>
+
+                    <p style="margin-bottom: 1rem; font-size: 0.875rem; color: #6b7280;">
+                        Indtast koden nedenfor:
+                    </p>
+
+                    <div class="verification-code">
+                        <input type="text" maxlength="1" class="verify-input" data-index="0">
+                        <input type="text" maxlength="1" class="verify-input" data-index="1">
+                        <input type="text" maxlength="1" class="verify-input" data-index="2">
+                        <input type="text" maxlength="1" class="verify-input" data-index="3">
+                        <input type="text" maxlength="1" class="verify-input" data-index="4">
+                        <input type="text" maxlength="1" class="verify-input" data-index="5">
+                    </div>
+
+                    <div class="info-box">
+                        💡 <strong>DEMO MODE:</strong> Koden er: <code id="demoCode" style="background: rgba(0, 176, 240, 0.1); padding: 2px 8px; border-radius: 4px; font-weight: 700; color: #00B0F0;"></code>
+                    </div>
+
+                    <button class="btn btn-brand" id="verifyCodeBtn" style="margin-top: 1rem; width: 100%;">✅ Verificer Kode</button>
+                    <button class="btn btn-clear" id="resendCodeBtn" style="margin-top: 0.5rem; width: 100%;">🔄 Send kode igen</button>
+                </div>
+
+                <div id="linkStep3" style="display: none;">
+                    <div class="success-box">
+                        <p style="margin-bottom: 0.5rem; font-weight: 700; color: #065f46;">
+                            ✅ Konto tilknyttet succesfuldt!
+                        </p>
+                        <p style="font-size: 0.875rem; color: #047857;">
+                            Din konto er nu forbundet med <strong id="linkedEmailDisplay"></strong>
+                        </p>
+                    </div>
+
+                    <div class="features" style="margin-top: 1rem;">
+                        <ul>
+                            <li>Automatisk login aktiveret</li>
+                            <li>Email notifikationer aktiveret</li>
+                            <li>Sikker konto gendannelse klar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-clear" id="closeLinkBtn">Luk</button>
+            </div>
+        </div>
+    </div>
+
     <template id="rowTemplate">
         <tr>
             <td><input type="number" class="table-input col-antal" min="0" placeholder="0"></td>
@@ -1202,14 +1325,76 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
+        // ===== SESSION MANAGEMENT =====
+        const SESSION_KEY = 'felson_session';
+        const ACCOUNT_KEY = 'felson_account';
+        
         // User credentials
         let userData = {
             username: 'admin',
             password: 'felson2025',
-            email: ''
+            email: '',
+            linkedEmail: '',
+            isLinked: false
         };
 
         let isAuthenticated = false;
+        let generatedCode = '';
+
+        // Try to restore session on page load
+        function restoreSession() {
+            try {
+                const session = sessionStorage.getItem(SESSION_KEY);
+                const account = sessionStorage.getItem(ACCOUNT_KEY);
+                
+                if (session) {
+                    const sessionData = JSON.parse(session);
+                    if (sessionData.authenticated && sessionData.username) {
+                        userData.username = sessionData.username;
+                        isAuthenticated = true;
+                        els.loginScreen.classList.add('hidden');
+                        els.appContainer.classList.add('visible');
+                        toast('🔓 Velkommen tilbage, ' + userData.username + '!');
+                        return true;
+                    }
+                }
+                
+                if (account) {
+                    const accountData = JSON.parse(account);
+                    Object.assign(userData, accountData);
+                }
+            } catch (e) {
+                console.error('Session restore error:', e);
+            }
+            return false;
+        }
+
+        function saveSession() {
+            try {
+                sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+                    authenticated: isAuthenticated,
+                    username: userData.username,
+                    timestamp: Date.now()
+                }));
+                sessionStorage.setItem(ACCOUNT_KEY, JSON.stringify({
+                    username: userData.username,
+                    password: userData.password,
+                    email: userData.email,
+                    linkedEmail: userData.linkedEmail,
+                    isLinked: userData.isLinked
+                }));
+            } catch (e) {
+                console.error('Session save error:', e);
+            }
+        }
+
+        function clearSession() {
+            try {
+                sessionStorage.removeItem(SESSION_KEY);
+            } catch (e) {
+                console.error('Session clear error:', e);
+            }
+        }
 
         const els = {
             loginScreen: document.getElementById('loginScreen'),
@@ -1223,6 +1408,7 @@
             logoutBadge: document.getElementById('logoutBadge'),
             settingsBadge: document.getElementById('settingsBadge'),
             securityBadge: document.getElementById('securityBadge'),
+            linkAccountBadge: document.getElementById('linkAccountBadge'),
             
             dato: document.getElementById('dato'),
             ordre: document.getElementById('ordre'),
@@ -1233,6 +1419,7 @@
             securityModal: document.getElementById('securityModal'),
             settingsModal: document.getElementById('settingsModal'),
             recoveryModal: document.getElementById('recoveryModal'),
+            linkAccountModal: document.getElementById('linkAccountModal'),
             
             settingsSuccess: document.getElementById('settingsSuccess'),
             settingsError: document.getElementById('settingsError'),
@@ -1255,6 +1442,20 @@
             recoverPasswordBtn: document.getElementById('recoverPasswordBtn'),
             cancelRecoveryBtn: document.getElementById('cancelRecoveryBtn'),
             backToLoginLink: document.getElementById('backToLoginLink'),
+            
+            linkSuccess: document.getElementById('linkSuccess'),
+            linkError: document.getElementById('linkError'),
+            linkEmail: document.getElementById('linkEmail'),
+            sendVerificationBtn: document.getElementById('sendVerificationBtn'),
+            linkStep1: document.getElementById('linkStep1'),
+            linkStep2: document.getElementById('linkStep2'),
+            linkStep3: document.getElementById('linkStep3'),
+            sentToEmail: document.getElementById('sentToEmail'),
+            demoCode: document.getElementById('demoCode'),
+            verifyCodeBtn: document.getElementById('verifyCodeBtn'),
+            resendCodeBtn: document.getElementById('resendCodeBtn'),
+            linkedEmailDisplay: document.getElementById('linkedEmailDisplay'),
+            closeLinkBtn: document.getElementById('closeLinkBtn'),
             
             acceptSecurityBtn: document.getElementById('acceptSecurityBtn'),
             addBtn: document.getElementById('addBtn'),
@@ -1291,6 +1492,7 @@
             
             if (username === userData.username && password === userData.password) {
                 isAuthenticated = true;
+                saveSession();
                 els.loginError.classList.remove('show');
                 els.loginScreen.classList.add('hidden');
                 
@@ -1309,6 +1511,7 @@
         els.logoutBadge.addEventListener('click', () => {
             if (confirm('Er du sikker på at du vil logge ud?')) {
                 isAuthenticated = false;
+                clearSession();
                 els.appContainer.classList.remove('visible');
                 
                 setTimeout(() => {
@@ -1333,6 +1536,21 @@
 
         els.securityBadge.addEventListener('click', () => {
             els.securityModal.classList.add('show');
+        });
+
+        els.linkAccountBadge.addEventListener('click', () => {
+            els.linkAccountModal.classList.add('show');
+            els.linkStep1.style.display = 'block';
+            els.linkStep2.style.display = 'none';
+            els.linkStep3.style.display = 'none';
+            hideMessage(els.linkSuccess);
+            hideMessage(els.linkError);
+            
+            if (userData.isLinked) {
+                els.linkStep1.style.display = 'none';
+                els.linkStep3.style.display = 'block';
+                els.linkedEmailDisplay.textContent = userData.linkedEmail;
+            }
         });
 
         els.forgotPasswordLink.addEventListener('click', (e) => {
@@ -1370,10 +1588,103 @@
             hideMessage(els.recoveryError);
         });
 
-        [els.securityModal, els.settingsModal, els.recoveryModal].forEach(modal => {
+        [els.securityModal, els.settingsModal, els.recoveryModal, els.linkAccountModal].forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) modal.classList.remove('show');
             });
+        });
+
+        // === LINK ACCOUNT SYSTEM ===
+        
+        // Send verification code
+        els.sendVerificationBtn.addEventListener('click', () => {
+            const email = els.linkEmail.value.trim();
+            
+            hideMessage(els.linkError);
+            
+            if (!email) {
+                showMessage(els.linkError, '⚠️ Indtast venligst en email adresse');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showMessage(els.linkError, '⚠️ Indtast venligst en gyldig email adresse');
+                return;
+            }
+            
+            // Generate random 6-digit code
+            generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+            
+            // Simulate sending email
+            els.linkStep1.style.display = 'none';
+            els.linkStep2.style.display = 'block';
+            els.sentToEmail.textContent = email;
+            els.demoCode.textContent = generatedCode;
+            
+            toast('📧 Verifikationskode sendt til ' + email);
+        });
+        
+        // Verification code inputs - auto-focus next
+        const verifyInputs = document.querySelectorAll('.verify-input');
+        verifyInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < verifyInputs.length - 1) {
+                    verifyInputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    verifyInputs[index - 1].focus();
+                }
+            });
+        });
+        
+        // Verify code
+        els.verifyCodeBtn.addEventListener('click', () => {
+            const enteredCode = Array.from(verifyInputs).map(input => input.value).join('');
+            
+            hideMessage(els.linkError);
+            
+            if (enteredCode.length !== 6) {
+                showMessage(els.linkError, '⚠️ Indtast venligst hele koden');
+                return;
+            }
+            
+            if (enteredCode !== generatedCode) {
+                showMessage(els.linkError, '❌ Forkert kode. Prøv igen.');
+                verifyInputs.forEach(input => input.value = '');
+                verifyInputs[0].focus();
+                return;
+            }
+            
+            // Success - link account
+            const email = els.linkEmail.value.trim();
+            userData.linkedEmail = email;
+            userData.isLinked = true;
+            saveSession();
+            
+            els.linkStep2.style.display = 'none';
+            els.linkStep3.style.display = 'block';
+            els.linkedEmailDisplay.textContent = email;
+            
+            toast('🎉 Konto tilknyttet succesfuldt!');
+        });
+        
+        // Resend code
+        els.resendCodeBtn.addEventListener('click', () => {
+            generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+            els.demoCode.textContent = generatedCode;
+            verifyInputs.forEach(input => input.value = '');
+            verifyInputs[0].focus();
+            toast('🔄 Ny kode sendt!');
+        });
+        
+        // Close link modal
+        els.closeLinkBtn.addEventListener('click', () => {
+            els.linkAccountModal.classList.remove('show');
+            els.linkEmail.value = '';
+            verifyInputs.forEach(input => input.value = '');
         });
 
         // Save Email
@@ -1664,6 +1975,15 @@
         // Initialize
         if (!els.dato.value) els.dato.valueAsDate = new Date();
         if (els.tbody.rows.length === 0) addRow();
+        
+        // === AUTO-RESTORE SESSION ON PAGE LOAD ===
+        window.addEventListener('DOMContentLoaded', () => {
+            const sessionRestored = restoreSession();
+            if (!sessionRestored) {
+                // Show login screen if no session
+                els.loginScreen.classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html>
