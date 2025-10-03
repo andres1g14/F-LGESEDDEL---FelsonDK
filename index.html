@@ -374,24 +374,28 @@
             .content { padding: 1.5rem; }
         }
 
-        /* ===== PRINT STYLES - FOOTER EN CADA PÁGINA ===== */
+        /* ===== ESTILOS DE IMPRESIÓN MEJORADOS ===== */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 15mm;
+                margin: 20mm 15mm;
             }
 
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
 
-            body {
+            html, body {
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
+                width: 100%;
+                height: 100%;
             }
 
+            /* Ocultar elementos de UI */
             .security-badge,
             .main-actions,
             .actions,
@@ -404,115 +408,191 @@
             .container {
                 max-width: 100% !important;
                 margin: 0 !important;
+                padding: 0 !important;
             }
 
             .card {
                 box-shadow: none !important;
                 border-radius: 0 !important;
                 margin: 0 !important;
+                background: white !important;
+                page-break-after: auto;
             }
 
+            /* Header */
             .header {
-                padding: 0 0 4mm 0 !important;
+                padding: 0 0 8mm 0 !important;
                 background: white !important;
-                border-bottom: 2px solid #00B0F0 !important;
-                margin-bottom: 5mm !important;
+                border-bottom: 2.5px solid #00B0F0 !important;
+                margin-bottom: 8mm !important;
+                page-break-inside: avoid !important;
             }
 
             .logo {
-                font-size: 16pt !important;
+                font-size: 20pt !important;
+                color: #00B0F0 !important;
             }
 
+            /* Content */
             .content {
                 padding: 0 !important;
             }
 
+            /* Title */
             .title {
-                font-size: 13pt !important;
+                font-size: 14pt !important;
                 background: #00B0F0 !important;
                 color: white !important;
-                padding: 3mm !important;
+                padding: 4mm 0 !important;
                 border-radius: 2mm !important;
-                margin-bottom: 5mm !important;
+                margin-bottom: 8mm !important;
+                text-align: center !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
             }
 
+            /* Form */
             .form {
                 grid-template-columns: 35% 65% !important;
-                gap: 4mm !important;
-                margin-bottom: 5mm !important;
-                background: #f5f5f5 !important;
-                padding: 3mm !important;
+                gap: 5mm !important;
+                margin-bottom: 8mm !important;
+                background: #f8f9fa !important;
+                padding: 4mm !important;
                 border-radius: 2mm !important;
                 page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            .field {
+                margin-bottom: 3mm !important;
             }
 
             .label {
-                font-size: 8pt !important;
+                font-size: 8.5pt !important;
                 color: #00B0F0 !important;
+                font-weight: 700 !important;
+                margin-bottom: 1.5mm !important;
             }
 
             .input, .textarea {
                 border: none !important;
                 padding: 0 !important;
-                font-size: 9pt !important;
+                font-size: 10pt !important;
+                background: transparent !important;
+                color: #1a1a1a !important;
+                font-weight: 400 !important;
+                box-shadow: none !important;
             }
 
+            .textarea {
+                min-height: auto !important;
+            }
+
+            /* Table */
             .table {
-                border: 1px solid #ccc !important;
-                margin-top: 4mm !important;
+                border: 1.5px solid #00B0F0 !important;
+                margin-top: 6mm !important;
+                border-radius: 0 !important;
+                page-break-inside: auto !important;
             }
 
             .table thead {
                 display: table-header-group !important;
+                background: #00B0F0 !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
             }
 
             .table th {
-                font-size: 8.5pt !important;
-                padding: 2.5mm !important;
+                font-size: 9pt !important;
+                padding: 3mm !important;
+                color: white !important;
+                background: #00B0F0 !important;
+                border: none !important;
+            }
+
+            .table tbody {
+                display: table-row-group !important;
             }
 
             .table tbody tr {
                 page-break-inside: avoid !important;
+                background: white !important;
             }
 
             .table tbody tr:nth-child(even) {
-                background: #f9f9f9 !important;
+                background: #f8f9fa !important;
+            }
+
+            .table tbody tr:not(:last-child) td {
+                border-bottom: 0.5px solid #dee2e6 !important;
             }
 
             .table tbody td {
-                padding: 2mm !important;
-                font-size: 9pt !important;
+                padding: 2.5mm 3mm !important;
+                font-size: 10pt !important;
+                color: #1a1a1a !important;
+                border: none !important;
             }
 
             .table-input {
                 border: none !important;
                 padding: 0 !important;
-                font-size: 9pt !important;
+                font-size: 10pt !important;
+                background: transparent !important;
+                color: #1a1a1a !important;
+                box-shadow: none !important;
             }
 
             .table-input.col-antal {
                 font-weight: 700 !important;
+                color: #00B0F0 !important;
             }
 
-            .footer,
-            .footer-clone {
+            .table-textarea {
+                min-height: auto !important;
+                overflow: visible !important;
+            }
+
+            /* Footer - siempre al final */
+            .footer {
                 display: block !important;
-                padding: 4mm 0 !important;
-                border-top: 2px solid #00B0F0 !important;
+                padding: 6mm 0 0 0 !important;
+                border-top: 2.5px solid #00B0F0 !important;
                 text-align: center !important;
                 page-break-inside: avoid !important;
-                margin-top: 5mm !important;
+                margin-top: 10mm !important;
+                background: white !important;
+                position: relative;
             }
 
-            .footer p,
-            .footer-clone p {
-                font-size: 7.5pt !important;
+            .footer p {
+                font-size: 8pt !important;
                 margin: 1mm 0 !important;
+                color: #495057 !important;
             }
 
+            /* Evitar saltos de página innecesarios */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid !important;
+            }
+
+            /* Eliminar controles de input */
             input::-webkit-calendar-picker-indicator,
-            input::-webkit-inner-spin-button {
+            input::-webkit-inner-spin-button,
+            input::-webkit-outer-spin-button {
                 display: none !important;
+                -webkit-appearance: none !important;
+            }
+
+            input[type="date"],
+            input[type="number"] {
+                -moz-appearance: textfield !important;
+            }
+
+            /* Asegurar que el contenido no se corte */
+            .card {
+                display: block !important;
             }
         }
     </style>
@@ -611,11 +691,8 @@
         </tr>
     </template>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        const STORAGE_KEY = 'felson_data';
-        const KEY = 'FelsonWatersafe2025';
         const ACCEPTED_KEY = 'felson_accepted';
 
         const els = {
@@ -635,20 +712,13 @@
             template: document.getElementById('rowTemplate')
         };
 
-        let saveTimer;
-
-        function encrypt(data) {
-            return CryptoJS.AES.encrypt(JSON.stringify(data), KEY).toString();
-        }
-
-        function decrypt(encrypted) {
-            try {
-                const bytes = CryptoJS.AES.decrypt(encrypted, KEY);
-                return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-            } catch (e) {
-                return null;
-            }
-        }
+        // Almacenamiento en memoria (no localStorage)
+        let formData = {
+            dato: '',
+            ordre: '',
+            levering: '',
+            rows: []
+        };
 
         function toast(msg) {
             els.toast.textContent = msg;
@@ -668,55 +738,12 @@
             }
             
             els.tbody.appendChild(row);
-            save();
         }
 
         function resize(textarea) {
             if (!textarea) return;
             textarea.style.height = 'auto';
             textarea.style.height = Math.max(40, textarea.scrollHeight) + 'px';
-        }
-
-        function save() {
-            clearTimeout(saveTimer);
-            saveTimer = setTimeout(() => {
-                const data = {
-                    dato: els.dato.value,
-                    ordre: els.ordre.value,
-                    levering: els.levering.value,
-                    rows: Array.from(els.tbody.querySelectorAll('tr')).map(row => ({
-                        antal: row.querySelector('.col-antal').value,
-                        desc: row.querySelector('.table-textarea').value
-                    }))
-                };
-                try {
-                    localStorage.setItem(STORAGE_KEY, encrypt(data));
-                } catch (e) {}
-            }, 1000);
-        }
-
-        function load() {
-            try {
-                const encrypted = localStorage.getItem(STORAGE_KEY);
-                if (!encrypted) return false;
-                
-                const data = decrypt(encrypted);
-                if (!data) return false;
-                
-                els.dato.value = data.dato || '';
-                els.ordre.value = data.ordre || '';
-                els.levering.value = data.levering || '';
-                
-                els.tbody.innerHTML = '';
-                if (data.rows?.length) {
-                    data.rows.forEach(row => addRow(row.antal, row.desc));
-                } else {
-                    addRow();
-                }
-                return true;
-            } catch (e) {
-                return false;
-            }
         }
 
         function clear() {
@@ -726,7 +753,6 @@
             els.levering.value = '';
             els.tbody.innerHTML = '';
             addRow();
-            localStorage.removeItem(STORAGE_KEY);
             toast('Alle data er ryddet');
         }
 
@@ -868,38 +894,9 @@
             toast('PDF genereret!');
         }
 
-        // SOLUCIÓN PARA PRINT: Clonar footer dinámicamente
-        function preparePrint() {
-            const pageH = 1000;
-            const footerH = 80;
-            let currentH = 400;
-
-            const rows = Array.from(els.tbody.querySelectorAll('tr'));
-            rows.forEach((row, i) => {
-                const rowH = row.offsetHeight || 40;
-                currentH += rowH;
-
-                if (currentH > pageH - footerH || i === rows.length - 1) {
-                    const clone = els.footer.cloneNode(true);
-                    clone.classList.add('footer-clone');
-                    clone.style.pageBreakAfter = i === rows.length - 1 ? 'auto' : 'always';
-                    row.parentNode.insertBefore(clone, row.nextSibling);
-                    currentH = rowH + 80;
-                }
-            });
-
-            els.footer.style.display = 'none';
-        }
-
-        function cleanupPrint() {
-            els.footer.style.display = '';
-            document.querySelectorAll('.footer-clone').forEach(el => el.remove());
-        }
-
         // Events
         els.badge.onclick = () => els.modal.classList.add('show');
         els.acceptBtn.onclick = () => {
-            localStorage.setItem(ACCEPTED_KEY, 'true');
             els.modal.classList.remove('show');
             toast('Sikkerhedsindstillinger accepteret');
         };
@@ -911,22 +908,13 @@
         els.pdfBtn.onclick = generatePDF;
         els.printBtn.onclick = () => {
             toast('Forbereder print...');
-            setTimeout(() => {
-                preparePrint();
-                window.print();
-            }, 500);
+            setTimeout(() => window.print(), 300);
         };
-
-        window.addEventListener('beforeprint', preparePrint);
-        window.addEventListener('afterprint', cleanupPrint);
-
-        [els.dato, els.ordre, els.levering].forEach(el => el.addEventListener('input', save));
 
         els.tbody.addEventListener('click', e => {
             if (e.target.classList.contains('btn-delete')) {
                 if (els.tbody.rows.length > 1) {
                     e.target.closest('tr').remove();
-                    save();
                 } else {
                     toast('Der skal være mindst én række');
                 }
@@ -935,17 +923,11 @@
 
         els.tbody.addEventListener('input', e => {
             if (e.target.classList.contains('table-textarea')) resize(e.target);
-            save();
         });
 
         // Init
-        const loaded = load();
         if (!els.dato.value) els.dato.valueAsDate = new Date();
         if (els.tbody.rows.length === 0) addRow();
-        if (loaded) toast('Data indlæst');
-        if (!localStorage.getItem(ACCEPTED_KEY)) {
-            setTimeout(() => els.modal.classList.add('show'), 500);
-        }
     </script>
 </body>
 </html>
