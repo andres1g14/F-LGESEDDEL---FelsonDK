@@ -925,7 +925,7 @@
             }
 
             .content {
-                padding: 0 0 35mm 0 !important;
+                padding: 0 0 15mm 0 !important;
                 position: relative !important;
             }
 
@@ -1056,6 +1056,8 @@
                 color: #000 !important;
                 border-bottom: 1px solid #e8e8e8 !important;
                 vertical-align: top !important;
+                max-height: 20mm !important;
+                overflow: hidden !important;
             }
 
             .table tbody tr:last-child td {
@@ -1069,6 +1071,8 @@
                 background: transparent !important;
                 color: #000 !important;
                 font-weight: 400 !important;
+                max-height: 18mm !important;
+                overflow: hidden !important;
             }
 
             .table-input.col-antal {
@@ -1079,7 +1083,9 @@
 
             .table-textarea {
                 min-height: auto !important;
-                overflow: visible !important;
+                overflow: hidden !important;
+                max-height: 18mm !important;
+                line-height: 1.4 !important;
             }
 
             /* Footer - Only blue line fixed at bottom */
@@ -1087,7 +1093,7 @@
                 position: fixed !important;
                 left: 0 !important;
                 right: 0 !important;
-                bottom: 8mm !important;
+                bottom: 1mm !important;
                 height: 0 !important;
                 border-top: 3px solid #00B0F0 !important;
                 page-break-inside: avoid !important;
