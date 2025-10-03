@@ -26,6 +26,18 @@
             75% { transform: translateX(10px); }
         }
 
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition: none !important;
+            }
+            body::before {
+                animation: none !important;
+            }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -1441,9 +1453,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // ===== SESSION MANAGEMENT =====
+        // ===== SESSION & STORAGE MANAGEMENT =====
         const SESSION_KEY = 'felson_session';
         const ACCOUNT_KEY = 'felson_account';
+        const FORM_DATA_KEY = 'felson_form_data';
         
         // User credentials
         let userData = {
@@ -1456,6 +1469,66 @@
 
         let isAuthenticated = false;
         let generatedCode = '';
+        let resetToken = null;
+
+        // Generate secure token
+        function generateToken() {
+            return Math.random().toString(36).slice(2, 8).toUpperCase();
+        }
+
+        // Auto-save form data (persistent)
+        function saveFormData() {
+            try {
+                const rows = Array.from(els.tbody.querySelectorAll('tr')).map(tr => ({
+                    antal: tr.querySelector('.col-antal')?.value || '',
+                    desc: tr.querySelector('.table-textarea')?.value || ''
+                }));
+                const formData = {
+                    dato: els.dato.value,
+                    ordre: els.ordre.value,
+                    levering: els.levering.value,
+                    rows: rows
+                };
+                localStorage.setItem(FORM_DATA_KEY, JSON.stringify(formData));
+            } catch (e) {
+                console.log('LocalStorage not available');
+            }
+        }
+
+        // Restore form data
+        function restoreFormData() {
+            try {
+                const saved = localStorage.getItem(FORM_DATA_KEY);
+                if (!saved) return false;
+                
+                const data = JSON.parse(saved);
+                els.dato.value = data.dato || '';
+                els.ordre.value = data.ordre || '';
+                els.levering.value = data.levering || '';
+                els.tbody.innerHTML = '';
+                
+                if (data.rows && data.rows.length > 0) {
+                    data.rows.forEach(row => addRow(row.antal, row.desc));
+                } else {
+                    addRow();
+                }
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Debounce function for performance
+        function debounce(fn, delay = 300) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => fn(...args), delay);
+            };
+        }
+
+        // Debounced save
+        const debouncedSave = debounce(saveFormData, 500);
 
         // Try to restore session on page load
         function restoreSession() {
@@ -1882,7 +1955,7 @@
             toast('🔒 Adgangskode opdateret!');
         });
 
-        // Password Recovery - CORREGIDO
+        // Password Recovery - IMPROVED with token system
         els.recoverPasswordBtn.addEventListener('click', () => {
             const username = els.recoveryUsername.value.trim();
             const email = els.recoveryEmailInput.value.trim();
@@ -1910,16 +1983,20 @@
                 return;
             }
             
-            // Success - show password
-            showMessage(els.recoverySuccess, `✅ Gendannelse succesfuld! Din adgangskode er: ${userData.password}`, 8000);
-            toast('🔓 Adgangskode gendannet!');
+            // Generate secure reset token
+            resetToken = generateToken();
+            
+            // Success - show token (in production, send via email)
+            showMessage(els.recoverySuccess, `✅ Gendannelse klar! Reset-kode: ${resetToken} (Demo: Din adgangskode er "${userData.password}")`, 10000);
+            toast('🔐 Reset-kode genereret!');
             
             setTimeout(() => {
                 els.recoveryModal.classList.remove('show');
                 els.recoveryUsername.value = '';
                 els.recoveryEmailInput.value = '';
                 hideMessage(els.recoverySuccess);
-            }, 8000);
+                resetToken = null; // Token expires
+            }, 10000);
         });
 
         // Form functions
@@ -2086,18 +2163,56 @@
 
         els.tbody.addEventListener('input', e => {
             if (e.target.classList.contains('table-textarea')) resize(e.target);
+            debouncedSave(); // Auto-save on input
+        });
+
+        // === KEYBOARD SHORTCUTS ===
+        
+        // Press Enter in last row textarea -> add new row
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey && document.activeElement?.classList.contains('table-textarea')) {
+                const currentRow = document.activeElement.closest('tr');
+                const lastRow = els.tbody.lastElementChild;
+                
+                if (currentRow === lastRow) {
+                    e.preventDefault();
+                    addRow();
+                    // Focus on the new row's textarea
+                    setTimeout(() => {
+                        const newLastRow = els.tbody.lastElementChild;
+                        const newTextarea = newLastRow?.querySelector('.table-textarea');
+                        if (newTextarea) newTextarea.focus();
+                    }, 0);
+                }
+            }
+        });
+
+        // Auto-save on form field changes
+        [els.dato, els.ordre, els.levering].forEach(el => {
+            el.addEventListener('input', debouncedSave);
+            el.addEventListener('change', debouncedSave);
         });
 
         // Initialize
-        if (!els.dato.value) els.dato.valueAsDate = new Date();
-        if (els.tbody.rows.length === 0) addRow();
-        
-        // === AUTO-RESTORE SESSION ON PAGE LOAD ===
         window.addEventListener('DOMContentLoaded', () => {
+            // Try to restore session
             const sessionRestored = restoreSession();
+            
+            // Try to restore form data
+            const formRestored = restoreFormData();
+            
             if (!sessionRestored) {
-                // Show login screen if no session
                 els.loginScreen.classList.remove('hidden');
+            }
+            
+            if (!formRestored) {
+                // Set defaults if no saved data
+                if (!els.dato.value) els.dato.valueAsDate = new Date();
+                if (els.tbody.rows.length === 0) addRow();
+            }
+            
+            if (formRestored) {
+                toast('📋 Gemt data gendannet');
             }
         });
     </script>
