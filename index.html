@@ -880,73 +880,74 @@
                 border: none !important;
             }
 
-            /* Header with blue line on top */
+            /* Header - Blue line on top + centered logo */
             .header {
                 padding: 0 !important;
                 background: white !important;
-                border-bottom: none !important;
                 border-top: 4px solid #00B0F0 !important;
+                border-bottom: none !important;
                 padding-top: 8mm !important;
-                margin-bottom: 8mm !important;
+                padding-bottom: 8mm !important;
+                margin-bottom: 0 !important;
                 text-align: center !important;
                 page-break-inside: avoid !important;
             }
 
             .logo {
-                font-size: 24pt !important;
+                font-size: 26pt !important;
                 font-weight: 700 !important;
                 color: #00B0F0 !important;
-                margin: 0 0 8mm 0 !important;
+                margin: 0 !important;
                 padding: 0 !important;
+                display: block !important;
             }
 
-            /* Company info box - positioned below logo, left side */
+            .content {
+                padding: 0 !important;
+                position: relative !important;
+            }
+
+            /* Company info box - below logo, left aligned */
             .content::before {
                 content: 'Felson Watersafe ApS\A Gartnervej 4\A 6710 Esbjerg V\A CVR-nr. DK26813522\A Tlf. 70206676\A felson@felson.dk';
                 white-space: pre-line;
                 display: block;
-                float: left;
-                width: 40%;
-                background: #f0f0f0;
+                background: #eeeeee;
                 padding: 6mm;
-                margin: 0 0 8mm 0;
+                margin: 0 0 10mm 0;
                 font-size: 9.5pt;
-                line-height: 1.5;
+                line-height: 1.6;
                 color: #333;
                 text-align: left;
                 border-radius: 2mm;
                 font-family: 'Inter', sans-serif;
                 font-weight: 400;
+                width: 42%;
                 box-sizing: border-box;
             }
 
-            .content {
-                padding: 0 !important;
-                overflow: hidden;
-            }
-
-            /* Clear float before title */
+            /* Title - FØLGESEDDEL Banner */
             .title {
-                clear: both !important;
-                font-size: 16pt !important;
+                font-size: 17pt !important;
                 font-weight: 700 !important;
                 background: #00B0F0 !important;
                 color: white !important;
                 padding: 5mm 0 !important;
-                margin: 12mm 0 8mm 0 !important;
+                margin: 8mm 0 !important;
                 text-align: center !important;
                 border-radius: 3mm !important;
-                letter-spacing: 0.35em !important;
+                letter-spacing: 0.4em !important;
                 page-break-inside: avoid !important;
                 page-break-after: avoid !important;
+                clear: both !important;
             }
 
-            /* Form Section - grid layout */
+            /* Form Section */
             .form {
                 display: grid !important;
-                grid-template-columns: 35% 1fr !important;
-                gap: 3% !important;
-                background: #e8f5fb !important;
+                grid-template-columns: 38% 1fr !important;
+                gap: 2% !important;
+                background: #e6f4fb !important;
                 padding: 6mm !important;
                 margin-bottom: 8mm !important;
                 border-radius: 3mm !important;
@@ -986,7 +987,7 @@
             .table {
                 width: 100% !important;
                 border: 2px solid #00B0F0 !important;
-                border-radius: 3mm !important;
+                border-radius: 4mm !important;
                 overflow: hidden !important;
                 margin-top: 0 !important;
                 border-collapse: collapse !important;
@@ -1015,7 +1016,7 @@
             }
 
             .table tbody tr:nth-child(even) {
-                background: #f8fcff !important;
+                background: #f5f9fc !important;
             }
 
             .table tbody tr:nth-child(odd) {
@@ -1055,9 +1056,9 @@
 
             /* Footer */
             .footer {
-                margin-top: 10mm !important;
+                margin-top: 12mm !important;
                 padding-top: 6mm !important;
-                border-top: 3px solid #00B0F0 !important;
+                border-top: 4px solid #00B0F0 !important;
                 page-break-inside: avoid !important;
                 background: white !important;
             }
@@ -1077,9 +1078,9 @@
             .footer p {
                 font-size: 8.5pt !important;
                 color: #666 !important;
-                margin: 1mm 0 !important;
+                margin: 1.5mm 0 !important;
                 text-align: center !important;
-                line-height: 1.5 !important;
+                line-height: 1.4 !important;
             }
 
             /* Remove input controls */
