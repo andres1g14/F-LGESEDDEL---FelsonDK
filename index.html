@@ -415,6 +415,9 @@
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 4rem);
         }
 
         .header {
@@ -432,6 +435,7 @@
 
         .content {
             padding: 3rem;
+            flex: 1;
         }
 
         .title {
@@ -841,6 +845,10 @@
 
         /* ===== PRINT STYLES - EXACT PDF MATCH ===== */
         @media print {
+            :root {
+                --print-footer-h: 22mm;
+            }
+
             @page {
                 size: A4 portrait;
                 margin: 15mm 15mm 30mm 15mm;
@@ -889,6 +897,8 @@
                 margin: 0 !important;
                 background: white !important;
                 border: none !important;
+                display: block !important;
+                min-height: auto !important;
             }
 
             /* Header - Blue line at very top, then logo on right */
@@ -925,8 +935,9 @@
             }
 
             .content {
-                padding: 0 0 15mm 0 !important;
+                padding: 0 0 var(--print-footer-h) 0 !important;
                 position: relative !important;
+                flex: none !important;
             }
 
             /* Company info box - below header, left aligned */
@@ -1088,25 +1099,30 @@
                 line-height: 1.4 !important;
             }
 
-            /* Footer - Only blue line fixed at bottom */
+            /* Footer - Fixed within margins and visible */
             .footer {
                 position: fixed !important;
-                left: 0 !important;
-                right: 0 !important;
-                bottom: 1mm !important;
-                height: 0 !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                bottom: 15mm !important;
                 border-top: 3px solid #00B0F0 !important;
+                background: #fff !important;
+                padding: 4mm 0 !important;
+                text-align: center !important;
                 page-break-inside: avoid !important;
-                background: transparent !important;
-                padding: 0 !important;
             }
 
-            /* Hide all footer content */
-            .footer > *,
-            .footer::before,
-            .footer::after {
-                display: none !important;
-                content: none !important;
+            /* Show footer content */
+            .footer > * {
+                display: block !important;
+            }
+
+            .footer p {
+                font-size: 8pt !important;
+                color: #666 !important;
+                margin: 1.5mm 0 !important;
+                text-align: center !important;
+                line-height: 1.5 !important;
             }
 
             /* Remove input controls */
@@ -2074,6 +2090,17 @@
                 doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', w / 2, fy + 4, { align: 'center' });
             }
 
+            function tableHeader() {
+                doc.setFillColor(0, 176, 240);
+                doc.roundedRect(m, y, w - 2 * m, 9, 2, 2, 'F');
+                doc.setTextColor(255);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(8);
+                doc.text('ANTAL', m + 5, y + 6);
+                doc.text('BESKRIVELSE', m + 35, y + 6);
+                y += 11;
+            }
+
             header();
             y = 25;
 
@@ -2110,14 +2137,8 @@
             doc.text(els.ordre.value || '', m + 3, y + 15);
             y += Math.max(24, levLines.length * 5 + 16);
 
-            doc.setFillColor(0, 176, 240);
-            doc.roundedRect(m, y, w - 2 * m, 9, 2, 2, 'F');
-            doc.setTextColor(255);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(8);
-            doc.text('ANTAL', m + 5, y + 6);
-            doc.text('BESKRIVELSE', m + 35, y + 6);
-            y += 11;
+            // Initial table header
+            tableHeader();
 
             const rows = Array.from(els.tbody.querySelectorAll('tr'));
             doc.setTextColor(40);
@@ -2135,6 +2156,8 @@
                     doc.addPage();
                     header();
                     y = 30;
+                    // Repeat table header on new page
+                    tableHeader();
                 }
 
                 if (i % 2 === 0) {
