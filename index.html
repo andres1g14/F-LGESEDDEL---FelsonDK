@@ -72,7 +72,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 20000;
+            z-index: 10000;
             padding: 1rem;
             opacity: 1;
             transition: opacity 0.5s, visibility 0.5s;
@@ -638,7 +638,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 15000;
+            z-index: 20000;
             padding: 1rem;
             opacity: 0;
             visibility: hidden;
@@ -648,6 +648,23 @@
         .modal.show {
             opacity: 1;
             visibility: visible;
+        }
+
+        .back-to-login {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .back-to-login:hover {
+            color: #00B0F0;
         }
 
         .modal-content {
@@ -950,11 +967,11 @@
 
                 <form class="login-form" id="loginForm">
                     <div class="input-group">
-                        <input type="text" class="login-input" id="username" placeholder="Brugernavn" required autocomplete="username">
+                        <input type="text" class="login-input" id="username" name="username" placeholder="Brugernavn" required autocomplete="username">
                         <span class="input-icon">👤</span>
                     </div>
                     <div class="input-group">
-                        <input type="password" class="login-input" id="password" placeholder="Adgangskode" required autocomplete="current-password">
+                        <input type="password" class="login-input" id="password" name="password" placeholder="Adgangskode" required autocomplete="current-password">
                         <span class="input-icon">🔒</span>
                     </div>
                     <button type="submit" class="login-btn">Log ind</button>
@@ -1088,7 +1105,7 @@
                         Tilføj en email til gendannelse af adgangskode
                     </p>
                     <div class="input-group">
-                        <input type="email" class="login-input" id="recoveryEmail" placeholder="din@email.dk">
+                        <input type="email" class="login-input" id="recoveryEmail" name="recovery-email" placeholder="din@email.dk" autocomplete="email">
                         <span class="input-icon">📧</span>
                     </div>
                     <button class="btn btn-brand" id="saveEmailBtn" style="margin-top: 0.75rem; width: 100%;">Gem Email</button>
@@ -1101,7 +1118,7 @@
                 <div class="settings-section">
                     <h3>👤 Skift Brugernavn</h3>
                     <div class="input-group">
-                        <input type="text" class="login-input" id="newUsername" placeholder="Nyt brugernavn">
+                        <input type="text" class="login-input" id="newUsername" name="new-username" placeholder="Nyt brugernavn" autocomplete="username">
                         <span class="input-icon">👤</span>
                     </div>
                     <button class="btn btn-brand" id="changeUsernameBtn" style="margin-top: 0.75rem; width: 100%;">Opdater Brugernavn</button>
@@ -1114,15 +1131,15 @@
                 <div class="settings-section">
                     <h3>🔒 Skift Adgangskode</h3>
                     <div class="input-group" style="margin-bottom: 0.75rem;">
-                        <input type="password" class="login-input" id="currentPassword" placeholder="Nuværende adgangskode" autocomplete="current-password">
+                        <input type="password" class="login-input" id="currentPassword" name="current-password" placeholder="Nuværende adgangskode" autocomplete="current-password">
                         <span class="input-icon">🔒</span>
                     </div>
                     <div class="input-group" style="margin-bottom: 0.75rem;">
-                        <input type="password" class="login-input" id="newPassword" placeholder="Ny adgangskode" autocomplete="new-password">
+                        <input type="password" class="login-input" id="newPassword" name="new-password" placeholder="Ny adgangskode" autocomplete="new-password">
                         <span class="input-icon">🔑</span>
                     </div>
                     <div class="input-group">
-                        <input type="password" class="login-input" id="confirmPassword" placeholder="Bekræft ny adgangskode" autocomplete="new-password">
+                        <input type="password" class="login-input" id="confirmPassword" name="confirm-password" placeholder="Bekræft ny adgangskode" autocomplete="new-password">
                         <span class="input-icon">🔑</span>
                     </div>
                     <button class="btn btn-brand" id="changePasswordBtn" style="margin-top: 0.75rem; width: 100%;">Opdater Adgangskode</button>
@@ -1146,6 +1163,8 @@
                 <h3 class="modal-title">Gendannelse af Adgangskode</h3>
             </div>
             <div class="modal-body">
+                <a href="#" class="back-to-login" id="backToLoginLink">← Tilbage til login</a>
+                
                 <div class="login-success" id="recoverySuccess"></div>
                 <div class="login-error" id="recoveryError"></div>
 
@@ -1154,11 +1173,11 @@
                 </p>
 
                 <div class="input-group" style="margin-bottom: 1rem;">
-                    <input type="text" class="login-input" id="recoveryUsername" placeholder="Brugernavn">
+                    <input type="text" class="login-input" id="recoveryUsername" name="recovery-username" placeholder="Brugernavn" autocomplete="username">
                     <span class="input-icon">👤</span>
                 </div>
                 <div class="input-group">
-                    <input type="email" class="login-input" id="recoveryEmailInput" placeholder="Recovery email">
+                    <input type="email" class="login-input" id="recoveryEmailInput" name="recovery-email" placeholder="Recovery email" autocomplete="email">
                     <span class="input-icon">📧</span>
                 </div>
 
@@ -1235,6 +1254,7 @@
             recoveryEmailInput: document.getElementById('recoveryEmailInput'),
             recoverPasswordBtn: document.getElementById('recoverPasswordBtn'),
             cancelRecoveryBtn: document.getElementById('cancelRecoveryBtn'),
+            backToLoginLink: document.getElementById('backToLoginLink'),
             
             acceptSecurityBtn: document.getElementById('acceptSecurityBtn'),
             addBtn: document.getElementById('addBtn'),
@@ -1336,6 +1356,18 @@
             els.recoveryModal.classList.remove('show');
             els.recoveryUsername.value = '';
             els.recoveryEmailInput.value = '';
+            hideMessage(els.recoverySuccess);
+            hideMessage(els.recoveryError);
+        });
+
+        // Back to login from recovery
+        els.backToLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            els.recoveryModal.classList.remove('show');
+            els.recoveryUsername.value = '';
+            els.recoveryEmailInput.value = '';
+            hideMessage(els.recoverySuccess);
+            hideMessage(els.recoveryError);
         });
 
         [els.securityModal, els.settingsModal, els.recoveryModal].forEach(modal => {
