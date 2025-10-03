@@ -1082,38 +1082,25 @@
                 overflow: visible !important;
             }
 
-            /* Footer - FIXED on all pages */
+            /* Footer - Only blue line fixed at bottom */
             .footer {
                 position: fixed !important;
-                left: 15mm !important;
-                right: 15mm !important;
-                bottom: 10mm !important;
-                padding-top: 5mm !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 8mm !important;
+                height: 0 !important;
                 border-top: 3px solid #00B0F0 !important;
                 page-break-inside: avoid !important;
-                background: white !important;
-                text-align: center !important;
+                background: transparent !important;
+                padding: 0 !important;
             }
 
-            .footer::before {
-                content: 'Side ' counter(page);
-                display: block;
-                background: #00B0F0;
-                color: white;
-                padding: 2mm 5mm;
-                border-radius: 3mm;
-                font-weight: 700;
-                font-size: 8.5pt;
-                margin: 0 auto 3mm auto;
-                width: fit-content;
-            }
-
-            .footer p {
-                font-size: 8pt !important;
-                color: #666 !important;
-                margin: 1.5mm 0 !important;
-                text-align: center !important;
-                line-height: 1.5 !important;
+            /* Hide all footer content */
+            .footer > *,
+            .footer::before,
+            .footer::after {
+                display: none !important;
+                content: none !important;
             }
 
             /* Remove input controls */
@@ -1127,21 +1114,6 @@
             input[type="date"],
             input[type="number"] {
                 -moz-appearance: textfield !important;
-            }
-
-            /* Hide original footer content, use only ::before */
-            .footer > * {
-                display: none !important;
-            }
-
-            .footer::after {
-                content: 'Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V\A CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk';
-                white-space: pre-line;
-                display: block;
-                font-size: 8pt;
-                color: #666;
-                text-align: center;
-                line-height: 1.5;
             }
         }
     </style>
