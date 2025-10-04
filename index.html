@@ -3,529 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Følgeseddel - Felson Watersafe ApS</title>
+    <title>Felson Watersafe - Enterprise System</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        @keyframes rgbRotate {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --primary-light: #38bdf8;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --sidebar-width: 280px;
+            --header-height: 70px;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        /* Respect prefers-reduced-motion */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.001ms !important;
-                animation-iteration-count: 1 !important;
-                transition: none !important;
-            }
-            body::before {
-                animation: none !important;
-            }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 2rem;
-            position: relative;
-            overflow-x: hidden;
-            background: #0a0e27;
+            color: var(--gray-900);
         }
 
-        /* RGB Animated Background */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(45deg, 
-                #ff0080, 
-                #ff8c00, 
-                #40e0d0, 
-                #00ff80, 
-                #0080ff, 
-                #8b00ff,
-                #ff0080
-            );
-            background-size: 400% 400%;
-            animation: rgbRotate 15s ease infinite;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 0, 128, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(128, 0, 255, 0.2) 0%, transparent 50%);
-            z-index: 0;
-        }
-
-        /* ===== LOGIN SCREEN ===== */
-        .login-screen {
-            position: fixed;
-            inset: 0;
+        .app {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            padding: 1rem;
-            opacity: 1;
-            transition: opacity 0.5s, visibility 0.5s;
+            min-height: 100vh;
         }
 
-        .login-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            max-width: 450px;
-            width: 100%;
-            overflow: hidden;
-            animation: slideUp 0.6s ease-out;
-            position: relative;
-            z-index: 2;
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%);
-            padding: 3rem 2rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .login-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.875rem;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-icon {
-            width: 80px;
-            height: 80px;
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
             background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-body {
-            padding: 2.5rem 2rem;
-        }
-
-        .login-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .login-description {
-            color: #6b7280;
-            font-size: 0.875rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-form {
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.25rem;
-            color: #9ca3af;
-            transition: color 0.2s;
-            z-index: 1;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 0.875rem 1rem 0.875rem 3rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 0.9375rem;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: #00B0F0;
-            box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.1);
-        }
-
-        .login-input:focus ~ .input-icon {
-            color: #00B0F0;
-        }
-
-        .login-btn {
-            padding: 1rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%);
-            color: white;
-            transition: all 0.3s;
-            margin-top: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 176, 240, 0.3);
-        }
-
-        .login-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .forgot-password {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .forgot-password a {
-            color: #00B0F0;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        .forgot-password a:hover {
-            color: #0090cc;
-            text-decoration: underline;
-        }
-
-        .login-error, .login-success {
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            text-align: center;
-            display: none;
-            animation: shake 0.4s;
-        }
-
-        .login-error {
-            background: #fee;
-            border: 1px solid #fcc;
-            color: #c33;
-        }
-
-        .login-success {
-            background: #efe;
-            border: 1px solid #cfc;
-            color: #3c3;
-        }
-
-        .login-error.show, .login-success.show {
-            display: block;
-        }
-
-        .login-footer {
-            padding: 1.5rem 2rem;
-            background: #f9fafb;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #6b7280;
-        }
-
-        .login-hint {
-            background: #e0f2fe;
-            border: 1px solid #bae6fd;
-            color: #0369a1;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.8125rem;
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .login-hint code {
-            background: rgba(0, 176, 240, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        /* ===== BADGES ===== */
-        .badge-container {
             position: fixed;
-            top: 1rem;
-            left: 1rem;
-            right: 1rem;
-            display: flex;
-            justify-content: space-between;
-            z-index: 1000;
-            pointer-events: none;
+            height: 100vh;
+            z-index: 100;
         }
 
-        .badge-container > * {
-            pointer-events: all;
-        }
-
-        .badge {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .badge:hover {
-            transform: scale(1.05);
-        }
-
-        .security-badge {
-            background: rgba(16, 185, 129, 0.9);
-            color: white;
-        }
-
-        .security-badge:hover {
-            background: rgba(16, 185, 129, 1);
-        }
-
-        .settings-badge {
-            background: rgba(99, 102, 241, 0.9);
-            color: white;
-        }
-
-        .settings-badge:hover {
-            background: rgba(99, 102, 241, 1);
-        }
-
-        .logout-badge {
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-        }
-
-        .logout-badge:hover {
-            background: rgba(239, 68, 68, 1);
-        }
-
-        /* ===== MAIN APP ===== */
-        .app-container {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s, visibility 0.5s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .app-container.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .container {
-            max-width: 920px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            min-height: calc(100vh - 4rem);
-        }
-
-        .header {
-            padding: 2.5rem 3rem 2rem;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border-bottom: 2px solid #00B0F0;
-            text-align: right;
+        .logo-section {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
         }
 
         .logo {
-            color: #00B0F0;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .content {
-            padding: 3rem;
+        .company-name {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        .nav-menu {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            margin-bottom: 0.75rem;
+            padding: 0 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--gray-700);
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .user-info {
             flex: 1;
         }
 
-        .title {
-            text-align: center;
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-
-        .form {
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .field {
-            margin-bottom: 1rem;
-        }
-
-        .label {
-            display: block;
+        .user-name {
             font-weight: 600;
-            font-size: 0.8125rem;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
+            font-size: 0.875rem;
         }
 
-        .input, .textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1.5px solid #e5e7eb;
-            border-radius: 10px;
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-bar {
+            height: var(--header-height);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* DASHBOARD */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        /* FØLGESEDDEL FORM */
+        .document-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .document-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .doc-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .document-body {
+            padding: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
             font-size: 0.9375rem;
-            font-family: 'Inter', sans-serif;
             transition: all 0.2s;
         }
 
-        .input:focus, .textarea:focus {
+        .form-input:focus {
             outline: none;
-            border-color: #00B0F0;
-            box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
         }
 
-        .textarea {
+        textarea.form-input {
             resize: vertical;
             min-height: 100px;
         }
 
-        .table {
+        /* ITEMS TABLE */
+        .items-section {
+            margin-top: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .items-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
             overflow: hidden;
-            margin-top: 1.5rem;
         }
 
-        .table thead {
-            background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%);
+        .items-table thead {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
         }
 
-        .table th {
+        .items-table th {
             padding: 1rem;
             text-align: left;
             color: white;
             font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
         }
 
-        .table th.col-antal {
-            width: 20%;
+        .items-table th.col-antal {
+            width: 15%;
             text-align: center;
         }
 
-        .table tbody tr {
+        .items-table th.col-actions {
+            width: 80px;
+            text-align: center;
+        }
+
+        .items-table tbody tr {
             background: white;
+            transition: background 0.2s;
         }
 
-        .table tbody tr:not(:last-child) td {
-            border-bottom: 1px solid #e5e7eb;
+        .items-table tbody tr:hover {
+            background: var(--gray-50);
         }
 
-        .table tbody td {
+        .items-table tbody tr:not(:last-child) td {
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .items-table td {
             padding: 0.75rem 1rem;
         }
 
@@ -535,315 +421,183 @@
             border: 1px solid transparent;
             border-radius: 6px;
             font-size: 0.9375rem;
-            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
         }
 
         .table-input:focus {
             outline: none;
-            border-color: #00B0F0;
-            background: rgba(0, 176, 240, 0.05);
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .table-input.antal {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .table-textarea {
             resize: none;
-            overflow: hidden;
             min-height: 2.5rem;
-        }
-
-        .table-input.col-antal {
-            text-align: center;
-            font-weight: 600;
-            color: #00B0F0;
-        }
-
-        .actions {
-            margin-top: 1rem;
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .btn {
-            padding: 0.625rem 1.25rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.8125rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .btn-clear {
-            background: white;
-            color: #ef4444;
-            border: 1.5px solid #ef4444;
         }
 
         .btn-delete {
             background: transparent;
-            color: #9ca3af;
-            font-size: 1.125rem;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            font-size: 1.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
 
-        .footer {
-            padding: 1.5rem 3rem;
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* SAVED DOCUMENTS */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .doc-card {
             background: white;
-            border-top: 2px solid #00B0F0;
-            text-align: center;
-            font-size: 0.8125rem;
-            color: #6b7280;
-            line-height: 1.6;
-            font-family: 'Poppins', sans-serif;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
         }
 
-        .footer p {
-            margin: 0.25rem 0;
+        .doc-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        .main-actions {
+        .doc-card-header {
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .doc-number {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--gray-900);
+        }
+
+        .doc-date {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .doc-meta {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-items-count {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .modal-overlay.active {
+            display: flex;
         }
 
-        .btn-brand {
-            background: linear-gradient(135deg, #00B0F0 0%, #0090cc 100%);
-            color: white;
+        .modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* TOAST */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: white;
             padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s;
-            z-index: 10000;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(150%);
+            transition: transform 0.3s;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .toast.show {
             transform: translateY(0);
-            opacity: 1;
         }
 
-        /* ===== MODALS ===== */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 20000;
-            padding: 1rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-login {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .back-to-login:hover {
-            color: #00B0F0;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            max-width: 600px;
-            width: 100%;
-            padding: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #00B0F0;
-        }
-
-        .modal-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .modal-icon.settings {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        }
-
-        .modal-icon.recovery {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
             font-weight: 700;
         }
 
-        .modal-body {
-            color: #6b7280;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
+        .toast.success .toast-icon {
+            background: var(--success);
+            color: white;
         }
 
-        .modal-body p {
-            margin-bottom: 1rem;
+        .toast.error .toast-icon {
+            background: var(--danger);
+            color: white;
         }
 
-        .features {
-            background: #f9fafb;
-            border-radius: 12px;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-
-        .features ul {
-            list-style: none;
-        }
-
-        .features li {
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .features li::before {
-            content: '✓';
-            color: #10b981;
-            font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.75rem;
-        }
-
-        .settings-section {
-            margin-bottom: 2rem;
-        }
-
-        .settings-section h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-box {
-            background: #e0f2fe;
-            border: 1px solid #bae6fd;
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-size: 0.875rem;
-            color: #0369a1;
-            margin-top: 1rem;
-        }
-
-        .warning-box {
-            background: #fef3c7;
-            border: 1px solid #fde68a;
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-size: 0.875rem;
-            color: #92400e;
-            margin-top: 1rem;
-        }
-
-        .success-box {
-            background: #d1fae5;
-            border: 1px solid #a7f3d0;
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-size: 0.875rem;
-            color: #065f46;
-            margin-top: 1rem;
-        }
-
-        .verification-code {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin: 1rem 0;
-        }
-
-        .verification-code input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .verification-code input:focus {
-            outline: none;
-            border-color: #00B0F0;
-            box-shadow: 0 0 0 4px rgba(0, 176, 240, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .form { grid-template-columns: 1fr; }
-            .content { padding: 1.5rem; }
-            .badge-container { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-        }
-
-        /* ===== PRINT STYLES - EXACT PDF MATCH ===== */
+        /* PRINT STYLES */
         @media print {
             :root {
                 --print-footer-h: 22mm;
@@ -851,1414 +605,509 @@
 
             @page {
                 size: A4 portrait;
-                margin: 15mm 15mm 30mm 15mm;
+                margin: 15mm;
             }
 
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-                color-adjust: exact !important;
             }
 
-            html, body {
+            body {
                 background: white !important;
-                padding: 0 !important;
-                margin: 0 !important;
             }
 
-            body::before, body::after {
-                display: none !important;
-            }
-
-            .login-screen,
-            .badge-container,
-            .main-actions,
-            .actions,
-            .btn-delete,
+            .sidebar,
+            .top-bar,
+            .btn,
+            .nav-item,
             .toast,
-            .modal {
+            .modal-overlay {
                 display: none !important;
             }
 
-            .app-container {
-                opacity: 1 !important;
-                visibility: visible !important;
+            .main-content {
+                margin-left: 0 !important;
             }
 
-            .container {
-                max-width: 100% !important;
-                margin: 0 !important;
+            .content-area {
                 padding: 0 !important;
             }
 
-            .card {
+            .document-container {
                 box-shadow: none !important;
                 border-radius: 0 !important;
-                margin: 0 !important;
-                background: white !important;
-                border: none !important;
-                display: block !important;
-                min-height: auto !important;
             }
 
-            /* Header - Blue line at very top, then logo on right */
-            .header {
-                padding: 0 !important;
-                background: white !important;
-                border-bottom: 3px solid #00B0F0 !important;
-                border-top: none !important;
-                padding-bottom: 5mm !important;
-                margin-bottom: 6mm !important;
-                text-align: right !important;
+            .document-header {
+                border-bottom: 3px solid var(--primary) !important;
+            }
+
+            .document-body {
+                padding-bottom: var(--print-footer-h) !important;
+            }
+
+            .items-table th,
+            .items-table td {
                 page-break-inside: avoid !important;
-                position: relative !important;
-            }
-
-            .header::before {
-                content: '';
-                position: absolute;
-                top: -15mm;
-                left: -15mm;
-                right: -15mm;
-                height: 3mm;
-                background: #00B0F0;
-            }
-
-            .logo {
-                font-size: 22pt !important;
-                font-weight: 700 !important;
-                color: #00B0F0 !important;
-                margin: 0 !important;
-                padding: 2mm 0 !important;
-                display: block !important;
-                text-align: right !important;
-            }
-
-            .content {
-                padding: 0 0 var(--print-footer-h) 0 !important;
-                position: fixed !important;
-                flex: none !important;
-            }
-
-            /* Company info box - below header, left aligned */
-            .content::before {
-                content: 'Felson Watersafe ApS\A Gartnervej 4\A 6710 Esbjerg V\A CVR-nr. DK26813522\A Tlf. 70206676\A felson@felson.dk';
-                white-space: pre-line;
-                display: block;
-                background: #eeeeee;
-                padding: 5mm 6mm;
-                margin: 0 0 8mm 0;
-                font-size: 9pt;
-                line-height: 1.65;
-                color: #333;
-                text-align: left;
-                border-radius: 2mm;
-                font-family: 'Inter', sans-serif;
-                font-weight: 400;
-                width: 45%;
-                box-sizing: border-box;
-            }
-
-            /* Title - FØLGESEDDEL Banner */
-            .title {
-                font-size: 15pt !important;
-                font-weight: 700 !important;
-                background: #00B0F0 !important;
-                color: white !important;
-                padding: 4mm 0 !important;
-                margin: 6mm 0 !important;
-                text-align: center !important;
-                border-radius: 3mm !important;
-                letter-spacing: 0.35em !important;
-                page-break-inside: avoid !important;
-                page-break-after: avoid !important;
-                clear: both !important;
-            }
-
-            /* Form Section */
-            .form {
-                display: grid !important;
-                grid-template-columns: 35% 1fr !important;
-                gap: 3% !important;
-                background: #e8f5fb !important;
-                padding: 5mm 6mm !important;
-                margin-bottom: 6mm !important;
-                border-radius: 2mm !important;
-                page-break-inside: avoid !important;
-            }
-
-            .field {
-                margin-bottom: 3.5mm !important;
-            }
-
-            .field:last-child {
-                margin-bottom: 0 !important;
-            }
-
-            .label {
-                font-size: 8.5pt !important;
-                font-weight: 700 !important;
-                color: #00B0F0 !important;
-                text-transform: uppercase !important;
-                margin-bottom: 1.5mm !important;
-                display: block !important;
-            }
-
-            .input, .textarea {
-                border: none !important;
-                padding: 0 !important;
-                font-size: 9.5pt !important;
-                background: transparent !important;
-                color: #000 !important;
-                font-weight: 400 !important;
-                display: block !important;
-                width: 100% !important;
-                line-height: 1.45 !important;
-            }
-
-            .textarea {
-                min-height: auto !important;
-            }
-
-            /* Table */
-            .table {
-                width: 100% !important;
-                border: 2px solid #00B0F0 !important;
-                border-radius: 3mm !important;
-                overflow: hidden !important;
-                margin-top: 0 !important;
-                border-collapse: collapse !important;
-            }
-
-            .table thead {
-                background: #00B0F0 !important;
-            }
-
-            .table th {
-                font-size: 9.5pt !important;
-                font-weight: 700 !important;
-                padding: 3.5mm 4mm !important;
-                color: white !important;
-                background: #00B0F0 !important;
-                text-transform: uppercase !important;
-                text-align: left !important;
-            }
-
-            .table th.col-antal {
-                text-align: center !important;
-                width: 18% !important;
-            }
-
-            .table tbody tr {
-                page-break-inside: avoid !important;
-            }
-
-            .table tbody tr:nth-child(even) {
-                background: #f7f9fb !important;
-            }
-
-            .table tbody tr:nth-child(odd) {
-                background: white !important;
-            }
-
-            .table tbody td {
-                padding: 3mm 4mm !important;
-                font-size: 9.5pt !important;
-                color: #000 !important;
-                border-bottom: 1px solid #e8e8e8 !important;
-                vertical-align: top !important;
-                max-height: 20mm !important;
-                overflow: hidden !important;
-            }
-
-            .table tbody tr:last-child td {
-                border-bottom: none !important;
             }
 
             .table-input {
                 border: none !important;
                 padding: 0 !important;
-                font-size: 9.5pt !important;
-                background: transparent !important;
-                color: #000 !important;
-                font-weight: 400 !important;
-                max-height: 18mm !important;
-                overflow: hidden !important;
             }
 
-            .table-input.col-antal {
-                font-weight: 700 !important;
-                color: #00B0F0 !important;
-                text-align: center !important;
-            }
-
-            .table-textarea {
-                min-height: auto !important;
-                overflow: hidden !important;
-                max-height: 18mm !important;
-                line-height: 1.4 !important;
-            }
-
-            /* Footer - Fixed within margins and visible */
-            .footer {
-                position: fixed !important;
-                left: 15mm !important;
-                right: 15mm !important;
-                bottom: 15mm !important;
-                border-top: 3px solid #00B0F0 !important;
-                background: #fff !important;
-                padding: 4mm 0 !important;
-                text-align: center !important;
-                page-break-inside: avoid !important;
-            }
-
-            /* Show footer content */
-            .footer p {
-                font-size: 8pt !important;
-                color: #666 !important;
-                margin: 1.5mm 0 !important;
-                text-align: center !important;
-                line-height: 1.5 !important;
-                display: block !important;
-            }
-
-            /* Page number counter */
-            .footer::after {
-                content: 'Side ' counter(page);
-                display: inline-block;
-                margin-top: 3mm;
-                font-weight: 600;
-                font-size: 8.5pt;
-                color: #00B0F0;
-            }
-
-            /* Remove input controls */
-            input::-webkit-calendar-picker-indicator,
-            input::-webkit-inner-spin-button,
-            input::-webkit-outer-spin-button {
+            .btn-delete {
                 display: none !important;
-                -webkit-appearance: none !important;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
             }
 
-            input[type="date"],
-            input[type="number"] {
-                -moz-appearance: textfield !important;
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="login-icon">💧</div>
-                <h1 class="login-logo">Felson Watersafe ApS</h1>
-                <p class="login-subtitle">Følgeseddel System</p>
+    <div class="app">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo">FELSON</div>
+                <div class="company-name">Watersafe ApS</div>
             </div>
-            <div class="login-body">
-                <h2 class="login-title">Velkommen tilbage</h2>
-                <p class="login-description">Log ind for at få adgang til følgeseddel systemet</p>
-                
-                <div class="login-error" id="loginError">
-                    Forkert brugernavn eller adgangskode
-                </div>
 
-                <form class="login-form" id="loginForm">
-                    <div class="input-group">
-                        <input type="text" class="login-input" id="username" name="username" placeholder="Brugernavn" required autocomplete="username">
-                        <span class="input-icon">👤</span>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Hoved</div>
+                    <div class="nav-item active" data-view="dashboard">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
                     </div>
-                    <div class="input-group">
-                        <input type="password" class="login-input" id="password" name="password" placeholder="Adgangskode" required autocomplete="current-password">
-                        <span class="input-icon">🔒</span>
+                    <div class="nav-item" data-view="new">
+                        <span class="nav-icon">➕</span>
+                        Ny Følgeseddel
                     </div>
-                    <button type="submit" class="login-btn">Log ind</button>
-                </form>
-
-                <div class="forgot-password">
-                    <a href="#" id="forgotPasswordLink">Glemt din adgangskode?</a>
+                    <div class="nav-item" data-view="saved">
+                        <span class="nav-icon">📁</span>
+                        Gemte Dokumenter
+                    </div>
                 </div>
 
-                <div class="login-hint">
-                    💡 <strong>Demo:</strong> Bruger: <code>admin</code> | Adgangskode: <code>felson2025</code>
-                </div>
-            </div>
-            <div class="login-footer">
-                🔒 Sikker login • GDPR-kompatibel • AES-256 kryptering
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN APPLICATION -->
-    <div class="app-container" id="appContainer">
-        <div class="badge-container">
-            <div class="badge logout-badge" id="logoutBadge">🚪 Log ud</div>
-            <div style="display: flex; gap: 0.5rem;">
-                <div class="badge settings-badge" id="settingsBadge">⚙️ Indstillinger</div>
-                <div class="badge" style="background: rgba(251, 191, 36, 0.9); color: white;" id="linkAccountBadge">🔗 Tilknyt Konto</div>
-                <div class="badge security-badge" id="securityBadge">🔒 Sikkerhed</div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="card">
-                <div class="header">
-                    <h1 class="logo">Felson Watersafe ApS</h1>
+                <div class="nav-section">
+                    <div class="nav-section-title">Værktøjer</div>
+                    <div class="nav-item" data-view="templates">
+                        <span class="nav-icon">📋</span>
+                        Skabeloner
+                    </div>
+                    <div class="nav-item" data-view="customers">
+                        <span class="nav-icon">👥</span>
+                        Kunder
+                    </div>
+                    <div class="nav-item" data-view="analytics">
+                        <span class="nav-icon">📈</span>
+                        Analyse
+                    </div>
                 </div>
 
-                <div class="content">
-                    <h2 class="title">Følgeseddel</h2>
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <div class="nav-item" data-view="settings">
+                        <span class="nav-icon">⚙️</span>
+                        Indstillinger
+                    </div>
+                </div>
+            </nav>
 
-                    <div class="form">
-                        <div>
-                            <div class="field">
-                                <label class="label">Dato</label>
-                                <input type="date" class="input" id="dato">
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">A</div>
+                    <div class="user-info">
+                        <div class="user-name">Admin</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <div class="top-bar">
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="top-actions">
+                    <button class="btn btn-secondary" id="exportBtn">
+                        <span>⬇</span> Eksporter
+                    </button>
+                    <button class="btn btn-primary" id="newDocBtn">
+                        <span>➕</span> Ny Følgeseddel
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <!-- DASHBOARD VIEW -->
+                <div class="view-container" id="dashboardView">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">I dag</div>
+                            <div class="stat-value" id="todayCount">0</div>
+                            <div class="stat-change positive">+0 fra i går</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Denne måned</div>
+                            <div class="stat-value" id="monthCount">0</div>
+                            <div class="stat-change positive">+0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total</div>
+                            <div class="stat-value" id="totalCount">0</div>
+                            <div class="stat-change">Alle dokumenter</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Sidste dokument</div>
+                            <div class="stat-value" style="font-size: 1rem;" id="lastDoc">-</div>
+                            <div class="stat-change" id="lastDocDate">-</div>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <h2 class="section-title">Seneste Dokumenter</h2>
+                    </div>
+                    <div class="documents-grid" id="recentDocs"></div>
+                </div>
+
+                <!-- NEW DOCUMENT VIEW -->
+                <div class="view-container" id="newDocView" style="display: none;">
+                    <div class="document-container">
+                        <div class="document-header">
+                            <h2 class="doc-title">FØLGESEDDEL</h2>
+                        </div>
+                        <div class="document-body">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Dato</label>
+                                    <input type="date" class="form-input" id="docDate">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Ordre Nr.</label>
+                                    <input type="text" class="form-input" id="docOrder" placeholder="Indtast ordrenummer">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">Leveringsadresse</label>
+                                    <textarea class="form-input" id="docDelivery" placeholder="Indtast leveringsadresse"></textarea>
+                                </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Ordre nr.</label>
-                                <input type="text" class="input" id="ordre" placeholder="Indtast ordrenummer">
+
+                            <div class="items-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">Varer</h3>
+                                    <button class="btn btn-success" id="addItemBtn">
+                                        <span>➕</span> Tilføj Vare
+                                    </button>
+                                </div>
+
+                                <table class="items-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-antal">Antal</th>
+                                            <th>Beskrivelse</th>
+                                            <th class="col-actions"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemsBody"></tbody>
+                                </table>
+                            </div>
+
+                            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                                <button class="btn btn-secondary" id="clearBtn">Ryd</button>
+                                <button class="btn btn-secondary" id="saveBtn">Gem</button>
+                                <button class="btn btn-primary" id="printBtn">
+                                    <span>🖨️</span> Udskriv
+                                </button>
                             </div>
                         </div>
-                        <div>
-                            <div class="field">
-                                <label class="label">Levering</label>
-                                <textarea class="textarea" id="levering" placeholder="Indtast leveringsadresse"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="col-antal">Antal</th>
-                                <th>Beskrivelse</th>
-                                <th style="width: 60px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody"></tbody>
-                    </table>
-
-                    <div class="actions">
-                        <button class="btn btn-add" id="addBtn">+ Tilføj Række</button>
-                        <button class="btn btn-clear" id="clearBtn">Ryd Alt</button>
                     </div>
                 </div>
 
-                <div class="footer" id="footer">
-                    <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
-                    <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
+                <!-- SAVED DOCUMENTS VIEW -->
+                <div class="view-container" id="savedView" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">Gemte Dokumenter</h2>
+                    </div>
+                    <div class="documents-grid" id="savedDocs"></div>
                 </div>
             </div>
-
-            <div class="main-actions">
-                <button class="btn btn-brand" id="pdfBtn">📄 Generer PDF</button>
-                <button class="btn btn-primary" id="printBtn">🖨️ Udskriv</button>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <!-- MODALS -->
-    <div class="toast" id="toast"></div>
-
-    <!-- Security Modal -->
-    <div class="modal" id="securityModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon">🔒</div>
-                <h3 class="modal-title">Sikkerhed og Databeskyttelse</h3>
-            </div>
-            <div class="modal-body">
-                <p>Velkommen til Felson Watersafe ApS følgeseddel system. Vi tager din datasikkerhed alvorligt.</p>
-                <div class="features">
-                    <ul>
-                        <li>AES-256 kryptering af alle gemte data</li>
-                        <li>Lokal lagring uden eksterne servere</li>
-                        <li>Ingen data deles med tredjeparter</li>
-                        <li>GDPR-kompatibel databehandling</li>
-                    </ul>
-                </div>
-                <p><strong>Din databeskyttelse:</strong> Vi følger GDPR retningslinjer. Du har fuld kontrol over dine data.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-brand" id="acceptSecurityBtn">Forstået og Accepter</button>
-            </div>
-        </div>
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <span id="toastMessage"></span>
     </div>
 
-    <!-- Settings Modal -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon settings">⚙️</div>
-                <h3 class="modal-title">Konto Indstillinger</h3>
-            </div>
-            <div class="modal-body">
-                <div class="login-success" id="settingsSuccess"></div>
-                <div class="login-error" id="settingsError"></div>
-
-                <!-- Email Section -->
-                <div class="settings-section">
-                    <h3>📧 Recovery Email</h3>
-                    <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem;">
-                        Tilføj en email til gendannelse af adgangskode
-                    </p>
-                    <div class="input-group">
-                        <input type="email" class="login-input" id="recoveryEmail" name="recovery-email" placeholder="din@email.dk" autocomplete="email">
-                        <span class="input-icon">📧</span>
-                    </div>
-                    <button class="btn btn-brand" id="saveEmailBtn" style="margin-top: 0.75rem; width: 100%;">Gem Email</button>
-                    <div class="info-box">
-                        <strong>Nuværende email:</strong> <span id="currentEmail">Ikke angivet</span>
-                    </div>
-                </div>
-
-                <!-- Username Section -->
-                <div class="settings-section">
-                    <h3>👤 Skift Brugernavn</h3>
-                    <div class="input-group">
-                        <input type="text" class="login-input" id="newUsername" name="new-username" placeholder="Nyt brugernavn" autocomplete="username">
-                        <span class="input-icon">👤</span>
-                    </div>
-                    <button class="btn btn-brand" id="changeUsernameBtn" style="margin-top: 0.75rem; width: 100%;">Opdater Brugernavn</button>
-                    <div class="info-box">
-                        <strong>Nuværende bruger:</strong> <span id="currentUsername">admin</span>
-                    </div>
-                </div>
-
-                <!-- Password Section -->
-                <div class="settings-section">
-                    <h3>🔒 Skift Adgangskode</h3>
-                    <div class="input-group" style="margin-bottom: 0.75rem;">
-                        <input type="password" class="login-input" id="currentPassword" name="current-password" placeholder="Nuværende adgangskode" autocomplete="current-password">
-                        <span class="input-icon">🔒</span>
-                    </div>
-                    <div class="input-group" style="margin-bottom: 0.75rem;">
-                        <input type="password" class="login-input" id="newPassword" name="new-password" placeholder="Ny adgangskode" autocomplete="new-password">
-                        <span class="input-icon">🔑</span>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" class="login-input" id="confirmPassword" name="confirm-password" placeholder="Bekræft ny adgangskode" autocomplete="new-password">
-                        <span class="input-icon">🔑</span>
-                    </div>
-                    <button class="btn btn-brand" id="changePasswordBtn" style="margin-top: 0.75rem; width: 100%;">Opdater Adgangskode</button>
-                </div>
-
-                <div class="warning-box">
-                    ⚠️ <strong>Vigtigt:</strong> Dine ændringer gemmes kun i denne session. Ved genstart bruges standard login.
-                </div>
-                
-                <div class="info-box" style="margin-top: 1rem;">
-                    💡 <strong>DEMO NOTE:</strong> Dette system simulerer email-funktionalitet. I produktion ville reelle emails blive sendt via en server (f.eks. SendGrid, AWS SES).
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-clear" id="closeSettingsBtn">Luk</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Password Recovery Modal -->
-    <div class="modal" id="recoveryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon recovery">🔑</div>
-                <h3 class="modal-title">Gendannelse af Adgangskode</h3>
-            </div>
-            <div class="modal-body">
-                <a href="#" class="back-to-login" id="backToLoginLink">← Tilbage til login</a>
-                
-                <div class="login-success" id="recoverySuccess"></div>
-                <div class="login-error" id="recoveryError"></div>
-
-                <p style="margin-bottom: 1.5rem;">
-                    Indtast dit brugernavn og den <strong>recovery email</strong> du har registreret i indstillinger.
-                </p>
-
-                <div class="input-group" style="margin-bottom: 1rem;">
-                    <input type="text" class="login-input" id="recoveryUsername" name="recovery-username" placeholder="Brugernavn" autocomplete="username">
-                    <span class="input-icon">👤</span>
-                </div>
-                <div class="input-group">
-                    <input type="email" class="login-input" id="recoveryEmailInput" name="recovery-email" placeholder="Recovery email" autocomplete="email">
-                    <span class="input-icon">📧</span>
-                </div>
-
-                <div class="info-box" style="margin-top: 1rem;">
-                    💡 <strong>Recovery system:</strong> Hvis email matcher, får du vist din adgangskode.
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-clear" id="cancelRecoveryBtn">Annuller</button>
-                <button class="btn btn-brand" id="recoverPasswordBtn">Gendan Adgangskode</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Link Account Modal -->
-    <div class="modal" id="linkAccountModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">🔗</div>
-                <h3 class="modal-title">Tilknyt Konto med Email</h3>
-            </div>
-            <div class="modal-body">
-                <div class="login-success" id="linkSuccess"></div>
-                <div class="login-error" id="linkError"></div>
-
-                <div id="linkStep1">
-                    <p style="margin-bottom: 1.5rem;">
-                        Tilknyt din konto med en email for at aktivere:
-                    </p>
-                    <div class="features">
-                        <ul>
-                            <li>Automatisk login på denne enhed</li>
-                            <li>Sikker adgangskode gendannelse</li>
-                            <li>Multi-device sync (kommende)</li>
-                            <li>To-faktor autentificering</li>
-                        </ul>
-                    </div>
-
-                    <div class="input-group" style="margin-top: 1.5rem;">
-                        <input type="email" class="login-input" id="linkEmail" name="link-email" placeholder="Din email adresse" autocomplete="email">
-                        <span class="input-icon">📧</span>
-                    </div>
-
-                    <button class="btn btn-brand" id="sendVerificationBtn" style="margin-top: 1rem; width: 100%;">📨 Send Verifikationskode</button>
-                </div>
-
-                <div id="linkStep2" style="display: none;">
-                    <p style="margin-bottom: 1rem;">
-                        Vi har sendt en 6-cifret verifikationskode til:<br>
-                        <strong id="sentToEmail" style="color: #00B0F0;"></strong>
-                    </p>
-
-                    <p style="margin-bottom: 1rem; font-size: 0.875rem; color: #6b7280;">
-                        Indtast koden nedenfor:
-                    </p>
-
-                    <div class="verification-code">
-                        <input type="text" maxlength="1" class="verify-input" data-index="0">
-                        <input type="text" maxlength="1" class="verify-input" data-index="1">
-                        <input type="text" maxlength="1" class="verify-input" data-index="2">
-                        <input type="text" maxlength="1" class="verify-input" data-index="3">
-                        <input type="text" maxlength="1" class="verify-input" data-index="4">
-                        <input type="text" maxlength="1" class="verify-input" data-index="5">
-                    </div>
-
-                    <div class="info-box">
-                        💡 <strong>DEMO MODE:</strong> Koden er: <code id="demoCode" style="background: rgba(0, 176, 240, 0.1); padding: 2px 8px; border-radius: 4px; font-weight: 700; color: #00B0F0;"></code>
-                    </div>
-
-                    <button class="btn btn-brand" id="verifyCodeBtn" style="margin-top: 1rem; width: 100%;">✅ Verificer Kode</button>
-                    <button class="btn btn-clear" id="resendCodeBtn" style="margin-top: 0.5rem; width: 100%;">🔄 Send kode igen</button>
-                </div>
-
-                <div id="linkStep3" style="display: none;">
-                    <div class="success-box">
-                        <p style="margin-bottom: 0.5rem; font-weight: 700; color: #065f46;">
-                            ✅ Konto tilknyttet succesfuldt!
-                        </p>
-                        <p style="font-size: 0.875rem; color: #047857;">
-                            Din konto er nu forbundet med <strong id="linkedEmailDisplay"></strong>
-                        </p>
-                    </div>
-
-                    <div class="features" style="margin-top: 1rem;">
-                        <ul>
-                            <li>Automatisk login aktiveret</li>
-                            <li>Email notifikationer aktiveret</li>
-                            <li>Sikker konto gendannelse klar</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-clear" id="closeLinkBtn">Luk</button>
-            </div>
-        </div>
-    </div>
-
-    <template id="rowTemplate">
+    <template id="itemTemplate">
         <tr>
-            <td><input type="number" class="table-input col-antal" min="0" placeholder="0"></td>
+            <td><input type="number" class="table-input antal" min="0" placeholder="0"></td>
             <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
-            <td style="text-align: center;"><button class="btn btn-delete">×</button></td>
+            <td style="text-align: center;"><button class="btn-delete">×</button></td>
         </tr>
     </template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // ===== SESSION & STORAGE MANAGEMENT =====
-        const SESSION_KEY = 'felson_session';
-        const ACCOUNT_KEY = 'felson_account';
-        const FORM_DATA_KEY = 'felson_form_data';
-        
-        // User credentials
-        let userData = {
-            username: 'admin',
-            password: 'felson2025',
-            email: '',
-            linkedEmail: '',
-            isLinked: false
+        // State management
+        const state = {
+            currentView: 'dashboard',
+            currentDoc: null,
+            documents: []
         };
 
-        let isAuthenticated = false;
-        let generatedCode = '';
-        let resetToken = null;
+        // Elements
+        const els = {
+            navItems: document.querySelectorAll('.nav-item'),
+            pageTitle: document.getElementById('pageTitle'),
+            views: {
+                dashboard: document.getElementById('dashboardView'),
+                new: document.getElementById('newDocView'),
+                saved: document.getElementById('savedView')
+            },
+            docDate: document.getElementById('docDate'),
+            docOrder: document.getElementById('docOrder'),
+            docDelivery: document.getElementById('docDelivery'),
+            itemsBody: document.getElementById('itemsBody'),
+            itemTemplate: document.getElementById('itemTemplate'),
+            addItemBtn: document.getElementById('addItemBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            saveBtn: document.getElementById('saveBtn'),
+            printBtn: document.getElementById('printBtn'),
+            newDocBtn: document.getElementById('newDocBtn'),
+            recentDocs: document.getElementById('recentDocs'),
+            savedDocs: document.getElementById('savedDocs'),
+            toast: document.getElementById('toast'),
+            toastMessage: document.getElementById('toastMessage'),
+            todayCount: document.getElementById('todayCount'),
+            monthCount: document.getElementById('monthCount'),
+            totalCount: document.getElementById('totalCount'),
+            lastDoc: document.getElementById('lastDoc'),
+            lastDocDate: document.getElementById('lastDocDate')
+        };
 
-        // Generate secure token
-        function generateToken() {
-            return Math.random().toString(36).slice(2, 8).toUpperCase();
+        // Initialize
+        function init() {
+            loadDocuments();
+            setupEventListeners();
+            updateDashboard();
+            els.docDate.valueAsDate = new Date();
+            addItem();
         }
 
-        // Auto-save form data (persistent)
-        function saveFormData() {
-            try {
-                const rows = Array.from(els.tbody.querySelectorAll('tr')).map(tr => ({
-                    antal: tr.querySelector('.col-antal')?.value || '',
-                    desc: tr.querySelector('.table-textarea')?.value || ''
-                }));
-                const formData = {
-                    dato: els.dato.value,
-                    ordre: els.ordre.value,
-                    levering: els.levering.value,
-                    rows: rows
-                };
-                localStorage.setItem(FORM_DATA_KEY, JSON.stringify(formData));
-            } catch (e) {
-                console.log('LocalStorage not available');
-            }
-        }
+        // Event listeners
+        function setupEventListeners() {
+            els.navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const view = item.dataset.view;
+                    switchView(view);
+                });
+            });
 
-        // Restore form data
-        function restoreFormData() {
-            try {
-                const saved = localStorage.getItem(FORM_DATA_KEY);
-                if (!saved) return false;
-                
-                const data = JSON.parse(saved);
-                els.dato.value = data.dato || '';
-                els.ordre.value = data.ordre || '';
-                els.levering.value = data.levering || '';
-                els.tbody.innerHTML = '';
-                
-                if (data.rows && data.rows.length > 0) {
-                    data.rows.forEach(row => addRow(row.antal, row.desc));
-                } else {
-                    addRow();
-                }
-                return true;
-            } catch (e) {
-                return false;
-            }
-        }
+            els.newDocBtn.addEventListener('click', () => switchView('new'));
+            els.addItemBtn.addEventListener('click', () => addItem());
+            els.clearBtn.addEventListener('click', clearForm);
+            els.saveBtn.addEventListener('click', saveDocument);
+            els.printBtn.addEventListener('click', () => window.print());
 
-        // Debounce function for performance
-        function debounce(fn, delay = 300) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => fn(...args), delay);
-            };
-        }
-
-        // Debounced save
-        const debouncedSave = debounce(saveFormData, 500);
-
-        // Try to restore session on page load
-        function restoreSession() {
-            try {
-                const session = sessionStorage.getItem(SESSION_KEY);
-                const account = sessionStorage.getItem(ACCOUNT_KEY);
-                
-                if (session) {
-                    const sessionData = JSON.parse(session);
-                    if (sessionData.authenticated && sessionData.username) {
-                        userData.username = sessionData.username;
-                        isAuthenticated = true;
-                        els.loginScreen.classList.add('hidden');
-                        els.appContainer.classList.add('visible');
-                        toast('🔓 Velkommen tilbage, ' + userData.username + '!');
-                        return true;
+            els.itemsBody.addEventListener('click', e => {
+                if (e.target.classList.contains('btn-delete')) {
+                    if (els.itemsBody.children.length > 1) {
+                        e.target.closest('tr').remove();
+                    } else {
+                        toast('Der skal være mindst én vare', 'error');
                     }
                 }
-                
-                if (account) {
-                    const accountData = JSON.parse(account);
-                    Object.assign(userData, accountData);
-                }
-            } catch (e) {
-                console.error('Session restore error:', e);
-            }
-            return false;
-        }
-
-        function saveSession() {
-            try {
-                sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-                    authenticated: isAuthenticated,
-                    username: userData.username,
-                    timestamp: Date.now()
-                }));
-                sessionStorage.setItem(ACCOUNT_KEY, JSON.stringify({
-                    username: userData.username,
-                    password: userData.password,
-                    email: userData.email,
-                    linkedEmail: userData.linkedEmail,
-                    isLinked: userData.isLinked
-                }));
-            } catch (e) {
-                console.error('Session save error:', e);
-            }
-        }
-
-        function clearSession() {
-            try {
-                sessionStorage.removeItem(SESSION_KEY);
-            } catch (e) {
-                console.error('Session clear error:', e);
-            }
-        }
-
-        const els = {
-            loginScreen: document.getElementById('loginScreen'),
-            loginForm: document.getElementById('loginForm'),
-            loginError: document.getElementById('loginError'),
-            username: document.getElementById('username'),
-            password: document.getElementById('password'),
-            forgotPasswordLink: document.getElementById('forgotPasswordLink'),
-            
-            appContainer: document.getElementById('appContainer'),
-            logoutBadge: document.getElementById('logoutBadge'),
-            settingsBadge: document.getElementById('settingsBadge'),
-            securityBadge: document.getElementById('securityBadge'),
-            linkAccountBadge: document.getElementById('linkAccountBadge'),
-            
-            dato: document.getElementById('dato'),
-            ordre: document.getElementById('ordre'),
-            levering: document.getElementById('levering'),
-            tbody: document.getElementById('tbody'),
-            
-            toast: document.getElementById('toast'),
-            securityModal: document.getElementById('securityModal'),
-            settingsModal: document.getElementById('settingsModal'),
-            recoveryModal: document.getElementById('recoveryModal'),
-            linkAccountModal: document.getElementById('linkAccountModal'),
-            
-            settingsSuccess: document.getElementById('settingsSuccess'),
-            settingsError: document.getElementById('settingsError'),
-            recoveryEmail: document.getElementById('recoveryEmail'),
-            saveEmailBtn: document.getElementById('saveEmailBtn'),
-            currentEmail: document.getElementById('currentEmail'),
-            newUsername: document.getElementById('newUsername'),
-            changeUsernameBtn: document.getElementById('changeUsernameBtn'),
-            currentUsername: document.getElementById('currentUsername'),
-            currentPassword: document.getElementById('currentPassword'),
-            newPassword: document.getElementById('newPassword'),
-            confirmPassword: document.getElementById('confirmPassword'),
-            changePasswordBtn: document.getElementById('changePasswordBtn'),
-            closeSettingsBtn: document.getElementById('closeSettingsBtn'),
-            
-            recoverySuccess: document.getElementById('recoverySuccess'),
-            recoveryError: document.getElementById('recoveryError'),
-            recoveryUsername: document.getElementById('recoveryUsername'),
-            recoveryEmailInput: document.getElementById('recoveryEmailInput'),
-            recoverPasswordBtn: document.getElementById('recoverPasswordBtn'),
-            cancelRecoveryBtn: document.getElementById('cancelRecoveryBtn'),
-            backToLoginLink: document.getElementById('backToLoginLink'),
-            
-            linkSuccess: document.getElementById('linkSuccess'),
-            linkError: document.getElementById('linkError'),
-            linkEmail: document.getElementById('linkEmail'),
-            sendVerificationBtn: document.getElementById('sendVerificationBtn'),
-            linkStep1: document.getElementById('linkStep1'),
-            linkStep2: document.getElementById('linkStep2'),
-            linkStep3: document.getElementById('linkStep3'),
-            sentToEmail: document.getElementById('sentToEmail'),
-            demoCode: document.getElementById('demoCode'),
-            verifyCodeBtn: document.getElementById('verifyCodeBtn'),
-            resendCodeBtn: document.getElementById('resendCodeBtn'),
-            linkedEmailDisplay: document.getElementById('linkedEmailDisplay'),
-            closeLinkBtn: document.getElementById('closeLinkBtn'),
-            
-            acceptSecurityBtn: document.getElementById('acceptSecurityBtn'),
-            addBtn: document.getElementById('addBtn'),
-            clearBtn: document.getElementById('clearBtn'),
-            pdfBtn: document.getElementById('pdfBtn'),
-            printBtn: document.getElementById('printBtn'),
-            template: document.getElementById('rowTemplate')
-        };
-
-        function toast(msg) {
-            els.toast.textContent = msg;
-            els.toast.classList.add('show');
-            setTimeout(() => els.toast.classList.remove('show'), 3000);
-        }
-
-        function showMessage(element, msg, duration = 3000) {
-            element.textContent = msg;
-            element.classList.add('show');
-            if (duration > 0) {
-                setTimeout(() => element.classList.remove('show'), duration);
-            }
-        }
-
-        function hideMessage(element) {
-            element.classList.remove('show');
-        }
-
-        // Login
-        els.loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const username = els.username.value.trim();
-            const password = els.password.value;
-            
-            if (username === userData.username && password === userData.password) {
-                isAuthenticated = true;
-                saveSession();
-                els.loginError.classList.remove('show');
-                els.loginScreen.classList.add('hidden');
-                
-                setTimeout(() => {
-                    els.appContainer.classList.add('visible');
-                    toast('✅ Login succesfuldt!');
-                }, 300);
-            } else {
-                els.loginError.classList.add('show');
-                els.password.value = '';
-                els.password.focus();
-            }
-        });
-
-        // Logout
-        els.logoutBadge.addEventListener('click', () => {
-            if (confirm('Er du sikker på at du vil logge ud?')) {
-                isAuthenticated = false;
-                clearSession();
-                els.appContainer.classList.remove('visible');
-                
-                setTimeout(() => {
-                    els.loginScreen.classList.remove('hidden');
-                    els.username.value = '';
-                    els.password.value = '';
-                    els.loginError.classList.remove('show');
-                }, 300);
-                
-                toast('👋 Du er nu logget ud');
-            }
-        });
-
-        // Open modals
-        els.settingsBadge.addEventListener('click', () => {
-            els.settingsModal.classList.add('show');
-            els.currentUsername.textContent = userData.username;
-            els.currentEmail.textContent = userData.email || 'Ikke angivet';
-            hideMessage(els.settingsSuccess);
-            hideMessage(els.settingsError);
-        });
-
-        els.securityBadge.addEventListener('click', () => {
-            els.securityModal.classList.add('show');
-        });
-
-        els.linkAccountBadge.addEventListener('click', () => {
-            els.linkAccountModal.classList.add('show');
-            els.linkStep1.style.display = 'block';
-            els.linkStep2.style.display = 'none';
-            els.linkStep3.style.display = 'none';
-            hideMessage(els.linkSuccess);
-            hideMessage(els.linkError);
-            
-            if (userData.isLinked) {
-                els.linkStep1.style.display = 'none';
-                els.linkStep3.style.display = 'block';
-                els.linkedEmailDisplay.textContent = userData.linkedEmail;
-            }
-        });
-
-        els.forgotPasswordLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            els.recoveryModal.classList.add('show');
-            hideMessage(els.recoverySuccess);
-            hideMessage(els.recoveryError);
-        });
-
-        // Close modals
-        els.acceptSecurityBtn.addEventListener('click', () => {
-            els.securityModal.classList.remove('show');
-            toast('✅ Sikkerhedsindstillinger accepteret');
-        });
-
-        els.closeSettingsBtn.addEventListener('click', () => {
-            els.settingsModal.classList.remove('show');
-        });
-
-        els.cancelRecoveryBtn.addEventListener('click', () => {
-            els.recoveryModal.classList.remove('show');
-            els.recoveryUsername.value = '';
-            els.recoveryEmailInput.value = '';
-            hideMessage(els.recoverySuccess);
-            hideMessage(els.recoveryError);
-        });
-
-        // Back to login from recovery
-        els.backToLoginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            els.recoveryModal.classList.remove('show');
-            els.recoveryUsername.value = '';
-            els.recoveryEmailInput.value = '';
-            hideMessage(els.recoverySuccess);
-            hideMessage(els.recoveryError);
-        });
-
-        [els.securityModal, els.settingsModal, els.recoveryModal, els.linkAccountModal].forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('show');
             });
-        });
 
-        // === LINK ACCOUNT SYSTEM ===
-        
-        // Send verification code
-        els.sendVerificationBtn.addEventListener('click', () => {
-            const email = els.linkEmail.value.trim();
-            
-            hideMessage(els.linkError);
-            
-            if (!email) {
-                showMessage(els.linkError, '⚠️ Indtast venligst en email adresse');
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                showMessage(els.linkError, '⚠️ Indtast venligst en gyldig email adresse');
-                return;
-            }
-            
-            // Generate random 6-digit code
-            generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-            
-            // Simulate sending email
-            els.linkStep1.style.display = 'none';
-            els.linkStep2.style.display = 'block';
-            els.sentToEmail.textContent = email;
-            els.demoCode.textContent = generatedCode;
-            
-            toast('📧 Verifikationskode sendt til ' + email);
-        });
-        
-        // Verification code inputs - auto-focus next
-        const verifyInputs = document.querySelectorAll('.verify-input');
-        verifyInputs.forEach((input, index) => {
-            input.addEventListener('input', (e) => {
-                if (e.target.value.length === 1 && index < verifyInputs.length - 1) {
-                    verifyInputs[index + 1].focus();
+            els.itemsBody.addEventListener('input', e => {
+                if (e.target.classList.contains('table-textarea')) {
+                    autoResize(e.target);
                 }
             });
-            
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
-                    verifyInputs[index - 1].focus();
-                }
-            });
-        });
-        
-        // Verify code
-        els.verifyCodeBtn.addEventListener('click', () => {
-            const enteredCode = Array.from(verifyInputs).map(input => input.value).join('');
-            
-            hideMessage(els.linkError);
-            
-            if (enteredCode.length !== 6) {
-                showMessage(els.linkError, '⚠️ Indtast venligst hele koden');
-                return;
-            }
-            
-            if (enteredCode !== generatedCode) {
-                showMessage(els.linkError, '❌ Forkert kode. Prøv igen.');
-                verifyInputs.forEach(input => input.value = '');
-                verifyInputs[0].focus();
-                return;
-            }
-            
-            // Success - link account
-            const email = els.linkEmail.value.trim();
-            userData.linkedEmail = email;
-            userData.isLinked = true;
-            saveSession();
-            
-            els.linkStep2.style.display = 'none';
-            els.linkStep3.style.display = 'block';
-            els.linkedEmailDisplay.textContent = email;
-            
-            toast('🎉 Konto tilknyttet succesfuldt!');
-        });
-        
-        // Resend code
-        els.resendCodeBtn.addEventListener('click', () => {
-            generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-            els.demoCode.textContent = generatedCode;
-            verifyInputs.forEach(input => input.value = '');
-            verifyInputs[0].focus();
-            toast('🔄 Ny kode sendt!');
-        });
-        
-        // Close link modal
-        els.closeLinkBtn.addEventListener('click', () => {
-            els.linkAccountModal.classList.remove('show');
-            els.linkEmail.value = '';
-            verifyInputs.forEach(input => input.value = '');
-        });
+        }
 
-        // Save Email
-        els.saveEmailBtn.addEventListener('click', () => {
-            const email = els.recoveryEmail.value.trim();
+        // View management
+        function switchView(viewName) {
+            Object.values(els.views).forEach(v => v.style.display = 'none');
+            els.navItems.forEach(i => i.classList.remove('active'));
             
-            if (!email) {
-                showMessage(els.settingsError, '⚠️ Indtast venligst en email adresse');
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                showMessage(els.settingsError, '⚠️ Indtast venligst en gyldig email adresse');
-                return;
-            }
-            
-            userData.email = email;
-            els.currentEmail.textContent = email;
-            els.recoveryEmail.value = '';
-            hideMessage(els.settingsError);
-            showMessage(els.settingsSuccess, '✅ Recovery email gemt succesfuldt!');
-            toast('📧 Email opdateret!');
-        });
+            const viewMap = {
+                dashboard: { title: 'Dashboard', element: els.views.dashboard },
+                new: { title: 'Ny Følgeseddel', element: els.views.new },
+                saved: { title: 'Gemte Dokumenter', element: els.views.saved },
+                templates: { title: 'Skabeloner', element: null },
+                customers: { title: 'Kunder', element: null },
+                analytics: { title: 'Analyse', element: null },
+                settings: { title: 'Indstillinger', element: null }
+            };
 
-        // Change Username
-        els.changeUsernameBtn.addEventListener('click', () => {
-            const newUsername = els.newUsername.value.trim();
-            
-            if (!newUsername) {
-                showMessage(els.settingsError, '⚠️ Indtast venligst et nyt brugernavn');
-                return;
-            }
-            
-            if (newUsername.length < 3) {
-                showMessage(els.settingsError, '⚠️ Brugernavn skal være mindst 3 tegn');
-                return;
-            }
-            
-            userData.username = newUsername;
-            els.currentUsername.textContent = newUsername;
-            els.newUsername.value = '';
-            hideMessage(els.settingsError);
-            showMessage(els.settingsSuccess, '✅ Brugernavn ændret succesfuldt!');
-            toast('👤 Brugernavn opdateret!');
-        });
+            const view = viewMap[viewName];
+            if (view) {
+                els.pageTitle.textContent = view.title;
+                if (view.element) view.element.style.display = 'block';
+                document.querySelector(`[data-view="${viewName}"]`)?.classList.add('active');
+                state.currentView = viewName;
 
-        // Change Password
-        els.changePasswordBtn.addEventListener('click', () => {
-            const current = els.currentPassword.value;
-            const newPass = els.newPassword.value;
-            const confirm = els.confirmPassword.value;
-            
-            if (!current || !newPass || !confirm) {
-                showMessage(els.settingsError, '⚠️ Udfyld venligst alle felter');
-                return;
+                if (viewName === 'dashboard') updateDashboard();
+                if (viewName === 'saved') renderSavedDocuments();
             }
-            
-            if (current !== userData.password) {
-                showMessage(els.settingsError, '⚠️ Nuværende adgangskode er forkert');
-                return;
-            }
-            
-            if (newPass.length < 6) {
-                showMessage(els.settingsError, '⚠️ Ny adgangskode skal være mindst 6 tegn');
-                return;
-            }
-            
-            if (newPass !== confirm) {
-                showMessage(els.settingsError, '⚠️ Adgangskoderne matcher ikke');
-                return;
-            }
-            
-            userData.password = newPass;
-            els.currentPassword.value = '';
-            els.newPassword.value = '';
-            els.confirmPassword.value = '';
-            hideMessage(els.settingsError);
-            showMessage(els.settingsSuccess, '✅ Adgangskode ændret succesfuldt!');
-            toast('🔒 Adgangskode opdateret!');
-        });
+        }
 
-        // Password Recovery - IMPROVED with token system
-        els.recoverPasswordBtn.addEventListener('click', () => {
-            const username = els.recoveryUsername.value.trim();
-            const email = els.recoveryEmailInput.value.trim();
-            
-            hideMessage(els.recoveryError);
-            hideMessage(els.recoverySuccess);
-            
-            if (!username || !email) {
-                showMessage(els.recoveryError, '⚠️ Udfyld venligst alle felter');
-                return;
-            }
-            
-            if (username !== userData.username) {
-                showMessage(els.recoveryError, '❌ Brugernavn ikke fundet i systemet');
-                return;
-            }
-            
-            if (!userData.email) {
-                showMessage(els.recoveryError, '❌ Ingen recovery email registreret. Gå til indstillinger for at tilføje en email.');
-                return;
-            }
-            
-            if (email !== userData.email) {
-                showMessage(els.recoveryError, '❌ Email matcher ikke den registrerede recovery email');
-                return;
-            }
-            
-            // Generate secure reset token
-            resetToken = generateToken();
-            
-            // Success - show token (in production, send via email)
-            showMessage(els.recoverySuccess, `✅ Gendannelse klar! Reset-kode: ${resetToken} (Demo: Din adgangskode er "${userData.password}")`, 10000);
-            toast('🔐 Reset-kode genereret!');
-            
-            setTimeout(() => {
-                els.recoveryModal.classList.remove('show');
-                els.recoveryUsername.value = '';
-                els.recoveryEmailInput.value = '';
-                hideMessage(els.recoverySuccess);
-                resetToken = null; // Token expires
-            }, 10000);
-        });
-
-        // Form functions
-        function addRow(antal = '', desc = '') {
-            const row = els.template.content.cloneNode(true);
-            const antalInput = row.querySelector('.col-antal');
+        // Items management
+        function addItem(antal = '', desc = '') {
+            const row = els.itemTemplate.content.cloneNode(true);
+            const antalInput = row.querySelector('.antal');
             const descInput = row.querySelector('.table-textarea');
             
             if (antal) antalInput.value = antal;
             if (desc) {
                 descInput.value = desc;
-                setTimeout(() => resize(descInput), 0);
+                setTimeout(() => autoResize(descInput), 0);
             }
             
-            els.tbody.appendChild(row);
+            els.itemsBody.appendChild(row);
         }
 
-        function resize(textarea) {
-            if (!textarea) return;
+        function autoResize(textarea) {
             textarea.style.height = 'auto';
-            textarea.style.height = Math.max(40, textarea.scrollHeight) + 'px';
+            textarea.style.height = textarea.scrollHeight + 'px';
         }
 
-        function clear() {
-            if (!confirm('Er du sikker på at du vil rydde alle data?')) return;
-            els.dato.value = '';
-            els.ordre.value = '';
-            els.levering.value = '';
-            els.tbody.innerHTML = '';
-            addRow();
-            toast('🗑️ Alle data er ryddet');
+        // Document management
+        function getFormData() {
+            const items = Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
+                antal: row.querySelector('.antal').value || '0',
+                beskrivelse: row.querySelector('.table-textarea').value || ''
+            }));
+
+            return {
+                id: Date.now(),
+                date: els.docDate.value,
+                order: els.docOrder.value,
+                delivery: els.docDelivery.value,
+                items: items,
+                created: new Date().toISOString()
+            };
         }
 
-        function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const w = doc.internal.pageSize.getWidth();
-            const h = doc.internal.pageSize.getHeight();
-            const m = 20;
-            let y = m;
-
-            function header() {
-                doc.setFillColor(0, 176, 240);
-                doc.rect(0, 0, w, 3, 'F');
-                doc.setFontSize(18);
-                doc.setTextColor(0, 176, 240);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Felson Watersafe ApS', w - m, 16, { align: 'right' });
-                doc.setDrawColor(0, 176, 240);
-                doc.line(m, 20, w - m, 20);
-            }
-
-            function footer() {
-                const fy = h - 20;
-                doc.setDrawColor(0, 176, 240);
-                doc.line(m, fy - 5, w - m, fy - 5);
-                doc.setFontSize(7);
-                doc.setTextColor(100);
-                doc.setFont('helvetica', 'normal');
-                doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', w / 2, fy, { align: 'center' });
-                doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', w / 2, fy + 4, { align: 'center' });
-            }
-
-            function tableHeader() {
-                doc.setFillColor(0, 176, 240);
-                doc.roundedRect(m, y, w - 2 * m, 9, 2, 2, 'F');
-                doc.setTextColor(255);
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(8);
-                doc.text('ANTAL', m + 5, y + 6);
-                doc.text('BESKRIVELSE', m + 35, y + 6);
-                y += 11;
-            }
-
-            header();
-            y = 25;
-
-            doc.setFillColor(0, 176, 240);
-            doc.roundedRect(m, y, w - 2 * m, 10, 2, 2, 'F');
-            doc.setFontSize(14);
-            doc.setTextColor(255);
-            doc.setFont('helvetica', 'bold');
-            doc.text('FØLGESEDDEL', w / 2, y + 6.5, { align: 'center' });
-            y += 14;
-
-            doc.setFillColor(250, 250, 250);
-            doc.roundedRect(m, y, w - 2 * m, 26, 2, 2, 'F');
-            y += 4;
-            doc.setFontSize(8);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 176, 240);
-            doc.text('DATO', m + 3, y);
-            doc.text('LEVERING', w / 2 + 5, y);
-            doc.setFontSize(9);
-            doc.setTextColor(40);
-            doc.setFont('helvetica', 'normal');
-            const fecha = els.dato.value ? new Date(els.dato.value + 'T00:00:00').toLocaleDateString('da-DK') : '';
-            doc.text(fecha, m + 3, y + 6);
-            const levLines = doc.splitTextToSize(els.levering.value || '', w / 2 - 30);
-            doc.text(levLines, w / 2 + 5, y + 6);
-            doc.setFontSize(8);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 176, 240);
-            doc.text('ORDRE NR.', m + 3, y + 10);
-            doc.setFontSize(9);
-            doc.setTextColor(40);
-            doc.setFont('helvetica', 'normal');
-            doc.text(els.ordre.value || '', m + 3, y + 15);
-            y += Math.max(24, levLines.length * 5 + 16);
-
-            // Initial table header
-            tableHeader();
-
-            const rows = Array.from(els.tbody.querySelectorAll('tr'));
-            doc.setTextColor(40);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-
-            rows.forEach((row, i) => {
-                const antal = row.querySelector('.col-antal').value || '0';
-                const desc = row.querySelector('.table-textarea').value || '';
-                const lines = doc.splitTextToSize(desc, w - m - 45);
-                const rh = Math.max(7, lines.length * 5);
-
-                if (y + rh > h - 30) {
-                    footer();
-                    doc.addPage();
-                    header();
-                    y = 30;
-                    // Repeat table header on new page
-                    tableHeader();
-                }
-
-                if (i % 2 === 0) {
-                    doc.setFillColor(248, 250, 252);
-                    doc.rect(m, y - 1, w - 2 * m, rh, 'F');
-                }
-
-                doc.setTextColor(0, 176, 240);
-                doc.setFont('helvetica', 'bold');
-                doc.text(antal, m + 15, y + 4, { align: 'center' });
-                doc.setTextColor(40);
-                doc.setFont('helvetica', 'normal');
-                doc.text(lines, m + 35, y + 4);
-                y += rh + 1;
-            });
-
-            footer();
-            doc.save(`folgeseddel_${els.ordre.value || 'dokument'}.pdf`);
-            toast('📄 PDF genereret!');
+        function saveDocument() {
+            const doc = getFormData();
+            state.documents.push(doc);
+            localStorage.setItem('felson_documents', JSON.stringify(state.documents));
+            toast('Dokument gemt');
+            updateDashboard();
         }
 
-        // Event listeners
-        els.addBtn.addEventListener('click', () => addRow());
-        els.clearBtn.addEventListener('click', clear);
-        els.pdfBtn.addEventListener('click', generatePDF);
-        els.printBtn.addEventListener('click', () => {
-            toast('🖨️ Forbereder print...');
-            setTimeout(() => window.print(), 300);
-        });
+        function loadDocuments() {
+            const saved = localStorage.getItem('felson_documents');
+            state.documents = saved ? JSON.parse(saved) : [];
+        }
 
-        els.tbody.addEventListener('click', e => {
-            if (e.target.classList.contains('btn-delete')) {
-                if (els.tbody.rows.length > 1) {
-                    e.target.closest('tr').remove();
-                } else {
-                    toast('⚠️ Der skal være mindst én række');
-                }
+        function clearForm() {
+            if (confirm('Ryd alle felter?')) {
+                els.docDate.valueAsDate = new Date();
+                els.docOrder.value = '';
+                els.docDelivery.value = '';
+                els.itemsBody.innerHTML = '';
+                addItem();
+                toast('Formular ryddet');
             }
-        });
+        }
 
-        els.tbody.addEventListener('input', e => {
-            if (e.target.classList.contains('table-textarea')) resize(e.target);
-            debouncedSave(); // Auto-save on input
-        });
-
-        // === KEYBOARD SHORTCUTS ===
-        
-        // Press Enter in last row textarea -> add new row
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey && document.activeElement?.classList.contains('table-textarea')) {
-                const currentRow = document.activeElement.closest('tr');
-                const lastRow = els.tbody.lastElementChild;
-                
-                if (currentRow === lastRow) {
-                    e.preventDefault();
-                    addRow();
-                    // Focus on the new row's textarea
-                    setTimeout(() => {
-                        const newLastRow = els.tbody.lastElementChild;
-                        const newTextarea = newLastRow?.querySelector('.table-textarea');
-                        if (newTextarea) newTextarea.focus();
-                    }, 0);
-                }
-            }
-        });
-
-        // Auto-save on form field changes
-        [els.dato, els.ordre, els.levering].forEach(el => {
-            el.addEventListener('input', debouncedSave);
-            el.addEventListener('change', debouncedSave);
-        });
-
-        // Initialize
-        window.addEventListener('DOMContentLoaded', () => {
-            // Try to restore session
-            const sessionRestored = restoreSession();
+        // Dashboard
+        function updateDashboard() {
+            const today = new Date().toDateString();
+            const thisMonth = new Date().getMonth();
             
-            // Try to restore form data
-            const formRestored = restoreFormData();
+            const todayDocs = state.documents.filter(d => new Date(d.created).toDateString() === today);
+            const monthDocs = state.documents.filter(d => new Date(d.created).getMonth() === thisMonth);
             
-            if (!sessionRestored) {
-                els.loginScreen.classList.remove('hidden');
-            }
+            els.todayCount.textContent = todayDocs.length;
+            els.monthCount.textContent = monthDocs.length;
+            els.totalCount.textContent = state.documents.length;
             
-            if (!formRestored) {
-                // Set defaults if no saved data
-                if (!els.dato.value) els.dato.valueAsDate = new Date();
-                if (els.tbody.rows.length === 0) addRow();
+            if (state.documents.length > 0) {
+                const last = state.documents[state.documents.length - 1];
+                els.lastDoc.textContent = last.order || 'Ingen nr.';
+                els.lastDocDate.textContent = new Date(last.created).toLocaleDateString('da-DK');
             }
+
+            renderRecentDocuments();
+        }
+
+        function renderRecentDocuments() {
+            const recent = state.documents.slice(-6).reverse();
+            els.recentDocs.innerHTML = recent.map(doc => `
+                <div class="doc-card" onclick="loadDocument(${doc.id})">
+                    <div class="doc-card-header">
+                        <div class="doc-number">#${doc.order || 'Ingen nr.'}</div>
+                        <div class="doc-date">${new Date(doc.created).toLocaleDateString('da-DK')}</div>
+                    </div>
+                    <div class="doc-meta">${doc.delivery || 'Ingen leveringsadresse'}</div>
+                    <div class="doc-items-count">${doc.items.length} varer</div>
+                </div>
+            `).join('');
+        }
+
+        function renderSavedDocuments() {
+            els.savedDocs.innerHTML = state.documents.slice().reverse().map(doc => `
+                <div class="doc-card" onclick="loadDocument(${doc.id})">
+                    <div class="doc-card-header">
+                        <div class="doc-number">#${doc.order || 'Ingen nr.'}</div>
+                        <div class="doc-date">${new Date(doc.created).toLocaleDateString('da-DK')}</div>
+                    </div>
+                    <div class="doc-meta">${doc.delivery || 'Ingen leveringsadresse'}</div>
+                    <div class="doc-items-count">${doc.items.length} varer</div>
+                </div>
+            `).join('');
+        }
+
+        function loadDocument(id) {
+            const doc = state.documents.find(d => d.id === id);
+            if (!doc) return;
+
+            els.docDate.value = doc.date;
+            els.docOrder.value = doc.order;
+            els.docDelivery.value = doc.delivery;
+            els.itemsBody.innerHTML = '';
+            doc.items.forEach(item => addItem(item.antal, item.beskrivelse));
             
-            if (formRestored) {
-                toast('📋 Gemt data gendannet');
-            }
-        });
+            switchView('new');
+            toast('Dokument indlæst');
+        }
+
+        // Toast
+        function toast(message, type = 'success') {
+            els.toastMessage.textContent = message;
+            els.toast.className = `toast ${type}`;
+            els.toast.classList.add('show');
+            setTimeout(() => els.toast.classList.remove('show'), 3000);
+        }
+
+        // Initialize app
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
