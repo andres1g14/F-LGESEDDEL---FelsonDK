@@ -1,892 +1,766 @@
 <!DOCTYPE html>
-
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#00B0F0">
-    <meta name="msapplication-navbutton-color" content="#00B0F0">
-    <meta name="apple-mobile-web-app-title" content="Felson">
-    <meta name="application-name" content="Felson Watersafe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Felson Watersafe - Enterprise System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-```
-    :root {
-        --primary: #00B0F0;
-        --primary-dark: #0090cc;
-        --primary-light: #38bdf8;
-        --secondary: #8b5cf6;
-        --success: #10b981;
-        --warning: #f59e0b;
-        --danger: #ef4444;
-        --dark: #0f172a;
-        --gray-50: #f8fafc;
-        --gray-100: #f1f5f9;
-        --gray-200: #e2e8f0;
-        --gray-300: #cbd5e1;
-        --gray-400: #94a3b8;
-        --gray-500: #64748b;
-        --gray-600: #475569;
-        --gray-700: #334155;
-        --gray-800: #1e293b;
-        --gray-900: #0f172a;
-        --sidebar-width: 280px;
-        --header-height: 70px;
-        --footer-height: 60px;
-        --safe-area-top: env(safe-area-inset-top, 0px);
-        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-        --safe-area-left: env(safe-area-inset-left, 0px);
-        --safe-area-right: env(safe-area-inset-right, 0px);
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    html {
-        height: 100%;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-        color: var(--gray-900);
-        position: relative;
-        overflow-x: hidden;
-    }
-
-    /* Prevent iOS rubber band effect */
-    @supports (-webkit-touch-callout: none) {
-        body {
-            position: fixed;
-            width: 100%;
-        }
-    }
-
-    /* LOGIN SCREEN */
-    .login-screen {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        z-index: 10000;
-        opacity: 1;
-        transition: opacity 0.5s;
-        padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
-    }
-
-    .login-screen.hidden {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .login-card {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        max-width: 450px;
-        width: 90%;
-        overflow: hidden;
-        margin: 20px;
-    }
-
-    .login-header {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        padding: 3rem 2rem;
-        text-align: center;
-        color: white;
-    }
-
-    .login-logo {
-        font-size: clamp(1.5rem, 4vw, 2rem);
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-
-    .login-subtitle {
-        font-size: 0.875rem;
-        opacity: 0.9;
-    }
-
-    .login-body {
-        padding: 2rem;
-    }
-
-    .login-title {
-        font-size: clamp(1.25rem, 3vw, 1.5rem);
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        text-align: center;
-    }
-
-    .login-description {
-        color: var(--gray-500);
-        font-size: 0.875rem;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .login-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-    }
-
-    .input-group {
-        position: relative;
-    }
-
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--gray-400);
-        pointer-events: none;
-    }
-
-    .login-input {
-        width: 100%;
-        padding: 0.875rem 1rem 0.875rem 3rem;
-        border: 2px solid var(--gray-200);
-        border-radius: 10px;
-        font-size: 16px; /* Prevents zoom on iOS */
-        transition: all 0.2s;
-        -webkit-appearance: none;
-        appearance: none;
-    }
-
-    .login-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0, 176, 240, 0.1);
-    }
-
-    .remember-group {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .remember-checkbox {
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-    }
-
-    .remember-label {
-        font-size: 0.875rem;
-        color: var(--gray-600);
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .login-btn {
-        padding: 1rem;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        transition: transform 0.2s;
-        -webkit-appearance: none;
-        appearance: none;
-    }
-
-    .login-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .login-btn:active {
-        transform: translateY(0);
-    }
-
-    .login-error {
-        background: #fee;
-        border: 1px solid #fcc;
-        color: #c33;
-        padding: 0.75rem;
-        border-radius: 8px;
-        font-size: 0.875rem;
-        display: none;
-    }
-
-    .login-error.show {
-        display: block;
-    }
-
-    .login-footer {
-        padding: 1.5rem 2rem;
-        background: var(--gray-50);
-        text-align: center;
-        font-size: 0.75rem;
-        color: var(--gray-500);
-    }
-
-    /* APP LAYOUT */
-    .app {
-        display: flex;
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-        opacity: 0;
-        transition: opacity 0.5s;
-        position: relative;
-    }
-
-    .app.visible {
-        opacity: 1;
-    }
-
-    /* FIXED HEADER */
-    .fixed-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: var(--header-height);
-        background: rgba(255,255,255,0.98);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--gray-200);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 2rem;
-        padding-top: var(--safe-area-top);
-        z-index: 1000;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .mobile-menu-btn {
-        display: none;
-        background: transparent;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        color: var(--gray-700);
-    }
-
-    .header-logo {
-        font-size: 1.25rem;
-        font-weight: 800;
-        color: var(--primary);
-    }
-
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .page-title {
-        font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-        font-weight: 700;
-        color: var(--gray-900);
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-        width: var(--sidebar-width);
-        background: white;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-        position: fixed;
-        top: var(--header-height);
-        left: 0;
-        bottom: var(--footer-height);
-        padding-top: var(--safe-area-top);
-        z-index: 100;
-        overflow-y: auto;
-        transition: transform 0.3s ease;
-    }
-
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 99;
-    }
-
-    .nav-menu {
-        padding: 1.5rem 1rem;
-    }
-
-    .nav-section {
-        margin-bottom: 2rem;
-    }
-
-    .nav-section-title {
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: var(--gray-400);
-        margin-bottom: 0.75rem;
-        padding: 0 0.75rem;
-        letter-spacing: 0.5px;
-    }
-
-    .nav-item {
-        display: flex;
-        align-items: center;
-        padding: 0.75rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-        color: var(--gray-700);
-        margin-bottom: 0.25rem;
-        text-decoration: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .nav-item:hover {
-        background: var(--gray-100);
-        color: var(--primary);
-    }
-
-    .nav-item:active {
-        transform: scale(0.98);
-    }
-
-    .nav-item.active {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: white;
-        font-weight: 600;
-    }
-
-    .nav-icon {
-        width: 20px;
-        margin-right: 0.75rem;
-    }
-
-    /* MAIN CONTENT */
-    .main-content {
-        flex: 1;
-        margin-left: var(--sidebar-width);
-        padding-top: calc(var(--header-height) + var(--safe-area-top));
-        padding-bottom: calc(var(--footer-height) + var(--safe-area-bottom));
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-    }
-
-    .content-area {
-        flex: 1;
-        padding: 2rem;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* FIXED FOOTER */
-    .fixed-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: var(--footer-height);
-        background: white;
-        border-top: 2px solid var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        padding-bottom: calc(1rem + var(--safe-area-bottom));
-        z-index: 100;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    }
-
-    .footer-content {
-        text-align: center;
-        font-size: clamp(0.625rem, 1.5vw, 0.75rem);
-        color: var(--gray-600);
-        line-height: 1.4;
-    }
-
-    .footer-content p {
-        margin: 0.1rem 0;
-    }
-
-    .footer-content strong {
-        color: var(--primary);
-    }
-
-    /* DASHBOARD */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .stat-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .stat-label {
-        font-size: 0.875rem;
-        color: var(--gray-500);
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-value {
-        font-size: clamp(1.5rem, 3vw, 2rem);
-        font-weight: 700;
-        color: var(--gray-900);
-    }
-
-    /* DOCUMENT */
-    .document-container {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        overflow: hidden;
-        margin-bottom: 2rem;
-    }
-
-    .document-header {
-        padding: 2rem;
-        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-        border-bottom: 3px solid var(--primary);
-        text-align: right;
-    }
-
-    .doc-logo {
-        font-size: clamp(1.25rem, 3vw, 1.75rem);
-        font-weight: 800;
-        color: var(--primary);
-    }
-
-    .document-body {
-        padding: clamp(1rem, 3vw, 2rem);
-    }
-
-    .company-info {
-        background: #eeeeee;
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin-bottom: 2rem;
-        width: 100%;
-        max-width: 400px;
-        font-size: clamp(0.75rem, 2vw, 0.875rem);
-        line-height: 1.6;
-    }
-
-    .doc-title {
-        background: var(--primary);
-        color: white;
-        padding: 1rem;
-        text-align: center;
-        font-size: clamp(1.125rem, 3vw, 1.5rem);
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        border-radius: 8px;
-        margin-bottom: 2rem;
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        background: #e8f5fb;
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin-bottom: 2rem;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-label {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-    }
-
-    .form-input {
-        padding: 0.75rem;
-        border: 1px solid var(--gray-300);
-        border-radius: 8px;
-        font-size: 16px;
-        background: white;
-        -webkit-appearance: none;
-        appearance: none;
-    }
-
-    .form-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0, 176, 240, 0.1);
-    }
-
-    textarea.form-input {
-        resize: vertical;
-        min-height: 80px;
-    }
-
-    /* TABLE */
-    .table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        margin-bottom: 2rem;
-    }
-
-    .items-table {
-        width: 100%;
-        min-width: 400px;
-        border-collapse: separate;
-        border-spacing: 0;
-        border: 2px solid var(--primary);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .items-table thead {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    }
-
-    .items-table th {
-        padding: 1rem;
-        text-align: left;
-        color: white;
-        font-weight: 700;
-        font-size: clamp(0.75rem, 2vw, 0.875rem);
-        text-transform: uppercase;
-    }
-
-    .items-table th.col-antal {
-        width: 100px;
-        text-align: center;
-    }
-
-    .items-table th.col-actions {
-        width: 60px;
-        text-align: center;
-    }
-
-    .items-table tbody tr:nth-child(even) {
-        background: #f7f9fb;
-    }
-
-    .items-table tbody tr:nth-child(odd) {
-        background: white;
-    }
-
-    .items-table td {
-        padding: 0.75rem;
-        border-bottom: 1px solid #e8e8e8;
-    }
-
-    .items-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .table-input {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid transparent;
-        border-radius: 6px;
-        font-size: 16px;
-        background: transparent;
-        -webkit-appearance: none;
-        appearance: none;
-    }
-
-    .table-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        background: rgba(0, 176, 240, 0.05);
-    }
-
-    .table-input.antal {
-        text-align: center;
-        font-weight: 700;
-        color: var(--primary);
-    }
-
-    .table-textarea {
-        resize: none;
-        min-height: 2.5rem;
-    }
-
-    /* BUTTONS */
-    .btn {
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        border: none;
-        font-weight: 600;
-        font-size: clamp(0.8125rem, 2vw, 0.875rem);
-        cursor: pointer;
-        transition: all 0.2s;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        white-space: nowrap;
-        -webkit-appearance: none;
-        appearance: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .btn:active {
-        transform: scale(0.98);
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: white;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(0, 176, 240, 0.3);
-    }
-
-    .btn-secondary {
-        background: white;
-        color: var(--gray-700);
-        border: 1px solid var(--gray-300);
-    }
-
-    .btn-success {
-        background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-        color: white;
-    }
-
-    .btn-delete {
-        background: transparent;
-        border: none;
-        color: var(--gray-400);
-        cursor: pointer;
-        font-size: 1.25rem;
-        transition: all 0.2s;
-        padding: 0.25rem;
-    }
-
-    .btn-delete:hover {
-        color: var(--danger);
-    }
-
-    .btn-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: flex-end;
-        margin-top: 1.5rem;
-    }
-
-    /* TOAST */
-    .toast {
-        position: fixed;
-        bottom: calc(var(--footer-height) + 2rem + var(--safe-area-bottom));
-        right: 2rem;
-        background: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        transform: translateY(150%);
-        transition: transform 0.3s;
-        z-index: 2000;
-    }
-
-    .toast.show {
-        transform: translateY(0);
-    }
-
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 768px) {
         :root {
+            --primary: #00B0F0;
+            --primary-dark: #0090cc;
+            --primary-light: #38bdf8;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
             --sidebar-width: 280px;
-            --header-height: 60px;
-            --footer-height: 50px;
-        }
-
-        .mobile-menu-btn {
-            display: block;
-        }
-
-        .sidebar {
-            transform: translateX(-100%);
-        }
-
-        .sidebar.open {
-            transform: translateX(0);
-        }
-
-        .sidebar-overlay.show {
-            display: block;
-        }
-
-        .main-content {
-            margin-left: 0;
-        }
-
-        .header-logo {
-            font-size: 1rem;
-        }
-
-        .fixed-header {
-            padding: 0 1rem;
-        }
-
-        .content-area {
-            padding: 1rem;
-        }
-
-        .form-grid {
-            padding: 1rem;
-        }
-
-        .company-info {
-            width: 100%;
-        }
-
-        .btn-group {
-            flex-direction: column;
-        }
-
-        .btn-group .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .footer-content {
-            font-size: 0.625rem;
-        }
-    }
-
-    /* TABLET */
-    @media (min-width: 769px) and (max-width: 1024px) {
-        :root {
-            --sidebar-width: 240px;
-        }
-
-        .form-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    /* DESKTOP HD+ */
-    @media (min-width: 1920px) {
-        .content-area {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-    }
-
-    /* PRINT */
-    @media print {
-        @page {
-            size: A4 portrait;
-            margin: 15mm;
+            --header-height: 70px;
         }
 
         * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background: white !important;
-            position: static !important;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-900);
         }
 
-        .fixed-header,
-        .sidebar,
-        .sidebar-overlay,
-        .fixed-footer,
-        .btn,
-        .toast,
-        .stats-grid,
-        .mobile-menu-btn,
-        .header-right,
-        .btn-delete {
-            display: none !important;
+        /* LOGIN SCREEN */
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.5s;
         }
 
-        .main-content {
-            margin: 0 !important;
-            padding: 0 !important;
+        .login-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .content-area {
-            padding: 0 !important;
-            overflow: visible !important;
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            max-width: 450px;
+            width: 90%;
+            overflow: hidden;
         }
 
-        .document-container {
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            page-break-inside: avoid;
+        .login-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: white;
         }
 
-        .document-header {
-            padding: 0 0 1rem 0 !important;
-            margin-bottom: 1rem !important;
+        .login-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
         }
 
-        .items-table tbody tr {
-            page-break-inside: avoid !important;
+        .login-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
         }
 
-        .form-input,
-        .table-input {
-            border: none !important;
-            padding: 0 !important;
-            background: none !important;
+        .login-body {
+            padding: 2rem;
         }
-    }
 
-    /* Touch device optimizations */
-    @media (hover: none) and (pointer: coarse) {
-        .btn:hover {
-            transform: none;
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-description {
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            transition: all 0.2s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 176, 240, 0.1);
+        }
+
+        .login-btn {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        .login-footer {
+            padding: 1.5rem 2rem;
+            background: var(--gray-50);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* APP LAYOUT */
+        .app {
+            display: flex;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .app.visible {
+            opacity: 1;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .logo-section {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .company-name {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        .nav-menu {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            margin-bottom: 0.75rem;
+            padding: 0 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--gray-700);
+            margin-bottom: 0.25rem;
         }
 
         .nav-item:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            width: 20px;
+            margin-right: 0.75rem;
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--danger);
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-bar {
+            height: var(--header-height);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 176, 240, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* DASHBOARD */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* DOCUMENT */
+        .document-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - var(--header-height) - 4rem);
+        }
+
+        .document-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border-bottom: 3px solid var(--primary);
+            text-align: right;
+        }
+
+        .doc-logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .document-body {
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .company-info {
+            background: #eeeeee;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            width: 45%;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .doc-title {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 35% 1fr;
+            gap: 2rem;
+            background: #e8f5fb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            padding: 0.5rem;
+            border: none;
+            background: transparent;
+            font-size: 0.9375rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .items-table thead {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .items-table th {
+            padding: 1rem;
+            text-align: left;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .items-table th.col-antal {
+            width: 18%;
+            text-align: center;
+        }
+
+        .items-table th.col-actions {
+            width: 60px;
+            text-align: center;
+        }
+
+        .items-table tbody tr:nth-child(even) {
+            background: #f7f9fb;
+        }
+
+        .items-table tbody tr:nth-child(odd) {
+            background: white;
+        }
+
+        .items-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .items-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 0.9375rem;
             background: transparent;
         }
 
-        .nav-item:active {
-            background: var(--gray-100);
+        .table-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 176, 240, 0.05);
         }
-    }
-</style>
-```
 
+        .table-input.antal {
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .table-textarea {
+            resize: none;
+            min-height: 2.5rem;
+        }
+
+        .btn-delete {
+            background: transparent;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            color: var(--danger);
+        }
+
+        .document-footer {
+            padding: 1.5rem 2rem;
+            background: white;
+            border-top: 3px solid var(--primary);
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        .document-footer p {
+            margin: 0.25rem 0;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(150%);
+            transition: transform 0.3s;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            :root {
+                --print-footer-h: 22mm;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 15mm;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .sidebar,
+            .top-bar,
+            .btn,
+            .toast,
+            .stats-grid {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+            }
+
+            .content-area {
+                padding: 0 !important;
+            }
+
+            .document-container {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                min-height: auto !important;
+            }
+
+            .document-header::before {
+                content: '';
+                position: absolute;
+                top: -15mm;
+                left: -15mm;
+                right: -15mm;
+                height: 3mm;
+                background: var(--primary);
+            }
+
+            .document-header {
+                position: relative;
+                padding: 0 !important;
+                padding-bottom: 5mm !important;
+                margin-bottom: 6mm !important;
+            }
+
+            .doc-logo {
+                font-size: 22pt !important;
+                padding: 2mm 0 !important;
+            }
+
+            .document-body {
+                padding: 0 0 var(--print-footer-h) 0 !important;
+            }
+
+            .company-info {
+                page-break-inside: avoid !important;
+            }
+
+            .doc-title {
+                font-size: 15pt !important;
+                padding: 4mm 0 !important;
+                margin: 6mm 0 !important;
+                page-break-after: avoid !important;
+            }
+
+            .form-grid {
+                page-break-inside: avoid !important;
+            }
+
+            .form-input,
+            .table-input {
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            .table-input.antal {
+                text-align: center !important;
+            }
+
+            .btn-delete {
+                display: none !important;
+            }
+
+            .items-table tbody tr {
+                page-break-inside: avoid !important;
+            }
+
+            .document-footer {
+                position: fixed !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                bottom: 15mm !important;
+                padding: 4mm 0 !important;
+            }
+
+            .document-footer::after {
+                content: 'Side ' counter(page);
+                display: block;
+                margin-top: 3mm;
+                font-weight: 600;
+                color: var(--primary);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .company-info {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- LOGIN SCREEN -->
@@ -899,141 +773,143 @@
             <div class="login-body">
                 <h2 class="login-title">Velkommen tilbage</h2>
                 <p class="login-description">Log ind for at fortsætte</p>
+                
+                <div class="login-error" id="loginError">
+                    Forkert brugernavn eller adgangskode
+                </div>
 
-```
-            <div class="login-error" id="loginError">
-                Forkert brugernavn eller adgangskode
+                <form class="login-form" id="loginForm">
+                    <div class="input-group">
+                        <span class="input-icon">👤</span>
+                        <input type="text" class="login-input" id="username" placeholder="Brugernavn" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="login-input" id="password" placeholder="Adgangskode" required>
+                    </div>
+                    <button type="submit" class="login-btn">Log ind</button>
+                </form>
             </div>
-
-            <form class="login-form" id="loginForm">
-                <div class="input-group">
-                    <span class="input-icon">👤</span>
-                    <input type="text" class="login-input" id="username" placeholder="Brugernavn" required autocomplete="username">
-                </div>
-                <div class="input-group">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" class="login-input" id="password" placeholder="Adgangskode" required autocomplete="current-password">
-                </div>
-                <div class="remember-group">
-                    <input type="checkbox" class="remember-checkbox" id="rememberMe">
-                    <label for="rememberMe" class="remember-label">Husk mig på denne enhed</label>
-                </div>
-                <button type="submit" class="login-btn">Log ind</button>
-            </form>
-        </div>
-        <div class="login-footer">
-            🔒 Sikker login • AES-256 kryptering • GDPR-kompatibel
+            <div class="login-footer">
+                🔒 Sikker login • AES-256 kryptering • GDPR-kompatibel
+            </div>
         </div>
     </div>
-</div>
 
-<!-- APP -->
-<div class="app" id="app">
-    <!-- FIXED HEADER -->
-    <header class="fixed-header">
-        <div class="header-left">
-            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-            <div class="header-logo">FELSON WATERSAFE</div>
-        </div>
-        <div class="header-right">
-            <h1 class="page-title" id="pageTitle">Dashboard</h1>
-        </div>
-    </header>
-
-    <!-- SIDEBAR OVERLAY -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <nav class="nav-menu">
-            <div class="nav-section">
-                <div class="nav-section-title">Hoved</div>
-                <a class="nav-item active" data-view="dashboard">
-                    <span class="nav-icon">📊</span>
-                    Dashboard
-                </a>
-                <a class="nav-item" data-view="new">
-                    <span class="nav-icon">➕</span>
-                    Ny Følgeseddel
-                </a>
-                <a class="nav-item" data-view="saved">
-                    <span class="nav-icon">📁</span>
-                    Gemte Dokumenter
-                </a>
+    <!-- APP -->
+    <div class="app" id="app">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo">FELSON</div>
+                <div class="company-name">Watersafe ApS</div>
             </div>
 
-            <div class="nav-section">
-                <div class="nav-section-title">System</div>
-                <a class="nav-item" data-view="settings">
-                    <span class="nav-icon">⚙️</span>
-                    Indstillinger
-                </a>
-                <a class="nav-item" id="logoutBtn">
-                    <span class="nav-icon">🚪</span>
-                    Log ud
-                </a>
-            </div>
-        </nav>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-        <div class="content-area">
-            <!-- DASHBOARD -->
-            <div class="view-container" id="dashboardView">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">I dag</div>
-                        <div class="stat-value" id="todayCount">0</div>
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Hoved</div>
+                    <div class="nav-item active" data-view="dashboard">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Denne måned</div>
-                        <div class="stat-value" id="monthCount">0</div>
+                    <div class="nav-item" data-view="new">
+                        <span class="nav-icon">➕</span>
+                        Ny Følgeseddel
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Total dokumenter</div>
-                        <div class="stat-value" id="totalCount">0</div>
+                    <div class="nav-item" data-view="saved">
+                        <span class="nav-icon">📁</span>
+                        Gemte Dokumenter
                     </div>
                 </div>
-                <button class="btn btn-primary" onclick="switchView('new')">
-                    ➕ Opret Ny Følgeseddel
-                </button>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Sikkerhed</div>
+                    <div class="nav-item" data-view="security">
+                        <span class="nav-icon">🔒</span>
+                        Sikkerhed
+                    </div>
+                    <div class="nav-item" data-view="settings">
+                        <span class="nav-icon">⚙️</span>
+                        Indstillinger
+                    </div>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">A</div>
+                    <div class="user-info">
+                        <div class="user-name" id="currentUser">Admin</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn" title="Log ud">🚪</button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="top-actions">
+                    <button class="btn btn-primary" id="newDocBtn">
+                        ➕ Ny Følgeseddel
+                    </button>
+                </div>
             </div>
 
-            <!-- NEW DOCUMENT -->
-            <div class="view-container" id="newDocView" style="display: none;">
-                <div class="document-container">
-                    <div class="document-header">
-                        <h1 class="doc-logo">Felson Watersafe ApS</h1>
+            <div class="content-area">
+                <!-- DASHBOARD -->
+                <div class="view-container" id="dashboardView">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">I dag</div>
+                            <div class="stat-value" id="todayCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Denne måned</div>
+                            <div class="stat-value" id="monthCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total dokumenter</div>
+                            <div class="stat-value" id="totalCount">0</div>
+                        </div>
                     </div>
-                    <div class="document-body">
-                        <div class="company-info">
-                            Felson Watersafe ApS<br>
-                            Gartnervej 4<br>
-                            6710 Esbjerg V<br>
-                            CVR-nr. DK26813522<br>
-                            Tlf. 70206676<br>
-                            felson@felson.dk
+                </div>
+
+                <!-- NEW DOCUMENT -->
+                <div class="view-container" id="newDocView" style="display: none;">
+                    <div class="document-container">
+                        <div class="document-header">
+                            <h1 class="doc-logo">Felson Watersafe ApS</h1>
                         </div>
-
-                        <h2 class="doc-title">FØLGESEDDEL</h2>
-
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label" for="docDate">Dato</label>
-                                <input type="date" class="form-input" id="docDate">
+                        <div class="document-body">
+                            <div class="company-info">
+                                Felson Watersafe ApS<br>
+                                Gartnervej 4<br>
+                                6710 Esbjerg V<br>
+                                CVR-nr. DK26813522<br>
+                                Tlf. 70206676<br>
+                                felson@felson.dk
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="docOrder">Ordre Nr.</label>
-                                <input type="text" class="form-input" id="docOrder" placeholder="Indtast ordrenummer">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="docDelivery">Levering</label>
-                                <textarea class="form-input" id="docDelivery" placeholder="Indtast leveringsadresse"></textarea>
-                            </div>
-                        </div>
 
-                        <div class="table-wrapper">
+                            <h2 class="doc-title">FØLGESEDDEL</h2>
+
+                            <div class="form-grid">
+                                <div>
+                                    <div class="form-group" style="margin-bottom: 1rem;">
+                                        <label class="form-label">Dato</label>
+                                        <input type="date" class="form-input" id="docDate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Ordre Nr.</label>
+                                        <input type="text" class="form-input" id="docOrder" placeholder="Indtast ordrenummer">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Levering</label>
+                                    <textarea class="form-input" id="docDelivery" placeholder="Indtast leveringsadresse"></textarea>
+                                </div>
+                            </div>
+
                             <table class="items-table">
                                 <thead>
                                     <tr>
@@ -1044,378 +920,410 @@
                                 </thead>
                                 <tbody id="itemsBody"></tbody>
                             </table>
-                        </div>
 
-                        <div class="btn-group">
-                            <button class="btn btn-success" id="addItemBtn">➕ Tilføj Række</button>
-                            <button class="btn btn-secondary" id="clearBtn">Ryd</button>
-                            <button class="btn btn-secondary" id="saveBtn">💾 Gem</button>
-                            <button class="btn btn-primary" id="printBtn">🖨️ Udskriv</button>
+                            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                                <button class="btn btn-success" id="addItemBtn">➕ Tilføj Række</button>
+                                <button class="btn btn-secondary" id="clearBtn">Ryd</button>
+                                <button class="btn btn-secondary" id="saveBtn">💾 Gem</button>
+                                <button class="btn btn-primary" id="pdfBtn">📄 Download PDF</button>
+                                <button class="btn btn-primary" id="printBtn">🖨️ Udskriv</button>
+                            </div>
+                        </div>
+                        <div class="document-footer">
+                            <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
+                            <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
-    <!-- FIXED FOOTER -->
-    <footer class="fixed-footer">
-        <div class="footer-content">
-            <p><strong>Felson Watersafe ApS</strong></p>
-            <p>Gartnervej 4 • 6710 Esbjerg V • CVR: DK26813522 • Tlf: 70206676 • felson@felson.dk</p>
-        </div>
-    </footer>
-</div>
+    <div class="toast" id="toast"></div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+    <template id="itemTemplate">
+        <tr>
+            <td><input type="number" class="table-input antal" min="0" placeholder="0"></td>
+            <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
+            <td style="text-align: center;"><button class="btn-delete">×</button></td>
+        </tr>
+    </template>
 
-<!-- ITEM TEMPLATE -->
-<template id="itemTemplate">
-    <tr>
-        <td><input type="number" class="table-input antal" min="0" placeholder="0"></td>
-        <td><textarea class="table-input table-textarea" rows="1" placeholder="Beskrivelse af vare"></textarea></td>
-        <td style="text-align: center;"><button class="btn-delete" title="Slet">×</button></td>
-    </tr>
-</template>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        // Encryption key
+        const ENCRYPTION_KEY = 'felson-watersafe-2025-secure-key';
 
-<script>
-    // State
-    const state = {
-        currentView: 'dashboard',
-        currentUser: null,
-        documents: []
-    };
+        // State
+        const state = {
+            currentView: 'dashboard',
+            currentUser: null,
+            documents: [],
+            credentials: {
+                username: 'admin',
+                password: encrypt('felson2025')
+            }
+        };
 
-    // Elements
-    const els = {
-        loginScreen: document.getElementById('loginScreen'),
-        loginForm: document.getElementById('loginForm'),
-        loginError: document.getElementById('loginError'),
-        username: document.getElementById('username'),
-        password: document.getElementById('password'),
-        rememberMe: document.getElementById('rememberMe'),
-        app: document.getElementById('app'),
-        logoutBtn: document.getElementById('logoutBtn'),
-        navItems: document.querySelectorAll('.nav-item'),
-        pageTitle: document.getElementById('pageTitle'),
-        mobileMenuBtn: document.getElementById('mobileMenuBtn'),
-        sidebar: document.getElementById('sidebar'),
-        sidebarOverlay: document.getElementById('sidebarOverlay'),
-        views: {
-            dashboard: document.getElementById('dashboardView'),
-            new: document.getElementById('newDocView')
-        },
-        docDate: document.getElementById('docDate'),
-        docOrder: document.getElementById('docOrder'),
-        docDelivery: document.getElementById('docDelivery'),
-        itemsBody: document.getElementById('itemsBody'),
-        itemTemplate: document.getElementById('itemTemplate'),
-        addItemBtn: document.getElementById('addItemBtn'),
-        clearBtn: document.getElementById('clearBtn'),
-        saveBtn: document.getElementById('saveBtn'),
-        printBtn: document.getElementById('printBtn'),
-        toast: document.getElementById('toast'),
-        todayCount: document.getElementById('todayCount'),
-        monthCount: document.getElementById('monthCount'),
-        totalCount: document.getElementById('totalCount')
-    };
-
-    // Init
-    function init() {
-        loadDocuments();
-        setupEventListeners();
-        checkSavedLogin();
-        preventIOSBounce();
-    }
-
-    // Prevent iOS bounce
-    function preventIOSBounce() {
-        if (CSS.supports('-webkit-overflow-scrolling', 'touch')) {
-            let startY = 0;
-            document.addEventListener('touchstart', e => {
-                startY = e.touches[0].pageY;
-            }, { passive: true });
-
-            document.addEventListener('touchmove', e => {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const clientHeight = document.documentElement.clientHeight;
-                const scrollHeight = document.documentElement.scrollHeight;
-                const isTop = scrollTop === 0;
-                const isBottom = scrollTop + clientHeight >= scrollHeight;
-                const isUp = e.touches[0].pageY > startY;
-                const isDown = e.touches[0].pageY < startY;
-                
-                if ((isTop && isUp) || (isBottom && isDown)) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
+        // Encryption functions
+        function encrypt(text) {
+            return CryptoJS.AES.encrypt(text, ENCRYPTION_KEY).toString();
         }
-    }
 
-    // Remember Me functionality
-    function checkSavedLogin() {
-        const savedUsername = localStorage.getItem('felson_username');
-        const savedPassword = localStorage.getItem('felson_password');
-        const savedRemember = localStorage.getItem('felson_remember');
+        function decrypt(ciphertext) {
+            const bytes = CryptoJS.AES.decrypt(ciphertext, ENCRYPTION_KEY);
+            return bytes.toString(CryptoJS.enc.Utf8);
+        }
 
-        if (savedRemember === 'true' && savedUsername && savedPassword) {
-            els.username.value = savedUsername;
-            els.password.value = atob(savedPassword);
-            els.rememberMe.checked = true;
-            
-            // Auto-login if credentials are saved
+        // Elements
+        const els = {
+            loginScreen: document.getElementById('loginScreen'),
+            loginForm: document.getElementById('loginForm'),
+            loginError: document.getElementById('loginError'),
+            username: document.getElementById('username'),
+            password: document.getElementById('password'),
+            app: document.getElementById('app'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            currentUser: document.getElementById('currentUser'),
+            navItems: document.querySelectorAll('.nav-item'),
+            pageTitle: document.getElementById('pageTitle'),
+            views: {
+                dashboard: document.getElementById('dashboardView'),
+                new: document.getElementById('newDocView')
+            },
+            docDate: document.getElementById('docDate'),
+            docOrder: document.getElementById('docOrder'),
+            docDelivery: document.getElementById('docDelivery'),
+            itemsBody: document.getElementById('itemsBody'),
+            itemTemplate: document.getElementById('itemTemplate'),
+            addItemBtn: document.getElementById('addItemBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            saveBtn: document.getElementById('saveBtn'),
+            pdfBtn: document.getElementById('pdfBtn'),
+            printBtn: document.getElementById('printBtn'),
+            newDocBtn: document.getElementById('newDocBtn'),
+            toast: document.getElementById('toast'),
+            todayCount: document.getElementById('todayCount'),
+            monthCount: document.getElementById('monthCount'),
+            totalCount: document.getElementById('totalCount')
+        };
+
+        // Init
+        function init() {
+            loadDocuments();
+            setupEventListeners();
+            checkSession();
+        }
+
+        // Session
+        function checkSession() {
+            try {
+                const session = sessionStorage.getItem('felson_session');
+                if (session) {
+                    const data = JSON.parse(session);
+                    if (data.authenticated && data.username) {
+                        login(data.username);
+                        return;
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function saveSession(username) {
+            sessionStorage.setItem('felson_session', JSON.stringify({
+                authenticated: true,
+                username: username,
+                timestamp: Date.now()
+            }));
+        }
+
+        // Event listeners
+        function setupEventListeners() {
+            els.loginForm.addEventListener('submit', handleLogin);
+            els.logoutBtn.addEventListener('click', handleLogout);
+            els.navItems.forEach(item => {
+                item.addEventListener('click', () => switchView(item.dataset.view));
+            });
+            els.newDocBtn.addEventListener('click', () => switchView('new'));
+            els.addItemBtn.addEventListener('click', () => addItem());
+            els.clearBtn.addEventListener('click', clearForm);
+            els.saveBtn.addEventListener('click', saveDocument);
+            els.pdfBtn.addEventListener('click', generatePDF);
+            els.printBtn.addEventListener('click', () => window.print());
+
+            els.itemsBody.addEventListener('click', e => {
+                if (e.target.classList.contains('btn-delete')) {
+                    if (els.itemsBody.children.length > 1) {
+                        e.target.closest('tr').remove();
+                    } else {
+                        toast('Der skal være mindst én række');
+                    }
+                }
+            });
+
+            els.itemsBody.addEventListener('input', e => {
+                if (e.target.classList.contains('table-textarea')) {
+                    autoResize(e.target);
+                }
+            });
+        }
+
+        // Login/Logout
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = els.username.value.trim();
+            const password = els.password.value;
+
+            if (username === state.credentials.username && encrypt(password) === state.credentials.password) {
+                login(username);
+                saveSession(username);
+            } else {
+                els.loginError.classList.add('show');
+                setTimeout(() => els.loginError.classList.remove('show'), 3000);
+            }
+        }
+
+        function login(username) {
+            state.currentUser = username;
+            els.currentUser.textContent = username;
+            els.loginScreen.classList.add('hidden');
             setTimeout(() => {
-                login(savedUsername);
+                els.app.classList.add('visible');
+                updateDashboard();
+                els.docDate.valueAsDate = new Date();
+                addItem();
             }, 500);
         }
-    }
 
-    function saveLoginCredentials() {
-        if (els.rememberMe.checked) {
-            localStorage.setItem('felson_username', els.username.value);
-            localStorage.setItem('felson_password', btoa(els.password.value));
-            localStorage.setItem('felson_remember', 'true');
-        } else {
-            localStorage.removeItem('felson_username');
-            localStorage.removeItem('felson_password');
-            localStorage.removeItem('felson_remember');
-        }
-    }
-
-    // Event listeners
-    function setupEventListeners() {
-        els.loginForm.addEventListener('submit', handleLogin);
-        els.logoutBtn.addEventListener('click', handleLogout);
-        els.mobileMenuBtn.addEventListener('click', toggleSidebar);
-        els.sidebarOverlay.addEventListener('click', closeSidebar);
-        
-        els.navItems.forEach(item => {
-            if (item.dataset.view) {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    switchView(item.dataset.view);
-                    closeSidebar();
-                });
-            }
-        });
-
-        if (els.addItemBtn) els.addItemBtn.addEventListener('click', () => addItem());
-        if (els.clearBtn) els.clearBtn.addEventListener('click', clearForm);
-        if (els.saveBtn) els.saveBtn.addEventListener('click', saveDocument);
-        if (els.printBtn) els.printBtn.addEventListener('click', () => window.print());
-
-        els.itemsBody?.addEventListener('click', e => {
-            if (e.target.classList.contains('btn-delete')) {
-                if (els.itemsBody.children.length > 1) {
-                    e.target.closest('tr').remove();
-                } else {
-                    toast('Der skal være mindst én række');
-                }
-            }
-        });
-
-        els.itemsBody?.addEventListener('input', e => {
-            if (e.target.classList.contains('table-textarea')) {
-                autoResize(e.target);
-            }
-        });
-
-        // Handle window resize
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                if (window.innerWidth > 768) {
-                    closeSidebar();
-                }
-            }, 250);
-        });
-    }
-
-    // Mobile menu
-    function toggleSidebar() {
-        els.sidebar.classList.toggle('open');
-        els.sidebarOverlay.classList.toggle('show');
-    }
-
-    function closeSidebar() {
-        els.sidebar.classList.remove('open');
-        els.sidebarOverlay.classList.remove('show');
-    }
-
-    // Login/Logout
-    function handleLogin(e) {
-        e.preventDefault();
-        const username = els.username.value.trim();
-        const password = els.password.value;
-
-        // Simple validation (in production, this would check against a server)
-        if (username === 'admin' && password === 'felson2025') {
-            saveLoginCredentials();
-            login(username);
-        } else {
-            els.loginError.classList.add('show');
-            setTimeout(() => els.loginError.classList.remove('show'), 3000);
-        }
-    }
-
-    function login(username) {
-        state.currentUser = username;
-        els.loginScreen.classList.add('hidden');
-        setTimeout(() => {
-            els.app.classList.add('visible');
-            updateDashboard();
-            if (els.docDate) els.docDate.valueAsDate = new Date();
-            if (els.itemsBody && els.itemsBody.children.length === 0) addItem();
-        }, 500);
-    }
-
-    function handleLogout() {
-        if (confirm('Er du sikker på at du vil logge ud?')) {
-            els.app.classList.remove('visible');
-            setTimeout(() => {
-                els.loginScreen.classList.remove('hidden');
-                if (!els.rememberMe.checked) {
+        function handleLogout() {
+            if (confirm('Er du sikker på at du vil logge ud?')) {
+                sessionStorage.removeItem('felson_session');
+                els.app.classList.remove('visible');
+                setTimeout(() => {
+                    els.loginScreen.classList.remove('hidden');
                     els.username.value = '';
                     els.password.value = '';
-                }
-            }, 300);
-        }
-    }
-
-    // Views
-    function switchView(viewName) {
-        Object.values(els.views).forEach(v => {
-            if (v) v.style.display = 'none';
-        });
-        
-        els.navItems.forEach(i => i.classList.remove('active'));
-        
-        const viewMap = {
-            dashboard: { title: 'Dashboard', element: els.views.dashboard },
-            new: { title: 'Ny Følgeseddel', element: els.views.new },
-            saved: { title: 'Gemte Dokumenter', element: null },
-            settings: { title: 'Indstillinger', element: null }
-        };
-
-        const view = viewMap[viewName];
-        if (view) {
-            els.pageTitle.textContent = view.title;
-            if (view.element) {
-                view.element.style.display = 'block';
+                }, 300);
             }
-            const navItem = document.querySelector(`[data-view="${viewName}"]`);
-            if (navItem) navItem.classList.add('active');
+        }
+
+        // Views
+        function switchView(viewName) {
+            Object.values(els.views).forEach(v => v.style.display = 'none');
+            els.navItems.forEach(i => i.classList.remove('active'));
             
-            if (viewName === 'dashboard') updateDashboard();
-            if (viewName === 'new' && els.itemsBody && els.itemsBody.children.length === 0) {
-                addItem();
+            const viewMap = {
+                dashboard: { title: 'Dashboard', element: els.views.dashboard },
+                new: { title: 'Ny Følgeseddel', element: els.views.new }
+            };
+
+            const view = viewMap[viewName];
+            if (view) {
+                els.pageTitle.textContent = view.title;
+                if (view.element) view.element.style.display = 'block';
+                document.querySelector(`[data-view="${viewName}"]`)?.classList.add('active');
+                if (viewName === 'dashboard') updateDashboard();
             }
         }
-        
-        state.currentView = viewName;
-    }
 
-    window.switchView = switchView; // Make it global for button onclick
-
-    // Items
-    function addItem(antal = '', desc = '') {
-        if (!els.itemTemplate || !els.itemsBody) return;
-        
-        const row = els.itemTemplate.content.cloneNode(true);
-        const antalInput = row.querySelector('.antal');
-        const descInput = row.querySelector('.table-textarea');
-        
-        if (antal) antalInput.value = antal;
-        if (desc) {
-            descInput.value = desc;
-            setTimeout(() => autoResize(descInput), 0);
+        // Items
+        function addItem(antal = '', desc = '') {
+            const row = els.itemTemplate.content.cloneNode(true);
+            const antalInput = row.querySelector('.antal');
+            const descInput = row.querySelector('.table-textarea');
+            
+            if (antal) antalInput.value = antal;
+            if (desc) {
+                descInput.value = desc;
+                setTimeout(() => autoResize(descInput), 0);
+            }
+            
+            els.itemsBody.appendChild(row);
         }
-        
-        els.itemsBody.appendChild(row);
-    }
 
-    function autoResize(textarea) {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
-    }
-
-    // Documents
-    function saveDocument() {
-        if (!els.docDate || !els.docOrder || !els.docDelivery || !els.itemsBody) return;
-        
-        const doc = {
-            id: Date.now(),
-            date: els.docDate.value,
-            order: els.docOrder.value,
-            delivery: els.docDelivery.value,
-            items: Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
-                antal: row.querySelector('.antal')?.value || '0',
-                beskrivelse: row.querySelector('.table-textarea')?.value || ''
-            })),
-            created: new Date().toISOString()
-        };
-        
-        state.documents.push(doc);
-        localStorage.setItem('felson_documents', JSON.stringify(state.documents));
-        toast('Dokument gemt succesfuldt');
-        updateDashboard();
-    }
-
-    function loadDocuments() {
-        const saved = localStorage.getItem('felson_documents');
-        state.documents = saved ? JSON.parse(saved) : [];
-    }
-
-    function clearForm() {
-        if (!confirm('Ryd alle felter?')) return;
-        
-        if (els.docDate) els.docDate.valueAsDate = new Date();
-        if (els.docOrder) els.docOrder.value = '';
-        if (els.docDelivery) els.docDelivery.value = '';
-        if (els.itemsBody) {
-            els.itemsBody.innerHTML = '';
-            addItem();
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
         }
-        toast('Formular ryddet');
-    }
 
-    // Dashboard
-    function updateDashboard() {
-        const today = new Date().toDateString();
-        const thisMonth = new Date().getMonth();
-        
-        const todayDocs = state.documents.filter(d => new Date(d.created).toDateString() === today);
-        const monthDocs = state.documents.filter(d => new Date(d.created).getMonth() === thisMonth);
-        
-        if (els.todayCount) els.todayCount.textContent = todayDocs.length;
-        if (els.monthCount) els.monthCount.textContent = monthDocs.length;
-        if (els.totalCount) els.totalCount.textContent = state.documents.length;
-    }
-
-    // Toast
-    function toast(message) {
-        els.toast.textContent = message;
-        els.toast.classList.add('show');
-        setTimeout(() => els.toast.classList.remove('show'), 3000);
-    }
-
-    // Visibility API to handle app state
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && state.currentUser) {
+        // Documents
+        function saveDocument() {
+            const doc = {
+                id: Date.now(),
+                date: els.docDate.value,
+                order: els.docOrder.value,
+                delivery: els.docDelivery.value,
+                items: Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
+                    antal: row.querySelector('.antal').value || '0',
+                    beskrivelse: row.querySelector('.table-textarea').value || ''
+                })),
+                created: new Date().toISOString()
+            };
+            
+            state.documents.push(doc);
+            localStorage.setItem('felson_documents', JSON.stringify(state.documents));
+            toast('Dokument gemt succesfuldt');
             updateDashboard();
         }
-    });
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-</script>
-```
+        function loadDocuments() {
+            const saved = localStorage.getItem('felson_documents');
+            state.documents = saved ? JSON.parse(saved) : [];
+        }
 
+        function clearForm() {
+            if (confirm('Ryd alle felter?')) {
+                els.docDate.valueAsDate = new Date();
+                els.docOrder.value = '';
+                els.docDelivery.value = '';
+                els.itemsBody.innerHTML = '';
+                addItem();
+                toast('Formular ryddet');
+            }
+        }
+
+        // Dashboard
+        function updateDashboard() {
+            const today = new Date().toDateString();
+            const thisMonth = new Date().getMonth();
+            
+            const todayDocs = state.documents.filter(d => new Date(d.created).toDateString() === today);
+            const monthDocs = state.documents.filter(d => new Date(d.created).getMonth() === thisMonth);
+            
+            els.todayCount.textContent = todayDocs.length;
+            els.monthCount.textContent = monthDocs.length;
+            els.totalCount.textContent = state.documents.length;
+        }
+
+        // PDF Generation
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const w = doc.internal.pageSize.getWidth();
+            const h = doc.internal.pageSize.getHeight();
+            const m = 20;
+            let y = m;
+
+            function header() {
+                doc.setFillColor(0, 176, 240);
+                doc.rect(0, 0, w, 3, 'F');
+                doc.setFontSize(18);
+                doc.setTextColor(0, 176, 240);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Felson Watersafe ApS', w - m, 16, { align: 'right' });
+                doc.setDrawColor(0, 176, 240);
+                doc.line(m, 20, w - m, 20);
+            }
+
+            function footer() {
+                const fy = h - 20;
+                doc.setDrawColor(0, 176, 240);
+                doc.line(m, fy - 5, w - m, fy - 5);
+                doc.setFontSize(7);
+                doc.setTextColor(100);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', w / 2, fy, { align: 'center' });
+                doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', w / 2, fy + 4, { align: 'center' });
+            }
+
+            function tableHeader() {
+                doc.setFillColor(0, 176, 240);
+                doc.roundedRect(m, y, w - 2 * m, 9, 2, 2, 'F');
+                doc.setTextColor(255);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(8);
+                doc.text('ANTAL', m + 5, y + 6);
+                doc.text('BESKRIVELSE', m + 35, y + 6);
+                y += 11;
+            }
+
+            header();
+            y = 25;
+
+            // Title
+            doc.setFillColor(0, 176, 240);
+            doc.roundedRect(m, y, w - 2 * m, 10, 2, 2, 'F');
+            doc.setFontSize(14);
+            doc.setTextColor(255);
+            doc.setFont('helvetica', 'bold');
+            doc.text('FØLGESEDDEL', w / 2, y + 6.5, { align: 'center' });
+            y += 14;
+
+            // Form data
+            doc.setFillColor(232, 245, 251);
+            doc.roundedRect(m, y, w - 2 * m, 26, 2, 2, 'F');
+            y += 4;
+            doc.setFontSize(8);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(0, 176, 240);
+            doc.text('DATO', m + 3, y);
+            doc.text('LEVERING', w / 2 + 5, y);
+            doc.setFontSize(9);
+            doc.setTextColor(40);
+            doc.setFont('helvetica', 'normal');
+            const fecha = els.docDate.value ? new Date(els.docDate.value + 'T00:00:00').toLocaleDateString('da-DK') : '';
+            doc.text(fecha, m + 3, y + 6);
+            const levLines = doc.splitTextToSize(els.docDelivery.value || '', w / 2 - 30);
+            doc.text(levLines, w / 2 + 5, y + 6);
+            doc.setFontSize(8);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(0, 176, 240);
+            doc.text('ORDRE NR.', m + 3, y + 10);
+            doc.setFontSize(9);
+            doc.setTextColor(40);
+            doc.setFont('helvetica', 'normal');
+            doc.text(els.docOrder.value || '', m + 3, y + 15);
+            y += Math.max(24, levLines.length * 5 + 16);
+
+            tableHeader();
+
+            const rows = Array.from(els.itemsBody.querySelectorAll('tr'));
+            doc.setTextColor(40);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+
+            rows.forEach((row, i) => {
+                const antal = row.querySelector('.antal').value || '0';
+                const desc = row.querySelector('.table-textarea').value || '';
+                const lines = doc.splitTextToSize(desc, w - m - 45);
+                const rh = Math.max(7, lines.length * 5);
+
+                if (y + rh > h - 30) {
+                    footer();
+                    doc.addPage();
+                    header();
+                    y = 30;
+                    tableHeader();
+                }
+
+                if (i % 2 === 0) {
+                    doc.setFillColor(247, 249, 251);
+                    doc.rect(m, y - 1, w - 2 * m, rh, 'F');
+                }
+
+                doc.setTextColor(0, 176, 240);
+                doc.setFont('helvetica', 'bold');
+                doc.text(antal, m + 15, y + 4, { align: 'center' });
+                doc.setTextColor(40);
+                doc.setFont('helvetica', 'normal');
+                doc.text(lines, m + 35, y + 4);
+                y += rh + 1;
+            });
+
+            footer();
+            doc.save(`folgeseddel_${els.docOrder.value || 'dokument'}.pdf`);
+            toast('PDF downloaded succesfuldt');
+        }
+
+        // Toast
+        function toast(message) {
+            els.toast.textContent = message;
+            els.toast.classList.add('show');
+            setTimeout(() => els.toast.classList.remove('show'), 3000);
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
