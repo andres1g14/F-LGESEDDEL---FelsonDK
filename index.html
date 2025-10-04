@@ -1113,16 +1113,23 @@
             }
 
             /* Show footer content */
-            .footer > * {
-                display: block !important;
-            }
-
             .footer p {
                 font-size: 8pt !important;
                 color: #666 !important;
                 margin: 1.5mm 0 !important;
                 text-align: center !important;
                 line-height: 1.5 !important;
+                display: block !important;
+            }
+
+            /* Page number counter */
+            .footer::after {
+                content: 'Side ' counter(page);
+                display: inline-block;
+                margin-top: 3mm;
+                font-weight: 600;
+                font-size: 8.5pt;
+                color: #00B0F0;
             }
 
             /* Remove input controls */
