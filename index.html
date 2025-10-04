@@ -985,11 +985,11 @@
             color: white;
         }
 
-        /* PRINT STYLES - OPTIMIZED FOR PDF */
+        /* PRINT STYLES - EXACT PDF MATCH */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 15mm;
+                margin: 15mm 15mm 20mm 15mm;
             }
 
             * {
@@ -1033,45 +1033,96 @@
                 border-radius: 0 !important;
                 margin: 0 !important;
                 background: white !important;
+                position: relative !important;
             }
 
+            /* Page Header - Logo + Blue Line */
             .document-header {
-                padding: 0 !important;
+                padding: 0 0 5mm 0 !important;
                 background: white !important;
-                border-bottom: 4px solid var(--primary) !important;
-                padding-bottom: 8mm !important;
+                border-bottom: 3px solid #00b0f0 !important;
                 margin-bottom: 8mm !important;
                 page-break-inside: avoid !important;
+                text-align: right !important;
             }
 
-            .doc-title {
-                font-size: 17pt !important;
-                background: var(--primary) !important;
-                color: white !important;
-                padding: 5mm 0 !important;
-                margin: 8mm 0 !important;
-                border-radius: 3mm !important;
-                letter-spacing: 0.4em !important;
+            .document-header .doc-title {
+                display: none !important;
+            }
+
+            .document-header::before {
+                content: 'Felson Watersafe ApS';
+                display: block !important;
+                font-size: 18pt !important;
+                font-weight: 700 !important;
+                color: #00b0f0 !important;
+                text-align: right !important;
+                margin-bottom: 3mm !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            /* Company Info Box */
+            .document-body::before {
+                content: 'Felson Watersafe ApS\A Gartnervej 4\A 6710 Esbjerg V\A CVR-nr. DK26813522\A Tlf. 70206676\A felson@felson.dk';
+                white-space: pre-line;
+                display: block;
+                background: #eeeeee;
+                padding: 5mm;
+                margin: 0 0 8mm 0;
+                font-size: 9pt;
+                line-height: 1.5;
+                color: #333;
+                text-align: left;
+                font-family: 'Inter', sans-serif;
+                font-weight: 400;
+                border-radius: 0;
                 -webkit-print-color-adjust: exact !important;
             }
 
             .document-body {
                 padding: 0 !important;
-                padding-bottom: 30mm !important;
+                padding-bottom: 25mm !important;
             }
 
-            .form-grid {
-                background: #e6f4fb !important;
-                padding: 6mm !important;
-                margin-bottom: 8mm !important;
+            /* FØLGESEDDEL Banner */
+            .document-body::after {
+                content: 'FØLGESEDDEL';
+                display: block;
+                background: #00b0f0 !important;
+                color: white !important;
+                font-size: 16pt !important;
+                font-weight: 700 !important;
+                text-align: center !important;
+                padding: 4mm 0 !important;
+                margin: 8mm 0 !important;
+                letter-spacing: 0.3em !important;
                 border-radius: 3mm !important;
-                page-break-inside: avoid !important;
                 -webkit-print-color-adjust: exact !important;
+            }
+
+            /* Form Section */
+            .form-grid {
+                background: white !important;
+                padding: 0 !important;
+                margin-bottom: 8mm !important;
+                page-break-inside: avoid !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 5mm !important;
+            }
+
+            .form-group {
+                margin-bottom: 0 !important;
             }
 
             .form-label {
                 font-size: 9pt !important;
-                color: var(--primary) !important;
+                font-weight: 700 !important;
+                color: #00b0f0 !important;
+                text-transform: uppercase !important;
+                margin-bottom: 2mm !important;
+                display: block !important;
+                -webkit-print-color-adjust: exact !important;
             }
 
             .form-input {
@@ -1080,10 +1131,18 @@
                 font-size: 10pt !important;
                 background: transparent !important;
                 color: #000 !important;
+                font-weight: 400 !important;
+                display: block !important;
+                width: 100% !important;
             }
 
+            .form-group.full-width {
+                grid-column: 1 / -1 !important;
+            }
+
+            /* Items Table */
             .items-section {
-                margin-top: 8mm !important;
+                margin-top: 0 !important;
             }
 
             .section-header {
@@ -1091,36 +1150,54 @@
             }
 
             .items-table {
-                border: 2px solid var(--primary) !important;
-                border-radius: 4mm !important;
-                -webkit-print-color-adjust: exact !important;
+                width: 100% !important;
+                border-collapse: collapse !important;
+                border: none !important;
+                margin-top: 0 !important;
             }
 
             .items-table thead {
-                background: var(--primary) !important;
+                background: #00b0f0 !important;
                 -webkit-print-color-adjust: exact !important;
             }
 
             .items-table th {
-                font-size: 10pt !important;
-                padding: 4mm !important;
+                font-size: 9pt !important;
+                font-weight: 700 !important;
+                padding: 3mm 4mm !important;
                 color: white !important;
-                background: var(--primary) !important;
+                background: #00b0f0 !important;
+                text-transform: uppercase !important;
+                text-align: left !important;
+                border: none !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .items-table th.col-antal {
+                text-align: center !important;
+                width: 15% !important;
             }
 
             .items-table tbody tr {
                 page-break-inside: avoid !important;
+                background: white !important;
             }
 
             .items-table tbody tr:nth-child(even) {
-                background: #f5f9fc !important;
+                background: #f8f8f8 !important;
                 -webkit-print-color-adjust: exact !important;
             }
 
-            .items-table td {
+            .items-table tbody td {
                 padding: 3mm 4mm !important;
                 font-size: 10pt !important;
-                border-bottom: 1px solid #e5e5e5 !important;
+                color: #000 !important;
+                border-bottom: 1px solid #ddd !important;
+                vertical-align: top !important;
+            }
+
+            .items-table tbody tr:last-child td {
+                border-bottom: none !important;
             }
 
             .table-input {
@@ -1129,18 +1206,91 @@
                 font-size: 10pt !important;
                 background: transparent !important;
                 color: #000 !important;
+                font-weight: 400 !important;
+                width: 100% !important;
             }
 
             .table-input.antal {
                 font-weight: 700 !important;
-                color: var(--primary) !important;
+                color: #00b0f0 !important;
+                text-align: center !important;
+                -webkit-print-color-adjust: exact !important;
             }
 
+            .table-textarea {
+                min-height: auto !important;
+                overflow: visible !important;
+            }
+
+            /* Footer - Fixed on each page */
+            .document-body {
+                position: relative !important;
+            }
+
+            body::after {
+                content: '';
+                display: block;
+                position: fixed;
+                bottom: 15mm;
+                left: 15mm;
+                right: 15mm;
+                height: 15mm;
+                background: white;
+                border-top: 2px solid #00b0f0;
+                padding-top: 3mm;
+                font-size: 8pt;
+                color: #666;
+                text-align: center;
+                line-height: 1.4;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            @supports (position: running(footer)) {
+                .print-footer {
+                    position: running(footer);
+                }
+                @page {
+                    @bottom-center {
+                        content: element(footer);
+                    }
+                }
+            }
+
+            /* Page counter */
+            @page {
+                @bottom-left {
+                    content: '';
+                }
+                @bottom-center {
+                    content: 'Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V\A CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk';
+                    white-space: pre-line;
+                    font-size: 8pt;
+                    color: #666;
+                    text-align: center;
+                    line-height: 1.3;
+                }
+                @bottom-right {
+                    content: 'Side ' counter(page);
+                    font-size: 9pt;
+                    font-weight: 700;
+                    color: white;
+                    background: #00b0f0;
+                    padding: 2mm 4mm;
+                    border-radius: 2mm;
+                }
+            }
+
+            /* Hide input controls */
             input::-webkit-calendar-picker-indicator,
             input::-webkit-inner-spin-button,
             input::-webkit-outer-spin-button {
                 display: none !important;
                 -webkit-appearance: none !important;
+            }
+
+            input[type="date"],
+            input[type="number"] {
+                -moz-appearance: textfield !important;
             }
         }
 
