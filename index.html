@@ -8,8 +8,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
         :root {
-            --primary: #00B0F0;
-            --primary-dark: #0090cc;
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
             --primary-light: #38bdf8;
             --secondary: #8b5cf6;
             --success: #10b981;
@@ -43,151 +43,12 @@
             color: var(--gray-900);
         }
 
-        /* LOGIN SCREEN */
-        .login-screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: 10000;
-            opacity: 1;
-            transition: opacity 0.5s;
-        }
-
-        .login-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .login-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            max-width: 450px;
-            width: 90%;
-            overflow: hidden;
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            padding: 3rem 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .login-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            font-size: 0.875rem;
-            opacity: 0.9;
-        }
-
-        .login-body {
-            padding: 2rem;
-        }
-
-        .login-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .login-description {
-            color: var(--gray-500);
-            font-size: 0.875rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-400);
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 0.875rem 1rem 0.875rem 3rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 10px;
-            font-size: 0.9375rem;
-            transition: all 0.2s;
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 176, 240, 0.1);
-        }
-
-        .login-btn {
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .login-error {
-            background: #fee;
-            border: 1px solid #fcc;
-            color: #c33;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            display: none;
-        }
-
-        .login-error.show {
-            display: block;
-        }
-
-        .login-footer {
-            padding: 1.5rem 2rem;
-            background: var(--gray-50);
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-
-        /* APP LAYOUT */
         .app {
             display: flex;
             min-height: 100vh;
-            opacity: 0;
-            transition: opacity 0.5s;
         }
 
-        .app.visible {
-            opacity: 1;
-        }
-
+        /* SIDEBAR */
         .sidebar {
             width: var(--sidebar-width);
             background: white;
@@ -207,7 +68,10 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .company-name {
@@ -260,7 +124,11 @@
 
         .nav-icon {
             width: 20px;
+            height: 20px;
             margin-right: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .sidebar-footer {
@@ -300,22 +168,7 @@
             color: var(--gray-500);
         }
 
-        .logout-btn {
-            background: transparent;
-            border: 1px solid var(--gray-300);
-            padding: 0.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            color: var(--danger);
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            background: var(--danger);
-            color: white;
-            border-color: var(--danger);
-        }
-
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
@@ -368,13 +221,17 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 176, 240, 0.3);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
         }
 
         .btn-secondary {
             background: white;
             color: var(--gray-700);
             border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
         }
 
         .btn-success {
@@ -415,64 +272,45 @@
             color: var(--gray-900);
         }
 
-        /* DOCUMENT */
+        .stat-change {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        /* FØLGESEDDEL FORM */
         .document-container {
             background: white;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: calc(100vh - var(--header-height) - 4rem);
         }
 
         .document-header {
             padding: 2rem;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border-bottom: 3px solid var(--primary);
-            text-align: right;
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border-bottom: 2px solid var(--primary);
         }
 
-        .doc-logo {
+        .doc-title {
             font-size: 1.75rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--primary);
+            text-align: center;
+            letter-spacing: 0.1em;
         }
 
         .document-body {
             padding: 2rem;
-            flex: 1;
-        }
-
-        .company-info {
-            background: #eeeeee;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            width: 45%;
-            font-size: 0.875rem;
-            line-height: 1.6;
-        }
-
-        .doc-title {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 0.3em;
-            border-radius: 8px;
-            margin-bottom: 2rem;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: 35% 1fr;
-            gap: 2rem;
-            background: #e8f5fb;
-            padding: 1.5rem;
-            border-radius: 8px;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
@@ -481,35 +319,59 @@
             flex-direction: column;
         }
 
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
         .form-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
             margin-bottom: 0.5rem;
-            text-transform: uppercase;
         }
 
         .form-input {
-            padding: 0.5rem;
-            border: none;
-            background: transparent;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
             font-size: 0.9375rem;
+            transition: all 0.2s;
         }
 
         .form-input:focus {
             outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
         }
 
         textarea.form-input {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
+        }
+
+        /* ITEMS TABLE */
+        .items-section {
+            margin-top: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
         }
 
         .items-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border: 2px solid var(--primary);
+            border: 1px solid var(--gray-200);
             border-radius: 8px;
             overflow: hidden;
         }
@@ -522,36 +384,35 @@
             padding: 1rem;
             text-align: left;
             color: white;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.875rem;
-            text-transform: uppercase;
         }
 
         .items-table th.col-antal {
-            width: 18%;
+            width: 15%;
             text-align: center;
         }
 
         .items-table th.col-actions {
-            width: 60px;
+            width: 80px;
             text-align: center;
         }
 
-        .items-table tbody tr:nth-child(even) {
-            background: #f7f9fb;
+        .items-table tbody tr {
+            background: white;
+            transition: background 0.2s;
         }
 
-        .items-table tbody tr:nth-child(odd) {
-            background: white;
+        .items-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .items-table tbody tr:not(:last-child) td {
+            border-bottom: 1px solid var(--gray-200);
         }
 
         .items-table td {
             padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e8e8e8;
-        }
-
-        .items-table tbody tr:last-child td {
-            border-bottom: none;
         }
 
         .table-input {
@@ -560,18 +421,18 @@
             border: 1px solid transparent;
             border-radius: 6px;
             font-size: 0.9375rem;
-            background: transparent;
+            transition: all 0.2s;
         }
 
         .table-input:focus {
             outline: none;
             border-color: var(--primary);
-            background: rgba(0, 176, 240, 0.05);
+            background: rgba(14, 165, 233, 0.05);
         }
 
         .table-input.antal {
             text-align: center;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--primary);
         }
 
@@ -586,25 +447,113 @@
             color: var(--gray-400);
             cursor: pointer;
             font-size: 1.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
             transition: all 0.2s;
         }
 
         .btn-delete:hover {
-            color: var(--danger);
+            background: var(--danger);
+            color: white;
         }
 
-        .document-footer {
-            padding: 1.5rem 2rem;
+        /* SAVED DOCUMENTS */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .doc-card {
             background: white;
-            border-top: 3px solid var(--primary);
-            text-align: center;
-            font-size: 0.8125rem;
-            color: var(--gray-600);
-            line-height: 1.6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
         }
 
-        .document-footer p {
-            margin: 0.25rem 0;
+        .doc-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .doc-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .doc-number {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--gray-900);
+        }
+
+        .doc-date {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .doc-meta {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-items-count {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
         }
 
         /* TOAST */
@@ -619,10 +568,33 @@
             transform: translateY(150%);
             transition: transform 0.3s;
             z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .toast.show {
             transform: translateY(0);
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .toast.success .toast-icon {
+            background: var(--success);
+            color: white;
+        }
+
+        .toast.error .toast-icon {
+            background: var(--danger);
+            color: white;
         }
 
         /* PRINT STYLES */
@@ -648,8 +620,9 @@
             .sidebar,
             .top-bar,
             .btn,
+            .nav-item,
             .toast,
-            .stats-grid {
+            .modal-overlay {
                 display: none !important;
             }
 
@@ -664,88 +637,39 @@
             .document-container {
                 box-shadow: none !important;
                 border-radius: 0 !important;
-                min-height: auto !important;
-            }
-
-            .document-header::before {
-                content: '';
-                position: absolute;
-                top: -15mm;
-                left: -15mm;
-                right: -15mm;
-                height: 3mm;
-                background: var(--primary);
             }
 
             .document-header {
-                position: relative;
-                padding: 0 !important;
-                padding-bottom: 5mm !important;
-                margin-bottom: 6mm !important;
-            }
-
-            .doc-logo {
-                font-size: 22pt !important;
-                padding: 2mm 0 !important;
+                border-bottom: 3px solid var(--primary) !important;
             }
 
             .document-body {
-                padding: 0 0 var(--print-footer-h) 0 !important;
+                padding-bottom: var(--print-footer-h) !important;
             }
 
-            .company-info {
+            .items-table th,
+            .items-table td {
                 page-break-inside: avoid !important;
             }
 
-            .doc-title {
-                font-size: 15pt !important;
-                padding: 4mm 0 !important;
-                margin: 6mm 0 !important;
-                page-break-after: avoid !important;
-            }
-
-            .form-grid {
-                page-break-inside: avoid !important;
-            }
-
-            .form-input,
             .table-input {
                 border: none !important;
                 padding: 0 !important;
             }
 
-            .table-input.antal {
-                text-align: center !important;
-            }
-
             .btn-delete {
                 display: none !important;
-            }
-
-            .items-table tbody tr {
-                page-break-inside: avoid !important;
-            }
-
-            .document-footer {
-                position: fixed !important;
-                left: 15mm !important;
-                right: 15mm !important;
-                bottom: 15mm !important;
-                padding: 4mm 0 !important;
-            }
-
-            .document-footer::after {
-                content: 'Side ' counter(page);
-                display: block;
-                margin-top: 3mm;
-                font-weight: 600;
-                color: var(--primary);
             }
         }
 
         @media (max-width: 1024px) {
             .sidebar {
                 transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
             }
 
             .main-content {
@@ -755,49 +679,12 @@
             .form-grid {
                 grid-template-columns: 1fr;
             }
-
-            .company-info {
-                width: 100%;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="login-logo">FELSON WATERSAFE</div>
-                <div class="login-subtitle">Enterprise System</div>
-            </div>
-            <div class="login-body">
-                <h2 class="login-title">Velkommen tilbage</h2>
-                <p class="login-description">Log ind for at fortsætte</p>
-                
-                <div class="login-error" id="loginError">
-                    Forkert brugernavn eller adgangskode
-                </div>
-
-                <form class="login-form" id="loginForm">
-                    <div class="input-group">
-                        <span class="input-icon">👤</span>
-                        <input type="text" class="login-input" id="username" placeholder="Brugernavn" required>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-icon">🔒</span>
-                        <input type="password" class="login-input" id="password" placeholder="Adgangskode" required>
-                    </div>
-                    <button type="submit" class="login-btn">Log ind</button>
-                </form>
-            </div>
-            <div class="login-footer">
-                🔒 Sikker login • AES-256 kryptering • GDPR-kompatibel
-            </div>
-        </div>
-    </div>
-
-    <!-- APP -->
-    <div class="app" id="app">
+    <div class="app">
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo-section">
                 <div class="logo">FELSON</div>
@@ -822,11 +709,23 @@
                 </div>
 
                 <div class="nav-section">
-                    <div class="nav-section-title">Sikkerhed</div>
-                    <div class="nav-item" data-view="security">
-                        <span class="nav-icon">🔒</span>
-                        Sikkerhed
+                    <div class="nav-section-title">Værktøjer</div>
+                    <div class="nav-item" data-view="templates">
+                        <span class="nav-icon">📋</span>
+                        Skabeloner
                     </div>
+                    <div class="nav-item" data-view="customers">
+                        <span class="nav-icon">👥</span>
+                        Kunder
+                    </div>
+                    <div class="nav-item" data-view="analytics">
+                        <span class="nav-icon">📈</span>
+                        Analyse
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
                     <div class="nav-item" data-view="settings">
                         <span class="nav-icon">⚙️</span>
                         Indstillinger
@@ -838,108 +737,128 @@
                 <div class="user-profile">
                     <div class="user-avatar">A</div>
                     <div class="user-info">
-                        <div class="user-name" id="currentUser">Admin</div>
+                        <div class="user-name">Admin</div>
                         <div class="user-role">Administrator</div>
                     </div>
-                    <button class="logout-btn" id="logoutBtn" title="Log ud">🚪</button>
                 </div>
             </div>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             <div class="top-bar">
                 <h1 class="page-title" id="pageTitle">Dashboard</h1>
                 <div class="top-actions">
+                    <button class="btn btn-secondary" id="exportBtn">
+                        <span>⬇</span> Eksporter
+                    </button>
                     <button class="btn btn-primary" id="newDocBtn">
-                        ➕ Ny Følgeseddel
+                        <span>➕</span> Ny Følgeseddel
                     </button>
                 </div>
             </div>
 
             <div class="content-area">
-                <!-- DASHBOARD -->
+                <!-- DASHBOARD VIEW -->
                 <div class="view-container" id="dashboardView">
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-label">I dag</div>
                             <div class="stat-value" id="todayCount">0</div>
+                            <div class="stat-change positive">+0 fra i går</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-label">Denne måned</div>
                             <div class="stat-value" id="monthCount">0</div>
+                            <div class="stat-change positive">+0%</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Total dokumenter</div>
+                            <div class="stat-label">Total</div>
                             <div class="stat-value" id="totalCount">0</div>
+                            <div class="stat-change">Alle dokumenter</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Sidste dokument</div>
+                            <div class="stat-value" style="font-size: 1rem;" id="lastDoc">-</div>
+                            <div class="stat-change" id="lastDocDate">-</div>
                         </div>
                     </div>
+
+                    <div class="section-header">
+                        <h2 class="section-title">Seneste Dokumenter</h2>
+                    </div>
+                    <div class="documents-grid" id="recentDocs"></div>
                 </div>
 
-                <!-- NEW DOCUMENT -->
+                <!-- NEW DOCUMENT VIEW -->
                 <div class="view-container" id="newDocView" style="display: none;">
                     <div class="document-container">
                         <div class="document-header">
-                            <h1 class="doc-logo">Felson Watersafe ApS</h1>
+                            <h2 class="doc-title">FØLGESEDDEL</h2>
                         </div>
                         <div class="document-body">
-                            <div class="company-info">
-                                Felson Watersafe ApS<br>
-                                Gartnervej 4<br>
-                                6710 Esbjerg V<br>
-                                CVR-nr. DK26813522<br>
-                                Tlf. 70206676<br>
-                                felson@felson.dk
-                            </div>
-
-                            <h2 class="doc-title">FØLGESEDDEL</h2>
-
                             <div class="form-grid">
-                                <div>
-                                    <div class="form-group" style="margin-bottom: 1rem;">
-                                        <label class="form-label">Dato</label>
-                                        <input type="date" class="form-input" id="docDate">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Ordre Nr.</label>
-                                        <input type="text" class="form-input" id="docOrder" placeholder="Indtast ordrenummer">
-                                    </div>
+                                <div class="form-group">
+                                    <label class="form-label">Dato</label>
+                                    <input type="date" class="form-input" id="docDate">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Levering</label>
+                                    <label class="form-label">Ordre Nr.</label>
+                                    <input type="text" class="form-input" id="docOrder" placeholder="Indtast ordrenummer">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">Leveringsadresse</label>
                                     <textarea class="form-input" id="docDelivery" placeholder="Indtast leveringsadresse"></textarea>
                                 </div>
                             </div>
 
-                            <table class="items-table">
-                                <thead>
-                                    <tr>
-                                        <th class="col-antal">Antal</th>
-                                        <th>Beskrivelse</th>
-                                        <th class="col-actions"></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="itemsBody"></tbody>
-                            </table>
+                            <div class="items-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">Varer</h3>
+                                    <button class="btn btn-success" id="addItemBtn">
+                                        <span>➕</span> Tilføj Vare
+                                    </button>
+                                </div>
+
+                                <table class="items-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-antal">Antal</th>
+                                            <th>Beskrivelse</th>
+                                            <th class="col-actions"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemsBody"></tbody>
+                                </table>
+                            </div>
 
                             <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
-                                <button class="btn btn-success" id="addItemBtn">➕ Tilføj Række</button>
                                 <button class="btn btn-secondary" id="clearBtn">Ryd</button>
-                                <button class="btn btn-secondary" id="saveBtn">💾 Gem</button>
-                                <button class="btn btn-primary" id="pdfBtn">📄 Download PDF</button>
-                                <button class="btn btn-primary" id="printBtn">🖨️ Udskriv</button>
+                                <button class="btn btn-secondary" id="saveBtn">Gem</button>
+                                <button class="btn btn-primary" id="printBtn">
+                                    <span>🖨️</span> Udskriv
+                                </button>
                             </div>
                         </div>
-                        <div class="document-footer">
-                            <p>Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V</p>
-                            <p>CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk</p>
-                        </div>
                     </div>
+                </div>
+
+                <!-- SAVED DOCUMENTS VIEW -->
+                <div class="view-container" id="savedView" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">Gemte Dokumenter</h2>
+                    </div>
+                    <div class="documents-grid" id="savedDocs"></div>
                 </div>
             </div>
         </main>
     </div>
 
-    <div class="toast" id="toast"></div>
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <span id="toastMessage"></span>
+    </div>
 
     <template id="itemTemplate">
         <tr>
@@ -950,47 +869,22 @@
     </template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-        // Encryption key
-        const ENCRYPTION_KEY = 'felson-watersafe-2025-secure-key';
-
-        // State
+        // State management
         const state = {
             currentView: 'dashboard',
-            currentUser: null,
-            documents: [],
-            credentials: {
-                username: 'admin',
-                password: encrypt('felson2025')
-            }
+            currentDoc: null,
+            documents: []
         };
-
-        // Encryption functions
-        function encrypt(text) {
-            return CryptoJS.AES.encrypt(text, ENCRYPTION_KEY).toString();
-        }
-
-        function decrypt(ciphertext) {
-            const bytes = CryptoJS.AES.decrypt(ciphertext, ENCRYPTION_KEY);
-            return bytes.toString(CryptoJS.enc.Utf8);
-        }
 
         // Elements
         const els = {
-            loginScreen: document.getElementById('loginScreen'),
-            loginForm: document.getElementById('loginForm'),
-            loginError: document.getElementById('loginError'),
-            username: document.getElementById('username'),
-            password: document.getElementById('password'),
-            app: document.getElementById('app'),
-            logoutBtn: document.getElementById('logoutBtn'),
-            currentUser: document.getElementById('currentUser'),
             navItems: document.querySelectorAll('.nav-item'),
             pageTitle: document.getElementById('pageTitle'),
             views: {
                 dashboard: document.getElementById('dashboardView'),
-                new: document.getElementById('newDocView')
+                new: document.getElementById('newDocView'),
+                saved: document.getElementById('savedView')
             },
             docDate: document.getElementById('docDate'),
             docOrder: document.getElementById('docOrder'),
@@ -1000,56 +894,41 @@
             addItemBtn: document.getElementById('addItemBtn'),
             clearBtn: document.getElementById('clearBtn'),
             saveBtn: document.getElementById('saveBtn'),
-            pdfBtn: document.getElementById('pdfBtn'),
             printBtn: document.getElementById('printBtn'),
             newDocBtn: document.getElementById('newDocBtn'),
+            recentDocs: document.getElementById('recentDocs'),
+            savedDocs: document.getElementById('savedDocs'),
             toast: document.getElementById('toast'),
+            toastMessage: document.getElementById('toastMessage'),
             todayCount: document.getElementById('todayCount'),
             monthCount: document.getElementById('monthCount'),
-            totalCount: document.getElementById('totalCount')
+            totalCount: document.getElementById('totalCount'),
+            lastDoc: document.getElementById('lastDoc'),
+            lastDocDate: document.getElementById('lastDocDate')
         };
 
-        // Init
+        // Initialize
         function init() {
             loadDocuments();
             setupEventListeners();
-            checkSession();
-        }
-
-        // Session
-        function checkSession() {
-            try {
-                const session = sessionStorage.getItem('felson_session');
-                if (session) {
-                    const data = JSON.parse(session);
-                    if (data.authenticated && data.username) {
-                        login(data.username);
-                        return;
-                    }
-                }
-            } catch (e) {}
-        }
-
-        function saveSession(username) {
-            sessionStorage.setItem('felson_session', JSON.stringify({
-                authenticated: true,
-                username: username,
-                timestamp: Date.now()
-            }));
+            updateDashboard();
+            els.docDate.valueAsDate = new Date();
+            addItem();
         }
 
         // Event listeners
         function setupEventListeners() {
-            els.loginForm.addEventListener('submit', handleLogin);
-            els.logoutBtn.addEventListener('click', handleLogout);
             els.navItems.forEach(item => {
-                item.addEventListener('click', () => switchView(item.dataset.view));
+                item.addEventListener('click', () => {
+                    const view = item.dataset.view;
+                    switchView(view);
+                });
             });
+
             els.newDocBtn.addEventListener('click', () => switchView('new'));
             els.addItemBtn.addEventListener('click', () => addItem());
             els.clearBtn.addEventListener('click', clearForm);
             els.saveBtn.addEventListener('click', saveDocument);
-            els.pdfBtn.addEventListener('click', generatePDF);
             els.printBtn.addEventListener('click', () => window.print());
 
             els.itemsBody.addEventListener('click', e => {
@@ -1057,7 +936,7 @@
                     if (els.itemsBody.children.length > 1) {
                         e.target.closest('tr').remove();
                     } else {
-                        toast('Der skal være mindst én række');
+                        toast('Der skal være mindst én vare', 'error');
                     }
                 }
             });
@@ -1069,53 +948,19 @@
             });
         }
 
-        // Login/Logout
-        function handleLogin(e) {
-            e.preventDefault();
-            const username = els.username.value.trim();
-            const password = els.password.value;
-
-            if (username === state.credentials.username && encrypt(password) === state.credentials.password) {
-                login(username);
-                saveSession(username);
-            } else {
-                els.loginError.classList.add('show');
-                setTimeout(() => els.loginError.classList.remove('show'), 3000);
-            }
-        }
-
-        function login(username) {
-            state.currentUser = username;
-            els.currentUser.textContent = username;
-            els.loginScreen.classList.add('hidden');
-            setTimeout(() => {
-                els.app.classList.add('visible');
-                updateDashboard();
-                els.docDate.valueAsDate = new Date();
-                addItem();
-            }, 500);
-        }
-
-        function handleLogout() {
-            if (confirm('Er du sikker på at du vil logge ud?')) {
-                sessionStorage.removeItem('felson_session');
-                els.app.classList.remove('visible');
-                setTimeout(() => {
-                    els.loginScreen.classList.remove('hidden');
-                    els.username.value = '';
-                    els.password.value = '';
-                }, 300);
-            }
-        }
-
-        // Views
+        // View management
         function switchView(viewName) {
             Object.values(els.views).forEach(v => v.style.display = 'none');
             els.navItems.forEach(i => i.classList.remove('active'));
             
             const viewMap = {
                 dashboard: { title: 'Dashboard', element: els.views.dashboard },
-                new: { title: 'Ny Følgeseddel', element: els.views.new }
+                new: { title: 'Ny Følgeseddel', element: els.views.new },
+                saved: { title: 'Gemte Dokumenter', element: els.views.saved },
+                templates: { title: 'Skabeloner', element: null },
+                customers: { title: 'Kunder', element: null },
+                analytics: { title: 'Analyse', element: null },
+                settings: { title: 'Indstillinger', element: null }
             };
 
             const view = viewMap[viewName];
@@ -1123,11 +968,14 @@
                 els.pageTitle.textContent = view.title;
                 if (view.element) view.element.style.display = 'block';
                 document.querySelector(`[data-view="${viewName}"]`)?.classList.add('active');
+                state.currentView = viewName;
+
                 if (viewName === 'dashboard') updateDashboard();
+                if (viewName === 'saved') renderSavedDocuments();
             }
         }
 
-        // Items
+        // Items management
         function addItem(antal = '', desc = '') {
             const row = els.itemTemplate.content.cloneNode(true);
             const antalInput = row.querySelector('.antal');
@@ -1147,23 +995,28 @@
             textarea.style.height = textarea.scrollHeight + 'px';
         }
 
-        // Documents
-        function saveDocument() {
-            const doc = {
+        // Document management
+        function getFormData() {
+            const items = Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
+                antal: row.querySelector('.antal').value || '0',
+                beskrivelse: row.querySelector('.table-textarea').value || ''
+            }));
+
+            return {
                 id: Date.now(),
                 date: els.docDate.value,
                 order: els.docOrder.value,
                 delivery: els.docDelivery.value,
-                items: Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
-                    antal: row.querySelector('.antal').value || '0',
-                    beskrivelse: row.querySelector('.table-textarea').value || ''
-                })),
+                items: items,
                 created: new Date().toISOString()
             };
-            
+        }
+
+        function saveDocument() {
+            const doc = getFormData();
             state.documents.push(doc);
             localStorage.setItem('felson_documents', JSON.stringify(state.documents));
-            toast('Dokument gemt succesfuldt');
+            toast('Dokument gemt');
             updateDashboard();
         }
 
@@ -1194,135 +1047,66 @@
             els.todayCount.textContent = todayDocs.length;
             els.monthCount.textContent = monthDocs.length;
             els.totalCount.textContent = state.documents.length;
+            
+            if (state.documents.length > 0) {
+                const last = state.documents[state.documents.length - 1];
+                els.lastDoc.textContent = last.order || 'Ingen nr.';
+                els.lastDocDate.textContent = new Date(last.created).toLocaleDateString('da-DK');
+            }
+
+            renderRecentDocuments();
         }
 
-        // PDF Generation
-        function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const w = doc.internal.pageSize.getWidth();
-            const h = doc.internal.pageSize.getHeight();
-            const m = 20;
-            let y = m;
+        function renderRecentDocuments() {
+            const recent = state.documents.slice(-6).reverse();
+            els.recentDocs.innerHTML = recent.map(doc => `
+                <div class="doc-card" onclick="loadDocument(${doc.id})">
+                    <div class="doc-card-header">
+                        <div class="doc-number">#${doc.order || 'Ingen nr.'}</div>
+                        <div class="doc-date">${new Date(doc.created).toLocaleDateString('da-DK')}</div>
+                    </div>
+                    <div class="doc-meta">${doc.delivery || 'Ingen leveringsadresse'}</div>
+                    <div class="doc-items-count">${doc.items.length} varer</div>
+                </div>
+            `).join('');
+        }
 
-            function header() {
-                doc.setFillColor(0, 176, 240);
-                doc.rect(0, 0, w, 3, 'F');
-                doc.setFontSize(18);
-                doc.setTextColor(0, 176, 240);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Felson Watersafe ApS', w - m, 16, { align: 'right' });
-                doc.setDrawColor(0, 176, 240);
-                doc.line(m, 20, w - m, 20);
-            }
+        function renderSavedDocuments() {
+            els.savedDocs.innerHTML = state.documents.slice().reverse().map(doc => `
+                <div class="doc-card" onclick="loadDocument(${doc.id})">
+                    <div class="doc-card-header">
+                        <div class="doc-number">#${doc.order || 'Ingen nr.'}</div>
+                        <div class="doc-date">${new Date(doc.created).toLocaleDateString('da-DK')}</div>
+                    </div>
+                    <div class="doc-meta">${doc.delivery || 'Ingen leveringsadresse'}</div>
+                    <div class="doc-items-count">${doc.items.length} varer</div>
+                </div>
+            `).join('');
+        }
 
-            function footer() {
-                const fy = h - 20;
-                doc.setDrawColor(0, 176, 240);
-                doc.line(m, fy - 5, w - m, fy - 5);
-                doc.setFontSize(7);
-                doc.setTextColor(100);
-                doc.setFont('helvetica', 'normal');
-                doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', w / 2, fy, { align: 'center' });
-                doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', w / 2, fy + 4, { align: 'center' });
-            }
+        function loadDocument(id) {
+            const doc = state.documents.find(d => d.id === id);
+            if (!doc) return;
 
-            function tableHeader() {
-                doc.setFillColor(0, 176, 240);
-                doc.roundedRect(m, y, w - 2 * m, 9, 2, 2, 'F');
-                doc.setTextColor(255);
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(8);
-                doc.text('ANTAL', m + 5, y + 6);
-                doc.text('BESKRIVELSE', m + 35, y + 6);
-                y += 11;
-            }
-
-            header();
-            y = 25;
-
-            // Title
-            doc.setFillColor(0, 176, 240);
-            doc.roundedRect(m, y, w - 2 * m, 10, 2, 2, 'F');
-            doc.setFontSize(14);
-            doc.setTextColor(255);
-            doc.setFont('helvetica', 'bold');
-            doc.text('FØLGESEDDEL', w / 2, y + 6.5, { align: 'center' });
-            y += 14;
-
-            // Form data
-            doc.setFillColor(232, 245, 251);
-            doc.roundedRect(m, y, w - 2 * m, 26, 2, 2, 'F');
-            y += 4;
-            doc.setFontSize(8);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 176, 240);
-            doc.text('DATO', m + 3, y);
-            doc.text('LEVERING', w / 2 + 5, y);
-            doc.setFontSize(9);
-            doc.setTextColor(40);
-            doc.setFont('helvetica', 'normal');
-            const fecha = els.docDate.value ? new Date(els.docDate.value + 'T00:00:00').toLocaleDateString('da-DK') : '';
-            doc.text(fecha, m + 3, y + 6);
-            const levLines = doc.splitTextToSize(els.docDelivery.value || '', w / 2 - 30);
-            doc.text(levLines, w / 2 + 5, y + 6);
-            doc.setFontSize(8);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(0, 176, 240);
-            doc.text('ORDRE NR.', m + 3, y + 10);
-            doc.setFontSize(9);
-            doc.setTextColor(40);
-            doc.setFont('helvetica', 'normal');
-            doc.text(els.docOrder.value || '', m + 3, y + 15);
-            y += Math.max(24, levLines.length * 5 + 16);
-
-            tableHeader();
-
-            const rows = Array.from(els.itemsBody.querySelectorAll('tr'));
-            doc.setTextColor(40);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-
-            rows.forEach((row, i) => {
-                const antal = row.querySelector('.antal').value || '0';
-                const desc = row.querySelector('.table-textarea').value || '';
-                const lines = doc.splitTextToSize(desc, w - m - 45);
-                const rh = Math.max(7, lines.length * 5);
-
-                if (y + rh > h - 30) {
-                    footer();
-                    doc.addPage();
-                    header();
-                    y = 30;
-                    tableHeader();
-                }
-
-                if (i % 2 === 0) {
-                    doc.setFillColor(247, 249, 251);
-                    doc.rect(m, y - 1, w - 2 * m, rh, 'F');
-                }
-
-                doc.setTextColor(0, 176, 240);
-                doc.setFont('helvetica', 'bold');
-                doc.text(antal, m + 15, y + 4, { align: 'center' });
-                doc.setTextColor(40);
-                doc.setFont('helvetica', 'normal');
-                doc.text(lines, m + 35, y + 4);
-                y += rh + 1;
-            });
-
-            footer();
-            doc.save(`folgeseddel_${els.docOrder.value || 'dokument'}.pdf`);
-            toast('PDF downloaded succesfuldt');
+            els.docDate.value = doc.date;
+            els.docOrder.value = doc.order;
+            els.docDelivery.value = doc.delivery;
+            els.itemsBody.innerHTML = '';
+            doc.items.forEach(item => addItem(item.antal, item.beskrivelse));
+            
+            switchView('new');
+            toast('Dokument indlæst');
         }
 
         // Toast
-        function toast(message) {
-            els.toast.textContent = message;
+        function toast(message, type = 'success') {
+            els.toastMessage.textContent = message;
+            els.toast.className = `toast ${type}`;
             els.toast.classList.add('show');
             setTimeout(() => els.toast.classList.remove('show'), 3000);
         }
 
+        // Initialize app
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
