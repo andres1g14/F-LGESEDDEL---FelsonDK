@@ -962,7 +962,8 @@
             documents: [],
             credentials: {
                 username: 'admin',
-                password: encrypt('felson2025')
+                // Store hashed password (SHA-256)
+                passwordHash: CryptoJS.SHA256('felson2025').toString()
             }
         };
 
@@ -1074,8 +1075,11 @@
             e.preventDefault();
             const username = els.username.value.trim();
             const password = els.password.value;
+            
+            // Hash the entered password and compare
+            const passwordHash = CryptoJS.SHA256(password).toString();
 
-            if (username === state.credentials.username && encrypt(password) === state.credentials.password) {
+            if (username === state.credentials.username && passwordHash === state.credentials.passwordHash) {
                 login(username);
                 saveSession(username);
             } else {
